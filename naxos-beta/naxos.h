@@ -384,7 +384,6 @@ class  NsList : public std::list<TemplType> {
 };
 
 ///  An \c unordered_set.
-
 template <class TemplType>
 class  NsSet : public Ns_UNORDERED_SET<TemplType> {
 
@@ -393,76 +392,6 @@ class  NsSet : public Ns_UNORDERED_SET<TemplType> {
 #include "stack.h"
 
 typedef  size_t  Ns_pointer_t;
-
-#if 0
-
-///  Abstract class that represents a constrained variable domain.
-
-///  \internal
-
-class  Ns_IntDomain {
-
-    public:
-
-        //  The destructor of an abstract class should be virtual.
-        virtual ~Ns_IntDomain (void)  {   }
-
-        ///  Creates a copy of the instance of the class.
-        virtual Ns_IntDomain  *clone (void) = 0;
-
-        ///  The domain size.
-        virtual NsUInt  size (void) = 0;
-
-        /////  Returns \c true if the domain is empty.
-        //virtual bool  empty (void) = 0;
-
-        ///  Returns \c true if the domain is bound, i.e.\ if it contains only one value.
-        virtual bool  isBound (void) = 0;
-
-        ///  The minimum variable of the domain.
-        virtual NsInt  min (void) = 0;
-
-        ///  The maximum variable of the domain.
-        virtual NsInt  max (void) = 0;
-
-        ///  The biggest value in the domain that is less than \a toVal.
-        virtual NsInt  previous (const NsInt toVal) = 0;
-
-        ///  The smallest value in the domain that is greater than \a toVal.
-        virtual NsInt  next  (const NsInt toVal) = 0;
-
-        /////  The biggest value \b not in the domain that is less than \a toVal.
-        //NsInt  previousGap (const NsInt toVal);
-
-        ///  The smallest value \b not in the domain that is greater than \a toVal.
-        virtual NsInt  nextGap (const NsInt toVal) = 0;
-
-        ///  Removes a range/interval of values.  Returns \c true if the domain remains non-empty.
-        virtual bool  removeRange (NsInt rangeMin, NsInt rangeMax) = 0;
-
-        ///  Checks whether the domain contains the range [\a rangeMin..\a rangeMax].
-        virtual bool  containsRange (const NsInt rangeMin, const NsInt rangeMax) = 0;
-
-        ///  If the domain can be depicted as a graph, it writes it to a file.
-        virtual void  toGraphFile (const char *fileName)
-        {
-                fileName = 0;	 // to suppress warnings
-                throw  NsException("Ns_IntDomain::toGraphFile: Unsupported");
-        }
-
-        //virtual const const_iterator  begin (void) = 0;
-
-        //virtual const const_iterator  end (void) = 0;
-
-        //virtual const const_reverse_iterator  rbegin (void) = 0;
-
-        //virtual const const_reverse_iterator  rend (void) = 0;
-
-        //virtual const const_gap_iterator  gap_begin (void) = 0;
-
-        //virtual const const_gap_iterator  gap_end (void) = 0;
-};
-#endif
 
 typedef  NsDeque<NsIntVar *>    Ns_PointArray_t;
 
@@ -478,7 +407,6 @@ const NsIndex   NsINDEX_INF = Ns_PointArray_t().max_size();
 ///   represented by its \a level.  Each \a level has its own valid \a id
 ///   that stops being valid when the frame is popped.
 ///   \internal
-
 struct  Ns_HistoryId_t {
 
         ///  The depth of the node in the search tree.
@@ -1310,42 +1238,11 @@ class  NsIntVar {
 
         NsIntVar (NsProblemManager& pm_init, const NsInt min_init, const NsInt max_init);
 
-        /////  Copy-constructor that uses the operator =.
-        //NsIntVar (const NsIntVar& vOther)
-        //{
-        //	*this  =  vOther;
-        //}
-
-        /////  Takes care while copying the \a domain pointer.
-        //	NsIntVar&
-        //operator = (const NsIntVar& vOther)
-        //{
-        //	pm               =  vOther.pm;
-        //	domain           =  vOther.domain->clone();
-        //	constraints      =  vOther.constraints;
-        //	//constraintsBoundsCons  =
-        //	//	vOther.constraintsBoundsCons;
-        //	//constraintsArcCons  =
-        //	//	vOther.constraintsArcCons;
-        //	arcsConnectedTo  =  vOther.arcsConnectedTo;
-        //	constraintNeedsRemovedValues  =
-        //		vOther.constraintNeedsRemovedValues;
-        //	queueItem        =  vOther.queueItem;
-
-        //	return  *this;
-        //}
-
         NsIntVar (const Ns_Expression& expr);
 
         NsIntVar&  operator = (const Ns_Expression& expr);
 
-        //~NsIntVar (void)
-        //{
-        //	if ( domain  !=  0 )
-        //		delete  domain;
-        //}
-
-        /*  Methods that remove values from the domain follow.  */
+        //  Methods that remove values from the domain follow...
 
         void  removeAll (void);
 
@@ -1357,7 +1254,6 @@ class  NsIntVar {
         }
 
         ///  To remove a value, plus recording the constraint that made this removal.  If c==0 no constraint is recorded.
-
         bool
         removeSingle (const NsInt val, const Ns_Constraint *c)
         {
@@ -1380,9 +1276,10 @@ class  NsIntVar {
         bool  removeRange (const NsInt first, const NsInt last, const Ns_Constraint *c, bool& modified);
 
         ///  Assigns a value to the constrained variable.
-        void  set (const NsInt val)
+        void
+        set (const NsInt val)
         {
-                assert_Ns( val != NsMINUS_INF && val != NsPLUS_INF,
+                assert_Ns( val != NsMINUS_INF  &&  val != NsPLUS_INF ,
                            "NsIntVar::set: Cannot assign infinity");
                 remove(NsMINUS_INF, val-1);
                 remove(val+1,       NsPLUS_INF);
@@ -1794,7 +1691,6 @@ class  NsIntVarArray {
 
         void  push_front (const NsIntVar& Var);
 
-        //private:
         void  push_front (NsIntVar& Var)
         {
                 assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
@@ -1816,7 +1712,6 @@ class  NsIntVarArray {
         class  const_iterator;
 
         ///  Iterator that iterates through the constrained variables of the array.
-
         class  iterator {
 
             private:
@@ -1901,7 +1796,6 @@ class  NsIntVarArray {
         }
 
         ///  Iterator that iterates through the constrained variables of the array (without modifying them).
-
         class  const_iterator {
 
             private:
@@ -2049,24 +1943,11 @@ class  NsIntVarArray {
         }
 
         ///  @}
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 };
 
 std::ostream&
 operator  << (std::ostream& os, const NsIntVarArray& VarArr);
-
-//class  NsIntVarArray  {
-//	private:
-//		std::deque<NsIntVar>  Var;
-//
-//	public:
-//		NsIntVarArray (int size, const NsInt min_dom, const NsInt max_dom);
-//
-//		NsIntVar&  operator  [] (const int i)
-//		{
-//			return  Var[i];
-//		}
-//};
 
 void  Ns_ternaryConstraintToGraphFile (std::ofstream& fileConstraintsGraph,
                                        const NsIntVar *VarX,
@@ -2095,7 +1976,6 @@ void  Ns_inverseConstraintToGraphFile (std::ofstream& fileConstraintsGraph,
 ///  Abstract class that represents a constraint between constrained variables.
 
 ///  \internal
-
 class  Ns_Constraint {
 
     public:
@@ -2104,10 +1984,9 @@ class  Ns_Constraint {
         unsigned long  lastConstraintCheckTime;
 
         ///  Constructor.
-        Ns_Constraint (/*const NsIndex PRIORITY_init=0*/)
+        Ns_Constraint (void)
                 : lastConstraintCheckTime(0),
                   revisionType(BOUNDS_CONSISTENCY)
-                  //PRIORITY(PRIORITY_init)
         {   }
 
         ///  @{
@@ -2124,21 +2003,12 @@ class  Ns_Constraint {
                 varFired  =  varFired;
                 throw  NsException("Ns_Constraint::lsFixedCons: Unimplemented");
         }
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 
         ///  @}
 
         ///  The number of the variables involved in the constraint.
         virtual int   varsInvolvedIn (void)  const = 0;
-
-        /////  True, if the constraint is involved in an `Inverse' constraint, or another constraint that needs to know the values that have been removed from the variable (the w 's in the AC-5 Algorithm).
-        //	virtual bool
-        //needsRemovedValues (void)  const
-        //{
-        //	//return  true;  // Uncomment for plain AC-5.
-        //	return  false;
-        //}
-        //bool  inConstraintsQueue;
 
         ///  Description of the consistency type that a `revision' function for a constraint can impose.
         enum  ConsistencyType {
@@ -2151,9 +2021,6 @@ class  Ns_Constraint {
 
                 ///  Like BOUNDS_CONSISTENCY, but revision is imposed in both directions.  E.g.\ Revision(i,j) is equivalent to Revision(j,i), where i, j are variables.
                 BIDIRECTIONAL_CONSISTENCY
-
-                /////  Like BIDIRECTIONAL_CONSISTENCY_IN_QUEUE, but the constraint is currently out of the independent arc consistency constraints queue.
-                //BIDIRECTIONAL_CONSISTENCY_OUT_OF_QUEUE
         };
 
         ///  Description of the type of revision function (LocalArcCons) for the constraint.
@@ -2210,7 +2077,8 @@ class Ns_ConstrXinDomain : public Ns_Constraint {
         toGraphFile (std::ofstream& fileConstraintsGraph)  const
         {
                 fileConstraintsGraph << "\n\t//Var"
-                                     << VarX << " -> Dom" << &domainPrevious
+                                     << VarX << " -> Dom"
+                                     << &domainPrevious
                                      << "   [label=\"dom\"];\n";
         }
 
@@ -2249,7 +2117,7 @@ class Ns_ConstrXlessthanY : public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXlesseqthanY : public Ns_Constraint {
@@ -4428,20 +4296,6 @@ class Ns_ExprConstrYeqZ : public Ns_ExprConstr {
         virtual NsIntVar&  postC (bool positively)  const;
 };
 
-//class Ns_ExprConstrYneqZ : public Ns_ExprConstr  {
-//	private:
-//		NsIntVar  &VarY, &VarZ;
-//
-//	public:
-//		Ns_ExprConstrYneqZ (NsIntVar& Y, NsIntVar& Z)
-//			: VarY(Y), VarZ(Z)	{   }
-//
-//		virtual Ns_Constraint*  postConstraint (void)  const;
-//
-//		virtual void      post (NsIntVar *VarX)  const;
-//		virtual NsIntVar&  post (void)  const;
-//};
-
 class Ns_ExprConstrYandZ : public Ns_ExprConstr {
 
     private:
@@ -4965,7 +4819,6 @@ NsElement  (const Ns_Expression& VarIndexExpr,
 ///  Each time a goal is executed by the solver, its method \c GOAL() is
 ///   called.  This method can make assignments or remove values from
 ///   constrained variables.
-
 class  NsGoal {
 
     public:
@@ -4997,7 +4850,6 @@ class  NsGoal {
 };
 
 ///  The first kind of `meta-goal' (i.e.\ goal used to combine two other goals).
-
 class NsgAND : public NsGoal {
 
     private:
@@ -5035,7 +4887,6 @@ class NsgAND : public NsGoal {
 };
 
 ///  The second--and last--kind of `meta-goal' (i.e.\ goal used to combine two other goals).
-
 class NsgOR : public NsGoal {
 
     private:
@@ -5073,7 +4924,6 @@ class NsgOR : public NsGoal {
 };
 
 ///  A simple goal that assigns a value to a constrained variable.
-
 class NsgSetValue : public NsGoal {
 
     private:
@@ -5095,7 +4945,6 @@ class NsgSetValue : public NsGoal {
 };
 
 ///  A goal that removes a value from the domain of a given constrained variable.
-
 class NsgRemoveValue : public NsGoal {
 
     private:
@@ -5121,7 +4970,6 @@ class NsgRemoveValue : public NsGoal {
 ///  I.e.\ it assigns a value from the domain of the variable;
 ///   if this assignment results to an inconsistency, it removes the value
 ///   from the domain, and continues trying the rest of the values.
-
 class NsgInDomain : public NsGoal {
 
     private:
@@ -5150,7 +4998,6 @@ class NsgInDomain : public NsGoal {
 ///  It uses NsgInDomain to iteratively instantiate each variable of the
 ///   array.  The next variable that is chosen is the one having the
 ///   minimum domain size (according to the `first-fail' heuristic).
-
 class NsgLabeling : public NsGoal {
 
     private:
@@ -5184,7 +5031,6 @@ class NsgLabeling : public NsGoal {
 ///  When a value is removed from the domain of a variable, an item is
 ///   added into this queue.
 ///   \internal
-
 class  Ns_QueueItem {
 
     private:
@@ -5255,45 +5101,21 @@ class  Ns_QueueItem {
 
     public:
 
-        /////  True if we have already passed through this queue item.
-        //bool  stale;
-
-        /////  An iterator pointing to the current item (`this').
-        //NsList<Ns_QueueItem>::iterator  iter;
-
         ///  Constructor.
         Ns_QueueItem (NsIntVar *varFired_init)
                 : varFired(varFired_init),
                   currentConstr(0),
                   currentRemovedValue(0)
-                  //stale(false)
-        {
-                //varFired->queueItem  =  this;
-        }
+        {   }
 
         ~Ns_QueueItem (void)
         {
-                if ( varFired->queueItem  ==  this ) {
-                        //  Is there any possibility of
-                        //   varFired->queueItem != this ?  Yes, when there
-                        //   are two items in AC queue for `varFired', the
-                        //   first being examined now (by the AC
-                        //   algorithm).
-                        varFired->queueItem  =  0;
-                        //if ( varFired->manager().emptyingQueue() )   {
-                        //	for (currentConstr = 0;
-                        //		currentConstr < varFired->constraints.size();
-                        //		++currentConstr)
-                        //	{
-                        //		if ( varFired->constraints[currentConstr].constr->revisionType  ==
-                        //				Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_IN_QUEUE )
-                        //		{
-                        //			varFired->constraints[currentConstr].constr->revisionType  =
-                        //				Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_OUT_OF_QUEUE;
-                        //		}
-                        //	}
-                        //}
-                }
+                if ( varFired->queueItem == this )
+                        varFired->queueItem = 0;
+                //  Is there any possibility of varFired->queueItem !=
+                //   this ?  Yes, when there are two items in AC queue for
+                //   `varFired', the first being examined now by the AC
+                //   algorithm.
         }
 
         void  boundChangedBy (const Ns_Constraint *constr);
@@ -5301,7 +5123,7 @@ class  Ns_QueueItem {
         void  add (const NsInt removedVal,
                    const Ns_Constraint *constrThatRemovedIt);
 
-        Ns_Constraint  *getNextConstraint (/*const bool onlyNecessary*/);
+        Ns_Constraint  *getNextConstraint (void);
 
         ///  Returns the variable that fired the constraint propagation.
         NsIntVar *
@@ -5338,10 +5160,9 @@ class  Ns_QueueItem {
         }
 };
 
-///  Normally used for describing the stack holding AND-goals that have to be satisfied.  (This stack is also called `stackAND'.)
+///  Normally used for describing the stack holding AND-goals that have to be satisfied.  This stack is also called `stackAND'.
 
 ///  \internal
-
 class Ns_StackGoals : public NsStack<NsGoal *> {
 
     public:
@@ -5349,38 +5170,6 @@ class Ns_StackGoals : public NsStack<NsGoal *> {
         ~Ns_StackGoals (void);
 };
 
-//typedef  __gnu_cxx::hash_set<Ns_pointer_t>  Ns_Set_t;
-//
-//
-////  An object of the struct `Ns_DomainsStore_t' stores all the necessary data that
-////   could be used if we wanted to restore the initial domains of all the
-////   constrained variables.  E.g., before the domain of a variable `V' is
-////   altered, we add the tuple `(V, DomainOfV)' to the stack `domainsOriginal'.
-////   When it is time to restore the initial domains, we pop all the frames
-////   out of `domainsOriginal', and for each tuple `(V, DomainOfV)' we call the
-////   method `V->setDomain(DomainOfV)'.  The data-member `alreadySaved'
-////   is a (hash) set containing all the pointers of the variables already
-////   stored.  We could live without it--as the same information is also
-////   contained in `domainsOriginal'--but its usefulness has to do with the
-////   acceleration of the searching whether the domain of a specific variable
-////   has been already saved.  (It takes constant time, though a search
-////   within `domainsOriginal' takes linear time.)
-//
-//struct  Ns_DomainsStore_t  {
-//
-//		Ns_StackDomains_t  domainsOriginal;
-//		Ns_Set_t     alreadySaved;
-//
-//		void  clear (void)
-//		{
-//			domainsOriginal.clear();
-//			alreadySaved.clear();
-//		}
-//};
-//
-////  `Ns_DomainsStore_t' could be only a `hash_map<Ns_pointer_t,IntDomain>'.  `Ns_DomainsStore_t'
-////   plays a role of a hash_map, although we implemented it in an indirect way
-////   --using hash_set--plainly for performance reasons (having to do with time).
 
 class Ns_SearchNode;
 
@@ -5392,7 +5181,6 @@ class Ns_SearchNode;
 ///   want to cancel this choice, and we want to revert back to the
 ///   previous problem status.
 ///   \internal
-
 class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
     public:
@@ -5409,7 +5197,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
     private:
 
         ///  History-ids together with time statistics.
-
         struct  history_time_t {
 
                 ///  An ID for the current history level.
@@ -5417,9 +5204,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 ///  An ID for the current node number.
                 NsUInt  searchTreeNodeNum;
-
-                /////  The time when this level was on top.
-                //clock_t  timePrevious;
 
                 ///  The time consumed all the nodes in this level.
                 double  timeSum;
@@ -5433,12 +5217,16 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The sum of the weights of timeSum terms.
                 double  weightsSum;
 
+                ///  The current desired simulation to real time ratio.
+                double  simulationRatio;
+
                 ///  Constructor.
                 history_time_t (void)
                         : validHistoryId(0),
                           timeSum(0.0),
                           timeSimChildSum(0.0),
-                          timeSimSum(0.0)
+                          timeSimSum(0.0),
+                          simulationRatio(1.0)
                 {    }
 
                 ///  Augments the valid history ID.
@@ -5459,18 +5247,13 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 ///  The mean value of the time spent in this level.
                 double
-                mean (void)  const
+                mean (void)
                 {
                         assert_Ns( validHistoryId != 0 ,
                                    "history_time_t::mean: Cannot get mean value of an empty set" );
-                        return  ( timeSum / weightsSum );
-                }
-
-                /// The next node is counted as simulated.
-                void
-                simulate (const double duration)
-                {
-                        timeSimSum  +=  duration;
+                        double  duration = timeSum / weightsSum;
+                        timeSimSum += duration;
+                        return  duration;
                 }
         };
 
@@ -5482,29 +5265,23 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         ///  The mean value of the time spent in the next level.
         double
-        nextMean (void)  const
+        nextMean (void)
         {
                 return  history_time[size()].mean();
         }
 
         ///  Decides whether the next level will be explored or simulated.
         bool
-        overrideNextLevel (double timeCompletedRatio)  const
+        overrideNextLevel (void)
         {
-                if ( history_time.size()  <  size() + 1 )
+                if ( history_time.size() < size() + 1 )
                         return  false;
-                // The ratio of simulated time to the total time
-                //  spent in the next level.
-                double  timeSimRatio =
-                        ( history_time[size()].timeSimChildSum +
-                          history_time[size()].timeSimSum + 1.0 ) /
-                        ( history_time[size()].timeSum +
-                          history_time[size()].timeSimSum + 1.0 );
-                //if ( timeSimRatio > 1  ||  timeCompletedRatio > 1  ||  timeSimRatio < 0  ||  timeCompletedRatio < 0 )
-                //std::cout << timeSimRatio << " < " << timeCompletedRatio << "\n";
-                //if ( timeCompletedRatio > 0.01 )
-                //	return  true;
-                return  ( timeSimRatio <= timeCompletedRatio );
+                double&  simRatio = history_time[size()].simulationRatio;
+                double  random = rand() / (RAND_MAX+1.0);
+                bool  override = ( random > simRatio );
+                simRatio = std::max(simulationRatioMin,
+                                    simRatio - simulationRatioStep);
+                return  override;
         }
 
         ///  The search tree split to be explored starts from this node.
@@ -5538,7 +5315,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         void
         reset (void)
         {
-                history_time[0].validHistoryId  =  0;
+                history_time[0].validHistoryId = 0;
         }
 
         NsUInt
@@ -5573,11 +5350,17 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         bool
         isValidHistoryId (const Ns_HistoryId_t di)  const
         {
-                return  ( di.id  ==  history_time[di.level].validHistoryId );
+                return  ( di.id == history_time[di.level].validHistoryId );
         }
 
         ///  Virtual extra time used for simulation.
         double  timeSimulated;
+
+        ///  The minimum percentage of the real search time vs total simulation time.
+        double  simulationRatioMin;
+
+        ///  How much to step from 100% towards `simulationRatioMin'.
+        double  simulationRatioStep;
 
         void
         currentNodeId (void)  const
@@ -5616,10 +5399,10 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         std::ofstream  fileSearchGraph;
 
         ///  True if it should write the objective value.
-        bool       recordObjective;
+        bool  recordObjective;
 
         ///  The last recorded objectiveValue.
-        NsInt      objectiveValue;
+        NsInt  objectiveValue;
 
     public:
 
@@ -5634,8 +5417,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         ///  Iterates through all the goals in the current Ns_StackGoals and the Ns_StackGoals below it.
 
         ///  (All of them consist a stack of Ns_StackGoals, named
-        ///   \c stackOfStacks.)
-
+        ///   stackOfStacks.)
         class  goal_iterator {
 
             private:
@@ -5666,25 +5448,30 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                                          || curr_node_it == b.curr_node_it ) );
                 }
 
-                bool  operator != (const goal_iterator& b)  const
+                bool
+                operator != (const goal_iterator& b)  const
                 {
-                        return  ! ( *this  ==  b );
+                        return  ! ( *this == b );
                 }
 
-                NsGoal  *operator * (void)  const
+                NsGoal *
+                operator * (void)  const
                 {
-                        assert_Ns(stackOfStacks != 0,
-                                  "Ns_StackSearch::goal_iterator::*: Uninitialized `*this'");
-                        assert_Ns(curr_Stack_it != stackOfStacks->end()
-                                  /*&&  curr_node_it != curr_Stack_it->stackAND.end()*/,
-                                  "Ns_StackSearch::goal_iterator::*: Bad request");
+                        assert_Ns( stackOfStacks != 0 ,
+                                   "Ns_StackSearch::goal_iterator::*: "
+                                   "Uninitialized `*this'");
+                        assert_Ns( curr_Stack_it != stackOfStacks->end() ,
+                                   "Ns_StackSearch::goal_iterator::*: "
+                                   "Bad request");
                         return  *curr_node_it;
                 }
 
-                goal_iterator&  end (void)
+                goal_iterator&
+                end (void)
                 {
-                        assert_Ns(stackOfStacks != 0,
-                                  "Ns_StackSearch::goal_iterator::end: Uninitialized `*this'");
+                        assert_Ns( stackOfStacks != 0 ,
+                                   "Ns_StackSearch::goal_iterator::end: "
+                                   "Uninitialized `*this'");
                         curr_Stack_it = stackOfStacks->end();
                         return  *this;
                 }
@@ -5692,12 +5479,14 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 goal_iterator&  operator ++ (void);
         };
 
-        goal_iterator  gbegin (void)
+        goal_iterator
+        gbegin (void)
         {
                 return  goal_iterator(*this);
         }
 
-        goal_iterator  gend (void)
+        goal_iterator
+        gend (void)
         {
                 goal_iterator  iterEnd(*this);
                 return  iterEnd.end();
@@ -5708,7 +5497,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
 ///  A critical type that can describe the current status of the problem.
 ///   \internal
-
 struct  Ns_SearchNode {
 
     public:
@@ -5728,13 +5516,11 @@ struct  Ns_SearchNode {
                 : goalNextChoice(goalNextChoice_init),
                   delayedGoal(git),
                   children(0),
-                  //has_a_child(false),
                   timeBorn(clock()),
                   timeSimChild(0.0)
         {    }
 
         ///  Describes a tuple (BitsetDomainPointer, BitsetDomain).
-
         class  BitsetCopy {
 
             private:
@@ -5751,9 +5537,7 @@ struct  Ns_SearchNode {
                 BitsetCopy (Ns_BitSet& bitsetDomain)
                         : bitsetDomainPointer(&bitsetDomain),
                           bitsetDomainCopy(bitsetDomain)
-                {
-                        //bitsetDomain.queueItem  =  0;
-                }
+                {    }
 
                 ///  Restores the copy back to the original domain place (i.e.\ pointer).
                 void
@@ -5790,9 +5574,6 @@ struct  Ns_SearchNode {
 
         ///  The node's children number.
         NsUInt  children;
-
-        /////  True, if the current node creates another OR-node.
-        //bool  has_a_child;
 
         ///  True if the current search node and its predecessors match the endNode.
         bool  matchesEndNode;
@@ -5871,16 +5652,13 @@ class  NsProblemManager {
         void  add (const Ns_ExprConstr& expr, const NsInt weight);
 
         ///  Returns the AC algorithm queue.
-
         Ns_Queue_t&
         getQueue (void)
         {
                 return  Q;
-                //return  searchNodes.top().Q;
         }
 
         ///  Informs NsProblemManager than an inconsistency has been found.
-
         void
         foundAnInconsistency (void)
         {
@@ -5988,12 +5766,17 @@ class  NsProblemManager {
 
         ///  Sets the time ticks limit for each search space split.
         void
-        splitTimeLimit (clock_t ticks)
+        splitTimeLimit (const clock_t ticks,
+                        const double simulationRatioMin=0.05,
+                        const double simulationRatioStep=0.01)
         {
-                timeSplitLim  =  ticks;
-                startNodeId  =  getCurrentNodeNum();
-                startSplitTime  =  clock();
-                assert_Ns(startSplitTime != -1,  "Could not find time for `splitTimeLimit'");
+                timeSplitLim = ticks;
+                searchNodes.simulationRatioMin  = simulationRatioMin;
+                searchNodes.simulationRatioStep = simulationRatioStep;
+                startNodeId = getCurrentNodeNum();
+                startSplitTime = clock();
+                assert_Ns( startSplitTime != -1 ,
+                           "Could not find time for `splitTimeLimit'");
                 searchNodes.currentNodeId();
         }
 
@@ -6040,9 +5823,8 @@ class  NsProblemManager {
         NsDeque<const NsIntVar *>  vars;
         NsUInt  domainsSizeMax;
 
-        unsigned long  nFailures, nBacktracks, nGoals,
-                 nConstraintChecks,//nRemovals,
-                 backtrackLim;
+        unsigned long  nFailures, nBacktracks, nGoals, nConstraintChecks,
+                       backtrackLim;
 
     public:
 
@@ -6082,18 +5864,6 @@ class  NsProblemManager {
                 return  nConstraintChecks;
         }
 
-        //	unsigned long
-        //currentRemovalId (void)  const
-        //{
-        //	return  nRemovals;
-        //}
-
-        //	unsigned long
-        //newRemovalId (void)
-        //{
-        //	return  ++nRemovals;
-        //}
-
         unsigned long
         numSearchTreeNodes (void)  const
         {
@@ -6105,16 +5875,14 @@ class  NsProblemManager {
         addVar (const NsIntVar *Var)
         {
                 vars.push_back( Var );
-                //domainsSizeSum        +=  Var->size();
-                if ( Var->size()  >  domainsSizeMax )
-                        domainsSizeMax  =  Var->size();
+                if ( Var->size() > domainsSizeMax )
+                        domainsSizeMax = Var->size();
         }
 
-        ///  Removes the last variable pointer recorded (to correct a problem created by Ns_Expression::post(Var)).
+        ///  Removes the last variable pointer recorded, to correct a problem created by Ns_Expression::post(Var).
         void
         removeLastVar (void)
         {
-                //ERRONEOUS: vars.back() has been destroyed!:  domainsSizeSum        -=  vars.back()->size();
                 vars.resize( vars.size() - 1 );
         }
 
@@ -6124,18 +5892,7 @@ class  NsProblemManager {
         {
                 std::cout << numVars() << "\t"
                           << domainsSizeMax << "\t"
-                          //<< domainsSizeSum << "\t"
                           << numConstraints() << "\n";
-                //std::cout
-                //<< "\nn = " << numVars() << "\n"
-                //<< "sqrt(sum|Di|/2) = " << sqrt(domainsSizeSum / 2)
-                //<< "\n"
-                //<< "\n2n^2 = " << 2 * numVars() * numVars() << "\n"
-                //<< "sum|Di| = " << domainsSizeSum
-                //<< "\n"
-                //<< "\nn = " << numVars() << "\n"
-                //<< "d = " << domainsSizeMax
-                //<< "\n";
         }
 
         ///  @}
@@ -6217,38 +5974,6 @@ class  NsProblemManager {
                 return  lsConflictingVariables;
         }
 
-        /////  An iterator for access to lsConflictingVariables.
-        //NsList<NsIntVar*>::const_iterator
-        //lsConflictingVariables_begin (void)  const
-        //{
-        //	return  lsConflictingVariables.begin();
-        //}
-
-        /////  An iterator for access to lsConflictingVariables.
-        //NsList<NsIntVar*>::const_iterator
-        //lsConflictingVariables_end (void)  const
-        //{
-        //	return  lsConflictingVariables.end();
-        //}
-
-        /////  Contains a list of constrained variables and the list of the pointers pointing to this.
-
-        //struct  NsListOfVars  {
-
-        //	///  The list of the variables.
-        //	NsList<NsIntVar*>  variables;
-
-        //	///  List of pointers pointing to this list.
-        //	NsList< NsList<NsIntVar::NsListOfVars>::iterator >  variablePointersToThis;
-
-        //	///  An accessor to variables.
-        //	const NsList<NsIntVar*>&
-        //	vars (void)  const
-        //	{
-        //		return  variables;
-        //	}
-        //};
-
         ///  A list containing the violated constraints (a violated constraint is practically the list of its variables).
         NsList< NsList<NsIntVar *> >  lsViolatedConstrs;
 
@@ -6262,180 +5987,9 @@ class  NsProblemManager {
                 return  lsViolatedConstrs;
         }
 
-        //	///  Describes an item of the Local Search queue.
-
-        //	struct  LsQueueItem_t   {
-
-        //		///  The domain of this variable has been modified.
-        //		NsIntVar  *varFired;
-
-        //		///  The constraint that fired the last modification of varFired.  If no constraint provoked the removal, then constrFired==0.
-        //		const Ns_Constraint  *constrFired;
-
-        //		///  Constructor.
-        //		LsQueueItem_t (NsIntVar *varFired_init,
-        //				const Ns_Constraint *constrFired_init)
-        //		 : varFired(varFired_init),
-        //		   constrFired(constrFired_init)
-        //		{    }
-        //	};
-
-        //	///  The queue of the variables assigned by Local Search.
-        //	NsQueue<LsQueueItem_t>  lsQueue;
-
-        //private:
-
-        //	///  An extension of STL list class to hold the variables to be unassigned during Local Search.  When a variable is inserted into the list, it is marked.
-
-        //	class LsUnassignQueue : public NsList<NsIntVar*>  {
-
-        //		public:
-
-        //			///  Extension of the corresponding list function (in order to un-mark erased variables).
-        //				iterator
-        //			erase (iterator V)
-        //			{
-        //				assert_Ns( (*V)->lsInUnassignQueue ,  "LsUnassignQueue::erase: Variable not marked in queue" );
-
-        //				(*V)->lsInUnassignQueue  =  false;
-
-        //				return  NsList<NsIntVar*>::erase(V);
-        //			}
-
-        //			///  Extension of the corresponding list function (in order to mark inserted variables).
-        //				void
-        //			push_back (NsIntVar* const & V)
-        //			{
-        //				assert_Ns( ! V->lsInUnassignQueue ,  "LsUnassignQueue::push_back: Variable already marked in queue" );
-
-        //				V->lsInUnassignQueue  =  true;
-
-        //				NsList<NsIntVar*>::push_back(V);
-        //			}
-        //	};
-
-        //public:
-
-        //	///  The queue of the variables to be un-assigned by Local Search.
-        //	LsUnassignQueue  lsUnassignQueue;
-
-        //	///  Pair of a variable and a value to be assigned to it.
-
-        //	struct  VarValue_t  {
-
-        //		///  The variable
-        //		NsIntVar  *var;
-
-        //		///  The value to be assigned to the variable.
-        //		const NsInt  value;
-
-        //		///  Constructor.
-        //		VarValue_t (NsIntVar *var_init, const NsInt value_init)
-        //			: var(var_init), value(value_init)
-        //		{	}
-        //	};
-
-        //	///  The queue of the variables to be assigned by Local Search.
-        //	NsList<VarValue_t>  lsAssignQueue;
-
-        //	void  lsPropagate (void);
-
         ///  @}
 
-#if 0
-        ///  @{
-        ///  \name  Provision of history ids to the Local Search assignments
-
-    private:
-
-        ///  An array of `timestamps' for the Local Search nodes/statuses.
-
-        struct  LsHistoryArray_t {
-
-                ///  A `timestamp' to characterize the validity of a Local Search node/status.
-
-                struct  LsHistoryId_t {
-
-                        ///  The identity of the Local Search node.
-                        NsUInt   id;
-
-                        ///  True, if the timestamp is old.
-                        bool  stale;
-
-                        ///  Constructor.
-                        LsHistoryId_t (void)
-                                : id(0), stale(false)
-                        {   }
-
-                        ///  Invalidates the timestamp.
-                        void
-                        invalidate (void)
-                        {
-                                ++id;
-                                stale  =  true;
-                        }
-                };
-
-                ///  An array containing the (valid) history `timestamps' for each Local Search node/status.
-                NsDeque<LsHistoryId_t>  validHistoryId;
-
-                ///  Points to the array element that corresponds to the current Local Search node/status.
-                NsIndex  currentHistoryIndex;
-
-                ///  Constructor.
-                LsHistoryArray_t (void)
-                        : currentHistoryIndex(0)
-                {   }
-        };
-
-        ///  Contains an array of `timestamps' for the Local Search nodes/statuses.
-        LsHistoryArray_t  lsStatuses;
-
-    public:
-
-        ///  Creates a fresh Local Search node/status id.
-        void
-        lsNewHistoryId (void)  const
-        {
-                for (++currentHistoryIndex;
-                     currentHistoryIndex < lsStatuses.validHistoryId.size();
-                     ++currentHistoryIndex) {
-                        if ( lsStatuses.validHistoryId[currentHistoryIndex-1].stale ) {
-                                lsStatuses.validHistoryId[currentHistoryIndex-1].stale  =  false;
-                                return;
-                        }
-                }
-                lsStatuses.validHistoryId.push_back();
-        }
-
-        ///  Returns the current Local Search node/status id.
-        Ns_HistoryId_t
-        lsGetCurrentHistoryId (void)  const
-        {
-                Ns_HistoryId_t  di;
-                di.level  =  lsStatuses.currentHistoryIndex-1;
-                di.id     =  lsStatuses.validHistoryId[di.level];
-                return  di;
-        }
-
-        ///  True, if the Local Search node/status id is valid.
-        bool
-        lsIsValidHistoryId (const Ns_HistoryId_t di)  const
-        {
-                return  ( di.id  ==  lsStatuses.validHistoryId[di.level].id
-                          &&  ! lsStatuses.validHistoryId[di.level].stale );
-        }
-
-        ///  Invalidates the Local Search node/status id.
-        void
-        lsInvalidateHistoryId (const Ns_HistoryId_t di)  const
-        {
-                lsStatuses.lsValidHistoryId[di.level].invalidate();
-        }
-
-        ///  @}
-#endif
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 
         ///  Saves the bitsetDomain--before being modified--for future backtracking purposes.
         void
@@ -6449,8 +6003,8 @@ class  NsProblemManager {
         }
 };
 
-}								 // end namespace
-#endif							 // Ns_NAXOS_H
+}  // end namespace
+#endif  // Ns_NAXOS_H
 
 ///  \example  nqueens.orig.cpp
 ///

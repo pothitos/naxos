@@ -104,7 +104,6 @@ Ns_StackSearch::splitEnded (void)
 }
 
 ///  Records the solution node to the goals graph file (if created).
-
 void
 Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
 {
@@ -127,24 +126,22 @@ Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
 }
 
 ///  Invalidates the \c validHistoryId for the current search node.
-
 void
 Ns_StackSearch::pop (void)
 {
-        //clock_t  timeNow = clock();
-        if ( fileSearchGraph  &&  size() - 1 > 0  &&  /*top().has_a_child*/ top().children > 0 )  {
+        if ( fileSearchGraph  &&  size() - 1 > 0  &&  top().children > 0 ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
-                                << history_time[size()-1].validHistoryId << ")\"   ->   \"("
+                                << history_time[size()-1].validHistoryId
+                                << ")\"   ->   \"("
                                 << size()-1 << ","
-                                << history_time[size()-1].validHistoryId << ")LastChild\"";
+                                << history_time[size()-1].validHistoryId
+                                << ")LastChild\"";
                 if ( recordObjective ) {
                         recordObjective  =  false;
-                        fileSearchGraph << "   [fontsize=9";
-                        fileSearchGraph << ", headlabel=\""
-                                        << objectiveValue << "\"";
-                        fileSearchGraph			 //<< ", label=\""
-                        //<< timeNow - top().timePrevious
+                        fileSearchGraph << "   [fontsize=9"
+                                        << ", headlabel=\""
+                                        << objectiveValue << "\""
                                         << "\"]";
                 }
                 fileSearchGraph << ";\n";
@@ -157,16 +154,16 @@ Ns_StackSearch::pop (void)
         if ( fileSearchGraph  &&  size() - 1 > 1 ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-2 << ","
-                                << history_time[size()-2].validHistoryId << ")\"   ->   \"("
+                                << history_time[size()-2].validHistoryId
+                                << ")\"   ->   \"("
                                 << size()-1 << ","
-                                << history_time[size()-1].validHistoryId << ")\"";
+                                << history_time[size()-1].validHistoryId
+                                << ")\"";
                 if ( recordObjective ) {
-                        recordObjective  =  false;
-                        fileSearchGraph << "   [fontsize=9";
-                        fileSearchGraph << ", headlabel=\""
-                                        << objectiveValue << "\"";
-                        fileSearchGraph			 //<< ", label=\""
-                        //<< timeNow - top().timePrevious
+                        recordObjective = false;
+                        fileSearchGraph << "   [fontsize=9"
+                                        << ", headlabel=\""
+                                        << objectiveValue << "\""
                                         << "\"]";
                 }
                 fileSearchGraph << ";\n";
@@ -174,15 +171,11 @@ Ns_StackSearch::pop (void)
         double  timeSimChild = top().timeSimChild;
         history_time[ size() - 1 ].invalidate(top().timeBorn, timeSimChild);
         NsStack<Ns_SearchNode>::pop();
-        if ( ! empty() ) {
-                top().timeSimChild  +=  timeSimChild;
-                //top().timeChildren  =  timeNow - top().timePrevious;
-                //top().timePrevious  =  timeNow;
-        }
+        if ( ! empty() )
+                top().timeSimChild += timeSimChild;
 }
 
 ///  Writes to a file a view of the constraint network in a Graphviz supported format.
-
 void
 NsProblemManager::constraintsToGraphFile (const char *fileName)
 {
@@ -205,7 +198,7 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
                         fileConstraintsGraph << ".." << (*v)->max();
                 fileConstraintsGraph << "]\"];\n";
                 //fileConstraintsGraph << "\n\t/* Constraints: "
-                //	<< (*v)->constraints.size() << " */\n";
+                //      << (*v)->constraints.size() << " */\n";
         }
         fileConstraintsGraph << "\n\n\n\t/*  Intermediate Variables (drawn with a smaller font)  */\n";
         for (NsDeque<NsIntVar *>::const_iterator
@@ -215,7 +208,7 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
                 fileConstraintsGraph << "\n\tVar" << *v
                                      << "  [fontsize=9];\n";
                 //fileConstraintsGraph << "\n\t/* Constraints: "
-                //	<< (*v)->constraints.size() << " */\n";
+                //      << (*v)->constraints.size() << " */\n";
         }
         fileConstraintsGraph << "\n\n\n\t/*  Constraints  */\n";
         for (Ns_constraints_array_t::iterator  c = constraints.begin();
@@ -255,7 +248,7 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 ///NsIntVar  V1(pm,0,0), V2(pm,0,1);
 ///
 ///for (int i=0;  i < 640;  ++i)
-///	pm.add( V1  <  V2 );
+///     pm.add( V1  <  V2 );
 ///
 ///pm.nextSolution();
 ///\endcode
@@ -269,13 +262,13 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 ///
 ///for ( ;  currentConstr != varFired->constraints_begin();  ++currentConstr)
 ///{
-///	temp  =  *currentConstr;
+///     temp  =  *currentConstr;
 ///
-///	if ( temp  !=  constrFired )    {
+///     if ( temp  !=  constrFired )    {
 ///
-///		++currentConstr;
-///		return  temp;
-///	}
+///             ++currentConstr;
+///             return  temp;
+///     }
 ///}
 ///\endcode
 
@@ -300,8 +293,8 @@ Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
                 case  Ns_Constraint::BOUNDS_CONSISTENCY :
                         //if ( onlyNecessary  &&  ! varFired->isBound() )    {
                         //if ( varFired->size()  >  k )    {
-                        //	//stale  =  true;
-                        //	continue;
+                        //      //stale  =  true;
+                        //      continue;
                         //}
                         if ( removedBoundRec.removedBound
                              && varFired->constraints[currentConstr].constr  !=
@@ -313,8 +306,8 @@ Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
                 case  Ns_Constraint::BIDIRECTIONAL_CONSISTENCY :
                         //if ( onlyNecessary  &&  ! varFired->isBound() )    {
                         //if ( varFired->size()  >  k )    {
-                        //	//stale  =  true;
-                        //	continue;
+                        //      //stale  =  true;
+                        //      continue;
                         //}
                         if ( removedBoundRec.removedBound
                              && removedBoundRec.removalTime  >=
@@ -323,8 +316,8 @@ Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
                         }
                         break;
                 //case  Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_OUT_OF_QUEUE :
-                //	//  Nothing to be done.
-                //	break;
+                //      //  Nothing to be done.
+                //      break;
                 default:
                         throw  NsException("Ns_QueueItem::getNextConstraint: Invalid `constr->revisionType'");
                         break;
@@ -360,16 +353,16 @@ Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
                         if ( currentConstr  <  varFired->constraintsBoundsCons.size() )
                                 return  varFired->constraintsBoundsCons[currentConstr++];
                 }
-        }								 //else if ( currentConstr < varFired->constraintsBoundsCons.size() )    {
+        }                                                                //else if ( currentConstr < varFired->constraintsBoundsCons.size() )    {
 //
-//	currentConstr  =  varFired->constraintsBoundsCons.size();
+//      currentConstr  =  varFired->constraintsBoundsCons.size();
 //}
 #endif
 ////  We have reached the end.
 //if ( stale )    {
-//	currentConstr  =  0;
-//	currentRemovedValue  =  0;
-//	removedValues.clear();
+//      currentConstr  =  0;
+//      currentRemovedValue  =  0;
+//      removedValues.clear();
 //}
         return  0;
 }
@@ -395,7 +388,7 @@ DiffTime (time_t time2, time_t time1)
         return  (time2 - time1);
 }
 
-}								 // end namespace
+}                                                                // end namespace
 
 Ns_StackSearch::Ns_StackSearch (void)
         : nSearchTreeNodes(0), alreadyReadSplit(false), timeSimulated(0.0),
@@ -481,21 +474,21 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
                         ++endIt;
                 startNode.push_back(node);
         }
-        line.clear();				 // Clears read failure.
+        line.clear();                            // Clears read failure.
         endNode.clear();
         while ( line >> node )
                 endNode.push_back(node);
         //cout << "startNode: ";
         //for (NsList<NsUInt>::const_iterator it=startNode.begin();
-        //		it != startNode.end();
-        //		++it)
+        //              it != startNode.end();
+        //              ++it)
         //{
-        //	cout << " " << *it;
+        //      cout << " " << *it;
         //}
         //cout << "\n";
         //cout << "  endNode: ";
         //for (endIt=endNode.begin();  endIt != endNode.end();  ++endIt)
-        //	cout << " " << *endIt;
+        //      cout << " " << *endIt;
         //cout << "\n";
         if ( startMatchesPreviousEnd )
                 startNode.clear();
@@ -505,10 +498,6 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
 
 NsProblemManager::~NsProblemManager (void)
 {
-        //  All the queues Q should by destroyed before the intermediateVars
-        //   array, because it uses variables of the array.
-        //while ( ! searchNodes.empty() )
-        //	searchNodes.pop();
         //  Constraints destruction.
         for (Ns_constraints_array_t::iterator  c = constraints.begin();
              c != constraints.end();
@@ -524,21 +513,19 @@ NsProblemManager::~NsProblemManager (void)
 }
 
 ///  Adds a constraint to the problem.
-
 void
 NsProblemManager::add (const Ns_ExprConstr& expr)
 {
         assert_Ns( firstNextSolution ,
                    "NsProblemManager::add: Cannot add a constraint because search has already started" );
         Ns_Constraint  *newConstr = expr.postConstraint();
-        if ( newConstr  ==  0 )
-                return;					 // unary constraint
+        if ( newConstr == 0 )
+                return;    // unary constraint
         newConstr->ArcCons();
         recordConstraint( newConstr );
 }
 
-///  Adds a soft constraint to the problem (with the corresponding \a weight).
-
+///  Adds a soft constraint to the problem, with the corresponding weight.
 void
 NsProblemManager::add (const Ns_ExprConstr& expr, const NsInt weight)
 {
@@ -550,32 +537,28 @@ NsProblemManager::add (const Ns_ExprConstr& expr, const NsInt weight)
 }
 
 ///  Imposes arc consistency.
-
 bool
 NsProblemManager::arcConsistent (void)
 {
-        //clock_t  timeStarted = clock();
         if ( foundInconsistency ) {
-                foundInconsistency  =  false;
+                foundInconsistency = false;
                 getQueue().clear();
                 ++nFailures;
                 return  false;
         }
         Ns_Constraint  *c;
         NsIntVar  *vFired;
-        //while  ( getQueue().current  !=  getQueue().end() )   {
         while  ( ! getQueue().empty() ) {
-                vFired  =  getQueue().front().getVarFired();
-                //  To avoid changing the queue item `Q.front()'
+                vFired = getQueue().front().getVarFired();
+                //  To avoid changing the queue item Q.front()
                 //   during this iteration...
                 vFired->queueItem  =  0;
-                //bool  onlyNecessary = false;//( getQueue().size() < 1 );//( searchNodes.top().timeChildren == Ns_SearchNode::NEVER
-                //|| clock() - searchNodes.top().timePrevious > searchNodes.top().timeChildren );
-                while ( (c = getQueue().front().getNextConstraint(/*onlyNecessary*/))  !=  0 )    {
+                while ( (c = getQueue().front().getNextConstraint())  !=  0 )    {
                         //  Change the following for AC-3.
                         //c->ArcCons();
                         c->LocalArcCons( getQueue().front() );
-                        c->lastConstraintCheckTime  =  ++nConstraintChecks;
+                        c->lastConstraintCheckTime =
+                                ++nConstraintChecks;
                         if ( foundInconsistency ) {
                                 foundInconsistency  =  false;
                                 getQueue().clear();
@@ -584,27 +567,11 @@ NsProblemManager::arcConsistent (void)
                         }
                 }
                 getQueue().pop();
-                //if ( getQueue().current->stale )
-                //	++getQueue().current;
-                //else
-                //getQueue().current  =  getQueue().erase( getQueue().current );
-                //if ( getQueue().current  ==  getQueue().end()
-                //	&&  ! onlyNecessary   &&  ! getQueue().empty()  )
-                //		getQueue().pushToEnd(getQueue().begin());
         }
-//if ( ! getQueue().empty() )
-//	cout << getCurrentHistoryId().level << "\t" << getQueue().size() << "\n";
-//clock_t  timeAC = clock() - timeStarted;
-//if ( timeAC > 10000 )    {
-//	for (NsIndex i=0;  i < getCurrentHistoryId().level;  ++i)
-//		cout << " ";
-//	cout << searchNodes.mean() << " " << timeAC << "\n";
-//}
         return  true;
 }
 
 ///  Backtracks the search process to the previous choice point.
-
 bool
 NsProblemManager::backtrack (void)
 {
@@ -617,15 +584,10 @@ NsProblemManager::backtrack (void)
                 goalNextChoice  =  searchNodes.top().goalNextChoice;
                 if ( goalNextChoice  ==  0 )
                         return  false;
-                //Ns_StackDomains_t&  domainsOriginal  =  searchNodes.top().domainsStore.domainsOriginal;
-                //while ( ! domainsOriginal.empty() )   {
-                //	domainsOriginal.top().Var->setDomain( domainsOriginal.top().Dom );
-                //	domainsOriginal.pop();
-                //}
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
                 searchNodes.top().stackAND.push( goalNextChoice );
-                if ( vMinObj  !=  0 ) {
+                if ( vMinObj != 0 ) {
                         vMinObj->remove(bestMinObjValue, NsPLUS_INF/*, 0*/);
                         if ( foundInconsistency ) {
                                 foundInconsistency  =  false;
@@ -638,7 +600,6 @@ NsProblemManager::backtrack (void)
 }
 
 ///  Reverts the domains of the constrained variables (except for the `objective' variable) in the state that they were after the first arcConsistent() has been called.
-
 void
 NsProblemManager::restart (void)
 {
@@ -653,11 +614,6 @@ NsProblemManager::restart (void)
                 goalNextChoice  =  searchNodes.top().goalNextChoice;
                 if ( goalNextChoice  ==  0 )
                         foundSecondFrame  =  true;
-                //Ns_StackDomains_t&  domainsOriginal  =  searchNodes.top().domainsStore.domainsOriginal;
-                //while ( ! domainsOriginal.empty() )   {
-                //	domainsOriginal.top().Var->setDomain( domainsOriginal.top().Dom );
-                //	domainsOriginal.pop();
-                //}
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
                 searchNodes.top().stackAND.push( goalNextChoice );
@@ -676,7 +632,6 @@ NsProblemManager::restart (void)
 }
 
 ///  Finds next solution of the problem.  Returns \c false when no solution found.
-
 bool
 NsProblemManager::nextSolution (void)
 {
@@ -746,12 +701,16 @@ NsProblemManager::nextSolution (void)
                         searchNodes.top().stackAND.pop();
                         popped_a_goal  =  true;
                 } else {
-                        assert_Ns( searchNodes.top().delayedGoal  !=  searchNodes.gend() ,
-                                   "NsProblemManager::nextSolution: No goal to execute");
+                        assert_Ns( searchNodes.top().delayedGoal !=
+                                   searchNodes.gend() ,
+                                   "NsProblemManager::nextSolution: "
+                                   "No goal to execute");
                         CurrGoal  =  *searchNodes.top().delayedGoal;
                         ++searchNodes.top().delayedGoal;
                 }
-                assert_Ns( CurrGoal != 0 ,  "NsProblemManager::nextSolution: Zero goal to execute");
+                assert_Ns( CurrGoal != 0 ,
+                           "NsProblemManager::nextSolution: "
+                           "Zero goal to execute");
                 if ( CurrGoal->isGoalAND() ) {
                         searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
                         searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
@@ -759,12 +718,11 @@ NsProblemManager::nextSolution (void)
                                 delete  CurrGoal;
                         //cout << "--- AND ---\n";
                 } else if ( CurrGoal->isGoalOR() ) {
-                        if ( timeSplitLim != 0  &&  timeLim != 0  &&
-                             searchNodes.overrideNextLevel(
-                                     DiffTime(time(0),startRealTime) / timeLim ) ) {
+                        if ( timeSplitLim != 0  &&
+                             searchNodes.overrideNextLevel() ) {
                                 double  timeSim = searchNodes.nextMean();
-                                searchNodes.timeSimulated  +=  timeSim;
-                                searchNodes.top().timeSimChild  +=  timeSim;
+                                searchNodes.timeSimulated += timeSim;
+                                searchNodes.top().timeSimChild += timeSim;
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
                                 searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
                         } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(), searchNodes.gbegin() ) ) ) {
@@ -788,16 +746,22 @@ NsProblemManager::nextSolution (void)
                                 destroy_goal( NewGoal );
                                 if ( ! backtrack() )
                                         return  false;
-                        } else if ( NewGoal  !=  0 ) {
+                        } else if ( NewGoal != 0 ) {
                                 searchNodes.top().stackAND.push( NewGoal );
                         } else if ( searchNodes.top().stackAND.empty()
-                                    &&  searchNodes.top().delayedGoal == searchNodes.gend() ) {
-                                if ( vMinObj  !=  0 ) {
-                                        assert_Ns(bestMinObjValue > vMinObj->max(),
-                                                  "NsProblemManager::nextSolution: Wrong objective value");
-                                        bestMinObjValue  =  vMinObj->max();
-                                        //  We have taken care about the rare (and odd) case
-                                        //   where the domain of vMinObj has been augmented.
+                                    &&  searchNodes.top().delayedGoal ==
+                                        searchNodes.gend() ) {
+                                if ( vMinObj != 0 ) {
+                                        assert_Ns( bestMinObjValue >
+                                                   vMinObj->max(),
+                                                   "NsProblemManager::"
+                                                   "nextSolution: Wrong "
+                                                   "objective value");
+                                        bestMinObjValue = vMinObj->max();
+                                        //  We have taken care about the
+                                        //   rare (and odd) case where the
+                                        //   domain of vMinObj has been
+                                        //   augmented.
                                 }
                                 searchNodes.solutionNode(vMinObj);
                                 return  true;
