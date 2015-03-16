@@ -10,7 +10,7 @@
 
 //   In the comments, words beginning with a backslash `\' should be
 //    ignored by the reader, because they are used by the `doxygen' program
-//    (that generates a source code reference manual).
+//    that generates a source code reference manual.
 
 ///  \mainpage
 ///
@@ -170,28 +170,13 @@ class Ns_ExprElement : public Ns_Expression {
 
         virtual void       post (NsIntVar& VarX)  const;
         virtual NsIntVar&  post (void)  const;
-
-        //virtual Ns_Constraint*  postConstraint (bool positively)  const;
-
-        //virtual void       postC (NsIntVar &VarX, bool positively)  const
-        //{
-        //	VarX.size();        // to suppress warnings
-        //	positively = true;  // to suppress warnings
-        //	throw  NsException("Ns_ExprConstrElement::postC: NsElement cannot be used as a meta-constraint");
-        //}
-        //virtual NsIntVar&  postC (bool positively)  const
-        //{
-        //	positively = true;  // to suppress warnings
-        //	throw  NsException("Ns_ExprConstrElement::postC: NsElement cannot be used as a meta-constraint");
-        //}
 };
 
 ///  A flexible array data structure (like \c std::deque).
 
 ///  A safer version of \c std::deque that throws an exception when an \c
-///   out_of_range request is being made.  (It takes advantage of the
-///   internal \c at() method that does this work.)
-
+///   out_of_range request is being made.  It takes advantage of the
+///   internal \c at() method that does this work.
 template <class TemplType>
 class  NsDeque : public std::deque<TemplType> {
 
@@ -426,67 +411,9 @@ class Ns_QueueItem;
 ///  A bit-set is used to hold its values.  If the <em>i</em>-th bit is
 ///   active, then the domain contains the value \a minDom + \a i.
 ///   \internal
-
-class  Ns_BitSet {		 /*: public Ns_IntDomain*/
+class  Ns_BitSet {
 
     private:
-
-        /////  A stack that saves the state of the domain during different search levels.
-        //
-        //class  DomainStore_t  {
-        //
-        //	public:
-        //
-        //		///  Describes the type of the frames that the stack of DomainStore_t contains.
-        //
-        //		struct  DomainFrame_t  {
-        //
-        //			///  The `timestamp' for the frame that can be used in chronological backtracking.
-        //			Ns_HistoryId_t  historyId;
-        //
-        //
-        //			DomainFrame_t (const NsProblemManager& pm);
-        //		};
-        //
-        //
-        //
-        //	private:
-        //
-        //		const NsProblemManager&  pm;
-        //
-        //		NsStack<DomainFrame_t>  domainStack;
-        //
-        //
-        //	public:
-        //
-        //		///  Constructs a DomainStore_t.
-        //		DomainStore_t (const NsProblemManager& pm_init)
-        //			: pm(pm_init)
-        //		{	}
-        //
-        //
-        //		/////  Constructs a DomainStore_t, with an uninitialized \a pm.
-        //		//DomainStore_t (void)
-        //		//	: pm(0)
-        //		//{	}
-        //
-        //
-        //	private:
-        //
-        //		void  refresh (void);
-        //
-        //
-        //	public:
-        //
-        //		DomainFrame_t&  currentDomain (void);
-        //
-        //		DomainFrame_t&  modifyDomain (void);
-        //};
-        //
-        //
-        //
-        //
-        //DomainStore_t  domainStore;
 
         ///  The problem manager to which the domain belongs to.
         NsProblemManager  *pm;
