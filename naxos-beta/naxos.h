@@ -1,10 +1,9 @@
 ///  \file
-///  \brief  Definitions of internal and public classes of <span style="font-variant: small-caps;"> Naxos. </span>
+///  \brief  Definitions of internal and public classes of Naxos.
 ///
 ///  This file is part of
-///   <span style="font-variant: small-caps;"> Naxos Solver: </span>
-///   A Constraint Programming Library. \n
-///   Copyright © 2007-2015  Nikolaos Pothitos.
+///   Naxos Solver: A Constraint Programming Library
+///   Copyright © 2007-2015  Nikolaos Pothitos
 ///
 ///  See ../license/LICENSE for the license of the library.
 
@@ -14,11 +13,10 @@
 
 ///  \mainpage
 ///
-///  <span style="font-variant: small-caps;"> Naxos </span> is a Constraint
-///   Satisfaction Problem (CSP) solver.  For a general idea and
-///   information on how to use it, read \c naxos.pdf first (written in
-///   Greek and normally included in the source code package).  Those pages
-///   and comments can be only used for internal developing purposes.
+///  Naxos is a Constraint Satisfaction Problem (CSP) solver.  For a
+///   general idea and information on how to use it, read naxos.pdf first
+///   (normally included in the source code package).  These comments can
+///   be only used for internal developing purposes.
 ///
 ///  \note
 ///   The names of <span style="font-variant: small-caps;"> Naxos </span>
@@ -5201,11 +5199,26 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         bool
         overrideNextLevel (void)
         {
-                if ( history_time.size() < size() + 1 )
+                if ( history_time.size() < size() + 1 ) {
+			//for (unsigned i=0;  i < size()+1;  ++i)
+			//	std::cerr << "*";
+			//std::cerr << "\n";
                         return  false;
+		}
                 double&  simRatio = history_time[size()].simulationRatio;
                 double  random = rand() / (RAND_MAX+1.0);
                 bool  override = ( random > simRatio );
+		//if ( override ) {
+		//	std::cerr << random << " > " << simRatio << "\n";
+		//	for (unsigned i=0;  i < size()+1;  ++i)
+		//		std::cerr << "-";
+		//	std::cerr << "\n";
+		//} else {
+		//	std::cerr << random << " < " << simRatio << "\n";
+		//	for (unsigned i=0;  i < size()+1;  ++i)
+		//		std::cerr << "+";
+		//	std::cerr << "\n";
+		//}
                 simRatio = std::max(simulationRatioMin,
                                     simRatio - simulationRatioStep);
                 return  override;
@@ -5694,7 +5707,7 @@ class  NsProblemManager {
         ///  Sets the time ticks limit for each search space split.
         void
         splitTimeLimit (const clock_t ticks,
-                        const double simulationRatioMin=0.05,
+                        const double simulationRatioMin=0.5,
                         const double simulationRatioStep=0.01)
         {
                 timeSplitLim = ticks;

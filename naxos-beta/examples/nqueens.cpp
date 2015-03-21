@@ -1,6 +1,6 @@
-  //  Naxos Solver:  A Constraint Programming Library            //
- //  Copyright © 2007-2015  Nikolaos Pothitos                   //
-//  See ../../license/LICENSE for the license of the library.  //
+  //  Naxos Solver:  A Constraint Programming Library           //
+ //  Copyright © 2007-2015  Nikolaos Pothitos                  //
+//  See ../../license/LICENSE for the license of the library  //
 
 #include <naxos.h>
 
@@ -26,7 +26,7 @@ int  main (int argc, char *argv[])
                 pm.add( NsAllDiff(VarMinus) );
                 if ( argc > 2 ) {
                         // SPLIT //
-                        pm.splitTimeLimit(CLOCKS_PER_SEC/100.0);
+                        pm.splitTimeLimit(atoi(argv[2]),atof(argv[3]),atof(argv[4]));
                         pm.addGoal( new NsgLabeling(Var) );
                         while (pm.nextSolution() != false)
                                 /*VOID*/ ;

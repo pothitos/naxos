@@ -1,11 +1,11 @@
 ///  \file
-///  \brief  Constraint finite domain integer variables implementation, based on bit-set.
+///  \brief  Constraint finite domain integer variables implementation,
+///           based on bit-set.
 ///
 ///  \internal
 ///  This file is part of
-///   <span style="font-variant: small-caps;"> Naxos Solver: </span>
-///   A Constraint Programming Library. \n
-///   Copyright © 2007-2015  Nikolaos Pothitos.
+///   Naxos Solver: A Constraint Programming Library
+///   Copyright © 2007-2015  Nikolaos Pothitos
 ///
 ///  See ../license/LICENSE for the license of the library.
 
