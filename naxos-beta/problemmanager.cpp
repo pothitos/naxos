@@ -38,7 +38,6 @@ Ns_StackSearch::goal_iterator::operator ++ (void)
 }
 
 ///  Writes to a file a view of the search tree in a Graphviz supported format.
-
 void
 Ns_StackSearch::searchToGraphFile (const char *fileName)
 {
@@ -51,16 +50,12 @@ Ns_StackSearch::searchToGraphFile (const char *fileName)
 }
 
 ///  If it does not exist, creates a \c validHistoryId entry for the current search node.  Returns \c false if failed, due to a specific search tree part exploration.
-
 bool
 Ns_StackSearch::push (const value_type& newNode)
 {
         ++nSearchTreeNodes;
-        if ( ! empty() ) {
+        if ( ! empty() )
                 ++top().children;
-                //top().has_a_child  =  true;
-                //top().timePrevious  =  clock();
-        }
         if ( ! startNode.empty() ) {
                 if ( startNode.front()-- > 1 )
                         return  false;
@@ -81,7 +76,6 @@ Ns_StackSearch::push (const value_type& newNode)
 }
 
 ///  Returns \c true when a specific search tree part exploration ends.
-
 bool
 Ns_StackSearch::splitEnded (void)
 {
@@ -387,7 +381,7 @@ DiffTime (time_t time2, time_t time1)
         return  (time2 - time1);
 }
 
-}                                                                // end namespace
+}  // end namespace
 
 Ns_StackSearch::Ns_StackSearch (void)
         : nSearchTreeNodes(0), alreadyReadSplit(false), timeSimulated(0.0),
@@ -450,7 +444,6 @@ Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
 #include <sstream>
 
 ///  Explore specific search tree splits described in standard input.
-
 bool
 Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
 {
@@ -473,22 +466,10 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
                         ++endIt;
                 startNode.push_back(node);
         }
-        line.clear();                            // Clears read failure.
+        line.clear();    // Clears read failure.
         endNode.clear();
         while ( line >> node )
                 endNode.push_back(node);
-        //cout << "startNode: ";
-        //for (NsList<NsUInt>::const_iterator it=startNode.begin();
-        //              it != startNode.end();
-        //              ++it)
-        //{
-        //      cout << " " << *it;
-        //}
-        //cout << "\n";
-        //cout << "  endNode: ";
-        //for (endIt=endNode.begin();  endIt != endNode.end();  ++endIt)
-        //      cout << " " << *endIt;
-        //cout << "\n";
         if ( startMatchesPreviousEnd )
                 startNode.clear();
         updateMatchesEndNode();

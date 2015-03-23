@@ -5133,6 +5133,9 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The time consumed all the nodes in this level.
                 double  timeSum;
 
+                ///  The number of the descendants of all nodes in this level.
+                double  descendants;
+
                 ///  The simulation time for the children of all the nodes in this level.
                 double  timeSimChildSum;
 
@@ -5149,6 +5152,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 history_time_t (void)
                         : validHistoryId(0),
                           timeSum(0.0),
+                          descendants(0.0),
                           timeSimChildSum(0.0),
                           timeSimSum(0.0),
                           simulationRatio(1.0)
