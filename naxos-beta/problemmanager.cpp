@@ -162,10 +162,13 @@ Ns_StackSearch::pop (void)
                 fileSearchGraph << ";\n";
         }
         double  timeSimChild = top().timeSimChild;
+        double  descSimChild = top().descSimChild;
         history_time[ size() - 1 ].invalidate(top().timeBorn, timeSimChild);
         NsStack<Ns_SearchNode>::pop();
-        if ( ! empty() )
+        if ( ! empty() ) {
                 top().timeSimChild += timeSimChild;
+                top().descSimChild += descSimChild;
+        }
 }
 
 ///  Writes to a file a view of the constraint network in a Graphviz supported format.
@@ -642,6 +645,7 @@ NsProblemManager::nextSolution (void)
                                 double timeSim = searchNodes.nextMean();
                                 searchNodes.timeSimulated += timeSim;
                                 searchNodes.top().timeSimChild += timeSim;
+                                searchNodes.top().descSimChild += descSim;
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
                                 searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
                         } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(), searchNodes.gbegin() ) ) ) {

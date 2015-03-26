@@ -5133,9 +5133,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The number of the descendants of all nodes in this level.
                 double  descendants;
 
-                ///  The weights sum of the descendants terms.
-                double  descendantsWeights;
-
                 ///  The simulation time for the children of all the nodes in this level.
                 double  timeSimChildSum;
 
@@ -5144,6 +5141,9 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 ///  The sum of the weights of timeSum terms.
                 double  weightsSum;
+
+                ///  The sum of the weights of the descendants terms.
+                double  descendantsWeights;
 
                 ///  The current desired simulation to real time ratio.
                 double  simulationRatio;
@@ -5207,8 +5207,12 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 if ( history_time.size() < size() + 1 )
                         return  false;
                 double&  simRatio = history_time[size()].simulationRatio;
+                double&  descendants = history_time[size()].descendants;
+                double&  descendantsWeights = history_time[size()].descendantsWeights;
                 double  random = rand() / (RAND_MAX+1.0);
                 bool  override = ( random > simRatio );
+                if ( override ) {
+                }
                 return  override;
         }
 
@@ -5442,7 +5446,8 @@ struct  Ns_SearchNode {
                   delayedGoal(git),
                   children(0),
                   timeBorn(clock()),
-                  timeSimChild(0.0)
+                  timeSimChild(0.0),
+                  descSimChild(0.0)
         {    }
 
         ///  Describes a tuple (BitsetDomainPointer, BitsetDomain).
@@ -5508,6 +5513,9 @@ struct  Ns_SearchNode {
 
         ///  Virtual extra time, used in the simulation of the search tree exploration.
         double  timeSimChild;
+
+        ///  Virtual extra descendants, used in the simulation of the search tree exploration.
+        double  descSimChild;
 };
 
 ///  Constraint satisfaction problem manager and solver class.
