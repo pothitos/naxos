@@ -18,9 +18,9 @@ Ns_StackSearch::goal_iterator::goal_iterator (Ns_StackSearch& stackOfStacks_init
         : stackOfStacks(&stackOfStacks_init),
           curr_Stack_it(stackOfStacks->begin())
 {
-        if ( curr_Stack_it  !=  stackOfStacks->end()
-             && (curr_node_it = curr_Stack_it->stackAND.begin())  ==  curr_Stack_it->stackAND.end() ) {
-                *this  =  curr_Stack_it->delayedGoal;
+        if ( curr_Stack_it != stackOfStacks->end()
+             && (curr_node_it = curr_Stack_it->stackAND.begin()) == curr_Stack_it->stackAND.end() ) {
+                *this = curr_Stack_it->delayedGoal;
         }
 }
 
@@ -32,7 +32,7 @@ Ns_StackSearch::goal_iterator::operator ++ (void)
         assert_Ns( curr_Stack_it != stackOfStacks->end()
                    && curr_node_it != curr_Stack_it->stackAND.end() ,
                    "Ns_StackSearch::goal_iterator::end: Bad request `++(something.end())'");
-        if ( ++curr_node_it  ==  curr_Stack_it->stackAND.end() )
+        if ( ++curr_node_it == curr_Stack_it->stackAND.end() )
                 *this = curr_Stack_it->delayedGoal;
         return  *this;
 }
@@ -62,16 +62,16 @@ Ns_StackSearch::push (const value_type& newNode)
                 else
                         startNode.pop_front();
         }
-        bool  matchesEndNodePrevious  =
+        bool matchesEndNodePrevious =
                 ( ( empty() && ! endNode.empty() )  ||
                   ( ! empty() && top().matchesEndNode &&
                     size() <= endNode.size() &&
                     top().children >= endNode[size()-1] ) );
         NsStack<Ns_SearchNode>::push(newNode);
-        top().matchesEndNode  =  matchesEndNodePrevious;
-        if ( history_time.size()  <  size() )
+        top().matchesEndNode = matchesEndNodePrevious;
+        if ( history_time.size() < size() )
                 history_time.push_back( history_time_t() );
-        history_time[size()-1].searchTreeNodeNum  =  nSearchTreeNodes;
+        history_time[size()-1].searchTreeNodeNum = nSearchTreeNodes;
         return  true;
 }
 
@@ -83,7 +83,7 @@ Ns_StackSearch::splitEnded (void)
              ( ( size() == endNode.size() &&
                  top().children >= endNode[size()-1] )  ||
                size() > endNode.size() ) ) {
-                bool  startMatchesPreviousEnd;
+                bool startMatchesPreviousEnd;
                 if ( readSplit(startMatchesPreviousEnd) ) {
                         if ( startMatchesPreviousEnd )
                                 return  false;
@@ -105,7 +105,7 @@ Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
                                 << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
                                 << ")"
-                                << ( ( /*top().has_a_child*/ top().children > 0 ) ? "LastChild" : "" )
+                                << ( ( top().children > 0 ) ? "LastChild" : "" )
                                 << "\" [shape=doublecircle, height=0.1, label=\"\"];\n";
                 //  If the node has children, and it is a solution, then it
                 //   it is the last child of itself.  (Besides, after the
@@ -190,8 +190,6 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
                 if ( ! (*v)->isBound() )
                         fileConstraintsGraph << ".." << (*v)->max();
                 fileConstraintsGraph << "]\"];\n";
-                //fileConstraintsGraph << "\n\t/* Constraints: "
-                //      << (*v)->constraints.size() << " */\n";
         }
         fileConstraintsGraph << "\n\n\n\t/*  Intermediate Variables (drawn with a smaller font)  */\n";
         for (NsDeque<NsIntVar *>::const_iterator
@@ -200,8 +198,6 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
              ++v) {
                 fileConstraintsGraph << "\n\tVar" << *v
                                      << "  [fontsize=9];\n";
-                //fileConstraintsGraph << "\n\t/* Constraints: "
-                //      << (*v)->constraints.size() << " */\n";
         }
         fileConstraintsGraph << "\n\n\n\t/*  Constraints  */\n";
         for (Ns_constraints_array_t::iterator  c = constraints.begin();
@@ -266,10 +262,8 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 ///\endcode
 
 Ns_Constraint *
-Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
+Ns_QueueItem::getNextConstraint (void)
 {
-        ////  The k-bounds-consistency level:
-        //const NsUInt  k = 25;
         for ( ;  currentConstr < varFired->constraints.size();  ++currentConstr) {
                 switch ( varFired->constraints[currentConstr].constr->revisionType ) {
                 case  Ns_Constraint::VALUE_CONSISTENCY :
@@ -284,11 +278,6 @@ Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
                                 return  varFired->constraints[currentConstr].constr;
                         break;
                 case  Ns_Constraint::BOUNDS_CONSISTENCY :
-                        //if ( onlyNecessary  &&  ! varFired->isBound() )    {
-                        //if ( varFired->size()  >  k )    {
-                        //      //stale  =  true;
-                        //      continue;
-                        //}
                         if ( removedBoundRec.removedBound
                              && varFired->constraints[currentConstr].constr  !=
                              removedBoundRec.constrFired  ) {
@@ -297,66 +286,17 @@ Ns_QueueItem::getNextConstraint (/*const bool onlyNecessary*/)
                         }
                         break;
                 case  Ns_Constraint::BIDIRECTIONAL_CONSISTENCY :
-                        //if ( onlyNecessary  &&  ! varFired->isBound() )    {
-                        //if ( varFired->size()  >  k )    {
-                        //      //stale  =  true;
-                        //      continue;
-                        //}
                         if ( removedBoundRec.removedBound
                              && removedBoundRec.removalTime  >=
                              varFired->constraints[currentConstr].constr->lastConstraintCheckTime ) {
                                 return  varFired->constraints[currentConstr++].constr;
                         }
                         break;
-                //case  Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_OUT_OF_QUEUE :
-                //      //  Nothing to be done.
-                //      break;
                 default:
                         throw  NsException("Ns_QueueItem::getNextConstraint: Invalid `constr->revisionType'");
                         break;
                 };
         }
-#if 0
-        //  First, we check the constraints that impose Arc Consistency.
-        if ( currentRemovedValue  <  removedValues.size() ) {
-                for ( ; ; ) {
-                        //  Cyclic increase of the currentConstr.
-                        if ( currentConstr /*- varFired->constraintsBoundsCons.size()*/  ==  varFired->constraintsArcCons.size() )    {
-                                currentConstr  =  0; //varFired->constraintsBoundsCons.size();
-                                if ( ++currentRemovedValue  >=  removedValues.size() ) {
-                                        removedValues.clear();
-                                        currentRemovedValue  =  0;
-                                        break;
-                                }
-                        }
-                        //  No need to check the constraint that initiated the propagation.
-                        if ( varFired->constraintsArcCons[currentConstr /*- varFired->constraintsBoundsCons.size()*/]
-                             !=  removedValues[currentRemovedValue].constrFired ) {
-                                return  varFired->constraintsArcCons[currentConstr++ /*- varFired->constraintsBoundsCons.size()*/];
-                        }
-                        ++currentConstr;
-                }
-        }
-//  Second, we check the constraints that impose Bounds Consistency.
-        if ( removedBoundRec.removedBound ) {
-                if ( currentConstr < varFired->constraintsBoundsCons.size() ) {
-                        //  No need to check the constraint that initiated the propagation.
-                        if ( varFired->constraintsBoundsCons[currentConstr]  ==  removedBoundRec.constrFired )
-                                ++currentConstr;
-                        if ( currentConstr  <  varFired->constraintsBoundsCons.size() )
-                                return  varFired->constraintsBoundsCons[currentConstr++];
-                }
-        }                                                                //else if ( currentConstr < varFired->constraintsBoundsCons.size() )    {
-//
-//      currentConstr  =  varFired->constraintsBoundsCons.size();
-//}
-#endif
-////  We have reached the end.
-//if ( stale )    {
-//      currentConstr  =  0;
-//      currentRemovedValue  =  0;
-//      removedValues.clear();
-//}
         return  0;
 }
 
@@ -366,7 +306,7 @@ void
 destroy_goal (NsGoal *g)
 {
         if ( g  !=  0 ) {
-                if ( g->isGoalAND()  ||  g->isGoalOR() ) {
+                if ( g->isGoalAND() || g->isGoalOR() ) {
                         destroy_goal( g->getFirstSubGoal() );
                         destroy_goal( g->getSecondSubGoal() );
                 }
@@ -698,9 +638,8 @@ NsProblemManager::nextSolution (void)
                                 delete  CurrGoal;
                         //cout << "--- AND ---\n";
                 } else if ( CurrGoal->isGoalOR() ) {
-                        if ( timeSplitLim != 0  &&
-                             searchNodes.overrideNextLevel() ) {
-                                double  timeSim = searchNodes.nextMean();
+                        if ( timeSplitLim != 0  &&  searchNodes.overrideNextLevel() ) {
+                                double timeSim = searchNodes.nextMean();
                                 searchNodes.timeSimulated += timeSim;
                                 searchNodes.top().timeSimChild += timeSim;
                                 destroy_goal( CurrGoal->getFirstSubGoal() );

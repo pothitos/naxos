@@ -5136,6 +5136,9 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The number of the descendants of all nodes in this level.
                 double  descendants;
 
+                ///  The weights sum of the descendants terms.
+                double  descendantsWeights;
+
                 ///  The simulation time for the children of all the nodes in this level.
                 double  timeSimChildSum;
 
@@ -5153,6 +5156,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         : validHistoryId(0),
                           timeSum(0.0),
                           descendants(0.0),
+                          descendantsWeights(0.0),
                           timeSimChildSum(0.0),
                           timeSimSum(0.0),
                           simulationRatio(1.0)
@@ -5203,26 +5207,11 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         bool
         overrideNextLevel (void)
         {
-                if ( history_time.size() < size() + 1 ) {
-			//for (unsigned i=0;  i < size()+1;  ++i)
-			//	std::cerr << "*";
-			//std::cerr << "\n";
+                if ( history_time.size() < size() + 1 )
                         return  false;
-		}
                 double&  simRatio = history_time[size()].simulationRatio;
                 double  random = rand() / (RAND_MAX+1.0);
                 bool  override = ( random > simRatio );
-		//if ( override ) {
-		//	std::cerr << random << " > " << simRatio << "\n";
-		//	for (unsigned i=0;  i < size()+1;  ++i)
-		//		std::cerr << "-";
-		//	std::cerr << "\n";
-		//} else {
-		//	std::cerr << random << " < " << simRatio << "\n";
-		//	for (unsigned i=0;  i < size()+1;  ++i)
-		//		std::cerr << "+";
-		//	std::cerr << "\n";
-		//}
                 simRatio = std::max(simulationRatioMin,
                                     simRatio - simulationRatioStep);
                 return  override;
