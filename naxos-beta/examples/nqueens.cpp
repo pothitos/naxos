@@ -26,7 +26,7 @@ int  main (int argc, char *argv[])
                 pm.add( NsAllDiff(VarMinus) );
                 if ( argc > 2 ) {
                         // SPLIT //
-                        pm.splitTimeLimit(atoi(argv[2]),atof(argv[3]),atof(argv[4]));
+                        pm.splitTimeLimit(atoi(argv[2]), atof(argv[3]));
                         pm.addGoal( new NsgLabeling(Var) );
                         while (pm.nextSolution() != false)
                                 /*VOID*/ ;

@@ -55,7 +55,7 @@
         #if __GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 3)
                 #define  Ns_OLD_UNORDERED_SET
         #endif
-#endif							 // __GNUC__
+#endif  // __GNUC__
 
 #ifdef Ns_OLD_UNORDERED_SET
         #include <ext/hash_set>
@@ -76,14 +76,12 @@
 
 #include <cmath>
 
-///  The namespace for <span style="font-variant: small-caps;"> Naxos Solver. </span>
-
+///  The namespace for Naxos Solver.
 namespace  naxos {
 
-///  <span style="font-variant: small-caps;"> Naxos </span> methods throw this type of exception.
+///  Naxos methods throw this type of exception.
 
 ///  \internal
-
 class NsException : public std::logic_error {
 
     public:
@@ -97,7 +95,6 @@ class NsException : public std::logic_error {
 ///  Here we used the type \a char* for \a errorMessage, instead of
 ///   \a string, plainly for time-performance reasons.
 ///   \internal
-
 inline void
 assert_Ns (const bool condition, const char *errorMessage)
 {
@@ -5212,8 +5209,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 double&  simRatio = history_time[size()].simulationRatio;
                 double  random = rand() / (RAND_MAX+1.0);
                 bool  override = ( random > simRatio );
-                simRatio = std::max(simulationRatioMin,
-                                    simRatio - simulationRatioStep);
                 return  override;
         }
 
@@ -5289,11 +5284,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         ///  Virtual extra time used for simulation.
         double  timeSimulated;
 
-        ///  The minimum percentage of the real search time vs total simulation time.
-        double  simulationRatioMin;
-
-        ///  How much to step from 100% towards `simulationRatioMin'.
-        double  simulationRatioStep;
+        ///  The percentage of the real search time vs total simulation time.
+        double  simulationRatio;
 
         void
         currentNodeId (void)  const
@@ -5699,13 +5691,10 @@ class  NsProblemManager {
 
         ///  Sets the time ticks limit for each search space split.
         void
-        splitTimeLimit (const clock_t ticks,
-                        const double simulationRatioMin=0.5,
-                        const double simulationRatioStep=0.01)
+        splitTimeLimit (const clock_t ticks, const double simulationRatio=0.5)
         {
                 timeSplitLim = ticks;
-                searchNodes.simulationRatioMin  = simulationRatioMin;
-                searchNodes.simulationRatioStep = simulationRatioStep;
+                searchNodes.simulationRatio = simulationRatio;
                 startNodeId = getCurrentNodeNum();
                 startSplitTime = clock();
                 assert_Ns( startSplitTime != -1 ,
