@@ -1048,9 +1048,6 @@ class  NsIntVar {
                 return  ( lsIdx  ==  NsINDEX_INF );
         }
 
-        /////  Used to mark the time we fixed the variable.
-        //Ns_HistoryId_t  lsTimeWhenFixed;
-
         struct  VarPointerToPointer_t;
 
         ///  Describes a Variable-List_Iterator pair.
@@ -4793,7 +4790,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 double  timeSum;
 
                 ///  The number of the descendants of all nodes in this level.
-                double  descendants;
+                double  descSum;
 
                 ///  The simulation time for the children of all the nodes in this level.
                 double  timeSimChildSum;
@@ -4804,14 +4801,14 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The sum of the weights of timeSum terms.
                 double  timeWeights;
 
-                ///  The sum of the weights of the descendants terms.
+                ///  The sum of the weights of the descSum terms.
                 double  descWeights;
 
                 ///  Constructor.
                 history_time_t (void)
                         : validHistoryId(0),
                           timeSum(0.0),
-                          descendants(0.0),
+                          descSum(0.0),
                           timeSimChildSum(0.0),
                           descSimChildSum(0.0),
                           timeWeights(0.0),
@@ -4840,9 +4837,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 {
                         assert_Ns( validHistoryId != 0 ,
                                    "history_time_t::mean: Cannot get mean value of an empty set" );
-                        double  duration = timeSum / timeWeights;
-                        timeSimSum += duration;
-                        return  duration;
+                        return  ( timeSum / timeWeights );
                 }
         };
 
@@ -4866,7 +4861,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 if ( history_time.size() < size() + 1 )
                         return  false;
                 double&  simRatio = history_time[size()].simulationRatio;
-                double&  descendants = history_time[size()].descendants;
+                double&  descSum = history_time[size()].descSum;
                 double&  descWeights = history_time[size()].descWeights;
                 double  random = rand() / (RAND_MAX+1.0);
                 bool  override = ( random > simRatio );
