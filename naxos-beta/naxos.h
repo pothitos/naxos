@@ -1051,7 +1051,6 @@ class  NsIntVar {
         struct  VarPointerToPointer_t;
 
         ///  Describes a Variable-List_Iterator pair.
-
         struct  VarPointer_t {
 
                 ///  Pointer to a constrained variable.
@@ -4777,7 +4776,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
     private:
 
-        ///  History-ids together with time statistics.
+        ///  History-IDs together with time statistics.
         struct  history_time_t {
 
                 ///  An ID for the current history level.
@@ -4815,17 +4814,19 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                           descWeights(0.0)
                 {    }
 
-                ///  Augments the valid history ID.
+                ///  Augments the valid history ID and updates statistics.
                 void
-                invalidate (clock_t timeBorn, double timeSimChild)
+                invalidate (clock_t timeBorn, double timeSimChild, double descSimChild)
                 {
                         ++validHistoryId;
-                        double  timeChild =
+                        double  timeNode =
                                 clock() - timeBorn + timeSimChild;
+                        double  descNode =
+                                1 + descSimChild;
                         double  weight = validHistoryId *
-                                         (timeChild - timeSimChild + 1.0) /
-                                         (timeChild + 1.0);
-                        timeSum  +=  timeChild * weight;
+                                         (timeNode - timeSimChild + 1.0) /
+                                         (timeNode + 1.0);
+                        timeSum  +=  timeNode * weight;
                         timeSimChildSum  +=
                                 timeSimChild * weight;
                         timeWeights += weight;
@@ -4833,11 +4834,20 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 ///  The mean value of the time spent in this level.
                 double
-                mean (void)
+                meanTime (void)
                 {
                         assert_Ns( validHistoryId != 0 ,
-                                   "history_time_t::mean: Cannot get mean value of an empty set" );
+                                   "history_time_t::mean: Cannot get mean value of an empty set");
                         return  ( timeSum / timeWeights );
+                }
+
+                ///  The mean value of the time spent in this level.
+                double
+                meanDesc (void)
+                {
+                        assert_Ns( validHistoryId != 0 ,
+                                   "history_time_t::mean: Cannot get mean value of an empty set");
+                        return  ( descSum / descWeights );
                 }
         };
 
@@ -4849,9 +4859,16 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         ///  The mean value of the time spent in the next level.
         double
-        nextMean (void)
+        nextMeanTime (void)
         {
-                return  history_time[size()].mean();
+                return  history_time[size()].meanTime();
+        }
+
+        ///  The mean value of the descendants in the next level.
+        double
+        nextMeanDesc (void)
+        {
+                return  history_time[size()].meanDesc();
         }
 
         ///  Decides whether the next level will be explored or simulated.
@@ -4999,8 +5016,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         ///  Iterates through all the goals in the current Ns_StackGoals and the Ns_StackGoals below it.
 
-        ///  (All of them consist a stack of Ns_StackGoals, named
-        ///   stackOfStacks.)
+        ///  All of them consist a stack of Ns_StackGoals, named stackOfStacks.
         class  goal_iterator {
 
             private:
