@@ -5136,27 +5136,24 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The simulation time for the children of all the nodes in this level.
                 double  timeSimChildSum;
 
-                ///  The plain simulation time for all the nodes in this level.
-                double  timeSimSum;
+                ///  The simulated descendants for the children of all the nodes in this level.
+                double  descSimChildSum;
 
                 ///  The sum of the weights of timeSum terms.
-                double  weightsSum;
+                double  timeWeights;
 
                 ///  The sum of the weights of the descendants terms.
-                double  descendantsWeights;
-
-                ///  The current desired simulation to real time ratio.
-                double  simulationRatio;
+                double  descWeights;
 
                 ///  Constructor.
                 history_time_t (void)
                         : validHistoryId(0),
                           timeSum(0.0),
                           descendants(0.0),
-                          descendantsWeights(0.0),
                           timeSimChildSum(0.0),
-                          timeSimSum(0.0),
-                          simulationRatio(1.0)
+                          descSimChildSum(0.0),
+                          timeWeights(0.0),
+                          descWeights(0.0)
                 {    }
 
                 ///  Augments the valid history ID.
@@ -5172,7 +5169,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         timeSum  +=  timeChild * weight;
                         timeSimChildSum  +=
                                 timeSimChild * weight;
-                        weightsSum  +=  weight;
+                        timeWeights += weight;
                 }
 
                 ///  The mean value of the time spent in this level.
@@ -5181,7 +5178,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 {
                         assert_Ns( validHistoryId != 0 ,
                                    "history_time_t::mean: Cannot get mean value of an empty set" );
-                        double  duration = timeSum / weightsSum;
+                        double  duration = timeSum / timeWeights;
                         timeSimSum += duration;
                         return  duration;
                 }
@@ -5208,7 +5205,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         return  false;
                 double&  simRatio = history_time[size()].simulationRatio;
                 double&  descendants = history_time[size()].descendants;
-                double&  descendantsWeights = history_time[size()].descendantsWeights;
+                double&  descWeights = history_time[size()].descWeights;
                 double  random = rand() / (RAND_MAX+1.0);
                 bool  override = ( random > simRatio );
                 if ( override ) {
