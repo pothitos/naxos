@@ -164,6 +164,7 @@ Ns_StackSearch::pop (void)
         double  timeSimChild = top().timeSimChild;
         double  descSimChild = top().descSimChild;
         history_time[ size() - 1 ].invalidate(top().timeBorn, timeSimChild,
+                                              numSearchTreeNodes(),
                                               top().descBorn, descSimChild);
         NsStack<Ns_SearchNode>::pop();
         if ( ! empty() ) {

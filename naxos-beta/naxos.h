@@ -4818,14 +4818,15 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 void
                 invalidate (const clock_t timeBorn,
                             const double timeSimChild,
+                            const unsigned long descNow,
                             const unsigned long descBorn,
                             const double descSimChild)
                 {
                         ++validHistoryId;
-                        double  timeNode = clock() - timeBorn
-                                           + timeSimChild;
-                        double  descNode = numSearchTreeNodes() - descBorn
-                                           + descSimChild;
+                        double  timeNode = clock() - timeBorn +
+                                           timeSimChild;
+                        double  descNode = descNow - descBorn +
+                                           descSimChild;
                         double  timeWeight = validHistoryId *
                                          (timeNode - timeSimChild + 1.0) /
                                          (timeNode + 1.0);
