@@ -553,7 +553,8 @@ NsProblemManager::restart (void)
         searchNodes.reset();
         if ( ! searchNodes.startNode.empty() )
                 searchNodes.startNode.push_front(1);
-        assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin() ) ) ,
+        assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
+                                                    numSearchTreeNodes() ) ) ,
                    "NsProblemManager::restart: First push should succeed");
         if ( vMinObj  !=  0 )
                 vMinObj->remove( bestMinObjValue, NsPLUS_INF/*, 0*/ );
@@ -581,7 +582,8 @@ NsProblemManager::nextSolution (void)
                 // A push of frame, for the purposes of NsProblemManager::restart().
                 //  We took care placing it *after* the arcConsistent() call (because
                 //  in future, we will not be able to revert to the current `Q').
-                assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin() ) ) ,
+                assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
+                                                            numSearchTreeNodes() ) ) ,
                            "NsProblemManager::nextSolution: First push should succeed");
                 //  (B) ...and pasting to the stackAND of the new frame.
                 while ( ! tempStackAND.empty() ) {
@@ -648,14 +650,16 @@ NsProblemManager::nextSolution (void)
                 } else if ( CurrGoal->isGoalOR() ) {
                         if ( timeSplitLim != 0  &&
                              searchNodes.overrideNextLevel() ) {
-                                double timeSim = searchNodes.nextTimeMean();
-                                double descSim = searchNodes.nextDescMean();
+                                double timeSim = searchNodes.nextMeanTime();
+                                double descSim = searchNodes.nextMeanDesc();
                                 searchNodes.timeSimulated += timeSim;
                                 searchNodes.top().timeSimChild += timeSim;
                                 searchNodes.top().descSimChild += descSim;
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
                                 searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
-                        } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(), searchNodes.gbegin() ) ) ) {
+                        } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(),
+                                                                     searchNodes.gbegin(),
+                                                                     numSearchTreeNodes() ) ) ) {
                                 searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
                         } else {
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
