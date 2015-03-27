@@ -1842,7 +1842,7 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 };
 
 //  The following constraint is somehow `stronger' than the simple `X == Y + C*Z'.
@@ -4816,25 +4816,33 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 ///  Augments the valid history ID and updates statistics.
                 void
-                invalidate (clock_t timeBorn, double timeSimChild, double descSimChild)
+                invalidate (const clock_t timeBorn,
+                            const double timeSimChild,
+                            const unsigned long descBorn,
+                            const double descSimChild)
                 {
                         ++validHistoryId;
-                        double  timeNode =
-                                clock() - timeBorn + timeSimChild;
-                        double  descNode =
-                                1 + descSimChild;
-                        double  weight = validHistoryId *
+                        double  timeNode = clock() - timeBorn
+                                           + timeSimChild;
+                        double  descNode = numSearchTreeNodes() - descBorn
+                                           + descSimChild;
+                        double  timeWeight = validHistoryId *
                                          (timeNode - timeSimChild + 1.0) /
                                          (timeNode + 1.0);
-                        timeSum  +=  timeNode * weight;
-                        timeSimChildSum  +=
-                                timeSimChild * weight;
-                        timeWeights += weight;
+                        double  descWeight = validHistoryId *
+                                         (descNode - descSimChild + 1.0) /
+                                         (descNode + 1.0);
+                        timeSum += timeNode * timeWeight;
+                        descSum += descNode * descWeight;
+                        timeSimChildSum += timeSimChild * timeWeight;
+                        descSimChildSum += descSimChild * descWeight;
+                        timeWeights += timeWeight;
+                        descWeights += descWeight;
                 }
 
                 ///  The mean value of the time spent in this level.
                 double
-                meanTime (void)
+                meanTime (void)  const
                 {
                         assert_Ns( validHistoryId != 0 ,
                                    "history_time_t::mean: Cannot get mean value of an empty set");
@@ -4843,7 +4851,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 ///  The mean value of the time spent in this level.
                 double
-                meanDesc (void)
+                meanDesc (void)  const
                 {
                         assert_Ns( validHistoryId != 0 ,
                                    "history_time_t::mean: Cannot get mean value of an empty set");
@@ -4859,14 +4867,14 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         ///  The mean value of the time spent in the next level.
         double
-        nextMeanTime (void)
+        nextMeanTime (void)  const
         {
                 return  history_time[size()].meanTime();
         }
 
         ///  The mean value of the descendants in the next level.
         double
-        nextMeanDesc (void)
+        nextMeanDesc (void)  const
         {
                 return  history_time[size()].meanDesc();
         }
@@ -4877,14 +4885,9 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         {
                 if ( history_time.size() < size() + 1 )
                         return  false;
-                double&  simRatio = history_time[size()].simulationRatio;
-                double&  descSum = history_time[size()].descSum;
-                double&  descWeights = history_time[size()].descWeights;
                 double  random = rand() / (RAND_MAX+1.0);
-                bool  override = ( random > simRatio );
-                if ( override ) {
-                }
-                return  override;
+                //TODO: simulation ratio corresponds to expected descendants.
+                return  ( random > simulationRatio );
         }
 
         ///  The search tree split to be explored starts from this node.
@@ -5111,11 +5114,13 @@ struct  Ns_SearchNode {
 
         ///  Constructor.
         Ns_SearchNode (NsGoal *goalNextChoice_init,
-                       Ns_StackSearch::goal_iterator git)
+                       Ns_StackSearch::goal_iterator git,
+                       const unsigned long descBorn_init)
                 : goalNextChoice(goalNextChoice_init),
                   delayedGoal(git),
                   children(0),
                   timeBorn(clock()),
+                  descBorn(descBorn_init),
                   timeSimChild(0.0),
                   descSimChild(0.0)
         {    }
@@ -5179,7 +5184,10 @@ struct  Ns_SearchNode {
         bool  matchesEndNode;
 
         ///  When the node was born?
-        clock_t  timeBorn;
+        const clock_t  timeBorn;
+
+        ///  How many tree nodes pushes existed when the node was born?
+        const unsigned long  descBorn;
 
         ///  Virtual extra time, used in the simulation of the search tree exploration.
         double  timeSimChild;
@@ -5233,16 +5241,21 @@ class  NsProblemManager {
                    nConstraintChecks(0),
                    backtrackLim(0)
         {
-                assert_Ns( sizeof(NsIntVar *)  <=  sizeof(Ns_pointer_t) ,
-                           "NsProblemManager::NsProblemManager: Cannot run on this machine, because a pointer does not fit in an `size_t' (the `unordered_set' type)");
-                assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin() ) ),
-                           "NsProblemManager::NsProblemManager: First push should succeed");
+                assert_Ns( sizeof(NsIntVar *) <= sizeof(Ns_pointer_t) ,
+                           "NsProblemManager::NsProblemManager: Cannot "
+                           "run on this machine, because a pointer does "
+                           "not fit in an `size_t' (the `unordered_set' "
+                           "type)");
+                assert_Ns( searchNodes.push( Ns_SearchNode( 0,
+                                             searchNodes.gbegin(),
+                                             numSearchTreeNodes() ) ) ,
+                           "NsProblemManager::NsProblemManager: "
+                           "First push should succeed");
         }
 
         ~NsProblemManager (void);
 
         ///  Adds a goal to be executed/satisfied.
-
         void
         addGoal (NsGoal *goal)
         {

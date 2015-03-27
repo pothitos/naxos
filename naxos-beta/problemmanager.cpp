@@ -163,7 +163,8 @@ Ns_StackSearch::pop (void)
         }
         double  timeSimChild = top().timeSimChild;
         double  descSimChild = top().descSimChild;
-        history_time[ size() - 1 ].invalidate(top().timeBorn, timeSimChild);
+        history_time[ size() - 1 ].invalidate(top().timeBorn, timeSimChild,
+                                              top().descBorn, descSimChild);
         NsStack<Ns_SearchNode>::pop();
         if ( ! empty() ) {
                 top().timeSimChild += timeSimChild;
@@ -327,7 +328,9 @@ DiffTime (time_t time2, time_t time1)
 }  // end namespace
 
 Ns_StackSearch::Ns_StackSearch (void)
-        : nSearchTreeNodes(0), alreadyReadSplit(false), timeSimulated(0.0),
+        : nSearchTreeNodes(0),
+          alreadyReadSplit(false),
+          timeSimulated(0.0),
           recordObjective(false)
 {    }
 
@@ -475,15 +478,14 @@ NsProblemManager::arcConsistent (void)
                 vFired = getQueue().front().getVarFired();
                 //  To avoid changing the queue item Q.front()
                 //   during this iteration...
-                vFired->queueItem  =  0;
+                vFired->queueItem = 0;
                 while ( (c = getQueue().front().getNextConstraint())  !=  0 )    {
                         //  Change the following for AC-3.
                         //c->ArcCons();
                         c->LocalArcCons( getQueue().front() );
-                        c->lastConstraintCheckTime =
-                                ++nConstraintChecks;
+                        c->lastConstraintCheckTime = ++nConstraintChecks;
                         if ( foundInconsistency ) {
-                                foundInconsistency  =  false;
+                                foundInconsistency = false;
                                 getQueue().clear();
                                 ++nFailures;
                                 return  false;
@@ -503,7 +505,9 @@ NsProblemManager::backtrack (void)
                 if ( backtrackLim != 0  &&  nBacktracks >= backtrackLim )
                         return  false;
                 ++nBacktracks;
-                assert_Ns( ! searchNodes.empty() ,  "NsProblemManager::backtrack: `searchNodes' is empty");
+                assert_Ns( ! searchNodes.empty() ,
+                           "NsProblemManager::backtrack: "
+                           "`searchNodes' is empty");
                 goalNextChoice  =  searchNodes.top().goalNextChoice;
                 if ( goalNextChoice  ==  0 )
                         return  false;
@@ -641,8 +645,10 @@ NsProblemManager::nextSolution (void)
                                 delete  CurrGoal;
                         //cout << "--- AND ---\n";
                 } else if ( CurrGoal->isGoalOR() ) {
-                        if ( timeSplitLim != 0  &&  searchNodes.overrideNextLevel() ) {
-                                double timeSim = searchNodes.nextMean();
+                        if ( timeSplitLim != 0  &&
+                             searchNodes.overrideNextLevel() ) {
+                                double timeSim = searchNodes.nextTimeMean();
+                                double descSim = searchNodes.nextDescMean();
                                 searchNodes.timeSimulated += timeSim;
                                 searchNodes.top().timeSimChild += timeSim;
                                 searchNodes.top().descSimChild += descSim;
