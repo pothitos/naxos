@@ -119,7 +119,6 @@ class  NsDeque;
 ///  Abstract class that represents an (algebraic etc.) expression between constrained variables.
 
 ///  \internal
-
 class  Ns_Expression {
 
     public:
@@ -640,10 +639,7 @@ class  Ns_BitSet {
                 }
         };
 
-        //friend class const_gap_iterator;
-
         ///  Iterates through all the missing values (gaps) of the domain [\a min..\a max], without changing them (\a const_iterator).
-
         class  const_gap_iterator {
 
             private:
@@ -747,7 +743,6 @@ typedef  NsDeque<Ns_Constraint *>  Ns_constraints_array_t;
 class Ns_Expression;
 
 ///  Represents a constrained variable.
-
 class  NsIntVar {
 
     private:
