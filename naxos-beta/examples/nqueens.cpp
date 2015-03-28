@@ -26,7 +26,11 @@ int  main (int argc, char *argv[])
                 pm.add( NsAllDiff(VarMinus) );
                 if ( argc > 2 ) {
                         // SPLIT //
-                        pm.splitTimeLimit(atoi(argv[2]), atof(argv[3]));
+                        if ( argc < 4 ) {
+                                std::cerr << "Provide the simulation ratio!" << "\n";
+                                return  1;
+                        }
+                        pm.splitTimeLimit(CLOCKS_PER_SEC*atof(argv[2]), atof(argv[3]));
                         pm.addGoal( new NsgLabeling(Var) );
                         while (pm.nextSolution() != false)
                                 /*VOID*/ ;

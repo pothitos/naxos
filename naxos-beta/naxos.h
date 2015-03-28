@@ -4889,7 +4889,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 //  Simulation ratio corresponds to expected descendants.
                 double  simRatio = pow(simulationRatio, nextMeanDesc());
                 double  random = rand() / (RAND_MAX+1.0);
-                return  ( random > simRatio );
+                return  ( random <= simRatio );
         }
 
         ///  The search tree split to be explored starts from this node.
@@ -5016,8 +5016,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         void  solutionNode (const NsIntVar *vObjective);
 
         ///  @}
-
-        //friend class goal_iterator;
 
         ///  Iterates through all the goals in the current Ns_StackGoals and the Ns_StackGoals below it.
 
@@ -5384,13 +5382,12 @@ class  NsProblemManager {
 
         ///  Sets the time ticks limit for each search space split.
         void
-        splitTimeLimit (const clock_t ticks, const double simulationRatio=0.5)
+        splitTimeLimit (const clock_t ticks, const double simulationRatio)
         {
-                assert_Ns( 0.0 < simulationRatio &&
-                                 simulationRatio <= 1.0 ,
+                assert_Ns( 0.0 <= simulationRatio &&
+                                  simulationRatio <= 1.0 ,
                            "NsProblemManager::splitTimeLimit: "
-                           "`simulationRatio' must be greater than 0 and "
-                           "less or equal to 1");
+                           "`simulationRatio' must be between 0 and 1");
                 timeSplitLim = ticks;
                 searchNodes.simulationRatio = simulationRatio;
                 startNodeId = getCurrentNodeNum();
