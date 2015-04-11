@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 using namespace naxos;
@@ -30,6 +31,9 @@ int  main (int argc, char *argv[])
                                 std::cerr << "Provide the simulation ratio!" << "\n";
                                 return  1;
                         }
+                        unsigned  seed = time(0);
+                        cerr << "Random seed is " << seed << "\n";
+                        srand(seed);
                         pm.splitTimeLimit(CLOCKS_PER_SEC*atof(argv[2]), atof(argv[3]));
                         pm.addGoal( new NsgLabeling(Var) );
                         while (pm.nextSolution() != false)
