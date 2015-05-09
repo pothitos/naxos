@@ -43,8 +43,15 @@ int  main (int argc, char *argv[])
                         // READ //
                         while ( pm.readSplit() ) {
                                 pm.addGoal( new NsgLabeling(Var) );
-                                while (pm.nextSolution() != false)
-                                        cout << "Solution: " << Var << "\n";
+                                if (pm.nextSolution() != false) {
+                                        for (int i=0;  i < N;  ++i) {
+                                                cout << Var[i].value();
+                                                if ( i < N-1 )
+                                                        cout << " ";
+                                        }
+                                        cout << "\n";
+                                        return 0;
+                                }
                                 pm.restart();
                         }
                 }
