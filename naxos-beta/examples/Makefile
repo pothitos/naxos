@@ -22,7 +22,7 @@ LDFLAGS = -s
 
 ####  FILENAMES  ####
 
-PROGRAMS = autocorrelation golomb nqueens send_more_money
+PROGRAMS = nqueens send_more_money
 PR_OBJECTS = $(PROGRAMS:=.o)
 
 OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
