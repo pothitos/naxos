@@ -18,15 +18,14 @@ using namespace std;
 void ListPrint(NsIntVarArray& List)
 {
         NsIntVarArray::iterator it = List.begin();
-        cout << "[";
         if (0 != List.size()) {
                 cout << it->value();
                 ++it;
                 for (; it != List.end(); ++it) {
-                        cout << ", " << it->value();
+                        cout << " " << it->value();
                 }
         }
-        cout << "]\n";
+        cout << " / ";
 }
 
 void ListPrintRest(NsIntVarArray& List)
@@ -35,14 +34,13 @@ void ListPrintRest(NsIntVarArray& List)
         long CurNum = it->value()-1;
         bool flag = false;
         ++it;
-        cout << "[";
         while (1) {
                 while (CurNum != it->value()) {
                         if (false == flag) {
                                 cout << CurNum;
                                 flag = true;
                         } else {
-                                cout << ", " << CurNum;
+                                cout << " " << CurNum;
                         }
                         CurNum--;
                 }
@@ -54,14 +52,14 @@ void ListPrintRest(NsIntVarArray& List)
                                         cout << CurNum;
                                         flag = true;
                                 } else {
-                                        cout << ", " << CurNum;
+                                        cout << " " << CurNum;
                                 }
                                 CurNum--;
                         }
                         break;
                 }
         }
-        cout << "]\n";
+        cout << "\n";
 }
 
 void Constraint(NsProblemManager& pm, NsIntVarArray& List)
@@ -78,18 +76,18 @@ void Constraint(NsProblemManager& pm, NsIntVarArray& List)
 
 int main(int argc, char **argv)
 {
+	if (argc != 2) {
+		cerr << argv[0] << ": Please provide <N> as argument\n";
+		return 1;
+	}
         int N = atoi(argv[1]);
-        int Solutions = 0;
         NsProblemManager pm;
         NsIntVarArray List, ListSquare;
-        if (0 != N % 4 || 0 > N) {
-                cout << "The problem has no solution.\n";
-                exit(0);
-        }
+        if (0 != N % 4 || 0 > N)
+		return 0;
         List.push_back(NsIntVar(pm, N, N));
         ListSquare.push_back(NsIntVar(pm, N*N, N*N));
         for (int i = 1; N/2 > i; ++i) {
-                //List.push_back(NsIntVar(pm, 1, N-1));
                 List.push_back(NsIntVar(pm, N/2 - i, N - i));
                 ListSquare.push_back(List[i]*List[i]);
         }
@@ -100,12 +98,8 @@ int main(int argc, char **argv)
         pm.add(SquareSum == N*(N+1)*(2*N+1)/12);
         pm.addGoal(new NsgLabeling(List));
         while (pm.nextSolution() != false) {
-                Solutions++;
-                cout << "L1 = ";
                 ListPrint(List);
-                cout << "L2 = ";
                 ListPrintRest(List);
         }
-        cout << "Solutions = " << Solutions << endl;
         return 0;
 }
