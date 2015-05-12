@@ -107,14 +107,14 @@ int main(int argc, char **argv)
                         cerr << "Random seed is " << seed << "\n";
                         srand(seed);
                         pm.splitTimeLimit(CLOCKS_PER_SEC*atof(argv[2]), atof(argv[3]));
-                        pm.addGoal( new NsgLabeling(Var) );
+                        pm.addGoal( new NsgLabeling(List) );
                         while (pm.nextSolution() != false)
                                 /*VOID*/ ;
                         cout << "\n";
                 } else {
                         // READ //
                         while ( pm.readSplit() ) {
-                                pm.addGoal( new NsgLabeling(Var) );
+                                pm.addGoal( new NsgLabeling(List) );
                                 if (pm.nextSolution() != false) {
                                         ListPrint(List);
                                         ListPrintRest(List);
