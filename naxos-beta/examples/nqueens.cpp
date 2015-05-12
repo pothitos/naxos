@@ -50,7 +50,6 @@ int  main (int argc, char *argv[])
                                                         cout << " ";
                                         }
                                         cout << "\n";
-                                        return 0;
                                 }
                                 pm.restart();
                         }

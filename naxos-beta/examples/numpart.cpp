@@ -76,7 +76,8 @@ void Constraint(NsProblemManager& pm, NsIntVarArray& List)
 
 int main(int argc, char **argv)
 {
-	if (argc != 2) {
+        try {
+	if (argc < 2) {
 		cerr << argv[0] << ": Please provide <N> as argument\n";
 		return 1;
 	}
@@ -96,10 +97,34 @@ int main(int argc, char **argv)
         NsIntVar Sum = NsSum(List), SquareSum = NsSum(ListSquare);
         pm.add(Sum == N*(N+1)/4);
         pm.add(SquareSum == N*(N+1)*(2*N+1)/12);
-        pm.addGoal(new NsgLabeling(List));
-        while (pm.nextSolution() != false) {
+                if ( argc > 2 ) {
+                        // SPLIT //
+                        if ( argc < 4 ) {
+                                std::cerr << argv[0] << ": Provide the simulation ratio\n";
+                                return  1;
+                        }
+                        unsigned  seed = time(0);
+                        cerr << "Random seed is " << seed << "\n";
+                        srand(seed);
+                        pm.splitTimeLimit(CLOCKS_PER_SEC*atof(argv[2]), atof(argv[3]));
+                        pm.addGoal( new NsgLabeling(Var) );
+                        while (pm.nextSolution() != false)
+                                /*VOID*/ ;
+                        cout << "\n";
+                } else {
+                        // READ //
+                        while ( pm.readSplit() ) {
+                                pm.addGoal( new NsgLabeling(Var) );
+                                if (pm.nextSolution() != false) {
                 ListPrint(List);
                 ListPrintRest(List);
+                                }
+                                pm.restart();
+                        }
+                }
+        } catch (exception& exc) {
+                cerr << exc.what() << "\n";
+        } catch (...) {
+                cerr << "Unknown exception" << "\n";
         }
-        return 0;
 }
