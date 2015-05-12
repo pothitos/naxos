@@ -77,26 +77,26 @@ void Constraint(NsProblemManager& pm, NsIntVarArray& List)
 int main(int argc, char **argv)
 {
         try {
-	if (argc < 2) {
-		cerr << argv[0] << ": Please provide <N> as argument\n";
-		return 1;
-	}
-        int N = atoi(argv[1]);
-        NsProblemManager pm;
-        NsIntVarArray List, ListSquare;
-        if (0 != N % 4 || 0 > N)
-		return 0;
-        List.push_back(NsIntVar(pm, N, N));
-        ListSquare.push_back(NsIntVar(pm, N*N, N*N));
-        for (int i = 1; N/2 > i; ++i) {
-                List.push_back(NsIntVar(pm, N/2 - i, N - i));
-                ListSquare.push_back(List[i]*List[i]);
-        }
-        pm.add(NsAllDiff(List));
-        Constraint(pm, List);
-        NsIntVar Sum = NsSum(List), SquareSum = NsSum(ListSquare);
-        pm.add(Sum == N*(N+1)/4);
-        pm.add(SquareSum == N*(N+1)*(2*N+1)/12);
+                if (argc < 2) {
+                        cerr << argv[0] << ": Please provide <N> as argument\n";
+                        return 1;
+                }
+                int N = atoi(argv[1]);
+                NsProblemManager pm;
+                NsIntVarArray List, ListSquare;
+                if (0 != N % 4 || 0 > N)
+                        return 0;
+                List.push_back(NsIntVar(pm, N, N));
+                ListSquare.push_back(NsIntVar(pm, N*N, N*N));
+                for (int i = 1; N/2 > i; ++i) {
+                        List.push_back(NsIntVar(pm, N/2 - i, N - i));
+                        ListSquare.push_back(List[i]*List[i]);
+                }
+                pm.add(NsAllDiff(List));
+                Constraint(pm, List);
+                NsIntVar Sum = NsSum(List), SquareSum = NsSum(ListSquare);
+                pm.add(Sum == N*(N+1)/4);
+                pm.add(SquareSum == N*(N+1)*(2*N+1)/12);
                 if ( argc > 2 ) {
                         // SPLIT //
                         if ( argc < 4 ) {
@@ -116,8 +116,8 @@ int main(int argc, char **argv)
                         while ( pm.readSplit() ) {
                                 pm.addGoal( new NsgLabeling(Var) );
                                 if (pm.nextSolution() != false) {
-                ListPrint(List);
-                ListPrintRest(List);
+                                        ListPrint(List);
+                                        ListPrintRest(List);
                                 }
                                 pm.restart();
                         }
