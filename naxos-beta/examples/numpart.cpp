@@ -1,19 +1,8 @@
-/*
- * File:   main.cpp
- * Author: peter
- *
- * Created on May 26, 2013, 5:34 PM
- */
-
 #include <cstdlib>
 #include "naxos.h"
 
 using namespace naxos;
 using namespace std;
-
-/*
- *
- */
 
 void ListPrint(NsIntVarArray& List)
 {
