@@ -104,7 +104,7 @@ int main(int argc, char **argv)
                         // READ //
                         while ( pm.readSplit() ) {
                                 pm.addGoal( new NsgLabeling(List) );
-                                if (pm.nextSolution() != false) {
+                                while (pm.nextSolution() != false) {
                                         ListPrint(List);
                                         ListPrintRest(List);
                                 }
