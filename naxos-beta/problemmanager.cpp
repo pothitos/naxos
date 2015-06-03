@@ -49,7 +49,7 @@ Ns_StackSearch::searchToGraphFile (const char *fileName)
                         << "\tedge [arrowhead=none];\n";
 }
 
-///  If it does not exist, creates a \c validHistoryId entry for the current search node.  Returns \c false if failed, due to a specific search tree part exploration.
+///  If it does not exist, creates a validHistoryId entry for the current search node. Returns false if failed, due to a specific search tree part exploration.
 bool
 Ns_StackSearch::push (const value_type& newNode)
 {
@@ -75,7 +75,7 @@ Ns_StackSearch::push (const value_type& newNode)
         return  true;
 }
 
-///  Returns \c true when a specific search tree part exploration ends.
+///  Returns true when a specific search tree part exploration ends.
 bool
 Ns_StackSearch::splitEnded (void)
 {
@@ -108,7 +108,7 @@ Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
                                 << ( ( top().children > 0 ) ? "LastChild" : "" )
                                 << "\" [shape=doublecircle, height=0.1, label=\"\"];\n";
                 //  If the node has children, and it is a solution, then it
-                //   it is the last child of itself.  (Besides, after the
+                //   it is the last child of itself. (Besides, after the
                 //   success it will be popped by the backtracking
                 //   algorithm.)
                 if ( vObjective  !=  0 ) {
@@ -118,7 +118,7 @@ Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
         }
 }
 
-///  Invalidates the \c validHistoryId for the current search node.
+///  Invalidates the validHistoryId for the current search node.
 void
 Ns_StackSearch::pop (void)
 {
@@ -139,10 +139,9 @@ Ns_StackSearch::pop (void)
                 }
                 fileSearchGraph << ";\n";
                 //  If the node has children, then it it is the last child
-                //   of itself.  (Besides, the `goalNextChoice'--the second
-                //   subgoal of an OR-goal--is executed one level before
-                //   the execution of the first subgoal, in the search
-                //   tree.)
+                //   of itself. Besides, the `goalNextChoice'--the second
+                //   subgoal of an OR-goal--is executed one level before the
+                //   execution of the first subgoal, in the search tree.
         }
         if ( fileSearchGraph  &&  size() - 1 > 1 ) {
                 fileSearchGraph << "\n\t\"("
@@ -225,15 +224,15 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 ///   The method is also called variable oriented propagation. (This idea
 ///   appeared in [McG79] and in [CJ98].)
 ///  Source: <em>An Optimal Coarse-grained Arc Consistency Algorithm,</em>
-///   by C.\ Bessiere et al.
+///   by C. Bessiere et al.
 ///
 ///  \li
-///  Strictly speaking, in AC-3, arc (\a i, \a j) is not enqueued when arc
-///   (\a j, \a i) is made consistent. This optimization could be added in
-///   AC-5 by adding \a j as an argument to Enqueue and adding the
-///   constraint \a k != \a j to its definition.
+///  Strictly speaking, in AC-3, arc (i,j) is not enqueued when arc (j,i) is
+///   made consistent. This optimization could be added in AC-5 by adding j
+///   as an argument to Enqueue and adding the constraint k != j to its
+///   definition.
 ///  Source: <em>A Generic Arc-Consistency Algorithm and its
-///   Specializations,</em> by P.\ van Hentenryck et al.
+///   Specializations,</em> by P. van Hentenryck et al.
 ///
 ///
 ///\note
@@ -248,7 +247,7 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 ///\endcode
 ///
 ///  The following, commented-out code did not work with the above code
-///   (that a Solver's programmer could develop).  We think that the culprit
+///   (that a Solver's programmer could develop). We think that the culprit
 ///   is an STL bug...
 ///
 ///\code
@@ -560,7 +559,7 @@ NsProblemManager::restart (void)
                 vMinObj->remove( bestMinObjValue, NsPLUS_INF/*, 0*/ );
 }
 
-///  Finds next solution of the problem.  Returns \c false when no solution found.
+///  Finds next solution of the problem. Returns false when no solution found.
 bool
 NsProblemManager::nextSolution (void)
 {
