@@ -34,12 +34,8 @@
 ///
 ///  \todo  O(1) removeRange().
 
-//#define Ns_AllDiff_Test
-
 #ifndef Ns_NAXOS_H
 #define Ns_NAXOS_H
-
-//#define Ns_LOCAL_SEARCH
 
 #include <iostream>
 #include <climits>
@@ -87,17 +83,42 @@ class NsException : public std::logic_error {
                 : logic_error("Naxos: " + error_message)  {    }
 };
 
-///  Asserts that the \a condition is \c true.  If it is not, it throws a NsException.
+///  Asserts that the condition is true.  If it is not, it throws a NsException.
 
-///  Here we used the type \a char* for \a errorMessage, instead of
-///   \a string, plainly for time-performance reasons.
+///  Here we used the type char* for message, instead of string, plainly
+///   for time-performance reasons.
 ///   \internal
 inline void
-assert_Ns (const bool condition, const char *errorMessage)
+assert_Ns (const bool condition, const char *message)
 {
         if ( ! condition )
-                throw  NsException(errorMessage);
+                throw  NsException(message);
 }
+
+// Assertions are disabled when the corresponding DEBUG_LEVEL_* is not
+// #define'd, to improve performance. The first debug level is assumed to
+// be active by default.
+#ifdef DEBUG_LEVEL_3
+        #define  DEBUG_LEVEL_2
+        #define  assert_Ns_3(condition, message)  \
+                 (assert_Ns((condition), (message)))
+#else
+        // Level 3 assertions are disabled.
+        #define  assert_Ns_3(condition, message)
+#endif
+
+#ifdef DEBUG_LEVEL_2
+        #define  assert_Ns_2(condition, message)  \
+                 (assert_Ns((condition), (message)))
+        #define  assert_Ns_2_run(condition, message)  \
+                 (assert_Ns_2((condition), (message)))
+#else
+        // Level 2 assertions are disabled.
+        #define  assert_Ns_2(condition, message)
+        // assert_Ns_2_run always executes condition (as a command).
+        #define  assert_Ns_2_run(condition, message)  \
+                 (condition)
+#endif
 
 ///  @{
 ///  \name  Definitions of Naxos Solver types and their limits
@@ -148,14 +169,9 @@ class Ns_ExprElement : public Ns_Expression {
     public:
 
         Ns_ExprElement (NsIntVar& VarIndex_init,
-                        const NsDeque<NsInt>& intArray_init
-                        /*,
-                        					NsIntVar& VarValue_init*/
-                       )
+                        const NsDeque<NsInt>& intArray_init)
                 : VarIndex(VarIndex_init),
                   intArray(intArray_init)
-                  /*,
-                  			VarValue(VarValue_init)*/
         {
         }
 
@@ -817,7 +833,7 @@ class  NsIntVar {
                   lsVal(NsMINUS_INF),
                   lsIdx(NsINDEX_INF)
                   //lsInUnassignQueue(false)
-#endif				 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
         {   }
 
         NsIntVar (NsProblemManager& pm_init, const NsInt min_init, const NsInt max_init);
@@ -935,13 +951,6 @@ class  NsIntVar {
                 return  *pm;
         }
 
-        /////  Graph of the current domain representation.
-        //	void
-        //toGraphFile (const char *fileName)  const
-        //{
-        //	domain.toGraphFile(fileName);
-        //}
-
         ///  @{
         ///  \name  Auxiliary AC algorithm data-members
 
@@ -989,25 +998,10 @@ class  NsIntVar {
         storeRemovedValues (void)  const
         {
                 return  constraintNeedsRemovedValues;
-                //return  ( ! constraintsArcCons.empty() );
         }
 
         ///  Adds a constraint to the collection of constraints of the variable.
         void  addConstraint (Ns_Constraint *c);
-
-        /////  A start point for the constraints of the variable iterator.
-        //const Ns_constraints_array_t::const_iterator
-        //constraints_begin (void)  const
-        //{
-        //	return  constraints.begin();
-        //}
-
-        /////  An end point for the constraints of the variable iterator.
-        //const Ns_constraints_array_t::const_iterator
-        //constraints_end (void)  const
-        //{
-        //	return  constraints.end();
-        //}
 
         ///  @}
 
