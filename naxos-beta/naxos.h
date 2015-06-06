@@ -2647,7 +2647,7 @@ class Ns_ConstrXneqY : public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqAbsY : public Ns_Constraint {
@@ -2714,7 +2714,7 @@ class Ns_ConstrAllDiff : public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif  // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrAllDiffStrong : public Ns_Constraint {
