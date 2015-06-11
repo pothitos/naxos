@@ -4901,6 +4901,21 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         bool  splitEnded (void);
 
+        /// Tests whether splitEnded() tells the truth.
+        bool
+        TEST_splitEnded (void)  const
+        {
+                NsUInt  depth;
+                return  TEST_splitEndedRec(begin(), depth);
+        }
+
+    private:
+
+        bool
+        TEST_splitEndedRec (const_iterator it, NsUInt& depth)  const;
+
+    public:
+
         unsigned long
         numSearchTreeNodes (void)  const
         {

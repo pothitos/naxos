@@ -92,8 +92,24 @@ Ns_StackSearch::splitEnded (void)
                 }
                 return  true;
         } else {
+                assert_Ns_3( ! TEST_splitEnded() ,
+                             "The split has already ended!");
                 return  false;
         }
+}
+
+bool
+Ns_StackSearch::TEST_splitEndedRec (const_iterator it, NsUInt& depth)  const
+{
+        if ( it  ==  end() ) {
+                depth  =  0;
+                return  ( ! endNode.empty() );
+        }
+        NsUInt  children = it->children;
+        bool  matchesEndNode = TEST_splitEndedRec(++it,depth);
+        ++depth;
+        return  ( matchesEndNode && depth <= endNode.size() &&
+                  children >= endNode[depth-1] );
 }
 
 ///  Records the solution node to the goals graph file (if created).
