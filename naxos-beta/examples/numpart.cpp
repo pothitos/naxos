@@ -14,7 +14,7 @@ void ListPrint(NsIntVarArray& List)
                         cout << " " << it->value();
                 }
         }
-        cout << " / ";
+        cout << "\n";
 }
 
 void ListPrintRest(NsIntVarArray& List)
@@ -104,10 +104,8 @@ int main(int argc, char **argv)
                         // READ //
                         while ( pm.readSplit() ) {
                                 pm.addGoal( new NsgLabeling(List) );
-                                while (pm.nextSolution() != false) {
+                                while (pm.nextSolution() != false)
                                         ListPrint(List);
-                                        ListPrintRest(List);
-                                }
                                 pm.restart();
                         }
                 }
