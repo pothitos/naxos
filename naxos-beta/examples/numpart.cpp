@@ -113,7 +113,9 @@ int main(int argc, char **argv)
                 }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
+                return  1;
         } catch (...) {
                 cerr << "Unknown exception" << "\n";
+                return  1;
         }
 }
