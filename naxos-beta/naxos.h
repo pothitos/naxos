@@ -152,8 +152,6 @@ class  Ns_Expression {
         ///   Ns_Expression (\c *this).
         virtual NsIntVar&  post (void)  const = 0;
 
-        //{  throw  NsException("Ns_Expression::post: this is an \"abstract\" function");  }
-
         // The destructor of an abstract class should be virtual.
         virtual ~Ns_Expression (void)  {   }
 };
@@ -4880,21 +4878,21 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         {
                 if ( history_time.size() < size() + 1 )
                         return  false;
-                //  Simulation ratio corresponds to expected descendants.
+                // Simulation ratio corresponds to expected descendants.
                 double  simRatio = pow(simulationRatio, nextMeanDesc());
                 double  random = rand() / (RAND_MAX+1.0);
                 return  ( random <= simRatio );
         }
 
-        ///  The search tree split to be explored starts from this node.
+        /// The search tree split to be explored starts from this node.
         NsList<NsUInt>  startNode;
 
     private:
 
-        ///  The search tree split to be explored ends up in this node.
+        /// The search tree split to be explored ends up in this node.
         NsDeque<NsUInt>  endNode;
 
-        ///  True if there was an unused readSplit call.
+        /// True if there was an unused readSplit call.
         bool  alreadyReadSplit;
 
     public:
