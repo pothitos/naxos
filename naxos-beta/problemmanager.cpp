@@ -80,7 +80,9 @@ bool
 Ns_StackSearch::splitEnded (void)
 {
         if ( top().matchesEndNode  &&
-             ( ( size() == endNode.size() &&
+             ( ( size() < endNode.size() &&
+                 top().children > endNode[size()-1] )  ||
+               ( size() == endNode.size() &&
                  top().children >= endNode[size()-1] )  ||
                size() > endNode.size() ) ) {
                 bool startMatchesPreviousEnd;
