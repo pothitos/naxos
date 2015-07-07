@@ -4903,16 +4903,13 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         /// Tests whether splitEnded() tells the truth.
         bool
-        TEST_splitEnded (void)  const
-        {
-                NsUInt  depth;
-                return  TEST_splitEndedRec(begin(), depth);
-        }
+        TEST_splitEnded (void)  const;
 
     private:
 
-        bool
-        TEST_splitEndedRec (const_iterator it, NsUInt& depth)  const;
+        void
+        TEST_CurrentVsEndNode (const_iterator it, NsUInt& depth,
+                               bool& equal, bool& greater)  const;
 
     public:
 
@@ -4924,7 +4921,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         bool  push (const value_type& newNode);
 
-        void  pop (void);
+        void  pop (const bool deleteStartNode=true);
 
         ///  Restores the validHistoryId 's state as it was before search began.
         void

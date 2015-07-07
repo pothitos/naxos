@@ -65,8 +65,8 @@ Ns_StackSearch::push (const value_type& newNode)
         bool matchesEndNodePrevious =
                 ( ( empty() && ! endNode.empty() )  ||
                   ( ! empty() && top().matchesEndNode &&
-                    size() <= endNode.size() &&
-                    top().children >= endNode[size()-1] ) );
+                    ( size() > endNode.size() ||
+                      top().children >= endNode[size()-1] ) ) );
         NsStack<Ns_SearchNode>::push(newNode);
         top().matchesEndNode = matchesEndNodePrevious;
         if ( history_time.size() < size() )
@@ -81,16 +81,16 @@ Ns_StackSearch::splitEnded (void)
 {
         if ( top().matchesEndNode  &&
              ( ( size() < endNode.size() &&
-                 top().children > endNode[size()-1] )  ||
+                 top().children > endNode[size()-1] ) ||
                ( size() == endNode.size() &&
-                 top().children >= endNode[size()-1] )  ||
+                 top().children >= endNode[size()-1] ) ||
                size() > endNode.size() ) ) {
                 bool startMatchesPreviousEnd;
                 if ( readSplit(startMatchesPreviousEnd) ) {
                         if ( startMatchesPreviousEnd )
-                                return  false;
+                                return  splitEnded();
                         else
-                                alreadyReadSplit  =  true;
+                                alreadyReadSplit = true;
                 }
                 return  true;
         } else {
@@ -100,18 +100,32 @@ Ns_StackSearch::splitEnded (void)
         }
 }
 
+/// Tests whether splitEnded() tells the truth.
 bool
-Ns_StackSearch::TEST_splitEndedRec (const_iterator it, NsUInt& depth)  const
+Ns_StackSearch::TEST_splitEnded (void)  const
 {
-        if ( it  ==  end() ) {
-                depth  =  0;
-                return  ( ! endNode.empty() );
+        NsUInt  depth;
+        bool  equal, greater;
+        TEST_CurrentVsEndNode(begin(), depth, equal, greater);
+        return ( ( equal && depth == endNode.size() )  ||  greater );
+}
+
+/// Recursive function that checks if the current node ID is greater or equal than the endNode ID and sets the boolean arguments `greater' and `equal' accordingly.
+void
+Ns_StackSearch::TEST_CurrentVsEndNode (const_iterator it, NsUInt& depth,
+                                       bool& equal, bool& greater)  const
+{
+        if ( it == end() ) {
+                depth = 0;
+                equal = true;
+                greater = false;
+        } else {
+                NsUInt  children = it->children;
+                TEST_CurrentVsEndNode(++it, depth, equal, greater);
+                ++depth;
+                equal  =  ( equal && depth <= endNode.size() && children == endNode[depth-1] );
+                greater  =  ( greater || ( equal && ( ( depth <= endNode.size() && children > endNode[depth-1] ) || depth > endNode.size() ) ) );
         }
-        NsUInt  children = it->children;
-        bool  matchesEndNode = TEST_splitEndedRec(++it,depth);
-        ++depth;
-        return  ( matchesEndNode && depth <= endNode.size() &&
-                  children >= endNode[depth-1] );
 }
 
 ///  Records the solution node to the goals graph file (if created).
@@ -138,8 +152,10 @@ Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
 
 ///  Invalidates the validHistoryId for the current search node.
 void
-Ns_StackSearch::pop (void)
+Ns_StackSearch::pop (const bool deleteStartNode)
 {
+        if ( deleteStartNode )
+                startNode.clear();
         if ( fileSearchGraph  &&  size() - 1 > 0  &&  top().children > 0 ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
@@ -401,8 +417,8 @@ Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
         bool&  matchesEndNode = it->matchesEndNode;
         matchesEndNode = updateMatchesEndNodeRec(++it,depth);
         ++depth;
-        return  ( matchesEndNode && depth <= endNode.size() &&
-                  children >= endNode[depth-1] );
+        return  ( matchesEndNode && ( depth > endNode.size() ||
+                  children >= endNode[depth-1] ) );
 }
 
 #include <sstream>
@@ -560,13 +576,13 @@ NsProblemManager::restart (void)
                 if ( goalNextChoice  ==  0 )
                         foundSecondFrame  =  true;
                 searchNodes.top().bitsetsStore.restore();
-                searchNodes.pop();
+                searchNodes.pop(false);
                 searchNodes.top().stackAND.push( goalNextChoice );
                 // We keeped the above line because of Memory Management
                 //  reasons (in order to delete the `goalNextChoice').
                 assert_Ns( ! searchNodes.empty() ,  "`restart()' call, before `nextSolution()'");
         } while ( ! foundSecondFrame );
-        searchNodes.pop();
+        searchNodes.pop(false);
         searchNodes.reset();
         if ( ! searchNodes.startNode.empty() )
                 searchNodes.startNode.push_front(1);
