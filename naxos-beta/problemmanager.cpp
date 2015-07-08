@@ -80,7 +80,9 @@ bool
 Ns_StackSearch::splitEnded (void)
 {
         if ( top().matchesEndNode  &&
-             ( ( size() < endNode.size() &&
+             ( ( size()-1 < endNode.size() &&
+                 (*(++begin())).children > endNode[size()-2] ) ||
+               ( size() < endNode.size() &&
                  top().children > endNode[size()-1] ) ||
                ( size() == endNode.size() &&
                  top().children >= endNode[size()-1] ) ||
@@ -542,8 +544,8 @@ NsProblemManager::backtrack (void)
                 assert_Ns( ! searchNodes.empty() ,
                            "NsProblemManager::backtrack: "
                            "`searchNodes' is empty");
-                goalNextChoice  =  searchNodes.top().goalNextChoice;
-                if ( goalNextChoice  ==  0 )
+                goalNextChoice = searchNodes.top().goalNextChoice;
+                if ( goalNextChoice == 0 )
                         return  false;
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
