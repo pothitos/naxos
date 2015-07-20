@@ -5004,6 +5004,18 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
     private:
 
+        /// The mapper's ID.
+        int  mapper;
+
+        /// The mapper's current input line.
+        std::string  mapperLine;
+
+        /// The time the mapper started to process a line.
+        double  mapperLineStartTime;
+
+        /// File to store the MapReduce mapper's input.
+        std::ofstream  fileMapperInput;
+
         ///  File to store the search tree graph.
         std::ofstream  fileSearchGraph;
 
@@ -5016,6 +5028,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
     public:
 
         void  searchToGraphFile (const char *fileName);
+
+        void  mapperInputToFile (const char *fileName, int mapperId);
 
         void  solutionNode (const NsIntVar *vObjective);
 
@@ -5288,6 +5302,13 @@ class  NsProblemManager {
         bool  nextSolution (void);
 
         void  restart (void);
+
+        ///  Writes to a file the (splits) input of a mapper.
+        void
+        mapperInputToFile (const char *fileName, int mapper)
+        {
+                searchNodes.mapperInputToFile(fileName, mapper);
+        }
 
         ///  Writes to a file a view of the search tree in a Graphviz supported format.
         void

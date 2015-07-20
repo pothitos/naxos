@@ -22,7 +22,7 @@ HEADERS = $(addprefix $(NAXOS)/, naxos.h internal.h stack.h)
 all: $(PROGRAMS)
 $(OBJECTS):   %.o:   %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $<  -o $@
-$(PR_OBJECTS):   %.o:   %.cpp
+$(PR_OBJECTS):   %.o:   %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -I$(NAXOS) -c  $<
 $(PROGRAMS):   %:   $(OBJECTS) %.o
 	$(LD) $(LDFLAGS) $^  -o $@

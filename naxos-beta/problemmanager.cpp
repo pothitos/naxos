@@ -37,6 +37,16 @@ Ns_StackSearch::goal_iterator::operator ++ (void)
         return  *this;
 }
 
+///  Writes to a file the (splits) input of a mapper.
+void
+Ns_StackSearch::mapperInputToFile (const char *fileName, int mapperId)
+{
+        fileMapperInput.open(fileName);
+        assert_Ns( fileMapperInput ,
+                   "Ns_StackSearch::mapperInputToFile: Could not open file");
+        mapper = mapperId;
+}
+
 ///  Writes to a file a view of the search tree in a Graphviz supported format.
 void
 Ns_StackSearch::searchToGraphFile (const char *fileName)
@@ -386,6 +396,12 @@ Ns_StackSearch::~Ns_StackSearch (void)
                 fileSearchGraph << "}\n";
                 fileSearchGraph.close();
         }
+        if ( fileMapperInput && ! mapperLine.empty() ) {
+                fileMapperInput << fixed
+                        << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                        << "\t" << mapper
+                        << "\t" << mapperLine << "\n";
+        }
 }
 
 Ns_StackGoals::~Ns_StackGoals (void)
@@ -433,10 +449,17 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
                 alreadyReadSplit  =  false;
                 return  true;
         }
-        string  lineString;
-        if ( ! getline(cin,lineString) )
+        if ( ! getline(cin,mapperLine) || mapperLine.empty() )
                 return  false;
-        istringstream  line(lineString);
+        if ( fileMapperInput && ! mapperLine.empty() ) {
+                fileMapperInput << fixed
+                        << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                        << "\t" << mapper
+                        << "\t" << mapperLine << "\n";
+        }
+        istringstream  line(mapperLine);
+        if ( fileMapperInput )
+                mapperLineStartTime = clock();
         NsUInt  node;
         startMatchesPreviousEnd  =  true;
         NsDeque<NsUInt>::const_iterator  endIt = endNode.begin();
