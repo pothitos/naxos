@@ -4780,14 +4780,11 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 ///  The time consumed all the nodes in this level.
                 double  timeSum;
 
-                ///  The number of the descendants of all nodes in this level.
-                double  descSum;
+                ///  The number of the descendants of all nodes in this level squared.
+                double  descSum2;
 
-                ///  The simulation time for the children of all the nodes in this level.
-                double  timeSimChildSum;
-
-                ///  The simulated descendants for the children of all the nodes in this level.
-                double  descSimChildSum;
+                ///  The mean number of the descendants of all nodes in this level.
+                double  descMean;
 
                 ///  The sum of the weights of timeSum terms.
                 double  timeWeights;
@@ -4799,9 +4796,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 history_time_t (void)
                         : validHistoryId(0),
                           timeSum(0.0),
-                          descSum(0.0),
-                          timeSimChildSum(0.0),
-                          descSimChildSum(0.0),
+                          descSum2(0.0),
+                          descMean(0.0),
                           timeWeights(0.0),
                           descWeights(0.0)
                 {    }
@@ -4819,17 +4815,27 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                                            timeSimChild;
                         double  descNode = descNow - descBorn +
                                            descSimChild;
-                        double  timeWeight = validHistoryId *
+                        double  timeWeight =
                                          (timeNode - timeSimChild + 1.0) /
                                          (timeNode + 1.0);
-                        double  descWeight = validHistoryId *
+                        double  descWeight =
                                          (descNode - descSimChild + 1.0) /
                                          (descNode + 1.0);
                         timeSum += timeNode * timeWeight;
-                        descSum += descNode * descWeight;
-                        timeSimChildSum += timeSimChild * timeWeight;
-                        descSimChildSum += descSimChild * descWeight;
                         timeWeights += timeWeight;
+                        // Compute descendants weighted mean and variance:
+                        //  temp = weight + sumweight
+                        double  temp = descWeight + descWeights;
+                        // delta = x - mean
+                        double  delta = descNode - descMean;
+                        // R = delta * weight / temp
+                        double  R = delta * descWeight / temp;
+                        // mean = mean + R
+                        descMean += R;
+                        // M2 = M2 + sumweight * delta * R
+                        descSum2 += descWeights * delta * R;
+                        //descSum += descNode * descWeight;
+                        // sumweight = temp
                         descWeights += descWeight;
                 }
 
@@ -4838,17 +4844,30 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 meanTime (void)  const
                 {
                         assert_Ns( validHistoryId != 0 ,
-                                   "history_time_t::mean: Cannot get mean value of an empty set");
+                                   "history_time_t::meanTime: Cannot get mean value of an empty set");
                         return  ( timeSum / timeWeights );
                 }
 
-                ///  The mean value of the time spent in this level.
+                ///  The mean value of the time spent in this level plus the standard deviation.
                 double
                 meanDesc (void)  const
                 {
                         assert_Ns( validHistoryId != 0 ,
-                                   "history_time_t::mean: Cannot get mean value of an empty set");
-                        return  ( descSum / descWeights );
+                                   "history_time_t::meanDesc: Cannot get mean value of an empty set");
+                        return  descMean;
+                }
+
+                ///  The mean value of the time spent in this level plus the standard deviation.
+                double
+                meanDescPlusSD (void)  const
+                {
+                        assert_Ns( validHistoryId > 1 ,
+                                   "history_time_t::meanDescPlusSD: Cannot get standard deviation");
+                        // variance_n = M2/sumweight
+                        double  variance_n = descSum2 / descWeights;
+                        // variance = variance_n * len(dataWeightPairs)/(len(dataWeightPairs) - 1)
+                        double  variance = variance_n * validHistoryId / (validHistoryId - 1);
+                        return  ( descMean + sqrt(variance) );
                 }
         };
 
@@ -4872,14 +4891,21 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 return  history_time[size()].meanDesc();
         }
 
+        ///  The mean value of the descendants in the next level plus the standard deviation.
+        double
+        nextMeanDescPlusSD (void)  const
+        {
+                return  history_time[size()].meanDescPlusSD();
+        }
+
         ///  Decides whether the next level will be explored or simulated.
         bool
         overrideNextLevel (void)
         {
-                if ( history_time.size() < size() + 1 )
+                if ( history_time.size() < size() + 1 || history_time[size()].validHistoryId < 2 )
                         return  false;
                 // Simulation ratio corresponds to expected descendants.
-                double  simRatio = pow(simulationRatio, nextMeanDesc());
+                double  simRatio = pow(simulationRatio, nextMeanDescPlusSD());
                 double  random = rand() / (RAND_MAX+1.0);
                 return  ( random <= simRatio );
         }
