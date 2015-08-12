@@ -37,7 +37,9 @@ Ns_StackSearch::goal_iterator::operator ++ (void)
         return  *this;
 }
 
-///  Writes to a file the (splits) input of a mapper.
+/// Writes to a file the (splits) input of a mapper.
+
+/// It can be called in main with the following arguments: mapperInputToFile( (string("/tmp/partitions") + "." + getenv("mapreduce_task_partition") + ".txt").c_str(), atoi(getenv("mapreduce_task_partition")) )
 void
 Ns_StackSearch::mapperInputToFile (const char *fileName, int mapperId)
 {
