@@ -5429,31 +5429,16 @@ class  NsProblemManager {
         ///  The previous recorded node by the splitting process.
         NsUInt  startNodeId;
 
+        /// Flag set by nextSolution() when time is up.
+        bool  timeIsOver;
+
     public:
 
-        ///  Sets the time ticks limit for each search space split.
-        void
-        splitTimeLimit (const clock_t ticks, const double simulationRatio)
-        {
-                assert_Ns( 0.0 <= simulationRatio &&
-                                  simulationRatio <= 1.0 ,
-                           "NsProblemManager::splitTimeLimit: "
-                           "`simulationRatio' must be between 0 and 1");
-                timeSplitLim = ticks;
-                searchNodes.simulationRatio = simulationRatio;
-                startNodeId = getCurrentNodeNum();
-                startSplitTime = clock();
-                assert_Ns( startSplitTime != -1 ,
-                           "Could not find time for `splitTimeLimit'");
-                searchNodes.currentNodeId();
-        }
-
-        ///  Explore specific search tree splits described in standard input.
+        ///  Returns true when the available time to solve the problem expires.
         bool
-        readSplit (void)
+        timeIsUp (void) const
         {
-                bool  foo;
-                return  searchNodes.readSplit(foo);
+                return  timeIsOver;
         }
 
         ///  Sets the time limit.  After this limit is exceeded, nextSolution() returns \c false.
@@ -5482,6 +5467,48 @@ class  NsProblemManager {
         }
 
         ///  @}
+
+        /// @{
+        /// \name  Search tree splitting functions
+
+        /// The first word of a line that descibes a search tree split.
+        static const char  *SPLIT_HEADER;
+
+        /// Prints out the header, e.g. the word "Split", in front of each line that designates a search tree split.
+        void
+        splitHeader (void)
+        {
+                std::cout << SPLIT_HEADER << " ";
+        }
+
+        /// Sets the time ticks limit for each search space split.
+        void
+        splitTimeLimit (const double secs, const double simulationRatio)
+        {
+                clock_t ticks = secs * CLOCKS_PER_SEC;
+                assert_Ns( 0.0 <= simulationRatio &&
+                                  simulationRatio <= 1.0 ,
+                           "NsProblemManager::splitTimeLimit: "
+                           "`simulationRatio' must be between 0 and 1");
+                timeSplitLim = ticks;
+                searchNodes.simulationRatio = simulationRatio;
+                startNodeId = getCurrentNodeNum();
+                startSplitTime = clock();
+                assert_Ns( startSplitTime != -1 ,
+                           "Could not find time for `splitTimeLimit'");
+                splitHeader();
+                searchNodes.currentNodeId();
+        }
+
+        /// Explore specific search tree splits described in standard input.
+        bool
+        readSplit (void)
+        {
+                bool  foo;
+                return  searchNodes.readSplit(foo);
+        }
+
+        /// @}
 
         ///  @{
         ///  \name  Statistic members

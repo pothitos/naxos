@@ -443,31 +443,37 @@ Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
 
 #include <sstream>
 
+const char  *NsProblemManager::SPLIT_HEADER = "Split:";
+
 ///  Explore specific search tree splits described in standard input.
 bool
 Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
 {
         if ( alreadyReadSplit ) {
-                alreadyReadSplit  =  false;
+                alreadyReadSplit = false;
                 return  true;
         }
         if ( ! getline(cin,mapperLine) || mapperLine.empty() )
                 return  false;
-        if ( fileMapperInput && ! mapperLine.empty() ) {
+        if ( fileMapperInput && !mapperLine.empty() ) {
                 fileMapperInput << fixed
                         << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
                         << "\t" << mapper
                         << "\t" << mapperLine << "\n";
         }
-        istringstream  line(mapperLine);
         if ( fileMapperInput )
                 mapperLineStartTime = clock();
+        istringstream  line(mapperLine);
+        string  lineHeader;
+        assert_Ns( line >> lineHeader &&
+                   lineHeader == NsProblemManager::SPLIT_HEADER ,
+                  "Ns_StackSearch::readSplit: Wrong split line header");
         NsUInt  node;
-        startMatchesPreviousEnd  =  true;
+        startMatchesPreviousEnd = true;
         NsDeque<NsUInt>::const_iterator  endIt = endNode.begin();
         startNode.clear();
         while ( line >> node ) {
-                if ( endIt == endNode.end()  ||  *endIt != node )
+                if ( endIt == endNode.end() || *endIt != node )
                         startMatchesPreviousEnd  =  false;
                 else
                         ++endIt;
@@ -624,6 +630,7 @@ NsProblemManager::restart (void)
 bool
 NsProblemManager::nextSolution (void)
 {
+        timeIsOver = false;
         bool  isArcCons = true;
         if ( firstNextSolution ) {
                 firstNextSolution  =  false;
@@ -653,20 +660,20 @@ NsProblemManager::nextSolution (void)
                 if ( searchNodes.top().stackAND.empty()  &&  searchNodes.top().delayedGoal == searchNodes.gend() )
                         return  isArcCons;
         }
-        if ( calledTimeLimit  &&  timeLim != 0 ) {
-                calledTimeLimit  =  false;
+        if ( calledTimeLimit && timeLim != 0 ) {
+                calledTimeLimit = false;
                 if ( isRealTime ) {
-                        startRealTime  =  time(0);
-                        assert_Ns(startRealTime != -1,  "Could not find time for `realTimeLimit'");
+                        startRealTime = time(0);
+                        assert_Ns(startRealTime != -1, "Could not find time for `realTimeLimit'");
                 } else {
-                        startTime  =  clock();
-                        assert_Ns(startTime != -1,  "Could not find time for `timeLimit'");
+                        startTime = clock();
+                        assert_Ns(startTime != -1, "Could not find time for `timeLimit'");
                 }
         }
-        if ( ( ! isArcCons  ||  ! arcConsistent() )
+        if ( ( !isArcCons || !arcConsistent() )
              || (searchNodes.top().stackAND.empty()
-                 &&  searchNodes.top().delayedGoal == searchNodes.gend()) ) {
-                if ( ! backtrack() )
+                 && searchNodes.top().delayedGoal == searchNodes.gend()) ) {
+                if ( !backtrack() )
                         return  false;
         }
         NsGoal  *CurrGoal, *NewGoal;
@@ -683,6 +690,7 @@ NsProblemManager::nextSolution (void)
                         cout << " - ";
                         searchNodes.currentNodeId();
                         cout << "\n";
+                        splitHeader();
                         searchNodes.currentNodeId();
                 }
                 popped_a_goal  =  false;
@@ -762,5 +770,6 @@ NsProblemManager::nextSolution (void)
                         }
                 }
         }
+        timeIsOver = true;
         return  false;
 }

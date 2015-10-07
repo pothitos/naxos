@@ -7,9 +7,21 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <sstream>
 
 using namespace std;
 using namespace naxos;
+
+void
+simulate (NsProblemManager& pm, NsIntVarArray& Var,
+          double splitTime, double simulationRatio)
+{
+        pm.splitTimeLimit(splitTime, simulationRatio);
+        pm.addGoal( new NsgLabeling(Var) );
+        while (pm.nextSolution() != false)
+                 /*VOID*/ ;
+        cout << "\n";
+}
 
 int  main (int argc, char *argv[])
 {
@@ -25,34 +37,33 @@ int  main (int argc, char *argv[])
                 pm.add( NsAllDiff(Var) );
                 pm.add( NsAllDiff(VarPlus) );
                 pm.add( NsAllDiff(VarMinus) );
-                if ( argc > 2 ) {
-                        // SPLIT //
-                        if ( argc < 4 ) {
-                                std::cerr << "Provide the simulation ratio!" << "\n";
-                                return  1;
-                        }
-                        unsigned  seed = time(0);
-                        cerr << "Random seed is " << seed << "\n";
-                        srand(seed);
-                        pm.splitTimeLimit(CLOCKS_PER_SEC*atof(argv[2]), atof(argv[3]));
+                // MapExplore specific code follows //
+                srand(time(0));
+                double  maxSplitTime, splitTime, simulationRatio;
+                if ( !( argc == 5 &&
+                        istringstream(argv[2]) >> maxSplitTime &&
+                        istringstream(argv[3]) >> splitTime &&
+                        istringstream(argv[4]) >> simulationRatio ) ) {
+                        cerr << "Usage: " << argv[0]
+                             << " <N> <max_split_time> <split_time> <simulation_ratio>\n";
+                        return  1;
+                }
+                while ( pm.readSplit() ) {
+                        pm.timeLimit(maxSplitTime);
                         pm.addGoal( new NsgLabeling(Var) );
-                        while (pm.nextSolution() != false)
-                                /*VOID*/ ;
-                        cout << "\n";
-                } else {
-                        // READ //
-                        while ( pm.readSplit() ) {
-                                pm.addGoal( new NsgLabeling(Var) );
-                                while (pm.nextSolution() != false) {
-                                        for (int i=0;  i < N;  ++i) {
-                                                cout << Var[i].value();
-                                                if ( i < N-1 )
-                                                        cout << " ";
-                                        }
-                                        cout << "\n";
+                        while ( pm.nextSolution() != false ) {
+                                for (int i=0;  i < N;  ++i) {
+                                        cout << Var[i].value();
+                                        if ( i < N-1 )
+                                                cout << " ";
                                 }
-                                pm.restart();
+                                cout << "\n";
                         }
+                        if ( pm.timeIsUp() ) {
+                                pm.timeLimit(0);
+                                simulate(pm, Var, splitTime, simulationRatio);
+                        }
+                        pm.restart();
                 }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
