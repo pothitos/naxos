@@ -74,7 +74,7 @@ Ns_StackSearch::push (const value_type& newNode)
                 else
                         startNode.pop_front();
         }
-        bool matchesEndNodePrevious =
+        bool  matchesEndNodePrevious =
                 ( ( empty() && ! endNode.empty() )  ||
                   ( ! empty() && top().matchesEndNode &&
                     ( size() > endNode.size() ||
@@ -146,7 +146,7 @@ Ns_StackSearch::TEST_CurrentVsEndNode (const_iterator it, NsUInt& depth,
 void
 Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
 {
-        if ( fileSearchGraph ) {
+        if ( fileSearchGraph.is_open() ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
@@ -170,7 +170,7 @@ Ns_StackSearch::pop (const bool deleteStartNode)
 {
         if ( deleteStartNode )
                 startNode.clear();
-        if ( fileSearchGraph  &&  size() - 1 > 0  &&  top().children > 0 ) {
+        if ( fileSearchGraph.is_open() && size() - 1 > 0 && top().children > 0 ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
@@ -179,7 +179,7 @@ Ns_StackSearch::pop (const bool deleteStartNode)
                                 << history_time[size()-1].validHistoryId
                                 << ")LastChild\"";
                 if ( recordObjective ) {
-                        recordObjective  =  false;
+                        recordObjective = false;
                         fileSearchGraph << "   [fontsize=9"
                                         << ", headlabel=\""
                                         << objectiveValue << "\""
@@ -191,7 +191,7 @@ Ns_StackSearch::pop (const bool deleteStartNode)
                 //   subgoal of an OR-goal--is executed one level before the
                 //   execution of the first subgoal, in the search tree.
         }
-        if ( fileSearchGraph  &&  size() - 1 > 1 ) {
+        if ( fileSearchGraph.is_open() && size() - 1 > 1 ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-2 << ","
                                 << history_time[size()-2].validHistoryId
@@ -394,11 +394,11 @@ Ns_StackSearch::clear (void)
 Ns_StackSearch::~Ns_StackSearch (void)
 {
         clear();
-        if ( fileSearchGraph ) {
+        if ( fileSearchGraph.is_open() ) {
                 fileSearchGraph << "}\n";
                 fileSearchGraph.close();
         }
-        if ( fileMapperInput && ! mapperLine.empty() ) {
+        if ( fileMapperInput.is_open() && ! mapperLine.empty() ) {
                 fileMapperInput << fixed
                         << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
                         << "\t" << mapper
@@ -455,13 +455,13 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
         }
         if ( ! getline(cin,mapperLine) || mapperLine.empty() )
                 return  false;
-        if ( fileMapperInput && !mapperLine.empty() ) {
+        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
                 fileMapperInput << fixed
                         << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
                         << "\t" << mapper
                         << "\t" << mapperLine << "\n";
         }
-        if ( fileMapperInput )
+        if ( fileMapperInput.is_open() )
                 mapperLineStartTime = clock();
         istringstream  line(mapperLine);
         string  lineHeader;
