@@ -67,7 +67,7 @@ void
 Ns_QueueItem::boundChangedBy (const Ns_Constraint *constr)
 {
         //if ( stale )
-        //	varFired->manager().getQueue().pushToEnd( iter );
+        //      varFired->manager().getQueue().pushToEnd( iter );
         removedBoundRec.boundChangedBy(constr ,
                                        varFired->manager().numConstraintChecks() );
 }
@@ -78,7 +78,7 @@ void
 Ns_QueueItem::add (const NsInt removedVal, const Ns_Constraint *constrThatRemovedIt)
 {
         //if ( stale )
-        //	varFired->manager().getQueue().pushToEnd( iter );
+        //      varFired->manager().getQueue().pushToEnd( iter );
         removedValues.push_back(
                 RemovedValueRecord_t( removedVal, constrThatRemovedIt) );
 }
@@ -94,22 +94,22 @@ NsIntVar::removeRange (const NsInt first, const NsInt last,
                 rangeEmpty  =  false;
                 ////  To get the appropriate queueItem()...
                 //if ( ! pm->isCurrentHistoryId(domain.lastSaveHistoryId()) )
-                //	pm->saveBitsetDomain(domain);
+                //      pm->saveBitsetDomain(domain);
                 if ( queueItem  ==  0 ) {
                         pm->getQueue().push( Ns_QueueItem(this) );
                         queueItem  =  & pm->getQueue().back();
                 }
                 queueItem->boundChangedBy(constr);
                 //for (NsDeque<NsIntVar::ConstraintAndFailure>::size_type  currentConstr = 0;
-                //	currentConstr < constraints.size();
-                //	++currentConstr)
+                //      currentConstr < constraints.size();
+                //      ++currentConstr)
                 //{
-                //	if ( constraints[currentConstr].constr->revisionType ==
-                //			Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_OUT_OF_QUEUE )
-                //	{
-                //		constraints[currentConstr].constr->revisionType  =
-                //			Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_IN_QUEUE;
-                //	}
+                //      if ( constraints[currentConstr].constr->revisionType ==
+                //                      Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_OUT_OF_QUEUE )
+                //      {
+                //              constraints[currentConstr].constr->revisionType  =
+                //                      Ns_Constraint::BIDIRECTIONAL_CONSISTENCY_IN_QUEUE;
+                //      }
                 //}
         }
         //  Check for modifications of the intermediate values of the
@@ -127,9 +127,9 @@ NsIntVar::removeRange (const NsInt first, const NsInt last,
                         //  Uncomment the following for AC-3.
                         //if ( queueItem  ==  0 )    {
                         //
-                        //	pm->getQueue().push( Ns_QueueItem(this) );
+                        //      pm->getQueue().push( Ns_QueueItem(this) );
                         //
-                        //	queueItem  =  & pm->getQueue().back();
+                        //      queueItem  =  & pm->getQueue().back();
                         //}
                         //
                         //queueItem->boundChangedBy(constr);
@@ -137,7 +137,7 @@ NsIntVar::removeRange (const NsInt first, const NsInt last,
                                 break;
                         ////  To get the appropriate queueItem()...
                         //if ( ! pm->isCurrentHistoryId(domain.lastSaveHistoryId()) )
-                        //	pm->saveBitsetDomain(domain);
+                        //      pm->saveBitsetDomain(domain);
                         if ( queueItem  ==  0 ) {
                                 pm->getQueue().push( Ns_QueueItem(this) );
                                 queueItem  =  & pm->getQueue().back();
@@ -161,9 +161,9 @@ NsIntVar::addConstraint (Ns_Constraint *constr)
 {
         constraints.push_back( ConstraintAndFailure(constr) );
         //if ( constr->needsRemovedValues() )
-        //	constraintsArcCons.push_back(constr);
+        //      constraintsArcCons.push_back(constr);
         //else
-        //	constraintsBoundsCons.push_back(constr);
+        //      constraintsBoundsCons.push_back(constr);
         assert_Ns( constr->varsInvolvedIn() >= 1 ,
                    "NsIntVar::addConstraint: Wrong `varsInvolvedIn' constraint `constr'");
         arcsConnectedTo  +=  constr->varsInvolvedIn() - 1;
@@ -183,7 +183,7 @@ NsIntVar::NsIntVar (NsProblemManager& pm_init, const NsInt min_init, const NsInt
           lsVal(NsMINUS_INF),
           lsIdx(NsINDEX_INF)
 //lsInUnassignQueue(false)
-#endif							 // Ns_LOCAL_SEARCH
+#endif                                                   // Ns_LOCAL_SEARCH
 {
         pm->addVar(this);
         //domain  =  new Ns_BitSet(pm_init, min_init, max_init);
@@ -199,7 +199,7 @@ NsIntVar::NsIntVar (const Ns_Expression& expr)
 NsIntVar&
 NsIntVar::operator = (const Ns_Expression& expr)
 {
-        assert_Ns( pm == 0			 //&&  domain == 0
+        assert_Ns( pm == 0                       //&&  domain == 0
                    &&  constraints.empty()
                    &&  constraintNeedsRemovedValues == false
                    //&&  constraintsBoundsCons.empty()  &&  constraintsArcCons.empty()

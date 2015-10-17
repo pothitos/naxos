@@ -1014,10 +1014,10 @@ class  NsIntVar {
         Ns_QueueItem  *queueItem;
 
         ///  The item in the AC queue that refers to the variable.  If there is no such item, the pointer is null.  This variable is stored in the domain for backtracking reasons.
-        //	Ns_QueueItem*&
+        //      Ns_QueueItem*&
         //queueItem (void)
         //{
-        //	return  domain.queueItem;
+        //      return  domain.queueItem;
         //}
 
 #ifdef  Ns_LOCAL_SEARCH
@@ -1154,7 +1154,7 @@ class  NsIntVar {
         //const NsSet<NsIndex>&
         //lsViolatedConstraintsIDs (void)  const
         //{
-        //	return  lsViolatedConstrs;
+        //      return  lsViolatedConstrs;
         //}
 
         ///  True, if there has been assigned a value (by Local Search) to the variable.
@@ -1205,23 +1205,23 @@ class  NsIntVar {
         //void  lsUnsetCommit (void);
 
         /////  Retains the current value of the variable, or un-assigns it if it is not supported.
-        //	void
+        //      void
         //lsRefresh (void)
         //{
-        //	for (NsList<VarPointer_t>::const_iterator var_val=lsSupportTuple.begin();
-        //			var_val != lsSupportTuple.end();
-        //			++var_val)
-        //	{
-        //		if ( var_val->Var->lsValue()  !=  var_val->value )
-        //		{
-        //			lsUnsetCommit();
-        //			return;
-        //		}
-        //	}
+        //      for (NsList<VarPointer_t>::const_iterator var_val=lsSupportTuple.begin();
+        //                      var_val != lsSupportTuple.end();
+        //                      ++var_val)
+        //      {
+        //              if ( var_val->Var->lsValue()  !=  var_val->value )
+        //              {
+        //                      lsUnsetCommit();
+        //                      return;
+        //              }
+        //      }
         //}
 
         ///  @}
-#endif					 // Ns_LOCAL_SEARCH
+#endif                                   // Ns_LOCAL_SEARCH
 
         void  transparent (void);
 };
@@ -1723,7 +1723,7 @@ class Ns_ConstrXlesseqthanY : public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif                                   // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqYplusC : public Ns_Constraint {
@@ -1760,7 +1760,7 @@ class Ns_ConstrXeqYplusC : public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif                                   // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqCminusY : public Ns_Constraint {
@@ -1870,7 +1870,7 @@ class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
 
         //virtual bool  needsRemovedValues (void)  const
         //{
-        //	return  true;
+        //      return  true;
         //}
 
         virtual void
@@ -1918,7 +1918,7 @@ class Ns_ConstrXeqYplusZ: public Ns_Constraint {
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
 #ifdef  Ns_LOCAL_SEARCH
         virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif					 // Ns_LOCAL_SEARCH
+#endif                                   // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqYtimesZ: public Ns_Constraint {
@@ -1968,7 +1968,7 @@ class Ns_ConstrXeqYdivC : public Ns_Constraint {
                 revisionType  =  BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns( &VarX->manager() == &VarY->manager(),  "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: All the variables of a constraint must belong to the same NsProblemManager");
                 //assert_Ns(Y->min() >= 0,
-                //		"Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required:  Y >= 0");
+                //              "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required:  Y >= 0");
                 assert_Ns(C != 0,
                           "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required:  C != 0");
         }
@@ -2059,7 +2059,7 @@ class Ns_ConstrXeqYmodC : public Ns_Constraint {
 
         //virtual bool  needsRemovedValues (void)  const
         //{
-        //	return  true;
+        //      return  true;
         //}
 
         virtual void
@@ -2368,20 +2368,20 @@ class Ns_ConstrMetaXeqYneqC : public Ns_Constraint {
 };
 
 //class Ns_ConstrMetaXeqYneqZ : public Ns_Constraint  {
-//	private:
-//		NsIntVar  *VarX, *VarY, *VarZ;
+//      private:
+//              NsIntVar  *VarX, *VarY, *VarZ;
 //
-//	public:
-//		Ns_ConstrMetaXeqYneqZ (NsIntVar *X, NsIntVar *Y, NsIntVar *Z)
-//			: VarX(X), VarY(Y), VarZ(Z)
-//		{
-//			assert_Ns( VarX->manager() == VarY->manager()  &&  VarY->manager() == VarZ->manager(),  "Ns_ConstrMetaXeqYneqZ::Ns_ConstrMetaXeqYneqZ: All the variables of a constraint must belong to the same NsProblemManager");
-//		}
+//      public:
+//              Ns_ConstrMetaXeqYneqZ (NsIntVar *X, NsIntVar *Y, NsIntVar *Z)
+//                      : VarX(X), VarY(Y), VarZ(Z)
+//              {
+//                      assert_Ns( VarX->manager() == VarY->manager()  &&  VarY->manager() == VarZ->manager(),  "Ns_ConstrMetaXeqYneqZ::Ns_ConstrMetaXeqYneqZ: All the variables of a constraint must belong to the same NsProblemManager");
+//              }
 //
-//		virtual int   varsInvolvedIn (void)  const    {  return 3;  }
+//              virtual int   varsInvolvedIn (void)  const    {  return 3;  }
 //
-//		virtual void  ArcCons      (void)  const;
-//		virtual void  LocalArcCons (Ns_QueueItem& Qitem)  const;
+//              virtual void  ArcCons      (void)  const;
+//              virtual void  LocalArcCons (Ns_QueueItem& Qitem)  const;
 //};
 
 class Ns_ConstrXeqYandZ : public Ns_Constraint {
@@ -2705,7 +2705,7 @@ class Ns_ConstrAllDiff : public Ns_Constraint {
 
         //virtual bool  needsRemovedValues (void)  const
         //{
-        //	return  true;
+        //      return  true;
         //}
 
         virtual void  ArcCons      (void);
@@ -2781,12 +2781,12 @@ class Ns_ConstrAllDiffStrong : public Ns_Constraint {
                 return VarArr.size();
         }
 
-        //	virtual void
+        //      virtual void
         //toGraphFile (std::ofstream& fileConstraintsGraph)  const
         //{
-        //	Ns_arrayConstraintToGraphFile(
-        //		fileConstraintsGraph,
-        //		&VarArr, this, "!= strong");
+        //      Ns_arrayConstraintToGraphFile(
+        //              fileConstraintsGraph,
+        //              &VarArr, this, "!= strong");
         //}
 
         virtual void  ArcCons      (void);
@@ -2951,7 +2951,7 @@ class Ns_ConstrInverse : public Ns_Constraint {
 
         //virtual bool  needsRemovedValues (void)  const
         //{
-        //	return  true;
+        //      return  true;
         //}
 
         virtual void
@@ -3078,7 +3078,7 @@ operator /  (NsIntVar& Y, const NsInt C)
 {
         //if (C < 0)
         //// In order to conform to the requirements of the constraint implementation
-        //	return  ( - (Y / -C) );
+        //      return  ( - (Y / -C) );
         return  Ns_ExprYdivC( Y, C );
 }
 
@@ -3087,7 +3087,7 @@ operator /  (const Ns_Expression& Yexpr, const NsInt C)
 {
         //if (C < 0)
         //// In order to conform to the requirements of the constraint implementation
-        //	return  ( - (Yexpr / -C) );
+        //      return  ( - (Yexpr / -C) );
         return  ( Yexpr.post() / C );
 }
 
@@ -3370,7 +3370,7 @@ operator /  (const NsInt C, NsIntVar& Z)
 {
         //if (C < 0)
         //// In order to conform to the requirements of the constraint implementation
-        //	return  ( - (-C / Z) );
+        //      return  ( - (-C / Z) );
         return  Ns_ExprCdivZ( C, Z );
 }
 
@@ -3379,7 +3379,7 @@ operator /  (const NsInt C, const Ns_Expression& Zexpr)
 {
         //if (C < 0)
         //// In order to conform to the requirements of the constraint implementation
-        //	return  ( - (-C / Zexpr) );
+        //      return  ( - (-C / Zexpr) );
         return  ( C / Zexpr.post() );
 }
 
@@ -3443,7 +3443,7 @@ operator %  (NsIntVar& Y, const NsInt C)
 {
         //if (C < 0)
         //// In order to conform to the requirements of the constraint implementation
-        //	return  ( - (Y % -C) );
+        //      return  ( - (Y % -C) );
         return  Ns_ExprYmodC( Y, C );
 }
 
@@ -3452,7 +3452,7 @@ operator %  (const Ns_Expression& Yexpr, const NsInt C)
 {
         //if (C < 0)
         //// In order to conform to the requirements of the constraint implementation
-        //	return  ( - (Yexpr % -C) );
+        //      return  ( - (Yexpr % -C) );
         return  ( Yexpr.post() % C );
 }
 
@@ -3752,18 +3752,18 @@ class Ns_ExprConstrYlesseqthanC : public Ns_ExprConstr {
 };
 
 //class Ns_ExprConstrYgreaterthanC : public Ns_ExprConstr  {
-//	private:
-//		NsIntVar  &VarY;
-//		NsInt  C;
+//      private:
+//              NsIntVar  &VarY;
+//              NsInt  C;
 //
-//	public:
-//		Ns_ExprConstrYgreaterthanC (NsIntVar& Y, const NsInt C_init)
-//			: VarY(Y), C(C_init)	{   }
+//      public:
+//              Ns_ExprConstrYgreaterthanC (NsIntVar& Y, const NsInt C_init)
+//                      : VarY(Y), C(C_init)    {   }
 //
-//		virtual Ns_Constraint*  postConstraint (void)  const;
+//              virtual Ns_Constraint*  postConstraint (void)  const;
 //
-//		virtual void      post (NsIntVar *VarX)  const;
-//		virtual NsIntVar&  post (void)  const;
+//              virtual void      post (NsIntVar *VarX)  const;
+//              virtual NsIntVar&  post (void)  const;
 //};
 //
 //
@@ -3771,18 +3771,18 @@ class Ns_ExprConstrYlesseqthanC : public Ns_ExprConstr {
 //
 //
 //class Ns_ExprConstrYgreatereqthanC : public Ns_ExprConstr  {
-//	private:
-//		NsIntVar  &VarY;
-//		NsInt  C;
+//      private:
+//              NsIntVar  &VarY;
+//              NsInt  C;
 //
-//	public:
-//		Ns_ExprConstrYgreatereqthanC (NsIntVar& Y, const NsInt C_init)
-//			: VarY(Y), C(C_init)	{   }
+//      public:
+//              Ns_ExprConstrYgreatereqthanC (NsIntVar& Y, const NsInt C_init)
+//                      : VarY(Y), C(C_init)    {   }
 //
-//		virtual Ns_Constraint*  postConstraint (void)  const;
+//              virtual Ns_Constraint*  postConstraint (void)  const;
 //
-//		virtual void      post (NsIntVar *VarX)  const;
-//		virtual NsIntVar&  post (void)  const;
+//              virtual void      post (NsIntVar *VarX)  const;
+//              virtual NsIntVar&  post (void)  const;
 //};
 
 class Ns_ExprConstrYeqC : public Ns_ExprConstr {
@@ -3803,18 +3803,18 @@ class Ns_ExprConstrYeqC : public Ns_ExprConstr {
 };
 
 //class Ns_ExprConstrYneqC : public Ns_ExprConstr  {
-//	private:
-//		NsIntVar  &VarY;
-//		NsInt  C;
+//      private:
+//              NsIntVar  &VarY;
+//              NsInt  C;
 //
-//	public:
-//		Ns_ExprConstrYneqC (NsIntVar& Y, const NsInt C_init)
-//			: VarY(Y), C(C_init)	{   }
+//      public:
+//              Ns_ExprConstrYneqC (NsIntVar& Y, const NsInt C_init)
+//                      : VarY(Y), C(C_init)    {   }
 //
-//		virtual Ns_Constraint*  postConstraint (void)  const;
+//              virtual Ns_Constraint*  postConstraint (void)  const;
 //
-//		virtual void      post (NsIntVar *VarX)  const;
-//		virtual NsIntVar&  post (void)  const;
+//              virtual void      post (NsIntVar *VarX)  const;
+//              virtual NsIntVar&  post (void)  const;
 //};
 
 class Ns_ExprConstrYlessthanZ : public Ns_ExprConstr {
@@ -3957,7 +3957,7 @@ class Ns_ExprConstrAllDiff : public Ns_ExprConstr {
 
         virtual void       postC (NsIntVar& VarX, bool positively)  const
         {
-                VarX.size();	 // to suppress warnings
+                VarX.size();     // to suppress warnings
                 // to suppress warnings
                 positively = positively;
                 throw  NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff cannot be used as a meta-constraint");
@@ -4001,7 +4001,7 @@ class Ns_ExprConstrCount : public Ns_ExprConstr {
 
         virtual void       postC (NsIntVar& VarX, bool positively)  const
         {
-                VarX.size();	 // to suppress warnings
+                VarX.size();     // to suppress warnings
                 // to suppress warnings
                 positively = positively;
                 throw  NsException("Ns_ExprConstrCount::postC: NsCount cannot be used as a meta-constraint");

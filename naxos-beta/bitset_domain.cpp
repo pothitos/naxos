@@ -48,18 +48,18 @@ isContinuous (const NsInt minVal, const NsInt maxVal,
         return  ( diff + 1 == setCount );
 }
 
-}								 // namespace
+}                                                                // namespace
 
 /////  Constructs a frame of the DomainStore_t.
 //
 //Ns_BitSet::DomainStore_t::DomainFrame_t::DomainFrame_t (
-//		const NsProblemManager& pm/*,
-//		const NsInt minVal_init,
-//		const NsInt maxVal_init,
-//		const NsUInt setCount_init*/)
-//	: historyId(pm.getCurrentHistoryId())//,
-//	 //minVal(minVal_init), maxVal(maxVal_init), setCount(setCount_init)
-//{	}
+//              const NsProblemManager& pm/*,
+//              const NsInt minVal_init,
+//              const NsInt maxVal_init,
+//              const NsUInt setCount_init*/)
+//      : historyId(pm.getCurrentHistoryId())//,
+//       //minVal(minVal_init), maxVal(maxVal_init), setCount(setCount_init)
+//{     }
 //
 //
 //
@@ -67,13 +67,13 @@ isContinuous (const NsInt minVal, const NsInt maxVal,
 //
 /////  Refreshes the top of the stack of domains, so that it contains a valid gap.
 //
-//	void
+//      void
 //Ns_BitSet::DomainStore_t::refresh (void)
 //{
-//	while ( ! pm.isValidHistoryId( domainStack.top().historyId ) )
-//	{
-//		domainStack.pop();
-//	}
+//      while ( ! pm.isValidHistoryId( domainStack.top().historyId ) )
+//      {
+//              domainStack.pop();
+//      }
 //}
 //
 //
@@ -81,12 +81,12 @@ isContinuous (const NsInt minVal, const NsInt maxVal,
 //
 /////  Returns the current valid DomainFrame_t.
 //
-//	Ns_BitSet::DomainStore_t::DomainFrame_t&
+//      Ns_BitSet::DomainStore_t::DomainFrame_t&
 //Ns_BitSet::DomainStore_t::currentDomain (void)
 //{
-//	refresh();
+//      refresh();
 //
-//	return  domainStack.top();
+//      return  domainStack.top();
 //}
 //
 //
@@ -94,65 +94,65 @@ isContinuous (const NsInt minVal, const NsInt maxVal,
 //
 /////  Returns a DomainFrame_t for the current search level.  It is possible to modify it.
 //
-//	Ns_BitSet::DomainStore_t::DomainFrame_t&
+//      Ns_BitSet::DomainStore_t::DomainFrame_t&
 //Ns_BitSet::DomainStore_t::modifyDomain (void)
 //{
-//	if ( domainStack.empty() )    {
+//      if ( domainStack.empty() )    {
 //
-//		domainStack.push( DomainFrame_t(pm) );
+//              domainStack.push( DomainFrame_t(pm) );
 //
-//	}  else if ( ! pm.isCurrentHistoryId(domainStack.top().historyId) )
-//	{
-//		DomainFrame_t&  dOld = currentDomain();
+//      }  else if ( ! pm.isCurrentHistoryId(domainStack.top().historyId) )
+//      {
+//              DomainFrame_t&  dOld = currentDomain();
 //
-//		if ( isContinuous(dOld.minVal,dOld.maxVal,dOld.setCount) )  {
-//			dOld.minDom  =  dOld.minVal;
+//              if ( isContinuous(dOld.minVal,dOld.maxVal,dOld.setCount) )  {
+//                      dOld.minDom  =  dOld.minVal;
 //
-//			dOld.nBits   =
-//			    correspondingBit(dOld.maxVal,dOld.minDom) + 1;
+//                      dOld.nBits   =
+//                          correspondingBit(dOld.maxVal,dOld.minDom) + 1;
 //
-//			dOld.machw.clear();
+//                      dOld.machw.clear();
 //
-//		}  else  {
-//			//  Trimming the empty words of the bit-set data
-//			//   structure.
+//              }  else  {
+//                      //  Trimming the empty words of the bit-set data
+//                      //   structure.
 //
-//			NsUInt  firstNonEmptyBit =
-//				correspondingBit(dOld.minVal,dOld.minDom);
-//			NsUInt  firstNonEmptyWord =
-//				firstNonEmptyBit / MW_BITS;
-//
-//
-//			dOld.minDom  +=  firstNonEmptyWord * MW_BITS;
-//
-//			dOld.nBits   =
-//			    correspondingBit(dOld.maxVal,dOld.minDom) + 1;
+//                      NsUInt  firstNonEmptyBit =
+//                              correspondingBit(dOld.minVal,dOld.minDom);
+//                      NsUInt  firstNonEmptyWord =
+//                              firstNonEmptyBit / MW_BITS;
 //
 //
-//			NsUInt   newMachwSize = (dOld.nBits-1)/MW_BITS + 1;
+//                      dOld.minDom  +=  firstNonEmptyWord * MW_BITS;
 //
-//			for (NsUInt i=0;   i < newMachwSize;   ++i)   {
+//                      dOld.nBits   =
+//                          correspondingBit(dOld.maxVal,dOld.minDom) + 1;
 //
-//				dOld.machw[i]  =
-//					dOld.machw[firstNonEmptyWord + i];
-//			}
 //
-//			dOld.machw.resize(newMachwSize);
-//		}
+//                      NsUInt   newMachwSize = (dOld.nBits-1)/MW_BITS + 1;
 //
-//		domainStack.push( DomainFrame_t(pm) );
+//                      for (NsUInt i=0;   i < newMachwSize;   ++i)   {
 //
-//		DomainFrame_t&  dNew = modifyDomain();
+//                              dOld.machw[i]  =
+//                                      dOld.machw[firstNonEmptyWord + i];
+//                      }
 //
-//		dNew.minDom    =  dOld.minDom;
-//		dNew.minVal    =  dOld.minVal;
-//		dNew.maxVal    =  dOld.maxVal;
-//		dNew.nBits     =  dOld.nBits;
-//		dNew.setCount  =  dOld.setCount;
-//		dNew.machw     =  dOld.machw;
-//	}
+//                      dOld.machw.resize(newMachwSize);
+//              }
 //
-//	return  domainStack.top();
+//              domainStack.push( DomainFrame_t(pm) );
+//
+//              DomainFrame_t&  dNew = modifyDomain();
+//
+//              dNew.minDom    =  dOld.minDom;
+//              dNew.minVal    =  dOld.minVal;
+//              dNew.maxVal    =  dOld.maxVal;
+//              dNew.nBits     =  dOld.nBits;
+//              dNew.setCount  =  dOld.setCount;
+//              dNew.machw     =  dOld.machw;
+//      }
+//
+//      return  domainStack.top();
 //}
 
 ///  Constructs the domain [\a minDom_init .. \a maxDom_init].
@@ -199,7 +199,7 @@ Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                 rangeMin  =  minVal;
         if ( rangeMax  >  maxVal )
                 rangeMax  =  maxVal;
-        if ( machw.empty() ) {	 // Bounds Consistency
+        if ( machw.empty() ) {   // Bounds Consistency
                 if ( rangeMin  <=  minVal ) {
                         setCount  -=  rangeMax + 1  -  minVal;
                         minVal     =  rangeMax + 1;
@@ -285,7 +285,7 @@ Ns_BitSet::previous (const NsInt val)  const
         if ( val  >   maxVal )
                 return  maxVal;
         if ( isContinuous(minVal,maxVal,setCount) )
-                return  (val - 1);		 // Bounds Consistency
+                return  (val - 1);               // Bounds Consistency
         NsUInt     nbit  =  correspondingBit(val,minDom) - 1;
         NsInt        mw  =  nbit / MW_BITS;
         size_t    mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
@@ -326,7 +326,7 @@ Ns_BitSet::next (const NsInt val)  const
         if ( val  <  minVal )
                 return  minVal;
         if ( isContinuous(minVal,maxVal,setCount) )
-                return  (val + 1);		 // Bounds Consistency
+                return  (val + 1);               // Bounds Consistency
         NsUInt     nbit  =  correspondingBit(val,minDom) + 1;
         NsUInt       mw  =  nbit / MW_BITS;
         size_t    mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
@@ -414,7 +414,7 @@ Ns_BitSet::containsRange (const NsInt rangeMin, const NsInt rangeMax)  const
         if ( rangeMin < minVal  ||  rangeMax > maxVal )
                 return  false;
         if ( isContinuous(minVal,maxVal,setCount) )
-                return  true;			 // Bounds Consistency
+                return  true;                    // Bounds Consistency
         for (NsInt val=rangeMin;   val <= rangeMax;  ++val) {
                 //std::cout << "val = " << val << "\n";
                 NsUInt  nbit  =  correspondingBit(val,minDom);

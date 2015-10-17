@@ -253,7 +253,7 @@ NsStack<TemplType>&
 NsStack<TemplType>::operator = (const NsStack& stackOther)
 {
         //assert_Ns( nFrames == 0  &&  stackTopNode == 0 ,
-        //	"NsStack::operator=: Non empty `*this'");
+        //      "NsStack::operator=: Non empty `*this'");
         nFrames  =  stackOther.nFrames;
         StackNode_t       **currNode       =  &stackTopNode;
         StackNode_t *const *currNodeOther  =  &stackOther.stackTopNode;
@@ -268,4 +268,4 @@ NsStack<TemplType>::operator = (const NsStack& stackOther)
         }
         return  *this;
 }
-#endif							 // Ns_STACK_H
+#endif                                                   // Ns_STACK_H

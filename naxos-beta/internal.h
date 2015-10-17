@@ -48,4 +48,4 @@ xDIVy (const naxos::NsInt x, const naxos::NsInt y)
         else
                 return  (x / y);
 }
-#endif							 // Ns_INTERNAL_H
+#endif                                                   // Ns_INTERNAL_H

@@ -58,8 +58,8 @@ array_sum_min_max (const NsIntVarArray *VarArr, const NsIndex start, const NsInd
                 sumMax += V.max();
         }
         //for (NsIntVarArray::iterator V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //	sumMin += V->min();
-        //	sumMax += V->max();
+        //      sumMin += V->min();
+        //      sumMax += V->max();
         //}
 }
 
@@ -107,14 +107,14 @@ Ns_ConstrXeqMin::ArcCons (void)
         } while ( min  >  VarX->min() );
         //NsIntVarArray::iterator  V;
         //NsIntVar::const_iterator v = VarX->begin();
-        //++v;	// the first value is OK
+        //++v;  // the first value is OK
         //for ( ;  v != VarX->end();  ++v)   {
-        //	for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //		if ( V->contains( *v ) )
-        //			break;
-        //	}
-        //	if ( V  ==  VarArr->end() )
-        //		VarX->removeSingle( *v , this);
+        //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
+        //              if ( V->contains( *v ) )
+        //                      break;
+        //      }
+        //      if ( V  ==  VarArr->end() )
+        //              VarX->removeSingle( *v , this);
         //}
 }
 
@@ -138,14 +138,14 @@ Ns_ConstrXeqMax::ArcCons (void)
         } while ( max  <  VarX->max() );
         //NsIntVarArray::iterator  V;
         //NsIntVar::const_iterator v = VarX->begin();
-        //++v;	// the first value is OK
+        //++v;  // the first value is OK
         //for ( ;  v != VarX->end();  ++v)   {
-        //	for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //		if ( V->contains( *v ) )
-        //			break;
-        //	}
-        //	if ( V  ==  VarArr->end() )
-        //		VarX->removeSingle( *v , this);
+        //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
+        //              if ( V->contains( *v ) )
+        //                      break;
+        //      }
+        //      if ( V  ==  VarArr->end() )
+        //              VarX->removeSingle( *v , this);
         //}
 }
 
@@ -155,38 +155,38 @@ Ns_ConstrXeqMin::LocalArcCons (Ns_QueueItem& Qitem)
         ArcCons();
         //NsIntVarArray::iterator  V;
         //if ( VarX  ==  Qitem.getVarFired() )    {
-        //	//if ( Qitem.getW()  <  VarX->min() )  {
-        //		for (V = VarArr->begin();   V != VarArr->end();   ++V)
-        //			V->removeRange(NsMINUS_INF, VarX->min()-1, this);
-        //	//}
+        //      //if ( Qitem.getW()  <  VarX->min() )  {
+        //              for (V = VarArr->begin();   V != VarArr->end();   ++V)
+        //                      V->removeRange(NsMINUS_INF, VarX->min()-1, this);
+        //      //}
         //}  else  {
-        //	//if ( Qitem.getW()  >  Qitem.getVarFired()->max() )
-        //	VarX->removeRange(Qitem.getVarFired()->max()+1, NsPLUS_INF, this);
-        //	if ( Qitem.getVarFired()->min()  >  VarX->min() )    {
-        //		NsInt  min, minmax;
-        //		array_min_minmax(VarArr, min, minmax);
-        //		VarX->removeRange(NsMINUS_INF, min-1, this);
-        //		VarX->removeRange(minmax+1, NsPLUS_INF, this);
-        //		//for (V = VarArr->begin();
-        //		//		V != VarArr->end();
-        //		//		++V)
-        //		//{
-        //		//	if ( V->min()  <=  VarX->min() )
-        //		//		break;
-        //		//}
-        //		//if ( V  ==  VarArr->end() )    {
-        //		//	VarX->remove(NsMINUS_INF,
-        //		//		Qitem.getVarFired()->min()-1, this);
-        //		//}
-        //	}
-        //	//if ( VarX->contains(Qitem.getW()) )   {
-        //	//	for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //	//		if ( V->contains( Qitem.getW() ) )
-        //	//			break;
-        //	//	}
-        //	//	if ( V  ==  VarArr->end() )
-        //	//		VarX->removeSingle( Qitem.getW() , this);
-        //	//}
+        //      //if ( Qitem.getW()  >  Qitem.getVarFired()->max() )
+        //      VarX->removeRange(Qitem.getVarFired()->max()+1, NsPLUS_INF, this);
+        //      if ( Qitem.getVarFired()->min()  >  VarX->min() )    {
+        //              NsInt  min, minmax;
+        //              array_min_minmax(VarArr, min, minmax);
+        //              VarX->removeRange(NsMINUS_INF, min-1, this);
+        //              VarX->removeRange(minmax+1, NsPLUS_INF, this);
+        //              //for (V = VarArr->begin();
+        //              //              V != VarArr->end();
+        //              //              ++V)
+        //              //{
+        //              //      if ( V->min()  <=  VarX->min() )
+        //              //              break;
+        //              //}
+        //              //if ( V  ==  VarArr->end() )    {
+        //              //      VarX->remove(NsMINUS_INF,
+        //              //              Qitem.getVarFired()->min()-1, this);
+        //              //}
+        //      }
+        //      //if ( VarX->contains(Qitem.getW()) )   {
+        //      //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
+        //      //              if ( V->contains( Qitem.getW() ) )
+        //      //                      break;
+        //      //      }
+        //      //      if ( V  ==  VarArr->end() )
+        //      //              VarX->removeSingle( Qitem.getW() , this);
+        //      //}
         //}
 }
 
@@ -196,49 +196,49 @@ Ns_ConstrXeqMax::LocalArcCons (Ns_QueueItem& Qitem)
         ArcCons();
         //NsIntVarArray::iterator  V;
         //if ( VarX  ==  Qitem.getVarFired() )    {
-        //	//if ( Qitem.getW() > VarX->max() )    {
-        //		for (V = VarArr->begin();   V != VarArr->end();   ++V)
-        //			V->removeRange(VarX->max()+1, NsPLUS_INF, this);
-        //	//}
+        //      //if ( Qitem.getW() > VarX->max() )    {
+        //              for (V = VarArr->begin();   V != VarArr->end();   ++V)
+        //                      V->removeRange(VarX->max()+1, NsPLUS_INF, this);
+        //      //}
         //}  else  {
-        //	//if ( Qitem.getW() < Qitem.getVarFired()->min() )    {
-        //	VarX->removeRange(NsMINUS_INF, Qitem.getVarFired()->min()-1, this);
-        //	//}
-        //	if ( Qitem.getVarFired()->max()  <  VarX->max() )    {
-        //		NsInt  maxmin, max;
-        //		array_maxmin_max(VarArr, maxmin, max);
-        //		VarX->removeRange(NsMINUS_INF, maxmin-1, this);
-        //		VarX->removeRange(max+1, NsPLUS_INF, this);
-        //		//for (V = VarArr->begin();
-        //		//		V != VarArr->end();
-        //		//		++V)
-        //		//{
-        //		//	if ( V->max()  >=  VarX->max() )
-        //		//		break;
-        //		//}
-        //		//if ( V  ==  VarArr->end() )    {
-        //		//	VarX->removeRange(Qitem.getVarFired()->max()+1,
-        //		//			NsPLUS_INF, this);
-        //		//}
-        //	}
-        //	//if ( VarX->contains(Qitem.getW()) )    {
-        //	//	for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //	//		if ( V->contains( Qitem.getW() ) )
-        //	//			break;
-        //	//	}
-        //	//	if ( V  ==  VarArr->end() )
-        //	//		VarX->removeSingle( Qitem.getW() , this);
-        //	//}
+        //      //if ( Qitem.getW() < Qitem.getVarFired()->min() )    {
+        //      VarX->removeRange(NsMINUS_INF, Qitem.getVarFired()->min()-1, this);
+        //      //}
+        //      if ( Qitem.getVarFired()->max()  <  VarX->max() )    {
+        //              NsInt  maxmin, max;
+        //              array_maxmin_max(VarArr, maxmin, max);
+        //              VarX->removeRange(NsMINUS_INF, maxmin-1, this);
+        //              VarX->removeRange(max+1, NsPLUS_INF, this);
+        //              //for (V = VarArr->begin();
+        //              //              V != VarArr->end();
+        //              //              ++V)
+        //              //{
+        //              //      if ( V->max()  >=  VarX->max() )
+        //              //              break;
+        //              //}
+        //              //if ( V  ==  VarArr->end() )    {
+        //              //      VarX->removeRange(Qitem.getVarFired()->max()+1,
+        //              //                      NsPLUS_INF, this);
+        //              //}
+        //      }
+        //      //if ( VarX->contains(Qitem.getW()) )    {
+        //      //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
+        //      //              if ( V->contains( Qitem.getW() ) )
+        //      //                      break;
+        //      //      }
+        //      //      if ( V  ==  VarArr->end() )
+        //      //              VarX->removeSingle( Qitem.getW() , this);
+        //      //}
         //}
-        //		//for (V = VarArr->begin();
-        //		//		V != VarArr->end();
-        //		//		++V)
-        //		//{
-        //		//	if ( ! V->isBound() )
-        //		//		break;
-        //		//}
-        //		//if ( V  ==  VarArr->end()  &&  ! VarX->isBound() )
-        //		//	cout << VarX << "  =  max" << VarArr << "\n";
+        //              //for (V = VarArr->begin();
+        //              //              V != VarArr->end();
+        //              //              ++V)
+        //              //{
+        //              //      if ( ! V->isBound() )
+        //              //              break;
+        //              //}
+        //              //if ( V  ==  VarArr->end()  &&  ! VarX->isBound() )
+        //              //      cout << VarX << "  =  max" << VarArr << "\n";
 }
 
 Ns_ConstrXeqSum::Ns_ConstrXeqSum (NsIntVar *X, NsIntVarArray *VarArr_init)
@@ -320,7 +320,7 @@ void
 Ns_ConstrXeqSum::LocalArcCons (Ns_QueueItem& Qitem)
 {
         //if (Qitem.getVarFired()->min() < Qitem.getW()  &&  Qitem.getW() < Qitem.getVarFired()->max())
-        //	return;	// bounds-consistency does not care
+        //      return; // bounds-consistency does not care
         ArcCons();
         //throw  NsException("Ns_ConstrXeqSum::LocalArcCons: unimplemented");
 }
@@ -363,7 +363,7 @@ allDiffArcCons (NsIntVarArray *VarArr,
         }
 }
 
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ConstrAllDiff::ArcCons (void)
@@ -394,15 +394,15 @@ Ns_ConstrAllDiff::ArcCons (void)
         }
         allDiffArcCons(VarArr, newBoundVars, this);
         //for (X = VarArr->begin();   X != VarArr->end();   ++X)  {
-        //	for (Y = VarArr->begin();   Y != VarArr->end();   ++Y)  {
-        //		if ( Y != X   &&   Y->isBound() )
-        //			X->removeSingle( Y->value(), 0 );
-        //		//  `0' is used in order not to record this constraint
-        //		//   that provoked the removal, because
-        //		//   Ns_ConstrAllDiff::LocalArcCons() should be called
-        //		//   to check again the constraint AllDiff (against
-        //		//   this removal).
-        //	}
+        //      for (Y = VarArr->begin();   Y != VarArr->end();   ++Y)  {
+        //              if ( Y != X   &&   Y->isBound() )
+        //                      X->removeSingle( Y->value(), 0 );
+        //              //  `0' is used in order not to record this constraint
+        //              //   that provoked the removal, because
+        //              //   Ns_ConstrAllDiff::LocalArcCons() should be called
+        //              //   to check again the constraint AllDiff (against
+        //              //   this removal).
+        //      }
         //}
 }
 
@@ -415,13 +415,13 @@ Ns_ConstrAllDiff::LocalArcCons (Ns_QueueItem& Qitem)
                 allDiffArcCons(VarArr, newBoundVars, this);
         }
         //if ( Qitem.getVarFired()->isBound() )    {
-        //	NsInt  Value = Qitem.getVarFired()->value();
-        //	for (NsIntVarArray::iterator X = VarArr->begin();   X != VarArr->end();   ++X)  {
-        //		if ( &*X  !=  Qitem.getVarFired() )
-        //			X->removeSingle( Value, 0 );
-        //		//  `0' is used in order not to record this constraint...
-        //		//   (see the previous comment).
-        //	}
+        //      NsInt  Value = Qitem.getVarFired()->value();
+        //      for (NsIntVarArray::iterator X = VarArr->begin();   X != VarArr->end();   ++X)  {
+        //              if ( &*X  !=  Qitem.getVarFired() )
+        //                      X->removeSingle( Value, 0 );
+        //              //  `0' is used in order not to record this constraint...
+        //              //   (see the previous comment).
+        //      }
         //}
 }
 
@@ -454,22 +454,22 @@ Ns_ConstrAllDiffStrong::groupedNsIntVar::removeDomain (const NsIntVar& V, const 
 
 //struct less_max_mmin_size : public binary_function<NsIntVar, NsIntVar, bool>  {
 //
-//	bool  operator ()  (const MaxLopez& X, const MaxLopez& Y)
-//	{
-//		return  ( X.max() < Y.max()
-//				|| ( X.max() == Y.max()  &&  X.min() >  Y.min() )
-//				|| ( X.max() == Y.max()  &&  X.min() == Y.min()  &&  X.size() < Y.size() ) );
-//	}
+//      bool  operator ()  (const MaxLopez& X, const MaxLopez& Y)
+//      {
+//              return  ( X.max() < Y.max()
+//                              || ( X.max() == Y.max()  &&  X.min() >  Y.min() )
+//                              || ( X.max() == Y.max()  &&  X.min() == Y.min()  &&  X.size() < Y.size() ) );
+//      }
 //
 //};
 //
 //
 //struct less_min           : public binary_function<NsIntVar, NsIntVar, bool>  {
 //
-//	bool  operator ()  (const MaxLopez& X, const MaxLopez& Y)
-//	{
-//		return  ( X.min() >  Y.min() );
-//	}
+//      bool  operator ()  (const MaxLopez& X, const MaxLopez& Y)
+//      {
+//              return  ( X.min() >  Y.min() );
+//      }
 //
 //};
 
@@ -490,7 +490,7 @@ Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong (NsIntVarArray *VarArr_init, unsi
                 VarPointerGroup.insert( make_pair( (Ns_pointer_t)&*V  ,  &VarArr.back() ) );
         }
         //for (X = VarArr->begin();   X != VarArr->end();   ++X)
-        //	VarArrGroup.push_back( NsIntVar(pm, NsMINUS_INF+1, NsPLUS_INF-1) );
+        //      VarArrGroup.push_back( NsIntVar(pm, NsMINUS_INF+1, NsPLUS_INF-1) );
 }
 
 namespace {
@@ -516,10 +516,10 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                           const Ns_ConstrAllDiffStrong::groupedNsIntVar::group_t group,
                           const Ns_Constraint *constraint)
 {
-        //	cout << &VarArr << ": ";
-        //	for (NsIndex k=0;   k < VarArr.size();   ++k)
-        //		cout << "  " << (VarArr[k].group() - groupedNsIntVar::FIRST_GROUP) << ">" << VarArr[k].Var;
-        //	cout << endl;
+        //      cout << &VarArr << ": ";
+        //      for (NsIndex k=0;   k < VarArr.size();   ++k)
+        //              cout << "  " << (VarArr[k].group() - groupedNsIntVar::FIRST_GROUP) << ">" << VarArr[k].Var;
+        //      cout << endl;
         //for (groupedNsIntVar::group_t group = groupedNsIntVar::FIRST_GROUP;   /* VOID */ ;   ++group)   {
         //  At first, we gather all the variables with group-id
         //   equal to `group' into the array `VarArrSortedList'.
@@ -534,7 +534,7 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                         nGroups = VarArr[i].group();
         }
         assert_Ns( ! VarArrSortedList.empty() ,  "allDiffBoundsConsistency: Empty `group' of variables" );
-        //break;	// We have processed all the separate groups of variables.
+        //break;        // We have processed all the separate groups of variables.
         //  Copying `VarArrSortedList' to `VarArrSorted' which is friendlier
         //   to the `qsort()' function that it is used bellow.
         Ns_ConstrAllDiffStrong::groupedNsIntVar  **VarArrSorted =
@@ -600,15 +600,15 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                         } else if ( VarLtMaxMins[i1]  <  VarEqMax[i2]->Var.min() ) {
                                 VarLeMaxMins.push_back( VarEqMax[i2]->Var.min() );
                                 do {
-                                        ++i2;	 // avoiding duplicates
+                                        ++i2;    // avoiding duplicates
                                 } while ( i2 < VarEqMax.size()
                                           &&  VarEqMax[i2]->Var.min() == VarEqMax[i2-1]->Var.min() );
-                        }				 // The two minima are equal.
+                        }                                // The two minima are equal.
                         else {
                                 VarLeMaxMins.push_back( VarLtMaxMins[i1] );
                                 ++i1;
                                 do {
-                                        ++i2;	 // avoiding duplicates
+                                        ++i2;    // avoiding duplicates
                                 } while ( i2 < VarEqMax.size()
                                           &&  VarEqMax[i2]->Var.min() == VarEqMax[i2-1]->Var.min() );
                         }
@@ -622,7 +622,7 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                 for ( ;   i2 < VarEqMax.size();   ) {
                         VarLeMaxMins.push_back( VarEqMax[i2]->Var.min() );
                         do {
-                                ++i2;		 // avoiding duplicates
+                                ++i2;            // avoiding duplicates
                         } while ( i2 < VarEqMax.size()
                                   &&  VarEqMax[i2]->Var.min() == VarEqMax[i2-1]->Var.min() );
                 }
@@ -638,7 +638,7 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                 for (gapVal = VarLeMax[0]->Var.gap_begin();  gapVal != VarLeMax[0]->Var.gap_end();  ++gapVal) {
                         vUnion->remove(*gapVal);
                         //assert_Ns( vUnion->removeSingle(*gapVal, constraint),
-                        //		"Ns_ConstrAllDiffStrong::ArcCons: `vUnion->removeSingle(*gapVal)' failed" );
+                        //              "Ns_ConstrAllDiffStrong::ArcCons: `vUnion->removeSingle(*gapVal)' failed" );
                 }
                 //  Iterating through the `VarLeMaxMins', which
                 //   has been renamed for readability as `Min'.
@@ -649,7 +649,7 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                         // Iterating through `VarLeMax'...
                         for ( ;   j < VarLeMax.size();   ++j) {
                                 if ( VarLeMax[j]->Var.min() < Min[min_i] )
-                                        break;	 // End of `Min', no propagation.
+                                        break;   // End of `Min', no propagation.
                                 ++nVars;
                                 //  We produce the union of the domains `vUnion' and `VarLeMax[j]'.  I.e.,
                                 //      vUnion  <---  vUnion  UNION  VarLeMax[j].domain.
@@ -698,9 +698,9 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                                         //   separate them from the current group, by changing their group.
                                         //   (This domain is in other words a `Hall Interval'.)
                                         ++nGroups;
-                                        //						bool changed=false;
+                                        //                                              bool changed=false;
                                         for (++j;  j < VarLeMax.size();  ++j) {
-                                                //							changed = true;
+                                                //                                                      changed = true;
                                                 if ( ! VarLeMax[j]->removeDomain(*vUnion, constraint) ) {
                                                         delete  vUnion;
                                                         delete  []  VarArrSorted;
@@ -709,7 +709,7 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                                                 VarLeMax[j]->setGroup( nGroups );
                                         }
                                         for ( ;  i < VarArrSortedList.size();  ++i) {
-                                                //							changed = true;
+                                                //                                                      changed = true;
                                                 if ( ! VarArrSorted[i]->removeDomain(*vUnion, constraint) ) {
                                                         delete  vUnion;
                                                         delete  []  VarArrSorted;
@@ -719,12 +719,12 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
                                         }
                                         allDiffBoundsConsistency(VarArr, Capacity, nGroups, constraint);
                                         max_i = Max.size();
-                                        //						if ( changed )   {
-                                        //	cout << "           ";
-                                        //	for (NsIndex k=0;   k < VarArr.size();   ++k)
-                                        //		cout << "  " << (VarArr[k].group() - groupedNsIntVar::FIRST_GROUP) << ">" << VarArr[k].Var;
-                                        //	cout << endl;
-                                        //						}
+                                        //                                              if ( changed )   {
+                                        //      cout << "           ";
+                                        //      for (NsIndex k=0;   k < VarArr.size();   ++k)
+                                        //              cout << "  " << (VarArr[k].group() - groupedNsIntVar::FIRST_GROUP) << ">" << VarArr[k].Var;
+                                        //      cout << endl;
+                                        //                                              }
                                 }
                                 if ( sizeXcap  >  VarLeMax.size() ) {
                                         //  The number of the values `sizeXcap' to be assigned to be assigned
@@ -743,7 +743,7 @@ allDiffBoundsConsistency (NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar>& VarA
         //} // groups iteration
 }
 
-}								 // namespace
+}                                                                // namespace
 
 // bounds-consistency only
 void
@@ -757,7 +757,7 @@ void
 Ns_ConstrAllDiffStrong::LocalArcCons (Ns_QueueItem& Qitem)
 {
         //if (Qitem.getVarFired()->min() < Qitem.getW()  &&  Qitem.getW() < Qitem.getVarFired()->max())
-        //	return;	// bounds-consistency does not care
+        //      return; // bounds-consistency does not care
         VarPointerGroup_t::const_iterator  cit = VarPointerGroup.find( (Ns_pointer_t)Qitem.getVarFired() );
         groupedNsIntVar::group_t  groupFired = cit->second->group();
         //ArcCons();
@@ -766,31 +766,31 @@ Ns_ConstrAllDiffStrong::LocalArcCons (Ns_QueueItem& Qitem)
 
 //namespace  {
 //
-//		void
-//	countUpdateMinMax (NsIntVar& vMinValueIndex,
-//			NsIntVar& vMaxValueIndex,
-//			NsIntVarArray& vCount)
-//	{
-//		NsInt  i;
+//              void
+//      countUpdateMinMax (NsIntVar& vMinValueIndex,
+//                      NsIntVar& vMaxValueIndex,
+//                      NsIntVarArray& vCount)
+//      {
+//              NsInt  i;
 //
 //
-//		for (i=vMinValueIndex.min();  i < static_cast<NsInt>(vCount.size());  ++i)    {
+//              for (i=vMinValueIndex.min();  i < static_cast<NsInt>(vCount.size());  ++i)    {
 //
-//			if ( vCount[i].max() != 0 )
-//				break;
-//		}
+//                      if ( vCount[i].max() != 0 )
+//                              break;
+//              }
 //
-//		vMinValueIndex.remove(NsMINUS_INF, i-1);
+//              vMinValueIndex.remove(NsMINUS_INF, i-1);
 //
 //
-//		for (i=vMaxValueIndex.max();  i >= 0;  --i)    {
+//              for (i=vMaxValueIndex.max();  i >= 0;  --i)    {
 //
-//			if ( vCount[i].max() != 0 )
-//				break;
-//		}
+//                      if ( vCount[i].max() != 0 )
+//                              break;
+//              }
 //
-//		vMaxValueIndex.remove(i+1, NsPLUS_INF);
-//	}
+//              vMaxValueIndex.remove(i+1, NsPLUS_INF);
+//      }
 //
 //} // namespace
 
@@ -830,7 +830,7 @@ Ns_ConstrCount::Ns_ConstrCount (NsIntVarArray *VarArr_init,
         assert_Ns( Values.size() == Occurrences.size() ,
                    "Ns_ConstrCount::Ns_ConstrCount: `Values' and `Occurrences' sizes should match");
         //assert_Ns( Split >= 0 ,
-        //	"Ns_ConstrCount::Ns_ConstrCount: Negative `Split' value");
+        //      "Ns_ConstrCount::Ns_ConstrCount: Negative `Split' value");
         if ( Split ) {
                 assert_Ns( Values.size() == SplitPositions.size() ,
                            "Ns_ConstrCount::Ns_ConstrCount: `Values' and `SplitPositions' sizes should match");
@@ -849,7 +849,7 @@ Ns_ConstrCount::Ns_ConstrCount (NsIntVarArray *VarArr_init,
                         assert_Ns( Occurrences[i] / Split == SplitPositions[i].size() ,
                                    "Ns_ConstrCount::Ns_ConstrCount: `SplitPositions[i]' size should match `Occurrences[i] / Split'");
                         for (NsIndex j=0;  j < SplitPositions[i].size();  ++j) {
-                                assert_Ns(		 /*0 <= SplitPositions[i][j] &&*/
+                                assert_Ns(               /*0 <= SplitPositions[i][j] &&*/
                                         SplitPositions[i][j] < VarArr->size() ,
                                         "Ns_ConstrCount::Ns_ConstrCount: Wrong `SplitPositions[i][j]'");
                         }
@@ -870,20 +870,20 @@ Ns_ConstrCount::Ns_ConstrCount (NsIntVarArray *VarArr_init,
 
 namespace {
 
-//	void
+//      void
 //countReviseValue (NsIntVar& Var, const NsInt value,
-//		NsIntVarArray& vCount,
-//		const Ns_ConstrCount::ValueIndex_t& ValueIndex,
-//		const Ns_Constraint *constraint)
+//              NsIntVarArray& vCount,
+//              const Ns_ConstrCount::ValueIndex_t& ValueIndex,
+//              const Ns_Constraint *constraint)
 //{
-//	Ns_ConstrCount::ValueIndex_t::const_iterator  cit =
-//		ValueIndex.find( value );
+//      Ns_ConstrCount::ValueIndex_t::const_iterator  cit =
+//              ValueIndex.find( value );
 
-//	if ( cit == ValueIndex.end() ||
-//			vCount[cit->second].max() == 0 )
-//	{
-//		Var.removeSingle(value, constraint);
-//	}
+//      if ( cit == ValueIndex.end() ||
+//                      vCount[cit->second].max() == 0 )
+//      {
+//              Var.removeSingle(value, constraint);
+//      }
 //}
 
 void
@@ -966,19 +966,19 @@ countArcCons (NsIntVarArray& VarArr,
               const Ns_Constraint *constraint)
 {
         //for (NsIntVar::const_iterator val=Var.begin();
-        //		val != Var.end();
-        //		++val)
+        //              val != Var.end();
+        //              ++val)
         //{
-        //	countReviseValue(Var, *val, vCount, ValueIndex, constraint);
+        //      countReviseValue(Var, *val, vCount, ValueIndex, constraint);
         //}
         //NsInt  value;
         //do  {
-        //	value  =  Var.min();
-        //	countReviseValue(Var, value, vCount, ValueIndex, constraint);
+        //      value  =  Var.min();
+        //      countReviseValue(Var, value, vCount, ValueIndex, constraint);
         //} while ( Var.min()  !=  value );
         //do  {
-        //	value  =  Var.max();
-        //	countReviseValue(Var, value, vCount, ValueIndex, constraint);
+        //      value  =  Var.max();
+        //      countReviseValue(Var, value, vCount, ValueIndex, constraint);
         //} while ( Var.max()  !=  value );
         countBoundsCons(true, VarArr, i, ValueIndex,
                         ValuesOccurrences, Dwin, constraint);
@@ -987,33 +987,33 @@ countArcCons (NsIntVarArray& VarArr,
                                 ValuesOccurrences, Dwin, constraint);
         }
         //if ( vMinValueIndex.min()-1  >=  0 )   {
-        //	Var.removeRange(NsMINUS_INF,
-        //	ValuesOccurrences[vMinValueIndex.min()-1].value,
-        //	constraint);
+        //      Var.removeRange(NsMINUS_INF,
+        //      ValuesOccurrences[vMinValueIndex.min()-1].value,
+        //      constraint);
         //}
         //if ( static_cast<NsIndex>(vMaxValueIndex.max()+1) <
-        //		ValuesOccurrences.size() )
+        //              ValuesOccurrences.size() )
         //{
-        //	Var.removeRange(ValuesOccurrences[vMaxValueIndex.max()+1].value,
-        //	NsPLUS_INF, constraint);
+        //      Var.removeRange(ValuesOccurrences[vMaxValueIndex.max()+1].value,
+        //      NsPLUS_INF, constraint);
         //}
         //if ( Var.isBound() )    {
-        //	Ns_ConstrCount::ValueIndex_t::const_iterator  cit =
-        //		ValueIndex.find( Var.value() );
-        //	if ( cit  ==  ValueIndex.end() )    {
-        //		vCount[0].removeAll();
-        //		return;
-        //	}
-        //	NsIndex  index = cit->second;
-        //	vCount[index].remove( vCount[index].max() );
-        //	//if ( vCount[index].max()  ==  0 )   {
-        //	//	countUpdateMinMax(vMinValueIndex,
-        //	//			vMaxValueIndex, vCount);
-        //	//}
+        //      Ns_ConstrCount::ValueIndex_t::const_iterator  cit =
+        //              ValueIndex.find( Var.value() );
+        //      if ( cit  ==  ValueIndex.end() )    {
+        //              vCount[0].removeAll();
+        //              return;
+        //      }
+        //      NsIndex  index = cit->second;
+        //      vCount[index].remove( vCount[index].max() );
+        //      //if ( vCount[index].max()  ==  0 )   {
+        //      //      countUpdateMinMax(vMinValueIndex,
+        //      //                      vMaxValueIndex, vCount);
+        //      //}
         //}
 }
 
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ConstrCount::ArcCons (void)
@@ -1032,26 +1032,26 @@ Ns_ConstrCount::LocalArcCons (Ns_QueueItem& Qitem)
 }
 
 //namespace  {
-//		void
-//	MakeIDs (NsIntVarArray *VarArr)
-//	{
-//		NsIntVarArray::iterator  X;
+//              void
+//      MakeIDs (NsIntVarArray *VarArr)
+//      {
+//              NsIntVarArray::iterator  X;
 //
-//		if ( X->IsSetID() )   {
-//			X = VarArr->begin();
-//			NsIndex  previous = X->getID();
-//			++X;
+//              if ( X->IsSetID() )   {
+//                      X = VarArr->begin();
+//                      NsIndex  previous = X->getID();
+//                      ++X;
 //
-//			for ( ;   X != VarArr->end();   ++X)   {
-//				assert_Ns( X->getID() == previous + 1 ,  "MakeIDs: Non-continuous ids in `VarArr'");
-//				previous = X->getID();
-//			}
+//                      for ( ;   X != VarArr->end();   ++X)   {
+//                              assert_Ns( X->getID() == previous + 1 ,  "MakeIDs: Non-continuous ids in `VarArr'");
+//                              previous = X->getID();
+//                      }
 //
-//		}  else  {
-//			for (X=VarArr->begin();   X != VarArr->end();   ++X)
-//				X->setID();
-//		}
-//	}
+//              }  else  {
+//                      for (X=VarArr->begin();   X != VarArr->end();   ++X)
+//                              X->setID();
+//              }
+//      }
 //}  // namespace
 
 Ns_ConstrInverse::Ns_ConstrInverse (NsIntVarArray *VarArrInv_init, NsIntVarArray *VarArr_init)

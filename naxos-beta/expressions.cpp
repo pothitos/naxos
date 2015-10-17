@@ -54,7 +54,7 @@ exprYopC_post_constr (NsIntVar& VarX, NsIntVar& VarY, const NsInt C, const op_ty
         newConstr->ArcCons();
         VarX.manager().recordConstraint( newConstr );
 }
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ExprYplusC::post (NsIntVar& VarX)  const
@@ -95,7 +95,7 @@ Ns_ExprYtimesC::post (NsIntVar& VarX)  const
 {
         VarX = NsIntVar(VarY.manager(),
                         min(VarY.min() * C, VarY.max() * C),  max(VarY.min() * C, VarY.max() * C));
-        if (C != 0)					 // if C==0 there is no constraint
+        if (C != 0)                                      // if C==0 there is no constraint
                 exprYopC_post_constr(VarX, VarY, C, opTimes);
 }
 
@@ -106,7 +106,7 @@ Ns_ExprYtimesC::post (void)  const
                 return  VarY;
         NsIntVar  *VarX = new NsIntVar(VarY.manager(),
                                        min(VarY.min() * C, VarY.max() * C),  max(VarY.min() * C, VarY.max() * C));
-        if (C != 0)					 // if C==0 there is no constraint
+        if (C != 0)                                      // if C==0 there is no constraint
                 exprYopC_post_constr(*VarX, VarY, C, opTimes);
         VarX->manager().recordIntermediateVar( VarX );
         return  *VarX;
@@ -234,7 +234,7 @@ exprInDomain_post_constr (NsIntVar& VarX,
         VarX.manager().recordConstraint( newConstr );
 }
 
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ExprInDomain::post (NsIntVar& VarX)  const
@@ -266,7 +266,7 @@ exprYplusCZspecial_post_constr (NsIntVar& VarX, NsIntVar& VarY, const NsInt C, N
         newConstr->ArcCons();
         VarX.manager().recordConstraint( newConstr );
 }
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ExprYplusCZspecial::post (NsIntVar& VarX)  const
@@ -306,8 +306,8 @@ exprYopZ_post_constr (NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ, const op_t
                 newConstr = new Ns_ConstrXeqYtimesZ(&VarY, &VarX, &VarZ);
                 break;
         //case  opMod:
-        //	newConstr = new Ns_ConstrXeqYmodZ(&VarX, &VarY, &VarZ);
-        //	break;
+        //      newConstr = new Ns_ConstrXeqYmodZ(&VarX, &VarY, &VarZ);
+        //      break;
         case  opAnd:
                 newConstr = new Ns_ConstrXeqYandZ(&VarX, &VarY, &VarZ, true);
                 break;
@@ -330,7 +330,7 @@ exprYopZ_post_constr (NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ, const op_t
         newConstr->ArcCons();
         VarX.manager().recordConstraint( newConstr );
 }
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ExprYplusZ::post (NsIntVar& VarX)  const
@@ -384,30 +384,30 @@ Ns_ExprYtimesZ::post (void)  const
         return  *VarX;
 }
 
-//	void
+//      void
 //Ns_ExprYdivZ::post (NsIntVar &VarX)  const
 //{
-//	NsInt  min, max;
-//	quotient_min_max(&VarY, &VarZ, min, max);
+//      NsInt  min, max;
+//      quotient_min_max(&VarY, &VarZ, min, max);
 //
-//	VarX = NsIntVar(VarY.manager(), min, max);
+//      VarX = NsIntVar(VarY.manager(), min, max);
 //
-//	exprYopZ_post_constr(VarX, VarY, VarZ, opDiv);
+//      exprYopZ_post_constr(VarX, VarY, VarZ, opDiv);
 //}
 //
 //
-//	NsIntVar&
+//      NsIntVar&
 //Ns_ExprYdivZ::post (void)  const
 //{
-//	NsInt  min, max;
-//	quotient_min_max(&VarY, &VarZ, min, max);
+//      NsInt  min, max;
+//      quotient_min_max(&VarY, &VarZ, min, max);
 //
-//	NsIntVar  *VarX = new NsIntVar(VarY.manager(), min, max);
+//      NsIntVar  *VarX = new NsIntVar(VarY.manager(), min, max);
 //
-//	exprYopZ_post_constr(*VarX, VarY, VarZ, opDiv);
+//      exprYopZ_post_constr(*VarX, VarY, VarZ, opDiv);
 //
-//	VarX->manager().recordIntermediateVar( VarX );
-//	return  *VarX;
+//      VarX->manager().recordIntermediateVar( VarX );
+//      return  *VarX;
 //}
 
 void
@@ -494,7 +494,7 @@ Ns_ExprConstrYorZ::postConstraint (bool positively)  const
 
 namespace {
 
-enum constr_type {		 //, csum};
+enum constr_type {               //, csum};
         cmin=1, cmax
 };
 
@@ -510,8 +510,8 @@ exprGlob_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const constr_type c
                 newConstr = new Ns_ConstrXeqMax(&VarX, &VarArr);
                 break;
         //case  csum:
-        //	newConstr = new Ns_ConstrXeqSum(&VarX, &VarArr);
-        //	break;
+        //      newConstr = new Ns_ConstrXeqSum(&VarX, &VarArr);
+        //      break;
         default:
                 throw  NsException("exprGlob_post_constr: Wrong `ctype'");
                 break;
@@ -536,7 +536,7 @@ exprGlobSum_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const NsIndex st
         VarX.manager().recordConstraint( newConstr );
 }
 
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ExprMin::post (NsIntVar& VarX)  const
@@ -598,7 +598,7 @@ Ns_ExprSum::post (NsIntVar& VarX)  const
         NsInt  summin, summax;
         array_sum_min_max(&VarArr, start, length, summin, summax);
         VarX = NsIntVar(VarArr[0].manager(), summin, summax);
-        //if (VarArr.size() != 0)	// if equal to zero, there is no constraint
+        //if (VarArr.size() != 0)       // if equal to zero, there is no constraint
         exprGlobSum_post_constr(VarX, VarArr, start, length);
 }
 
@@ -612,7 +612,7 @@ Ns_ExprSum::post (void)  const
         NsInt  summin, summax;
         array_sum_min_max(&VarArr, start, length, summin, summax);
         NsIntVar  *VarX = new NsIntVar(VarArr[0].manager(), summin, summax);
-        //if (VarArr.size() != 0)	// if equal to zero, there is no constraint
+        //if (VarArr.size() != 0)       // if equal to zero, there is no constraint
         exprGlobSum_post_constr(*VarX, VarArr, start, length);
         VarX->manager().recordIntermediateVar( VarX );
         return  *VarX;
@@ -654,7 +654,7 @@ exprElement_post_constr (NsIntVar& VarIndex,
         VarX.manager().recordConstraint( newConstr );
 }
 
-}								 // namespace
+}                                                                // namespace
 
 void
 Ns_ExprElement::post (NsIntVar& VarX)  const
@@ -727,7 +727,7 @@ exprConstrYopZ_post_constr (Ns_Constraint *newConstr, NsIntVar& VarX, NsIntVar& 
         VarZ.addConstraint(newConstr);
         exprConstrYopZ_post_constr(newConstr, VarX, VarY);
 }
-}								 // namespace
+}                                                                // namespace
 
 Ns_Constraint *
 Ns_ExprConstrYlessthanC::postConstraint (bool positively)  const
@@ -739,7 +739,7 @@ Ns_ExprConstrYlessthanC::postConstraint (bool positively)  const
         } else {
                 VarY.remove( NsMINUS_INF, C-1/*, 0*/ );
         }
-        return  0;					 // unary constraint
+        return  0;                                       // unary constraint
 }
 
 void
@@ -787,7 +787,7 @@ Ns_ExprConstrYlesseqthanC::postConstraint (bool positively)  const
         } else {
                 VarY.remove( NsMINUS_INF, C/*, 0*/ );
         }
-        return  0;					 // unary constraint
+        return  0;                                       // unary constraint
 }
 
 void
@@ -825,71 +825,71 @@ Ns_ExprConstrYlesseqthanC::postC (bool positively)  const
         return  *VarX;
 }
 
-//	Ns_Constraint*
+//      Ns_Constraint*
 //Ns_ExprConstrYgreaterthanC::postConstraint (void)  const
 //{
-//	while ( VarY.min() <= C )   {
-//		if ( !VarY.removeSingle( VarY.min(), 0 ) )
-//			return  0;	// ... to avoid an infinite loop
-//	}
-//	return  0;  // unary constraint
+//      while ( VarY.min() <= C )   {
+//              if ( !VarY.removeSingle( VarY.min(), 0 ) )
+//                      return  0;      // ... to avoid an infinite loop
+//      }
+//      return  0;  // unary constraint
 //}
 //
 //
 //
-//	void
+//      void
 //Ns_ExprConstrYgreaterthanC::post (NsIntVar *VarX)  const
 //{
-//	*VarX = NsIntVar(*VarY.manager(), VarY.min() > C, VarY.max() > C);
+//      *VarX = NsIntVar(*VarY.manager(), VarY.min() > C, VarY.max() > C);
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreaterthanC(VarX, &VarY, C);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreaterthanC(VarX, &VarY, C);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //}
 //
 //
-//	NsIntVar&
+//      NsIntVar&
 //Ns_ExprConstrYgreaterthanC::post (void)  const
 //{
-//	NsIntVar  *VarX = new NsIntVar(*VarY.manager(), VarY.min() > C, VarY.max() > C);
+//      NsIntVar  *VarX = new NsIntVar(*VarY.manager(), VarY.min() > C, VarY.max() > C);
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreaterthanC(VarX, &VarY, C);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreaterthanC(VarX, &VarY, C);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //
-//	VarX->manager()->recordIntermediateVar( VarX );
-//	return  *VarX;
+//      VarX->manager()->recordIntermediateVar( VarX );
+//      return  *VarX;
 //}
 
-//	Ns_Constraint*
+//      Ns_Constraint*
 //Ns_ExprConstrYgreatereqthanC::postConstraint (void)  const
 //{
-//	while ( VarY.min() < C )   {
-//		if ( !VarY.removeSingle( VarY.min(), 0 ) )
-//			return  0;	// ... to avoid an infinite loop
-//	}
-//	return  0;  // unary constraint
+//      while ( VarY.min() < C )   {
+//              if ( !VarY.removeSingle( VarY.min(), 0 ) )
+//                      return  0;      // ... to avoid an infinite loop
+//      }
+//      return  0;  // unary constraint
 //}
 //
 //
-//	void
+//      void
 //Ns_ExprConstrYgreatereqthanC::post (NsIntVar *VarX)  const
 //{
-//	*VarX = NsIntVar(*VarY.manager(), VarY.min() >= C, VarY.max() >= C);
+//      *VarX = NsIntVar(*VarY.manager(), VarY.min() >= C, VarY.max() >= C);
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreatereqthanC(VarX, &VarY, C);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreatereqthanC(VarX, &VarY, C);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //}
 //
 //
-//	NsIntVar&
+//      NsIntVar&
 //Ns_ExprConstrYgreatereqthanC::post (void)  const
 //{
-//	NsIntVar  *VarX = new NsIntVar(*VarY.manager(), VarY.min() >= C, VarY.max() >= C);
+//      NsIntVar  *VarX = new NsIntVar(*VarY.manager(), VarY.min() >= C, VarY.max() >= C);
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreatereqthanC(VarX, &VarY, C);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYgreatereqthanC(VarX, &VarY, C);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //
-//	VarX->manager()->recordIntermediateVar( VarX );
-//	return  *VarX;
+//      VarX->manager()->recordIntermediateVar( VarX );
+//      return  *VarX;
 //}
 
 Ns_Constraint *
@@ -904,7 +904,7 @@ Ns_ExprConstrYeqC::postConstraint (bool positively)  const
                 if (VarY.contains( C ))
                         VarY.remove( C );
         }
-        return  0;					 // unary constraint
+        return  0;                                       // unary constraint
 }
 
 void
@@ -942,35 +942,35 @@ Ns_ExprConstrYeqC::postC (bool positively)  const
         return  *VarX;
 }
 
-//	Ns_Constraint*
+//      Ns_Constraint*
 //Ns_ExprConstrYneqC::postConstraint (void)  const
 //{
-//	if (VarY.contains( C ))
-//		VarY.remove( C );
-//	return  0;  // unary constraint
+//      if (VarY.contains( C ))
+//              VarY.remove( C );
+//      return  0;  // unary constraint
 //}
 //
 //
-//	void
+//      void
 //Ns_ExprConstrYneqC::post (NsIntVar *VarX)  const
 //{
-//	*VarX = NsIntVar(*VarY.manager(), !VarY.contains(C), (VarY.min()!=C || VarY.max()!=C));
+//      *VarX = NsIntVar(*VarY.manager(), !VarY.contains(C), (VarY.min()!=C || VarY.max()!=C));
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqC(VarX, &VarY, C);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqC(VarX, &VarY, C);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //}
 //
 //
-//	NsIntVar&
+//      NsIntVar&
 //Ns_ExprConstrYneqC::post (void)  const
 //{
-//	NsIntVar  *VarX = new NsIntVar(*VarY.manager(), !VarY.contains(C), (VarY.min()!=C || VarY.max()!=C));
+//      NsIntVar  *VarX = new NsIntVar(*VarY.manager(), !VarY.contains(C), (VarY.min()!=C || VarY.max()!=C));
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqC(VarX, &VarY, C);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqC(VarX, &VarY, C);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //
-//	VarX->manager()->recordIntermediateVar( VarX );
-//	return  *VarX;
+//      VarX->manager()->recordIntermediateVar( VarX );
+//      return  *VarX;
 //}
 
 Ns_Constraint *
@@ -1130,75 +1130,75 @@ Ns_ExprConstrYeqZ::postC (bool positively)  const
         return  *VarX;
 }
 
-//	Ns_Constraint*
+//      Ns_Constraint*
 //Ns_ExprConstrYneqZ::postConstraint (void)  const
 //{
-//	Ns_Constraint  *newConstr = new Ns_ConstrXneqY(&VarY, &VarZ);
-//	VarY.addConstraint(newConstr);
-//	VarZ.addConstraint(newConstr);
-//	return  newConstr;
+//      Ns_Constraint  *newConstr = new Ns_ConstrXneqY(&VarY, &VarZ);
+//      VarY.addConstraint(newConstr);
+//      VarZ.addConstraint(newConstr);
+//      return  newConstr;
 //}
 //
 //
-//	void
+//      void
 //Ns_ExprConstrYneqZ::post (NsIntVar *VarX)  const
 //{
-//	*VarX = NsIntVar(*VarY.manager(), intersectionEmpty(&VarY, &VarZ),
-//			!(VarY.max()==VarZ.min() && VarY.min()==VarZ.max()));
+//      *VarX = NsIntVar(*VarY.manager(), intersectionEmpty(&VarY, &VarZ),
+//                      !(VarY.max()==VarZ.min() && VarY.min()==VarZ.max()));
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqZ(VarX, &VarY, &VarZ);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY, &VarZ);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqZ(VarX, &VarY, &VarZ);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY, &VarZ);
 //}
 //
 //
-//	NsIntVar&
+//      NsIntVar&
 //Ns_ExprConstrYneqZ::post (void)  const
 //{
-//	NsIntVar  *VarX = new NsIntVar(*VarY.manager(), intersectionEmpty(&VarY, &VarZ),
-//			!(VarY.max()==VarZ.min() && VarY.min()==VarZ.max()));
+//      NsIntVar  *VarX = new NsIntVar(*VarY.manager(), intersectionEmpty(&VarY, &VarZ),
+//                      !(VarY.max()==VarZ.min() && VarY.min()==VarZ.max()));
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqZ(VarX, &VarY, &VarZ);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY, &VarZ);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYneqZ(VarX, &VarY, &VarZ);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY, &VarZ);
 //
-//	VarX->manager()->recordIntermediateVar( VarX );
-//	return  *VarX;
+//      VarX->manager()->recordIntermediateVar( VarX );
+//      return  *VarX;
 //}
 
-//	Ns_Constraint*
+//      Ns_Constraint*
 //Ns_ExprConstrNegationY::postConstraint (void)  const
 //{
-//	while ( VarY->min() < 0 )   {
-//		if ( !VarY->removeSingle( VarY->min(), 0 ) )
-//			return;	// ... to avoid an infinite loop
-//	}
-//	while ( VarY->max() > 0 )   {
-//		if ( !VarY->removeSingle( VarY->max(), 0 ) )
-//			return;	// ... to avoid an infinite loop
-//	}
-//	return  0;
+//      while ( VarY->min() < 0 )   {
+//              if ( !VarY->removeSingle( VarY->min(), 0 ) )
+//                      return; // ... to avoid an infinite loop
+//      }
+//      while ( VarY->max() > 0 )   {
+//              if ( !VarY->removeSingle( VarY->max(), 0 ) )
+//                      return; // ... to avoid an infinite loop
+//      }
+//      return  0;
 //}
 //
 //
-//	void
+//      void
 //Ns_ExprConstrNegationY::post (NsIntVar *VarX)  const
 //{
-//	*VarX = NsIntVar(*VarY.manager(), VarY.max() < 1, VarY.min() < 1);
+//      *VarX = NsIntVar(*VarY.manager(), VarY.max() < 1, VarY.min() < 1);
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYlessthanC(VarX, &VarY, 1);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYlessthanC(VarX, &VarY, 1);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //}
 //
 //
-//	NsIntVar&
+//      NsIntVar&
 //Ns_ExprConstrNegationY::post (void)  const
 //{
-//	NsIntVar  *VarX = new NsIntVar(*VarY.manager(), VarY.max() < 1, VarY.min() < 1);
+//      NsIntVar  *VarX = new NsIntVar(*VarY.manager(), VarY.max() < 1, VarY.min() < 1);
 //
-//	Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYlessthanC(VarX, &VarY, 1);
-//	exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
+//      Ns_Constraint  *newConstr = new Ns_ConstrMetaXeqYlessthanC(VarX, &VarY, 1);
+//      exprConstrYopZ_post_constr(newConstr, VarX, &VarY);
 //
-//	VarX->manager()->recordIntermediateVar( VarX );
-//	return  *VarX;
+//      VarX->manager()->recordIntermediateVar( VarX );
+//      return  *VarX;
 //}
 
 Ns_Constraint *
@@ -1206,7 +1206,7 @@ Ns_ExprConstrAllDiff::postConstraint (bool positively)  const
 {
         assert_Ns(positively,  "Ns_ExprConstrAllDiff::postConstraint: `positively'==false");
         if (VarArr.size() <= Capacity  ||  ( Capacity==0 && VarArr.size() <= 1 ) )
-                return  0;				 // no constraint
+                return  0;                               // no constraint
         Ns_Constraint  *newConstr;
         if ( Capacity  ==  0 )
                 // default case
@@ -1231,19 +1231,19 @@ Ns_ExprConstrCount::postConstraint (bool positively)  const
         return  newConstr;
 }
 
-//	Ns_Constraint*
+//      Ns_Constraint*
 //Ns_ExprConstrElement::postConstraint (bool positively)  const
 //{
-//	assert_Ns(positively,  "Ns_ExprConstrElement::postConstraint: `positively'==false");
+//      assert_Ns(positively,  "Ns_ExprConstrElement::postConstraint: `positively'==false");
 //
-//	assert_Ns( ! intArray.empty() ,
-//			"Cannot get an element of an empty array" );
+//      assert_Ns( ! intArray.empty() ,
+//                      "Cannot get an element of an empty array" );
 //
-//	Ns_Constraint  *newConstr =
-//		new Ns_ConstrElement(&VarIndex, intArray, &VarValue);
+//      Ns_Constraint  *newConstr =
+//              new Ns_ConstrElement(&VarIndex, intArray, &VarValue);
 //
-//	VarIndex.addConstraint(newConstr);
-//	VarValue.addConstraint(newConstr);
+//      VarIndex.addConstraint(newConstr);
+//      VarValue.addConstraint(newConstr);
 //
-//	return  newConstr;
+//      return  newConstr;
 //}
