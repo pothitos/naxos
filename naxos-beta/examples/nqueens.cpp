@@ -19,7 +19,7 @@ simulate (NsProblemManager& pm, NsIntVarArray& Var,
         pm.splitTimeLimit(splitTime, simulationRatio);
         pm.addGoal( new NsgLabeling(Var) );
         while (pm.nextSolution() != false)
-                 /*VOID*/ ;
+                /*VOID*/ ;
         cout << "\n";
 }
 

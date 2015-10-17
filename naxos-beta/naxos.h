@@ -4742,7 +4742,6 @@ class Ns_StackGoals : public NsStack<NsGoal *> {
         ~Ns_StackGoals (void);
 };
 
-
 class Ns_SearchNode;
 
 ///  Contains all the Ns_SearchNode 's.
@@ -4816,11 +4815,11 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         double  descNode = descNow - descBorn +
                                            descSimChild;
                         double  timeWeight =
-                                         (timeNode - timeSimChild + 1.0) /
-                                         (timeNode + 1.0);
+                                (timeNode - timeSimChild + 1.0) /
+                                (timeNode + 1.0);
                         double  descWeight =
-                                         (descNode - descSimChild + 1.0) /
-                                         (descNode + 1.0);
+                                (descNode - descSimChild + 1.0) /
+                                (descNode + 1.0);
                         timeSum += timeNode * timeWeight;
                         timeWeights += timeWeight;
                         // Compute descendants weighted mean and variance:
@@ -5487,7 +5486,7 @@ class  NsProblemManager {
         {
                 clock_t ticks = secs * CLOCKS_PER_SEC;
                 assert_Ns( 0.0 <= simulationRatio &&
-                                  simulationRatio <= 1.0 ,
+                           simulationRatio <= 1.0 ,
                            "NsProblemManager::splitTimeLimit: "
                            "`simulationRatio' must be between 0 and 1");
                 timeSplitLim = ticks;
@@ -5519,7 +5518,7 @@ class  NsProblemManager {
         NsUInt  domainsSizeMax;
 
         unsigned long  nFailures, nBacktracks, nGoals, nConstraintChecks,
-                       backtrackLim;
+                 backtrackLim;
 
     public:
 

@@ -400,9 +400,9 @@ Ns_StackSearch::~Ns_StackSearch (void)
         }
         if ( fileMapperInput.is_open() && ! mapperLine.empty() ) {
                 fileMapperInput << fixed
-                        << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
-                        << "\t" << mapper
-                        << "\t" << mapperLine << "\n";
+                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                                << "\t" << mapper
+                                << "\t" << mapperLine << "\n";
         }
 }
 
@@ -438,7 +438,7 @@ Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
         matchesEndNode = updateMatchesEndNodeRec(++it,depth);
         ++depth;
         return  ( matchesEndNode && ( depth > endNode.size() ||
-                  children >= endNode[depth-1] ) );
+                                      children >= endNode[depth-1] ) );
 }
 
 #include <sstream>
@@ -457,9 +457,9 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
                 return  false;
         if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
                 fileMapperInput << fixed
-                        << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
-                        << "\t" << mapper
-                        << "\t" << mapperLine << "\n";
+                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                                << "\t" << mapper
+                                << "\t" << mapperLine << "\n";
         }
         if ( fileMapperInput.is_open() )
                 mapperLineStartTime = clock();
@@ -467,7 +467,7 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
         string  lineHeader;
         assert_Ns( line >> lineHeader &&
                    lineHeader == NsProblemManager::SPLIT_HEADER ,
-                  "Ns_StackSearch::readSplit: Wrong split line header");
+                   "Ns_StackSearch::readSplit: Wrong split line header");
         NsUInt  node;
         startMatchesPreviousEnd = true;
         NsDeque<NsUInt>::const_iterator  endIt = endNode.begin();
@@ -546,7 +546,7 @@ NsProblemManager::arcConsistent (void)
                 //  To avoid changing the queue item Q.front()
                 //   during this iteration...
                 vFired->queueItem = 0;
-                while ( (c = getQueue().front().getNextConstraint())  !=  0 )    {
+                while ( (c = getQueue().front().getNextConstraint())  !=  0 ) {
                         //  Change the following for AC-3.
                         //c->ArcCons();
                         c->LocalArcCons( getQueue().front() );
@@ -620,7 +620,7 @@ NsProblemManager::restart (void)
         if ( ! searchNodes.startNode.empty() )
                 searchNodes.startNode.push_front(1);
         assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
-                                                    numSearchTreeNodes() ) ) ,
+                                     numSearchTreeNodes() ) ) ,
                    "NsProblemManager::restart: First push should succeed");
         if ( vMinObj  !=  0 )
                 vMinObj->remove( bestMinObjValue, NsPLUS_INF/*, 0*/ );
@@ -650,7 +650,7 @@ NsProblemManager::nextSolution (void)
                 //  We took care placing it *after* the arcConsistent() call (because
                 //  in future, we will not be able to revert to the current `Q').
                 assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
-                                                            numSearchTreeNodes() ) ) ,
+                                             numSearchTreeNodes() ) ) ,
                            "NsProblemManager::nextSolution: First push should succeed");
                 //  (B) ...and pasting to the stackAND of the new frame.
                 while ( ! tempStackAND.empty() ) {
@@ -726,8 +726,8 @@ NsProblemManager::nextSolution (void)
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
                                 searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
                         } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(),
-                                                                     searchNodes.gbegin(),
-                                                                     numSearchTreeNodes() ) ) ) {
+                                                      searchNodes.gbegin(),
+                                                      numSearchTreeNodes() ) ) ) {
                                 searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
                         } else {
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
@@ -752,7 +752,7 @@ NsProblemManager::nextSolution (void)
                                 searchNodes.top().stackAND.push( NewGoal );
                         } else if ( searchNodes.top().stackAND.empty()
                                     &&  searchNodes.top().delayedGoal ==
-                                        searchNodes.gend() ) {
+                                    searchNodes.gend() ) {
                                 if ( vMinObj != 0 ) {
                                         assert_Ns( bestMinObjValue >
                                                    vMinObj->max(),
