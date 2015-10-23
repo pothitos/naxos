@@ -13,11 +13,9 @@ using namespace std;
 using namespace naxos;
 
 void
-simulate (NsProblemManager& pm, NsIntVarArray& Var,
-          double splitTime, double simulationRatio)
+simulate (NsProblemManager& pm, double splitTime, double simulationRatio)
 {
         pm.splitTimeLimit(splitTime, simulationRatio);
-        pm.addGoal( new NsgLabeling(Var) );
         while (pm.nextSolution() != false)
                 /*VOID*/ ;
         cout << "\n";
@@ -61,7 +59,7 @@ int  main (int argc, char *argv[])
                         }
                         if ( pm.timeIsUp() ) {
                                 pm.timeLimit(0);
-                                simulate(pm, Var, splitTime, simulationRatio);
+                                simulate(pm, splitTime, simulationRatio);
                         }
                         pm.restart();
                 }
