@@ -61,7 +61,7 @@ class  NsStack {
 
         void  clear (void)
         {
-                while ( ! empty() )
+                while ( !empty() )
                         pop();
         }
 
@@ -90,7 +90,7 @@ class  NsStack {
 
         void  pop (void)
         {
-                assert_Ns( ! empty() ,  "NsStack::pop: Stack is empty");
+                assert_Ns( !empty() ,  "NsStack::pop: Stack is empty");
                 StackNode_t  *current = stackTopNode;
                 stackTopNode = current->next;
                 delete current;
@@ -132,7 +132,7 @@ class  NsStack {
 
                 bool  operator != (const iterator& b)  const
                 {
-                        return  ( ! ( *this  ==  b ) );
+                        return  ( !( *this  ==  b ) );
                 }
 
                 TemplType&  operator * (void)  const
@@ -195,7 +195,7 @@ class  NsStack {
 
                 bool  operator != (const const_iterator& b)  const
                 {
-                        return  ( ! ( *this  ==  b ) );
+                        return  ( !( *this  ==  b ) );
                 }
 
                 const TemplType&  operator * (void)  const

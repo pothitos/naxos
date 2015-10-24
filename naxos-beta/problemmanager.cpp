@@ -66,9 +66,9 @@ bool
 Ns_StackSearch::push (const value_type& newNode)
 {
         ++nSearchTreeNodes;
-        if ( ! empty() )
+        if ( !empty() )
                 ++top().children;
-        if ( ! startNode.empty() ) {
+        if ( !startNode.empty() ) {
                 if ( startNode.front()-- > 1 ) {
                         return  false;
                 } else {
@@ -81,8 +81,8 @@ Ns_StackSearch::push (const value_type& newNode)
                 }
         }
         bool  matchesEndNodePrevious =
-                ( ( empty() && ! endNode.empty() )  ||
-                  ( ! empty() && top().matchesEndNode &&
+                ( ( empty() && !endNode.empty() )  ||
+                  ( !empty() && top().matchesEndNode &&
                     ( size() > endNode.size() ||
                       top().children >= endNode[size()-1] ) ) );
         NsStack<Ns_SearchNode>::push(newNode);
@@ -107,7 +107,7 @@ Ns_StackSearch::splitEnded (void)
                size() > endNode.size() ) ) {
                 return  true;
         } else {
-                assert_Ns_3( ! TEST_splitEnded() ,
+                assert_Ns_3( !TEST_splitEnded() ,
                              "The split has already ended!");
                 return  false;
         }
@@ -213,7 +213,7 @@ Ns_StackSearch::pop (const bool deleteStartNode)
                                               numSearchTreeNodes(),
                                               top().descBorn, descSimChild);
         NsStack<Ns_SearchNode>::pop();
-        if ( ! empty() ) {
+        if ( !empty() ) {
                 top().timeSimChild += timeSimChild;
                 top().descSimChild += descSimChild;
         }
@@ -238,7 +238,7 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
                 fileConstraintsGraph << "\n\tVar" << *v
                                      << "  [label=\"["
                                      << (*v)->min();
-                if ( ! (*v)->isBound() )
+                if ( !(*v)->isBound() )
                         fileConstraintsGraph << ".." << (*v)->max();
                 fileConstraintsGraph << "]\"];\n";
         }
@@ -383,7 +383,7 @@ Ns_StackSearch::Ns_StackSearch (void)
 void
 Ns_StackSearch::clear (void)
 {
-        while ( ! empty() ) {
+        while ( !empty() ) {
                 destroy_goal( top().goalNextChoice );
                 pop();
         }
@@ -396,7 +396,7 @@ Ns_StackSearch::~Ns_StackSearch (void)
                 fileSearchGraph << "}\n";
                 fileSearchGraph.close();
         }
-        if ( fileMapperInput.is_open() && ! mapperLine.empty() ) {
+        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
                 fileMapperInput << fixed
                                 << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
                                 << "\t" << mapper
@@ -406,7 +406,7 @@ Ns_StackSearch::~Ns_StackSearch (void)
 
 Ns_StackGoals::~Ns_StackGoals (void)
 {
-        while ( ! empty() ) {
+        while ( !empty() ) {
                 destroy_goal( top() );
                 pop();
         }
@@ -429,7 +429,7 @@ Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
 {
         if ( it  ==  end() ) {
                 depth  =  0;
-                return  ( ! endNode.empty() );
+                return  ( !endNode.empty() );
         }
         NsUInt  children = it->children;
         bool&  matchesEndNode = it->matchesEndNode;
@@ -447,7 +447,7 @@ const char  *NsProblemManager::SPLIT_HEADER = "Split:";
 bool
 Ns_StackSearch::readSplit (void)
 {
-        if ( ! getline(cin,mapperLine) || mapperLine.empty() )
+        if ( !getline(cin,mapperLine) || mapperLine.empty() )
                 return  false;
         if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
                 fileMapperInput << fixed
@@ -526,7 +526,7 @@ NsProblemManager::arcConsistent (void)
         }
         Ns_Constraint  *c;
         NsIntVar  *vFired;
-        while  ( ! getQueue().empty() ) {
+        while  ( !getQueue().empty() ) {
                 vFired = getQueue().front().getVarFired();
                 //  To avoid changing the queue item Q.front()
                 //   during this iteration...
@@ -557,7 +557,7 @@ NsProblemManager::backtrack (void)
                 if ( backtrackLim != 0  &&  nBacktracks >= backtrackLim )
                         return  false;
                 ++nBacktracks;
-                assert_Ns( ! searchNodes.empty() ,
+                assert_Ns( !searchNodes.empty() ,
                            "NsProblemManager::backtrack: "
                            "`searchNodes' is empty");
                 goalNextChoice = searchNodes.top().goalNextChoice;
@@ -588,7 +588,7 @@ NsProblemManager::restart (void)
         getQueue().clear();
         bool  foundSecondFrame  =  false;
         NsGoal  *goalNextChoice;
-        assert_Ns( ! searchNodes.empty() ,  "NsProblemManager::restart: `searchNodes' is empty");
+        assert_Ns( !searchNodes.empty() ,  "NsProblemManager::restart: `searchNodes' is empty");
         do {
                 goalNextChoice  =  searchNodes.top().goalNextChoice;
                 if ( goalNextChoice  ==  0 )
@@ -598,11 +598,11 @@ NsProblemManager::restart (void)
                 searchNodes.top().stackAND.push( goalNextChoice );
                 // We keeped the above line because of Memory Management
                 //  reasons (in order to delete the `goalNextChoice').
-                assert_Ns( ! searchNodes.empty() ,  "`restart()' call, before `nextSolution()'");
-        } while ( ! foundSecondFrame );
+                assert_Ns( !searchNodes.empty() ,  "`restart()' call, before `nextSolution()'");
+        } while ( !foundSecondFrame );
         searchNodes.pop(false);
         searchNodes.reset();
-        if ( ! searchNodes.startNode.empty() )
+        if ( !searchNodes.startNode.empty() )
                 searchNodes.startNode.push_front(1);
         assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
                                      numSearchTreeNodes() ) ) ,
@@ -620,14 +620,14 @@ NsProblemManager::nextSolution (void)
         if ( firstNextSolution ) {
                 firstNextSolution  =  false;
                 //  Soft constraints objective.
-                if ( vMinObj == 0   &&  ! vSoftConstraintsTerms.empty() )
+                if ( vMinObj == 0   &&  !vSoftConstraintsTerms.empty() )
                         minimize( - NsSum( vSoftConstraintsTerms ) );
                 isArcCons  =  arcConsistent();
                 //  Throwing away unnesessary `bitsetsStore' in the first frame.
                 searchNodes.top().bitsetsStore.clear();
                 //  (A) Cutting from the stackAND of the base frame...
                 Ns_StackGoals  tempStackAND;
-                while ( ! searchNodes.top().stackAND.empty() ) {
+                while ( !searchNodes.top().stackAND.empty() ) {
                         tempStackAND.push( searchNodes.top().stackAND.top() );
                         searchNodes.top().stackAND.pop();
                 }
@@ -638,7 +638,7 @@ NsProblemManager::nextSolution (void)
                                              numSearchTreeNodes() ) ) ,
                            "NsProblemManager::nextSolution: First push should succeed");
                 //  (B) ...and pasting to the stackAND of the new frame.
-                while ( ! tempStackAND.empty() ) {
+                while ( !tempStackAND.empty() ) {
                         searchNodes.top().stackAND.push( tempStackAND.top() );
                         tempStackAND.pop();
                 }
@@ -664,7 +664,7 @@ NsProblemManager::nextSolution (void)
         NsGoal  *CurrGoal, *NewGoal;
         bool  popped_a_goal;
         while ( timeLim == 0  ||  (   isRealTime  &&  DiffTime(time(0),startRealTime)  <= timeLim)
-                ||  ( ! isRealTime  &&  static_cast<unsigned long>(clock()-startTime) <= timeLim*static_cast<unsigned long>(CLOCKS_PER_SEC) ) ) {
+                ||  ( !isRealTime  &&  static_cast<unsigned long>(clock()-startTime) <= timeLim*static_cast<unsigned long>(CLOCKS_PER_SEC) ) ) {
                 if ( timeSplitLim != 0  &&
                      getCurrentNodeNum() > startNodeId  &&
                      clock() - startSplitTime + searchNodes.timeSimulated >=
@@ -679,7 +679,7 @@ NsProblemManager::nextSolution (void)
                         searchNodes.currentPath();
                 }
                 popped_a_goal  =  false;
-                if ( ! searchNodes.top().stackAND.empty() ) {
+                if ( !searchNodes.top().stackAND.empty() ) {
                         CurrGoal  =  searchNodes.top().stackAND.top();
                         searchNodes.top().stackAND.pop();
                         popped_a_goal  =  true;
@@ -733,10 +733,10 @@ NsProblemManager::nextSolution (void)
                         NewGoal  =  CurrGoal->GOAL();
                         if ( popped_a_goal )
                                 delete  CurrGoal;
-                        if ( ! arcConsistent() ) {
+                        if ( !arcConsistent() ) {
                                 //cout << "<BACKTRACK>\n";
                                 destroy_goal( NewGoal );
-                                if ( ! backtrack() )
+                                if ( !backtrack() )
                                         return  false;
                         } else if ( NewGoal != 0 ) {
                                 searchNodes.top().stackAND.push( NewGoal );

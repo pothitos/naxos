@@ -70,7 +70,7 @@ isContinuous (const NsInt minVal, const NsInt maxVal,
 //      void
 //Ns_BitSet::DomainStore_t::refresh (void)
 //{
-//      while ( ! pm.isValidHistoryId( domainStack.top().historyId ) )
+//      while ( !pm.isValidHistoryId( domainStack.top().historyId ) )
 //      {
 //              domainStack.pop();
 //      }
@@ -101,7 +101,7 @@ isContinuous (const NsInt minVal, const NsInt maxVal,
 //
 //              domainStack.push( DomainFrame_t(pm) );
 //
-//      }  else if ( ! pm.isCurrentHistoryId(domainStack.top().historyId) )
+//      }  else if ( !pm.isCurrentHistoryId(domainStack.top().historyId) )
 //      {
 //              DomainFrame_t&  dOld = currentDomain();
 //
@@ -193,7 +193,7 @@ Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                 return  true;
         //  The domain is going to be changed.
         //  Saving the domain for future backtracking purposes.
-        if ( ! pm->isCurrentHistoryId(lastSaveHistoryId()) )
+        if ( !pm->isCurrentHistoryId(lastSaveHistoryId()) )
                 pm->saveBitsetDomain(*this);
         if ( rangeMin  <  minVal )
                 rangeMin  =  minVal;
@@ -382,7 +382,7 @@ Ns_BitSet::nextGap (const NsInt val)  const
                 nbit  =  (mw + 1) * MW_BITS;
         } else {
                 for ( ;   mwbit!=0  &&  nbit <= maxbit;   mwbit<<=1) {
-                        if ( ! ( machw[mw] & mwbit ) )
+                        if ( !( machw[mw] & mwbit ) )
                                 return  (nbit + minDom);
                         ++nbit;
                 }
@@ -394,7 +394,7 @@ Ns_BitSet::nextGap (const NsInt val)  const
                         nbit  +=  MW_BITS;
                 } else {
                         for (mwbit=1;  mwbit!=0 && nbit<=maxbit;  mwbit<<=1) {
-                                if ( ! ( machw[mw] & mwbit ) )
+                                if ( !( machw[mw] & mwbit ) )
                                         return  (nbit + minDom);
                                 ++nbit;
                         }
@@ -432,7 +432,7 @@ Ns_BitSet::containsRange (const NsInt rangeMin, const NsInt rangeMax)  const
                         //  the for's `++val' increment.
                 } else {
                         size_t  mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
-                        if ( ! ( machw[mw] & mwbit ) )
+                        if ( !( machw[mw] & mwbit ) )
                                 return  false;
                 }
         }

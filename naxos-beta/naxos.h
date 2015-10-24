@@ -91,7 +91,7 @@ class NsException : public std::logic_error {
 inline void
 assert_Ns (const bool condition, const char *message)
 {
-        if ( ! condition )
+        if ( !condition )
                 throw  NsException(message);
 }
 
@@ -260,7 +260,7 @@ class  NsQueue : public std::queue<TemplType> {
 
         void  clear (void)
         {
-                while ( ! std::queue<TemplType>::empty() )
+                while ( !std::queue<TemplType>::empty() )
                         std::queue<TemplType>::pop();
         }
 
@@ -547,7 +547,7 @@ class  Ns_BitSet {
                 {
                         assert_Ns(domain != 0,
                                   "Ns_BitSet::const_iterator::!=: Uninitialized `*this'");
-                        return  ! ( *this  ==  b );
+                        return  !( *this  ==  b );
                 }
 
                 NsInt  operator * (void)  const
@@ -616,7 +616,7 @@ class  Ns_BitSet {
                 {
                         assert_Ns(domain != 0,
                                   "Ns_BitSet::const_reverse_iterator::!=: Uninitialized `*this'");
-                        return  ! ( *this  ==  b );
+                        return  !( *this  ==  b );
                 }
 
                 NsInt  operator * (void)  const
@@ -682,7 +682,7 @@ class  Ns_BitSet {
                 {
                         assert_Ns(domain != 0,
                                   "Ns_BitSet::const_gap_iterator::!=: Uninitialized `*this'");
-                        return  ! ( *this  ==  b );
+                        return  !( *this  ==  b );
                 }
 
                 NsInt  operator * (void)  const
@@ -1184,7 +1184,7 @@ class  NsIntVar {
         NsIndex
         lsIndex (void)  const
         {
-                assert_Ns( ! lsIsIntermediate() ,
+                assert_Ns( !lsIsIntermediate() ,
                            "NsIntVar::lsIndex: Variable is intermediate" );
                 return  lsIdx;
         }
@@ -1265,7 +1265,7 @@ class  NsIntVarArray {
 
         void  push_front (NsIntVar& Var)
         {
-                assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+                assert_Ns( !addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
                 PointArray.push_front( &Var );
         }
 
@@ -1275,7 +1275,7 @@ class  NsIntVarArray {
 
         void  push_back (NsIntVar& Var)
         {
-                assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+                assert_Ns( !addedConstraint ,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
                 PointArray.push_back( &Var );
         }
 
@@ -1314,7 +1314,7 @@ class  NsIntVarArray {
 
                 bool  operator != (const iterator& b)  const
                 {
-                        return  ! ( *this  ==  b );
+                        return  !( *this  ==  b );
                 }
 
                 NsIntVar&  operator * (void)  const
@@ -1409,7 +1409,7 @@ class  NsIntVarArray {
 
                 bool  operator != (const const_iterator& b)  const
                 {
-                        return  ! ( *this == b );
+                        return  !( *this == b );
                 }
 
                 const NsIntVar&  operator * (void)  const
@@ -2985,7 +2985,7 @@ class Ns_ConstrElement : public Ns_Constraint {
         {
                 revisionType  =  VALUE_CONSISTENCY;
                 assert_Ns( &VarIndex->manager() == &VarValue->manager(),  "Ns_ConstrElement::Ns_ConstrElement: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns( ! intArray.empty() ,  "Ns_ConstrElement::Ns_ConstrElement: Empty element array" );
+                assert_Ns( !intArray.empty() ,  "Ns_ConstrElement::Ns_ConstrElement: Empty element array" );
         }
 
         virtual int   varsInvolvedIn (void)  const
@@ -4315,7 +4315,7 @@ operator ||  (const Ns_ExprConstr& Yexpr, const Ns_ExprConstr& Zexpr)
 }
 
 inline  Ns_ExprConstrNegationY
-operator !  (const Ns_ExprConstr& Yexpr)
+operator ! (const Ns_ExprConstr& Yexpr)
 {
         return  Ns_ExprConstrNegationY( Yexpr );
 }
@@ -4342,7 +4342,7 @@ inline  Ns_ExprConstrYorZ
 NsIfThen  (const Ns_ExprConstr& Yexpr, const Ns_ExprConstr& Zexpr)
 {
         //  "p => q"  is equivalent to  "!p || q".
-        return  ( ! Yexpr  ||  Zexpr );
+        return  ( !Yexpr  ||  Zexpr );
 }
 
 inline  Ns_ExprConstrYeqZ
@@ -4978,7 +4978,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         isCurrentHistoryIdNextTo (const Ns_HistoryId_t di)  const
         {
                 return  ( di.level < size() - 1
-                          || ! isValidHistoryId(di) );
+                          || !isValidHistoryId(di) );
         }
 
         bool
@@ -5093,7 +5093,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 bool
                 operator != (const goal_iterator& b)  const
                 {
-                        return  ! ( *this == b );
+                        return  !( *this == b );
                 }
 
                 NsGoal *
@@ -5205,7 +5205,7 @@ struct  Ns_SearchNode {
                 void
                 restore (void)
                 {
-                        while ( ! empty() ) {
+                        while ( !empty() ) {
                                 top().restore();
                                 pop();
                         }

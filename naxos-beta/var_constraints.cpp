@@ -420,7 +420,7 @@ Ns_ConstrMetaXeqYeqC::ArcCons (void)
         makeBoolean(VarX, this);
         if ( VarY->min() == C  &&  VarY->max() == C )
                 VarX->removeSingle( 0 , this);
-        if ( ! VarY->contains(C) )
+        if ( !VarY->contains(C) )
                 VarX->removeSingle( 1 , this);
         if ( VarX->isBound() ) {
                 if ( VarX->value()  ==  0 ) {
@@ -452,7 +452,7 @@ Ns_ConstrMetaXeqYeqC::LocalArcCons (Ns_QueueItem& Qitem)
                            "Ns_ConstrMetaXeqYeqC::LocalArcCons: Wrong getVarFired");
                 if ( VarY->min() == C  &&  VarY->max() == C )
                         VarX->removeSingle( 0 , this);
-                if ( ! VarY->contains(C) )
+                if ( !VarY->contains(C) )
                         VarX->removeSingle( 1 , this);
         }
 }
@@ -461,7 +461,7 @@ void
 Ns_ConstrMetaXeqYneqC::ArcCons (void)
 {
         makeBoolean(VarX, this);
-        if ( ! VarY->contains(C))
+        if ( !VarY->contains(C))
                 VarX->removeSingle( 0 , this);
         if ( VarY->min() == C  &&  VarY->max() == C )
                 VarX->removeSingle( 1 , this);
@@ -493,7 +493,7 @@ Ns_ConstrMetaXeqYneqC::LocalArcCons (Ns_QueueItem& Qitem)
         } else {
                 assert_Ns( VarY == Qitem.getVarFired() ,
                            "Ns_ConstrMetaXeqYneqC::LocalArcCons: Wrong getVarFired");
-                if ( ! VarY->contains(C) )
+                if ( !VarY->contains(C) )
                         VarX->removeSingle( 0 , this);
                 if ( VarY->min() == C  &&  VarY->max() == C )
                         VarX->removeSingle( 1 , this);
@@ -519,12 +519,12 @@ Ns_ConstrXeqYplusC::ArcCons (void)
         //
         //for (v = VarX->begin();  v != VarX->end();  ++v)  {
         //
-        //      if ( ! VarY->contains( *v - C ) )
+        //      if ( !VarY->contains( *v - C ) )
         //              VarX->removeSingle( *v , this);
         //}
         //for (v = VarY->begin();  v != VarY->end();  ++v)  {
         //
-        //      if ( ! VarX->contains( *v + C ) )
+        //      if ( !VarX->contains( *v + C ) )
         //              VarY->removeSingle( *v , this);
         //}
 }
@@ -572,11 +572,11 @@ Ns_ConstrXeqCminusY::ArcCons (void)
         }  while ( modification );
         //NsIntVar::const_iterator  v;
         //for (v = VarX->begin();  v != VarX->end();  ++v)  {
-        //      if ( ! VarY->contains( C - *v ) )
+        //      if ( !VarY->contains( C - *v ) )
         //              VarX->removeSingle( *v , this);
         //}
         //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-        //      if ( ! VarX->contains( C - *v ) )
+        //      if ( !VarX->contains( C - *v ) )
         //              VarY->removeSingle( *v , this);
         //}
 }
@@ -628,17 +628,17 @@ Ns_ConstrXeqYtimesC::ArcCons (void)
                         VarY->removeRange(VarX->min()/C+1, NsPLUS_INF, this, modification);
                 }
         }  while ( modification );
-        //if ( ( VarX->isBound()  &&  ! VarY->isBound() )  ||  ( ! VarX->isBound()  &&  VarY->isBound() ) )   {
+        //if ( ( VarX->isBound()  &&  !VarY->isBound() )  ||  ( !VarX->isBound()  &&  VarY->isBound() ) )   {
         //      cout << "EEEEEEEEE?:\t" << *VarX << " = " << C << "*" << *VarY << ".\tVarX=" << VarX << " VarY=" << VarY << "\n";
         //      abort();
         //}
         //NsIntVar::const_iterator  v;
         //for (v = VarX->begin();  v != VarX->end();  ++v)  {
-        //      if ( *v % C != 0  ||  ! VarY->contains( *v / C ) )
+        //      if ( *v % C != 0  ||  !VarY->contains( *v / C ) )
         //              VarX->removeSingle( *v , this);
         //}
         //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-        //      if ( ! VarX->contains( *v * C ) )
+        //      if ( !VarX->contains( *v * C ) )
         //              VarY->removeSingle( *v , this);
         //}
 }
@@ -665,7 +665,7 @@ Ns_ConstrXeqYtimesC::LocalArcCons (Ns_QueueItem& Qitem)
         //              VarX->removeRange(VarY->min()*C+1, NsPLUS_INF, this);
         //      }
         //}
-        //if ( Qitem.getVarFired()->isBound()  &&  ( ! VarX->isBound()  ||  ! VarY->isBound() ) )   {
+        //if ( Qitem.getVarFired()->isBound()  &&  ( !VarX->isBound()  ||  !VarY->isBound() ) )   {
         //if ( VarX->min() == 0   &&  VarX->max() == 19 )    {
         //      cout << "Bug?:\t" << *VarX << " = " << C << "*" << *VarY << ".\tVarX=" << VarX << " VarY=" << VarY << " fired=" << *Qitem.getVarFired() << "\n";
         //abort();
@@ -702,11 +702,11 @@ Ns_ConstrXeqY::ArcCons (void)
         }  while ( modification );
         //NsIntVar::const_iterator  v;
         //for (v = VarX->begin();  v != VarX->end();  ++v)  {
-        //      if ( ! VarY->contains( *v ) )
+        //      if ( !VarY->contains( *v ) )
         //              VarX->removeSingle( *v , this);
         //}
         //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-        //      if ( ! VarX->contains( *v ) )
+        //      if ( !VarX->contains( *v ) )
         //              VarY->removeSingle( *v , this);
         //}
 }
@@ -743,7 +743,7 @@ Ns_ConstrXeqYplusCZspecial::ArcCons (void)
 {
         NsIntVar::const_iterator  v, vz;
         for (v = VarX->begin();  v != VarX->end();  ++v) {
-                if ( ! VarY->contains( *v % C )   ||   ! VarZ->contains( (*v - *v % C) / C ) )
+                if ( !VarY->contains( *v % C )   ||   !VarZ->contains( (*v - *v % C) / C ) )
                         VarX->removeSingle( *v , this);
         }
         for (v = VarY->begin();  v != VarY->end();  ++v) {
@@ -836,7 +836,7 @@ Ns_ConstrXeqYdivC::ArcCons (void)
         //              VarX->removeSingle( *v , this);
         //}
         //for (v = VarY->begin();  v != VarY->end();  ++v)   {
-        //      if ( ! VarX->contains( *v / C ) )
+        //      if ( !VarX->contains( *v / C ) )
         //              VarY->removeSingle( *v , this);
         //}
 }
@@ -910,7 +910,7 @@ Ns_ConstrXeqCdivY::ArcCons (void)
                 //      }  else  {
                 //              VarY->removeRange(C / (Qitem.getW()+1) +1,  C / Qitem.getW(), this);
                 //cout << *VarX << " == " << C << " / " << *VarY << "\n";
-                if ( ! ( VarX->min() < 0  &&  0 < VarX->max() ) ) {
+                if ( !( VarX->min() < 0  &&  0 < VarX->max() ) ) {
                         if ( C  >=  0 ) {
                                 //cout << "Y = [" << xDIVy(C,(VarX->max()+1))+1 << ".." << xDIVy(C,VarX->min()) << "]\n";
                                 if ( VarX->max()  ==  -1 )
@@ -940,7 +940,7 @@ Ns_ConstrXeqCdivY::ArcCons (void)
         //              VarX->removeSingle( *v , this);
         //}
         //for (v = VarY->begin();  v != VarY->end();  ++v)   {
-        //      if ( ! VarX->contains( C / *v ) )
+        //      if ( !VarX->contains( C / *v ) )
         //              VarY->removeSingle( *v , this);
         //}
 }
@@ -952,7 +952,7 @@ Ns_ConstrXeqCdivY::LocalArcCons (Ns_QueueItem& Qitem)
         ////cout << *VarX << " == " << *VarY << " / " << C << "\n";
         //if ( VarX  ==  Qitem.getVarFired() )  {
         //      //cout << "VarX fired.\n";
-        //      if ( ! ( VarX->min() < 0  &&  0 < VarX->max() ) )   {
+        //      if ( !( VarX->min() < 0  &&  0 < VarX->max() ) )   {
         //              if ( C  >=  0 )    {
         //                      //cout << "Y = [" << xDIVy(C,(VarX->max()+1))+1 << ".." << xDIVy(C,VarX->min()) << "]\n";
         //                      if ( VarX->max()  ==  -1 )
@@ -1052,7 +1052,7 @@ Ns_ConstrXeqYmodC::ArcCons (void)
                         VarX->removeSingle( *v , this);
         }
         for (v = VarY->begin();  v != VarY->end();  ++v) {
-                if ( ! VarX->contains( *v % C ) )
+                if ( !VarX->contains( *v % C ) )
                         VarY->removeSingle( *v , this);
         }
 }
@@ -1182,7 +1182,7 @@ Ns_ConstrMetaXeqYeqZ::ArcCons (void)
         if ( VarY->max() == VarZ->min()  &&  VarY->min() == VarZ->max() )
                 VarX->removeSingle( neg , this);
         if ( intersectionEmpty(VarY,VarZ) )
-                VarX->removeSingle( ! neg , this);
+                VarX->removeSingle( !neg , this);
         if ( VarX->isBound() ) {
                 if ( VarX->value()  ==  neg ) {
                         if ( VarZ->isBound() )
@@ -1190,18 +1190,18 @@ Ns_ConstrMetaXeqYeqZ::ArcCons (void)
                         if ( VarY->isBound() )
                                 VarZ->removeSingle( VarY->value() , this);
                 } else {
-                        assert_Ns( VarX->value() == ! neg ,  "MetaXeqYeqneqZArcCons: Wrong `VarX->value()'");
+                        assert_Ns( VarX->value() == !neg ,  "MetaXeqYeqneqZArcCons: Wrong `VarX->value()'");
                         VarY->removeRange(NsMINUS_INF, VarZ->min()-1, this);
                         VarY->removeRange(VarZ->max()+1, NsPLUS_INF, this);
                         VarZ->removeRange(NsMINUS_INF, VarY->min()-1, this);
                         VarZ->removeRange(VarY->max()+1, NsPLUS_INF, this);
                         //NsIntVar::const_iterator  v;
                         //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-                        //      if ( ! VarZ->contains( *v ) )
+                        //      if ( !VarZ->contains( *v ) )
                         //              VarY->removeSingle( *v , this);
                         //}
                         //for (v = VarZ->begin();  v != VarZ->end();  ++v)  {
-                        //      if ( ! VarY->contains( *v ) )
+                        //      if ( !VarY->contains( *v ) )
                         //              VarZ->removeSingle( *v , this);
                         //}
                 }
@@ -1220,7 +1220,7 @@ Ns_ConstrMetaXeqYeqZ::LocalArcCons (Ns_QueueItem& Qitem)
                                 if ( VarY->isBound() )
                                         VarZ->removeSingle( VarY->value() , this);
                         } else {
-                                assert_Ns( VarX->value() == ! neg ,
+                                assert_Ns( VarX->value() == !neg ,
                                            "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong `VarX->value()'");
                                 VarY->removeRange(NsMINUS_INF, VarZ->min()-1, this);
                                 VarY->removeRange(VarZ->max()+1, NsPLUS_INF, this);
@@ -1228,11 +1228,11 @@ Ns_ConstrMetaXeqYeqZ::LocalArcCons (Ns_QueueItem& Qitem)
                                 VarZ->removeRange(VarY->max()+1, NsPLUS_INF, this);
                                 //NsIntVar::const_iterator  v;
                                 //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-                                //      if ( ! VarZ->contains( *v ) )
+                                //      if ( !VarZ->contains( *v ) )
                                 //              VarY->removeSingle( *v , this);
                                 //}
                                 //for (v = VarZ->begin();  v != VarZ->end();  ++v)  {
-                                //      if ( ! VarY->contains( *v ) )
+                                //      if ( !VarY->contains( *v ) )
                                 //              VarZ->removeSingle( *v , this);
                                 //}
                         }
@@ -1244,7 +1244,7 @@ Ns_ConstrMetaXeqYeqZ::LocalArcCons (Ns_QueueItem& Qitem)
                                         if ( VarY->isBound() )
                                                 VarZ->removeSingle( VarY->value() , this);
                                 } else {
-                                        assert_Ns( VarX->value() == ! neg ,
+                                        assert_Ns( VarX->value() == !neg ,
                                                    "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong `VarX->value()'");
                                         VarY->removeRange(NsMINUS_INF, VarZ->min()-1, this);
                                         VarY->removeRange(VarZ->max()+1, NsPLUS_INF, this);
@@ -1262,7 +1262,7 @@ Ns_ConstrMetaXeqYeqZ::LocalArcCons (Ns_QueueItem& Qitem)
                                         if ( VarZ->isBound() )
                                                 VarY->removeSingle( VarZ->value() , this);
                                 } else {
-                                        assert_Ns( VarX->value() == ! neg ,
+                                        assert_Ns( VarX->value() == !neg ,
                                                    "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong `VarX->value()'");
                                         VarY->removeRange(NsMINUS_INF, VarZ->min()-1, this);
                                         VarY->removeRange(VarZ->max()+1, NsPLUS_INF, this);
@@ -1276,7 +1276,7 @@ Ns_ConstrMetaXeqYeqZ::LocalArcCons (Ns_QueueItem& Qitem)
                 if ( VarY->max() == VarZ->min()  &&  VarY->min() == VarZ->max() )
                         VarX->removeSingle( neg , this);
                 if ( intersectionEmpty(VarY,VarZ) )
-                        VarX->removeSingle( ! neg , this);
+                        VarX->removeSingle( !neg , this);
         }
 }
 
@@ -1299,13 +1299,13 @@ Ns_ConstrXeqYandZ::ArcCons (void)
         makeBoolean(VarX, this);
         if ( (VarY->min() * VarZ->min()) )
                 VarX->removeSingle( neg , this);
-        if ( ! (VarY->max() * VarZ->max()) )
-                VarX->removeSingle( ! neg , this);
+        if ( !(VarY->max() * VarZ->max()) )
+                VarX->removeSingle( !neg , this);
         if ( VarX->isBound() ) {
                 if (VarX->value() == neg) {
                         //VOID
                 } else {
-                        assert_Ns( VarX->value() == ! neg ,
+                        assert_Ns( VarX->value() == !neg ,
                                    "Ns_ConstrXeqYandZ::LocalArcCons: Wrong `VarX->value()'");
                         //if ( VarY->contains(0) )
                         VarY->removeSingle( 0 , this);
@@ -1323,7 +1323,7 @@ Ns_ConstrXeqYandZ::LocalArcCons (Ns_QueueItem& Qitem)
                         if (VarX->value() == neg) {
                                 //VOID
                         } else {
-                                assert_Ns( VarX->value() == ! neg ,
+                                assert_Ns( VarX->value() == !neg ,
                                            "Ns_ConstrXeqYandZ::LocalArcCons: Wrong `VarX->value()'");
                                 //if ( VarY->contains(0) )
                                 VarY->removeSingle( 0 , this);
@@ -1335,8 +1335,8 @@ Ns_ConstrXeqYandZ::LocalArcCons (Ns_QueueItem& Qitem)
                 //assert_Ns( VarY == Qitem.getVarFired() ,  "Ns_ConstrXeqYandZ::LocalArcCons: Wrong getVarFired");
                 if ( (VarY->min() * VarZ->min()) )
                         VarX->removeSingle( neg , this);
-                if ( ! (VarY->max() * VarZ->max()) )
-                        VarX->removeSingle( ! neg , this);
+                if ( !(VarY->max() * VarZ->max()) )
+                        VarX->removeSingle( !neg , this);
         }
 }
 
@@ -1347,7 +1347,7 @@ Ns_ConstrXeqYorZ::ArcCons (void)
         if ( VarY->min() + VarZ->min()  !=  0 )
                 VarX->removeSingle( neg , this);
         if ( VarY->max() + VarZ->max()  ==  0 )
-                VarX->removeSingle( ! neg , this);
+                VarX->removeSingle( !neg , this);
         if ( VarX->isBound() ) {
                 if (VarX->value() == neg) {
                         //if ( VarY->contains(1) )
@@ -1355,7 +1355,7 @@ Ns_ConstrXeqYorZ::ArcCons (void)
                         //if ( VarZ->contains(1) )
                         VarZ->removeSingle( 1 , this);
                 } else {
-                        assert_Ns( VarX->value() == ! neg ,
+                        assert_Ns( VarX->value() == !neg ,
                                    "Ns_ConstrXeqYorZ::LocalArcCons: Wrong `VarX->value()'");
                         //VOID
                 }
@@ -1373,7 +1373,7 @@ Ns_ConstrXeqYorZ::LocalArcCons (Ns_QueueItem& Qitem)
                                 //if ( VarZ->contains(1) )
                                 VarZ->removeSingle( 1 , this);
                         } else {
-                                assert_Ns( VarX->value() == ! neg ,
+                                assert_Ns( VarX->value() == !neg ,
                                            "Ns_ConstrXeqYorZ::LocalArcCons: Wrong `VarX->value()'");
                                 //VOID
                         }
@@ -1383,7 +1383,7 @@ Ns_ConstrXeqYorZ::LocalArcCons (Ns_QueueItem& Qitem)
                 if ( VarY->min() + VarZ->min()  !=  0 )
                         VarX->removeSingle( neg , this);
                 if ( VarY->max() + VarZ->max()  ==  0 )
-                        VarX->removeSingle( ! neg , this);
+                        VarX->removeSingle( !neg , this);
         }
 }
 
@@ -1418,47 +1418,47 @@ Ns_ConstrXeqYplusZ::ArcCons (void)
         bool  changed_summinmax = true;
         for ( ; ; ) {
                 do {
-                        if ( ! VarX->removeRange(NsMINUS_INF,  VarY->min() + VarZ->min() - 1, this) )
+                        if ( !VarX->removeRange(NsMINUS_INF,  VarY->min() + VarZ->min() - 1, this) )
                                 return;
                         if ( VarY->min() + VarZ->max() < VarX->min() ) {
-                                //if ( ! VarY->removeRange( VarY->min() , this) )
+                                //if ( !VarY->removeRange( VarY->min() , this) )
                                 //      return; // ... to avoid an infinite loop
-                                if ( ! VarY->removeRange(NsMINUS_INF,  - VarZ->max() + VarX->min() -1, this) )
+                                if ( !VarY->removeRange(NsMINUS_INF,  - VarZ->max() + VarX->min() -1, this) )
                                         return;
                                 changed_summinmax = true;
                         }
                         if ( VarZ->min() + VarY->max() < VarX->min() ) {
-                                //if ( ! VarZ->removeRange( VarZ->min() , this) )
+                                //if ( !VarZ->removeRange( VarZ->min() , this) )
                                 //      return; // ... to avoid an infinite loop
-                                if ( ! VarZ->removeRange(NsMINUS_INF,  - VarY->max() + VarX->min() -1, this) )
+                                if ( !VarZ->removeRange(NsMINUS_INF,  - VarY->max() + VarX->min() -1, this) )
                                         return;
                                 changed_summinmax = true;
                         }
                 } while ( VarX->min() < VarY->min() + VarZ->min() );
                 //  Initially `changed_summinmax' was intentionally set true, in order the
                 //   following `if' statement to be ignored, the first time it is executed.
-                if ( ! changed_summinmax )
+                if ( !changed_summinmax )
                         break;
                 changed_summinmax = false;
                 do {
-                        if ( ! VarX->removeRange(VarY->max() + VarZ->max() + 1,  NsPLUS_INF, this) )
+                        if ( !VarX->removeRange(VarY->max() + VarZ->max() + 1,  NsPLUS_INF, this) )
                                 return;
                         if ( VarY->max() + VarZ->min() > VarX->max() ) {
-                                //if ( ! VarY->removeRange( VarY->max() , this) )
+                                //if ( !VarY->removeRange( VarY->max() , this) )
                                 //      return; // ... to avoid an infinite loop
-                                if ( ! VarY->removeRange(-VarZ->min() + VarX->max() +1,  NsPLUS_INF, this) )
+                                if ( !VarY->removeRange(-VarZ->min() + VarX->max() +1,  NsPLUS_INF, this) )
                                         return;
                                 changed_summinmax = true;
                         }
                         if ( VarZ->max() + VarY->min() > VarX->max() ) {
-                                //if ( ! VarZ->removeRange( VarZ->max() , this) )
+                                //if ( !VarZ->removeRange( VarZ->max() , this) )
                                 //      return; // ... to avoid an infinite loop
-                                if ( ! VarZ->removeRange(-VarY->min() + VarX->max() +1,  NsPLUS_INF, this) )
+                                if ( !VarZ->removeRange(-VarY->min() + VarX->max() +1,  NsPLUS_INF, this) )
                                         return;
                                 changed_summinmax = true;
                         }
                 } while ( VarX->max() > VarY->max() + VarZ->max() );
-                if ( ! changed_summinmax )
+                if ( !changed_summinmax )
                         break;
                 changed_summinmax = false;
         }
@@ -1478,7 +1478,7 @@ quotient_min_max (const NsIntVar *VarY, NsIntVar *VarZ,
                   NsInt& min, NsInt& max, const Ns_Constraint *constraint)
 {
         VarZ->removeSingle(0, constraint);
-        assert_Ns( ! ( VarZ->isBound()  &&  VarZ->value() == 0 ) ,
+        assert_Ns( !( VarZ->isBound()  &&  VarZ->value() == 0 ) ,
                    "quotient_min_max: zero `VarZ'");
         NsInt  quotient;
         quotient  =  VarY->min() / VarZ->min();
@@ -1556,13 +1556,13 @@ product_prune_bound (NsIntVar *VarX, NsIntVar *VarY, NsIntVar *VarZ,
 {
         while ( ( VarY->min() * VarZ->min() < VarX->min()  &&  VarY->min() * VarZ->max() < VarX->min() )
                 || ( VarY->min() * VarZ->min() > VarX->max()  &&  VarY->min() * VarZ->max() > VarX->max() ) ) {
-                if ( ! VarY->removeSingle( VarY->min(), constraint ) )
+                if ( !VarY->removeSingle( VarY->min(), constraint ) )
                         return;                  // ... to avoid an infinite loop
                 changed_minmax = true;
         }
         while ( ( VarY->max() * VarZ->min() < VarX->min()  &&  VarY->max() * VarZ->max() < VarX->min() )
                 || ( VarY->max() * VarZ->min() > VarX->max()  &&  VarY->max() * VarZ->max() > VarX->max() ) ) {
-                if ( ! VarY->removeSingle( VarY->max(), constraint ) )
+                if ( !VarY->removeSingle( VarY->max(), constraint ) )
                         return;                  // ... to avoid an infinite loop
                 changed_minmax = true;
         }

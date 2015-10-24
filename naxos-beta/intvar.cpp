@@ -93,7 +93,7 @@ NsIntVar::removeRange (const NsInt first, const NsInt last,
              || ( first <= max() && max() <= last ) ) {
                 rangeEmpty  =  false;
                 ////  To get the appropriate queueItem()...
-                //if ( ! pm->isCurrentHistoryId(domain.lastSaveHistoryId()) )
+                //if ( !pm->isCurrentHistoryId(domain.lastSaveHistoryId()) )
                 //      pm->saveBitsetDomain(domain);
                 if ( queueItem  ==  0 ) {
                         pm->getQueue().push( Ns_QueueItem(this) );
@@ -133,10 +133,10 @@ NsIntVar::removeRange (const NsInt first, const NsInt last,
                         //}
                         //
                         //queueItem->boundChangedBy(constr);
-                        if ( ! storeRemovedValues() )
+                        if ( !storeRemovedValues() )
                                 break;
                         ////  To get the appropriate queueItem()...
-                        //if ( ! pm->isCurrentHistoryId(domain.lastSaveHistoryId()) )
+                        //if ( !pm->isCurrentHistoryId(domain.lastSaveHistoryId()) )
                         //      pm->saveBitsetDomain(domain);
                         if ( queueItem  ==  0 ) {
                                 pm->getQueue().push( Ns_QueueItem(this) );
@@ -145,8 +145,8 @@ NsIntVar::removeRange (const NsInt first, const NsInt last,
                         queueItem->add(newFirst, constr);
                 }
         }
-        if ( ! rangeEmpty ) {
-                if ( ! domain.removeRange(first,last) ) {
+        if ( !rangeEmpty ) {
+                if ( !domain.removeRange(first,last) ) {
                         pm->foundAnInconsistency();
                         return  false;
                 } else {
@@ -229,7 +229,7 @@ NsIntVarArray::NsIntVarArray (const Ns_ExpressionArray& expr)
 NsIntVarArray&
 NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
 {
-        assert_Ns( PointArray.empty()  &&  ! addedConstraint ,
+        assert_Ns( PointArray.empty()  &&  !addedConstraint ,
                    "NsIntVarArray::operator=: Some constraints already imposed on `*this'");
         expr.post(*this);
         return  *this;
@@ -238,7 +238,7 @@ NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
 void
 NsIntVarArray::push_front (const NsIntVar& Var)
 {
-        assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns( !addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
         NsIntVar  *NewVar = new NsIntVar(Var);
         PointArray.push_front( NewVar );
         NewVar->manager().recordIntermediateVar( NewVar );
@@ -249,14 +249,14 @@ NsIntVarArray::push_front (const NsIntVar& Var)
 void
 NsIntVarArray::push_front (const Ns_Expression& expr)
 {
-        assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns( !addedConstraint ,  "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
         PointArray.push_front( &expr.post() );
 }
 
 void
 NsIntVarArray::push_back (const NsIntVar& Var)
 {
-        assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns( !addedConstraint ,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
         NsIntVar  *NewVar = new NsIntVar(Var);
         PointArray.push_back( NewVar );
         NewVar->manager().recordIntermediateVar( NewVar );
@@ -267,6 +267,6 @@ NsIntVarArray::push_back (const NsIntVar& Var)
 void
 NsIntVarArray::push_back (const Ns_Expression& expr)
 {
-        assert_Ns( ! addedConstraint ,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns( !addedConstraint ,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
         PointArray.push_back( &expr.post() );
 }
