@@ -7,7 +7,7 @@ WARNINGS = -pedantic -Wall -W -Wshadow
 CXXFLAGS = $(WARNINGS) $(STANDARD) -O2
 
 ### FILENAMES ###
-HEADERS = naxos.h internal.h stack.h
+HEADERS = naxos.h stack.h internal.h
 SOURCES = problemmanager.cpp expressions.cpp var_constraints.cpp array_constraints.cpp intvar.cpp bitset_domain.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 

@@ -12,10 +12,10 @@ LD = $(CXX)
 LDFLAGS = -s
 
 ### FILENAMES ###
-PROGRAMS = numpart nqueens send_more_money
+PROGRAMS = nqueens numpart send_more_money
 PR_OBJECTS = $(PROGRAMS:=.o)
 OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
-HEADERS = $(addprefix $(NAXOS)/, naxos.h internal.h stack.h)
+HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
 
 ### BUILDING ###
 .PHONY: all
