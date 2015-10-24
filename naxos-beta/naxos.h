@@ -4997,15 +4997,15 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         double  simulationRatio;
 
         void
-        currentNodeId (void)  const
+        currentPath (void)  const
         {
-                currentNodeIdRec(begin());
+                currentPathRec(begin());
         }
 
     private:
 
         void
-        currentNodeIdRec (const_iterator it)  const;
+        currentPathRec (const_iterator it)  const;
 
     public:
 
@@ -5491,12 +5491,20 @@ class  NsProblemManager {
                            "`simulationRatio' must be between 0 and 1");
                 timeSplitLim = ticks;
                 searchNodes.simulationRatio = simulationRatio;
+                if ( timeSplitLim == 0 )
+                        return;
                 startNodeId = getCurrentNodeNum();
                 startSplitTime = clock();
                 assert_Ns( startSplitTime != -1 ,
                            "Could not find time for `splitTimeLimit'");
                 splitHeader();
-                searchNodes.currentNodeId();
+                searchNodes.currentPath();
+        }
+
+        void
+        currentPath (void)  const
+        {
+                searchNodes.currentPath();
         }
 
         /// Explore specific search tree splits described in standard input.

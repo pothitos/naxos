@@ -19,6 +19,7 @@ simulate (NsProblemManager& pm, double splitTime, double simulationRatio)
         while (pm.nextSolution() != false)
                 /*VOID*/ ;
         cout << "\n";
+        pm.splitTimeLimit(0, simulationRatio);
 }
 
 int  main (int argc, char *argv[])
@@ -58,9 +59,15 @@ int  main (int argc, char *argv[])
                                 cout << "\n";
                         }
                         if ( pm.timeIsUp() ) {
+                                cout << "Sim\t" << time(0) << "\t";
+                                pm.currentPath();
+                                cout << "\n";
                                 pm.timeLimit(0);
                                 simulate(pm, splitTime, simulationRatio);
                         }
+                        cout << "End\t" << time(0) << "\t";
+                        pm.currentPath();
+                        cout << "\n";
                         pm.restart();
                 }
         } catch (exception& exc) {

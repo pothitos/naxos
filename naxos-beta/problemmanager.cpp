@@ -69,10 +69,16 @@ Ns_StackSearch::push (const value_type& newNode)
         if ( ! empty() )
                 ++top().children;
         if ( ! startNode.empty() ) {
-                if ( startNode.front()-- > 1 )
+                if ( startNode.front()-- > 1 ) {
                         return  false;
-                else
+                } else {
                         startNode.pop_front();
+                        if ( startNode.empty() ) {
+                                cout << "Start\t" << time(0) << "\t";
+                                currentPath();
+                                cout << "\n";
+                        }
+                }
         }
         bool  matchesEndNodePrevious =
                 ( ( empty() && ! endNode.empty() )  ||
@@ -415,11 +421,11 @@ Ns_StackGoals::~Ns_StackGoals (void)
 }
 
 void
-Ns_StackSearch::currentNodeIdRec (const_iterator it)  const
+Ns_StackSearch::currentPathRec (const_iterator it)  const
 {
         if ( it  !=  end() ) {
                 NsUInt  children = it->children;
-                currentNodeIdRec(++it);
+                currentPathRec(++it);
                 if ( it  !=  end() )
                         cout << " ";
                 cout << children;
@@ -688,10 +694,10 @@ NsProblemManager::nextSolution (void)
                         startSplitTime  =  clock();
                         searchNodes.timeSimulated  =  0;
                         cout << " - ";
-                        searchNodes.currentNodeId();
+                        searchNodes.currentPath();
                         cout << "\n";
                         splitHeader();
-                        searchNodes.currentNodeId();
+                        searchNodes.currentPath();
                 }
                 popped_a_goal  =  false;
                 if ( ! searchNodes.top().stackAND.empty() ) {
@@ -728,6 +734,11 @@ NsProblemManager::nextSolution (void)
                         } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(),
                                                       searchNodes.gbegin(),
                                                       numSearchTreeNodes() ) ) ) {
+#ifdef DEBUG_SPLITS
+                                cout << "Node: ";
+                                searchNodes.currentPath();
+                                cout << "\n";
+#endif
                                 searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
                         } else {
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
