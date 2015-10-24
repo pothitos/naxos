@@ -105,13 +105,6 @@ Ns_StackSearch::splitEnded (void)
                ( size() == endNode.size() &&
                  top().children >= endNode[size()-1] ) ||
                size() > endNode.size() ) ) {
-                bool startMatchesPreviousEnd;
-                if ( readSplit(startMatchesPreviousEnd) ) {
-                        if ( startMatchesPreviousEnd )
-                                return  splitEnded();
-                        else
-                                alreadyReadSplit = true;
-                }
                 return  true;
         } else {
                 assert_Ns_3( ! TEST_splitEnded() ,
@@ -383,7 +376,6 @@ DiffTime (time_t time2, time_t time1)
 
 Ns_StackSearch::Ns_StackSearch (void)
         : nSearchTreeNodes(0),
-          alreadyReadSplit(false),
           timeSimulated(0.0),
           recordObjective(false)
 {    }
@@ -453,12 +445,8 @@ const char  *NsProblemManager::SPLIT_HEADER = "Split:";
 
 ///  Explore specific search tree splits described in standard input.
 bool
-Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
+Ns_StackSearch::readSplit (void)
 {
-        if ( alreadyReadSplit ) {
-                alreadyReadSplit = false;
-                return  true;
-        }
         if ( ! getline(cin,mapperLine) || mapperLine.empty() )
                 return  false;
         if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
@@ -475,22 +463,13 @@ Ns_StackSearch::readSplit (bool& startMatchesPreviousEnd)
                    lineHeader == NsProblemManager::SPLIT_HEADER ,
                    "Ns_StackSearch::readSplit: Wrong split line header");
         NsUInt  node;
-        startMatchesPreviousEnd = true;
-        NsDeque<NsUInt>::const_iterator  endIt = endNode.begin();
         startNode.clear();
-        while ( line >> node ) {
-                if ( endIt == endNode.end() || *endIt != node )
-                        startMatchesPreviousEnd  =  false;
-                else
-                        ++endIt;
+        while ( line >> node )
                 startNode.push_back(node);
-        }
         line.clear();    // Clears read failure.
         endNode.clear();
         while ( line >> node )
                 endNode.push_back(node);
-        if ( startMatchesPreviousEnd )
-                startNode.clear();
         updateMatchesEndNode();
         return  true;
 }

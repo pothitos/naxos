@@ -4917,12 +4917,9 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         /// The search tree split to be explored ends up in this node.
         NsDeque<NsUInt>  endNode;
 
-        /// True if there was an unused readSplit call.
-        bool  alreadyReadSplit;
-
     public:
 
-        bool  readSplit (bool& startMatchesPreviousEnd);
+        bool  readSplit (void);
 
         bool  splitEnded (void);
 
@@ -5511,8 +5508,7 @@ class  NsProblemManager {
         bool
         readSplit (void)
         {
-                bool  foo;
-                return  searchNodes.readSplit(foo);
+                return  searchNodes.readSplit();
         }
 
         /// @}
