@@ -4919,7 +4919,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
     public:
 
-        bool  readSplit (void);
+        bool  readSplit (std::string& splitEnd);
 
         bool  splitEnded (void);
 
@@ -5426,16 +5426,9 @@ class  NsProblemManager {
         NsUInt  startNodeId;
 
         /// Flag set by nextSolution() when time is up.
-        bool  timeIsOver;
+        bool  timeIsUp;
 
     public:
-
-        ///  Returns true when the available time to solve the problem expires.
-        bool
-        timeIsUp (void) const
-        {
-                return  timeIsOver;
-        }
 
         ///  Sets the time limit.  After this limit is exceeded, nextSolution() returns \c false.
         void
@@ -5498,25 +5491,27 @@ class  NsProblemManager {
                 searchNodes.currentPath();
         }
 
-        void
-        currentPath (void)  const
-        {
-                searchNodes.currentPath();
-        }
-
         /// Explore specific search tree splits described in standard input.
         bool
         readSplit (void)
         {
-                return  searchNodes.readSplit();
+                return  searchNodes.readSplit(splitEnd);
         }
+
+    private:
+
+        /// Contains a string describing the last path of the current search tree split.
+        std::string  splitEnd;
+
+    public:
+
+        void
+        simulate (const double splitTime, const double simulationRatio);
 
         /// @}
 
         ///  @{
         ///  \name  Statistic members
-
-    private:
 
         NsDeque<const NsIntVar *>  vars;
         NsUInt  domainsSizeMax;

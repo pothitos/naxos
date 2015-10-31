@@ -74,7 +74,7 @@ Ns_StackSearch::push (const value_type& newNode)
                 } else {
                         startNode.pop_front();
                         if ( startNode.empty() ) {
-                                cout << "Start\t" << time(0) << "\t";
+                                cout << "SolveStart\t" << time(0) << "\t";
                                 currentPath();
                                 cout << "\n";
                         }
@@ -260,6 +260,172 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
         fileConstraintsGraph.close();
 }
 
+#include <sstream>
+
+const char  *NsProblemManager::SPLIT_HEADER = "Split:";
+
+///  Explore specific search tree splits described in standard input.
+bool
+Ns_StackSearch::readSplit (string& splitEnd)
+{
+        if ( !getline(cin,mapperLine) || mapperLine.empty() )
+                return  false;
+        cerr << mapperLine << "\n";
+        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
+                fileMapperInput << fixed
+                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                                << "\t" << mapper
+                                << "\t" << mapperLine << "\n";
+        }
+        if ( fileMapperInput.is_open() )
+                mapperLineStartTime = clock();
+        istringstream  line(mapperLine);
+        string  lineHeader;
+        assert_Ns( line >> lineHeader &&
+                   lineHeader == NsProblemManager::SPLIT_HEADER ,
+                   "Ns_StackSearch::readSplit: Wrong split line header");
+        NsUInt  node;
+        startNode.clear();
+        while ( line >> node )
+                startNode.push_back(node);
+        line.clear();    // Clears read failure.
+        getline(line, splitEnd);
+        istringstream  lineRest(splitEnd);
+        endNode.clear();
+        while ( lineRest >> node )
+                endNode.push_back(node);
+        updateMatchesEndNode();
+        return  true;
+}
+
+/// When the time for normal search is exhausted, this function is called to output the remaining search tree splits.
+void
+NsProblemManager::simulate (const double splitTime, const double simulationRatio)
+{
+        cout << "SolveEnd\t" << time(0) << "\t";
+        searchNodes.currentPath();
+        cout << "\n";
+        if ( timeIsUp ) {
+                cout << "SimulateStart\t" << time(0) << "\t";
+                searchNodes.currentPath();
+                cout << "\n";
+                timeLimit(0);
+                splitTimeLimit(splitTime, simulationRatio);
+                while ( nextSolution() != false )
+                        /*VOID*/ ;
+                cout << " -" << splitEnd << "\n";
+                splitTimeLimit(0, simulationRatio);
+                cout << "SimulateEnd\t" << time(0) << "\t";
+                searchNodes.currentPath();
+                cout << "\n";
+        }
+        restart();
+}
+
+void
+Ns_StackSearch::currentPathRec (const_iterator it)  const
+{
+        if ( it  !=  end() ) {
+                NsUInt  children = it->children;
+                currentPathRec(++it);
+                if ( it  !=  end() )
+                        cout << " ";
+                cout << children;
+        }
+}
+
+bool
+Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
+{
+        if ( it  ==  end() ) {
+                depth  =  0;
+                return  ( !endNode.empty() );
+        }
+        NsUInt  children = it->children;
+        bool&  matchesEndNode = it->matchesEndNode;
+        matchesEndNode = updateMatchesEndNodeRec(++it,depth);
+        ++depth;
+        return  ( matchesEndNode && ( depth > endNode.size() ||
+                                      children >= endNode[depth-1] ) );
+}
+
+namespace {
+
+void
+destroy_goal (NsGoal *g)
+{
+        if ( g  !=  0 ) {
+                if ( g->isGoalAND() || g->isGoalOR() ) {
+                        destroy_goal( g->getFirstSubGoal() );
+                        destroy_goal( g->getSecondSubGoal() );
+                }
+                delete  g;
+        }
+}
+
+//  We reimplement difftime() because of MinGW issues.
+inline double
+DiffTime (time_t time2, time_t time1)
+{
+        return  (time2 - time1);
+}
+
+}  // end namespace
+
+Ns_StackSearch::Ns_StackSearch (void)
+        : nSearchTreeNodes(0),
+          timeSimulated(0.0),
+          recordObjective(false)
+{    }
+
+void
+Ns_StackSearch::clear (void)
+{
+        while ( !empty() ) {
+                destroy_goal( top().goalNextChoice );
+                pop();
+        }
+}
+
+Ns_StackSearch::~Ns_StackSearch (void)
+{
+        clear();
+        if ( fileSearchGraph.is_open() ) {
+                fileSearchGraph << "}\n";
+                fileSearchGraph.close();
+        }
+        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
+                fileMapperInput << fixed
+                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                                << "\t" << mapper
+                                << "\t" << mapperLine << "\n";
+        }
+}
+
+Ns_StackGoals::~Ns_StackGoals (void)
+{
+        while ( !empty() ) {
+                destroy_goal( top() );
+                pop();
+        }
+}
+
+NsProblemManager::~NsProblemManager (void)
+{
+        //  Constraints destruction.
+        for (Ns_constraints_array_t::iterator  c = constraints.begin();
+             c != constraints.end();
+             ++c) {
+                delete  *c;
+        }
+        //  Intermediate variables destruction.
+        for (NsDeque<NsIntVar *>::iterator  v = intermediateVars.begin();
+             v != intermediateVars.end();
+             ++v) {
+                delete  *v;
+        }
+}
+
 ///  Fetches the next constraint to currentConstr, that concerns the variable varFired.
 
 ///  \remarks
@@ -349,145 +515,6 @@ Ns_QueueItem::getNextConstraint (void)
                 };
         }
         return  0;
-}
-
-namespace {
-
-void
-destroy_goal (NsGoal *g)
-{
-        if ( g  !=  0 ) {
-                if ( g->isGoalAND() || g->isGoalOR() ) {
-                        destroy_goal( g->getFirstSubGoal() );
-                        destroy_goal( g->getSecondSubGoal() );
-                }
-                delete  g;
-        }
-}
-
-//  We reimplement difftime() because of MinGW issues.
-inline double
-DiffTime (time_t time2, time_t time1)
-{
-        return  (time2 - time1);
-}
-
-}  // end namespace
-
-Ns_StackSearch::Ns_StackSearch (void)
-        : nSearchTreeNodes(0),
-          timeSimulated(0.0),
-          recordObjective(false)
-{    }
-
-void
-Ns_StackSearch::clear (void)
-{
-        while ( !empty() ) {
-                destroy_goal( top().goalNextChoice );
-                pop();
-        }
-}
-
-Ns_StackSearch::~Ns_StackSearch (void)
-{
-        clear();
-        if ( fileSearchGraph.is_open() ) {
-                fileSearchGraph << "}\n";
-                fileSearchGraph.close();
-        }
-        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
-                fileMapperInput << fixed
-                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
-                                << "\t" << mapper
-                                << "\t" << mapperLine << "\n";
-        }
-}
-
-Ns_StackGoals::~Ns_StackGoals (void)
-{
-        while ( !empty() ) {
-                destroy_goal( top() );
-                pop();
-        }
-}
-
-void
-Ns_StackSearch::currentPathRec (const_iterator it)  const
-{
-        if ( it  !=  end() ) {
-                NsUInt  children = it->children;
-                currentPathRec(++it);
-                if ( it  !=  end() )
-                        cout << " ";
-                cout << children;
-        }
-}
-
-bool
-Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
-{
-        if ( it  ==  end() ) {
-                depth  =  0;
-                return  ( !endNode.empty() );
-        }
-        NsUInt  children = it->children;
-        bool&  matchesEndNode = it->matchesEndNode;
-        matchesEndNode = updateMatchesEndNodeRec(++it,depth);
-        ++depth;
-        return  ( matchesEndNode && ( depth > endNode.size() ||
-                                      children >= endNode[depth-1] ) );
-}
-
-#include <sstream>
-
-const char  *NsProblemManager::SPLIT_HEADER = "Split:";
-
-///  Explore specific search tree splits described in standard input.
-bool
-Ns_StackSearch::readSplit (void)
-{
-        if ( !getline(cin,mapperLine) || mapperLine.empty() )
-                return  false;
-        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
-                fileMapperInput << fixed
-                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
-                                << "\t" << mapper
-                                << "\t" << mapperLine << "\n";
-        }
-        if ( fileMapperInput.is_open() )
-                mapperLineStartTime = clock();
-        istringstream  line(mapperLine);
-        string  lineHeader;
-        assert_Ns( line >> lineHeader &&
-                   lineHeader == NsProblemManager::SPLIT_HEADER ,
-                   "Ns_StackSearch::readSplit: Wrong split line header");
-        NsUInt  node;
-        startNode.clear();
-        while ( line >> node )
-                startNode.push_back(node);
-        line.clear();    // Clears read failure.
-        endNode.clear();
-        while ( line >> node )
-                endNode.push_back(node);
-        updateMatchesEndNode();
-        return  true;
-}
-
-NsProblemManager::~NsProblemManager (void)
-{
-        //  Constraints destruction.
-        for (Ns_constraints_array_t::iterator  c = constraints.begin();
-             c != constraints.end();
-             ++c) {
-                delete  *c;
-        }
-        //  Intermediate variables destruction.
-        for (NsDeque<NsIntVar *>::iterator  v = intermediateVars.begin();
-             v != intermediateVars.end();
-             ++v) {
-                delete  *v;
-        }
 }
 
 ///  Adds a constraint to the problem.
@@ -615,7 +642,7 @@ NsProblemManager::restart (void)
 bool
 NsProblemManager::nextSolution (void)
 {
-        timeIsOver = false;
+        timeIsUp = false;
         bool  isArcCons = true;
         if ( firstNextSolution ) {
                 firstNextSolution  =  false;
@@ -760,6 +787,6 @@ NsProblemManager::nextSolution (void)
                         }
                 }
         }
-        timeIsOver = true;
+        timeIsUp = true;
         return  false;
 }
