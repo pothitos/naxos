@@ -270,7 +270,6 @@ Ns_StackSearch::readSplit (string& splitEnd)
 {
         if ( !getline(cin,mapperLine) || mapperLine.empty() )
                 return  false;
-        cerr << mapperLine << "\n";
         if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
                 fileMapperInput << fixed
                                 << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
@@ -629,8 +628,6 @@ NsProblemManager::restart (void)
         } while ( !foundSecondFrame );
         searchNodes.pop(false);
         searchNodes.reset();
-        if ( !searchNodes.startNode.empty() )
-                searchNodes.startNode.push_front(1);
         assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
                                      numSearchTreeNodes() ) ) ,
                    "NsProblemManager::restart: First push should succeed");
