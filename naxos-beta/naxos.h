@@ -4943,7 +4943,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         bool  push (const value_type& newNode);
 
-        void  pop (const bool deleteStartNode=true);
+        void  pop (void);
 
         ///  Restores the validHistoryId 's state as it was before search began.
         void

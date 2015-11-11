@@ -165,10 +165,14 @@ Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
 
 ///  Invalidates the validHistoryId for the current search node.
 void
-Ns_StackSearch::pop (const bool deleteStartNode)
+Ns_StackSearch::pop (void)
 {
-        if ( deleteStartNode )
-                startNode.clear();
+        if ( !startNode.empty() ) {
+                cout << "SolveStart\t" << time(0) << "\t";
+                currentPath();
+                cout << "\n";
+        }
+        startNode.clear();
         if ( fileSearchGraph.is_open() && size() - 1 > 0 && top().children > 0 ) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
@@ -620,13 +624,13 @@ NsProblemManager::restart (void)
                 if ( goalNextChoice  ==  0 )
                         foundSecondFrame  =  true;
                 searchNodes.top().bitsetsStore.restore();
-                searchNodes.pop(false);
+                searchNodes.pop();
                 searchNodes.top().stackAND.push( goalNextChoice );
                 // We keeped the above line because of Memory Management
                 //  reasons (in order to delete the `goalNextChoice').
                 assert_Ns( !searchNodes.empty() ,  "`restart()' call, before `nextSolution()'");
         } while ( !foundSecondFrame );
-        searchNodes.pop(false);
+        searchNodes.pop();
         searchNodes.reset();
         assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
                                      numSearchTreeNodes() ) ) ,
