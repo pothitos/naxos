@@ -1,5 +1,8 @@
+#include <naxos.h>
+#include <iostream>
 #include <cstdlib>
-#include "naxos.h"
+#include <ctime>
+#include <sstream>
 
 using namespace naxos;
 using namespace std;
@@ -86,28 +89,23 @@ int main(int argc, char **argv)
                 NsIntVar Sum = NsSum(List), SquareSum = NsSum(ListSquare);
                 pm.add(Sum == N*(N+1)/4);
                 pm.add(SquareSum == N*(N+1)*(2*N+1)/12);
-                if ( argc > 2 ) {
-                        // SPLIT //
-                        if ( argc < 4 ) {
-                                std::cerr << argv[0] << ": Provide the simulation ratio\n";
-                                return  1;
-                        }
-                        unsigned  seed = time(0);
-                        cerr << "Random seed is " << seed << "\n";
-                        srand(seed);
-                        pm.splitTimeLimit(CLOCKS_PER_SEC*atof(argv[2]), atof(argv[3]));
+                // MapExplore specific code follows //
+                srand(time(0));
+                double  maxSplitTime, splitTime, simulationRatio;
+                if ( !( argc == 5 &&
+                        istringstream(argv[2]) >> maxSplitTime &&
+                        istringstream(argv[3]) >> splitTime &&
+                        istringstream(argv[4]) >> simulationRatio ) ) {
+                        cerr << "Usage: " << argv[0]
+                             << " <N> <max_split_time> <split_time> <simulation_ratio>\n";
+                        return  1;
+                }
+                while ( pm.readSplit() ) {
+                        pm.timeLimit(maxSplitTime);
                         pm.addGoal( new NsgLabeling(List) );
-                        while (pm.nextSolution() != false)
-                                /*VOID*/ ;
-                        cout << "\n";
-                } else {
-                        // READ //
-                        while ( pm.readSplit() ) {
-                                pm.addGoal( new NsgLabeling(List) );
-                                while (pm.nextSolution() != false)
-                                        ListPrint(List);
-                                pm.restart();
-                        }
+                        while ( pm.nextSolution() != false )
+                                ListPrint(List);
+                        pm.simulate(splitTime, simulationRatio);
                 }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";

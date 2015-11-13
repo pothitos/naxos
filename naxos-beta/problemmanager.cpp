@@ -742,7 +742,7 @@ NsProblemManager::nextSolution (void)
                                                       searchNodes.gbegin(),
                                                       numSearchTreeNodes() ) ) ) {
 #ifdef DEBUG_SPLITS
-                                cout << "Node: ";
+                                cout << "Node\t" << time(0) << "\t";
                                 searchNodes.currentPath();
                                 cout << "\n";
 #endif

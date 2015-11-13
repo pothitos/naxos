@@ -3,7 +3,6 @@
 //  See ../../license/LICENSE for the license of the library  //
 
 #include <naxos.h>
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
