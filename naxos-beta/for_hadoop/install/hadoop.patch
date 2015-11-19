@@ -1,0 +1,151 @@
+diff -uraN hadoop-2.6.0/etc/hadoop/core-site.xml /usr/local/hd/etc/hadoop/core-site.xml
+--- hadoop-2.6.0/etc/hadoop/core-site.xml	2014-11-13 23:20:32.000000000 +0200
++++ /usr/local/hd/etc/hadoop/core-site.xml	2015-02-23 18:55:57.911362868 +0200
+@@ -17,4 +17,24 @@
+ <!-- Put site-specific property overrides in this file. -->
+ 
+ <configuration>
++	<property>
++		<name>hadoop.tmp.dir</name>
++		<value>/app/hd/tmp</value>
++		<description>A base for other temporary directories.
++		</description>
++	</property>
++ 
++	<!--property>
++		<name>fs.default.name</name>
++		<value>hdfs://localhost:54310</value>
++		<description>
++		The name of the default file system. A URI whose scheme and authority determine the FileSystem implementation.  The uri's scheme determines the config property(fs.SCHEME.impl) naming the FileSystem implementation class. The uri's authority is used to determine the host, port, etc.for a filesystem.
++		</description>
++	</property-->
++
++	<property>
++		<name>fs.default.name</name>
++		<value>hdfs://master:54310</value>
++		<description>The name of the default file system.  A URI whose scheme and authority determine the FileSystem implementation.The uri's scheme determines the config property (fs.SCHEME.impl) naming the FileSystem implementation class.  The uri's authority is used to  determine the host, port, etc. for a filesystem.</description>
++	</property>
+ </configuration>
+diff -uraN hadoop-2.6.0/etc/hadoop/hadoop-env.sh /usr/local/hd/etc/hadoop/hadoop-env.sh
+--- hadoop-2.6.0/etc/hadoop/hadoop-env.sh	2014-11-13 23:20:32.000000000 +0200
++++ /usr/local/hd/etc/hadoop/hadoop-env.sh	2015-02-23 13:47:35.376307982 +0200
+@@ -22,7 +22,8 @@
+ # remote nodes.
+ 
+ # The java implementation to use.
+-export JAVA_HOME=${JAVA_HOME}
++#export JAVA_HOME=${JAVA_HOME}
++export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
+ 
+ # The jsvc implementation to use. Jsvc is required to run secure datanodes
+ # that bind to privileged ports to provide authentication of data transfer
+diff -uraN hadoop-2.6.0/etc/hadoop/hdfs-site.xml /usr/local/hd/etc/hadoop/hdfs-site.xml
+--- hadoop-2.6.0/etc/hadoop/hdfs-site.xml	2014-11-13 23:20:32.000000000 +0200
++++ /usr/local/hd/etc/hadoop/hdfs-site.xml	2015-04-20 01:02:05.952154479 +0300
+@@ -18,4 +18,11 @@
+ 
+ <configuration>
+ 
++	<property>
++		<name>dfs.replication</name>
++		<value>8</value>
++		<description>Default block replication.The actual number of replications can be specified when the file is created. The default is used if replication is not specified in create time.
++		</description>
++	</property>
++ 
+ </configuration>
+diff -uraN hadoop-2.6.0/etc/hadoop/mapred-site.xml /usr/local/hd/etc/hadoop/mapred-site.xml
+--- hadoop-2.6.0/etc/hadoop/mapred-site.xml	1970-01-01 02:00:00.000000000 +0200
++++ /usr/local/hd/etc/hadoop/mapred-site.xml	2015-02-23 13:54:11.044307914 +0200
+@@ -0,0 +1,24 @@
++<?xml version="1.0"?>
++<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
++<!--
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License. See accompanying LICENSE file.
++-->
++
++<!-- Put site-specific property overrides in this file. -->
++
++<configuration>
++	<property>
++		<name>mapreduce.framework.name</name>
++		<value>yarn</value>
++	</property>
++</configuration>
+diff -uraN hadoop-2.6.0/etc/hadoop/slaves /usr/local/hd/etc/hadoop/slaves
+--- hadoop-2.6.0/etc/hadoop/slaves	2014-11-13 23:20:32.000000000 +0200
++++ /usr/local/hd/etc/hadoop/slaves	2015-04-06 10:08:07.707043155 +0300
+@@ -1 +1,8 @@
+-localhost
++master
++slave1
++slave2
++slave3
++slave4
++slave5
++slave6
++slave7
+diff -uraN hadoop-2.6.0/etc/hadoop/yarn-site.xml /usr/local/hd/etc/hadoop/yarn-site.xml
+--- hadoop-2.6.0/etc/hadoop/yarn-site.xml	2014-11-13 23:20:32.000000000 +0200
++++ /usr/local/hd/etc/hadoop/yarn-site.xml	2015-02-24 21:36:15.067237596 +0200
+@@ -16,4 +16,50 @@
+ 
+ <!-- Site specific YARN configuration properties -->
+ 
++	<property>
++		<name>yarn.nodemanager.aux-services</name>
++		<value>mapreduce_shuffle</value>
++	</property>
++ 
++	<property>
++		<name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
++		<value>org.apache.hadoop.mapred.ShuffleHandler</value>
++	</property>
++
++	<property>
++	<name>mapreduce.framework.name</name>
++	<value>yarn</value>
++	</property>
++
++
++  <!-- StackOverflow -->
++  <property>
++    <name>yarn.resourcemanager.resource-tracker.address</name>
++    <value>master:8031</value>
++  </property>
++  <property>
++    <name>yarn.resourcemanager.address</name>
++    <value>master:8032</value>
++  </property>
++  <property>
++    <name>yarn.resourcemanager.scheduler.address</name>
++    <value>master:8030</value>
++  </property>
++  <property>
++    <name>yarn.resourcemanager.admin.address</name>
++    <value>master:8033</value>
++  </property>
++  <property>
++    <name>yarn.resourcemanager.webapp.address</name>
++    <value>master:8088</value>
++  </property>
++
+ </configuration>
++
++
++	<!--configuration>
++	<property>
++	<name>mapreduce.framework.name</name>
++	<value>yarn</value>
++	</property>
++	</configuration-->
