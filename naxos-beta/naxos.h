@@ -4801,7 +4801,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                           descWeights(0.0)
                 {    }
 
-                ///  Augments the valid history ID and updates statistics.
+                /// Augments the valid history ID and updates statistics.
                 void
                 invalidate (const clock_t timeBorn,
                             const double timeSimChild,
@@ -4838,7 +4838,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         descWeights += descWeight;
                 }
 
-                ///  The mean value of the time spent in this level.
+                /// The mean value of the time spent in this level.
                 double
                 meanTime (void)  const
                 {
@@ -4847,26 +4847,33 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         return  ( timeSum / timeWeights );
                 }
 
-                ///  The mean value of the time spent in this level plus the standard deviation.
+                /// The mean value of the descendants of a node in this level.
                 double
-                meanDesc (void)  const
+                meanDesc (void) const
                 {
                         assert_Ns( validHistoryId != 0 ,
                                    "history_time_t::meanDesc: Cannot get mean value of an empty set");
                         return  descMean;
                 }
 
-                ///  The mean value of the time spent in this level plus the standard deviation.
+                /// The mean value of the descendants of a node in this level plus the standard deviation.
                 double
-                meanDescPlusSD (void)  const
+                standardDeviationDesc (void) const
                 {
                         assert_Ns( validHistoryId > 1 ,
-                                   "history_time_t::meanDescPlusSD: Cannot get standard deviation");
+                                   "history_time_t::standardDeviationDesc: Cannot get standard deviation");
                         // variance_n = M2/sumweight
                         double  variance_n = descSum2 / descWeights;
                         // variance = variance_n * len(dataWeightPairs)/(len(dataWeightPairs) - 1)
                         double  variance = variance_n * validHistoryId / (validHistoryId - 1);
-                        return  ( descMean + sqrt(variance) );
+                        return  sqrt(variance);
+                }
+
+                /// The mean value of the descendants of a node in this level plus the standard deviation.
+                double
+                meanDescPlusSD (void) const
+                {
+                        return  (descMean + standardDeviationDesc());
                 }
         };
 
