@@ -1,5 +1,7 @@
 #! /bin/sh
 
+: ${HD_HOME?"Please set the envinonment variable HD_HOME, by executing the command e.g. 'export HD_HOME=/usr/local/hd'"}
+
 if [ $# -ne 6 -a $# -ne 7 ]
 then
         echo "Usage: $0 CSP N MaxSplitTime SplitTime SimulationRatio Mappers" >&2
@@ -60,9 +62,9 @@ do
         time -f "=== Splits upload in %e seconds ===" \
                 hadoop fs -moveFromLocal -f splits
         time -f "=== Hadoop round $ROUND in %e seconds ===" \
-                hadoop jar hadoop-streaming-2.7.1.jar  \
+                hadoop jar $HD_HOME/share/hadoop/tools/lib/hadoop-streaming*.jar  \
                 -D mapreduce.job.maps=$MAPPERS \
-                -mapper "/home/user/nikos/naxos-solver/naxos-beta/for_hadoop/$CSP $N $MAXSPLITTIME $SPLITTIME $SIMRATIO" \
+                -mapper "$PWD/$CSP $N $MAXSPLITTIME $SPLITTIME $SIMRATIO" \
                 -reducer NONE \
                 -input splits \
                 -output solutions 2>&1 | \
