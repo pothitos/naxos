@@ -1,0 +1,157 @@
+# # # # # # # # # # # # # SEARCH PARAMETERS # # # # # # # # # # # # # # # #
+#                                                                         #
+#                                                                         #
+#   Below, we define the search method that will be used and its          #
+#    parameters in the following way:                                     #
+#                                                                         #
+#      searchMethod <method> <parameter1> ... <parameterN>                #
+#                                                                         #
+#   Available <method>s (and their <parameter>s):                         #
+#                                                                         #
+#        DFS [RANDOM_VAR_HEUR|RANDOM_VAL_HEUR]                            #
+#             Depth First Search                                          #
+#                                                                         #
+#        LDS [<step> [<lookAhead> [<minDiscrepancy> [<maxDiscrepancy>]]]] #
+#             Limited Discrepancy Search                                  #
+#             <step> is the amount added to the allowed discrepancy       #
+#                 on each LDS iteration (default: 1).                     #
+#             When we reach a search node with a distance <lookAhead>     #
+#                 from the leafs, the search method continues             #
+#                 searching using DFS (default: 0).                       #
+#             Paths with discrepancy less than <minDiscrepancy>           #
+#                 (default: 0) or greater than <maxDiscrepancy>           #
+#                 (default: 0, that represents infinity) will not be      #
+#                 explored.                                               #
+#                                                                         #
+#        CREDIT <creditInRoot>                                            #
+#             Credit Search                                               #
+#                                                                         #
+#        DBS [<depthLimit>]                                               #
+#             Depth Bounded backtrack Search                              #
+#             After an iteration of this search method reaches the        #
+#                 search tree depth <depthLimit> (default: 0), it         #
+#                 follows only one path.  After each DBS iteration,       #
+#                 <depthLimit> is incremented by 1.                       #
+#                                                                         #
+#        LAN <lanLimit>                                                   #
+#             Limited Assignment Number                                   #
+#             Each variable is assigned a value at most <lanLimit>        #
+#                 times.                                                  #
+#                                                                         #
+#        DBDS                                                             #
+#             Depth Bounded Discrepancy Search                            #
+#                                                                         #
+#        IBROAD                                                           #
+#             Iterative Broadening Search                                 #
+#                                                                         #
+#        BBS <iterations> [<lookAhead>]                                   #
+#             Bounded Backtrack Search                                    #
+#             <iterations> is the number of the algorithm iterations.     #
+#             This method does no backtracking in the <lookAhead>         #
+#                 (default: 0) last levels.                               #
+#                                                                         #
+#        RDFS <iterations> <timeout>                                      #
+#             DFS with Restarts                                           #
+#             <iterations> is the number of the algorithm iterations.     #
+#             At each iteration it explores at most <timeout> search      #
+#                 nodes.                                                  #
+#                                                                         #
+#        GNS                                                              #
+#             Gradual Narrowing Search                                    #
+#                                                                         #
+#        FNS fSample|fSampleMiddle|fSampleExp                             #
+#             Functional Narrowing Search                                 #
+#             (Choose between the available functions.)                   #
+#                                                                         #
+#        ISAMP <iterations>                                               #
+#             Iterative Sampling                                          #
+#             <iterations> is the number of the algorithm iterations.     #
+#                                                                         #
+#        ONESAMP                                                          #
+#             One-Sampling                                                #
+#                                                                         #
+#        DOMAIN_SPLITTING [FAIR]                                          #
+#             Domain-splitting.  If `FAIR' exists,                        #
+#             fair-domain-splitting is used.                              #
+#                                                                         #
+#        PoPS [<pieProportion>]                                           #
+#             Piece of Pie Search.  At each search node, a                #
+#             <pieProportion> of the heuristics roulette is explored.     #
+#             The proportion is a number between 0 and 100.               #
+#             If <pieProportion> is not defined, PoPS returns to normal   #
+#             mode and uses various proportions.                          #
+#                                                                         #
+#                                                                         #
+#   For Local Search, use `metaSearchMethod' instead of `searchMethod'.   #
+#                                                                         #
+#                                                                         #
+#   The time that will be spent by the application.  Consult the          #
+#    given program benchmark_machine/benchmark_my_linux_machine to        #
+#    assign an appropriate value.                                         #
+#                                                                         #
+#      timeLimit  <seconds>                                               #
+#                                                                         #
+#                                                                         #
+#   The application interchanges a direct method with an indirect         #
+#    one (Local Search), and the following parameters define the time     #
+#    that will be spent by the corresponding method at each round.        #
+#    A zero value is interpeted as infinity.                              #
+#                                                                         #
+#      timeLimitDirectMethodRound    <seconds>                            #
+#      timeLimitIndirectMethodRound  <seconds>                            #
+#                                                                         #
+#                                                                         #
+#   In order to output only the best solution cost and the time it        #
+#    took to find it, use:                                                #
+#                                                                         #
+#      quiet                                                              #
+#                                                                         #
+#                                                                         #
+#                                                                         #
+# # # # # # # # # # # # HEURISTICS PARAMETERS # # # # # # # # # # # # # # #
+#                                                                         #
+#                                                                         #
+#   Definitions of the weights to different approaches to value           #
+#    ordering heuristic function.                                         #
+#                                                                         #
+#   The parameter `constrainingFactorExponent' is used by the least       #
+#    constraining value ordering heuristic: For each variable a           #
+#    fraction (DomainSizeBefore - DomainSizeAfter) / DomainSizeBefore     #
+#    is estimated, according to the corresponding domain size before      #
+#    and after a specific value assignment.  Then we take the sum of      #
+#    each fraction^constrainingFactorExponent, and we seek the value      #
+#    assignment that minimizes it.                                        #
+#                                                                         #
+#   The parameter `conf' is used by the random heuristics.  E.g. when     #
+#    we have two heuristic function estimations named `a' and `b', the    #
+#    values `a ^ conf' and `b ^ conf' are used.  When 1 > conf --> 0,     #
+#    two different values come closer (more randomness), however when     #
+#    1 < conf --> oo, the distance between the values becomes greater     #
+#    (less randomness).                                                   #
+#                                                                         #
+#                                                                         #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+metaSearchMethod  NONE
+
+
+searchMethod  DFS
+#searchMethod  LDS
+#searchMethod  IBROAD
+#searchMethod  PoPS
+
+timeLimit                        900
+timeLimitDirectMethodRound       900
+timeLimitIndirectMethodRound     0
+
+
+# Heuristics Parameters #
+
+conf                                   1.0    # See above for an explanation
+
+constrainingFactorExponent             1.0    # See above for an explanation
+leastConstrainingValueHeuristicWeight  1.0
+
+objectiveOrientedValueHeuristicWeight  1.0
