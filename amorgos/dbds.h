@@ -9,59 +9,59 @@
 #include "dfs.h"
 #include "onesamp.h"
 
-
-namespace  naxos  {
+namespace  naxos {
 
 class goalDbds : public NsGoal {
-private:
-	NsIntVarArray&  Vars;
+    private:
+        NsIntVarArray&  Vars;
 
-	VariableHeuristic *varHeur;//ITC
-	ValueHeuristic *valHeur;
-public:
-	goalDbds(NsIntVarArray& Vars_init, 
-	                VariableHeuristic *varHeuristic = new VarHeurMRV,//ITC
-	         ValueHeuristic *valHeuristic = new ValHeurFirst)
-			: Vars(Vars_init), varHeur(varHeuristic),/*ITC*/ valHeur(valHeuristic) {}
-	NsGoal*  GOAL (void);
+        //ITC
+        VariableHeuristic *varHeur;
+        ValueHeuristic *valHeur;
+    public:
+        goalDbds(NsIntVarArray& Vars_init,
+                 //ITC
+                 VariableHeuristic *varHeuristic = new VarHeurMRV,
+                 ValueHeuristic *valHeuristic = new ValHeurFirst)
+                : Vars(Vars_init), varHeur(varHeuristic),/*ITC*/ valHeur(valHeuristic) {}
+        NsGoal  *GOAL (void);
 };
 
-class goalDbdsStepping : public NsGoal  {
-private:
-	NsIntVarArray&  Vars;
-	unsigned int depthLimit;
+class goalDbdsStepping : public NsGoal {
+    private:
+        NsIntVarArray&  Vars;
+        unsigned int depthLimit;
 
-	VariableHeuristic *varHeur;//ITC
-	ValueHeuristic *valHeur;
-public:
-	goalDbdsStepping(NsIntVarArray& Vars_init, unsigned limit, 
-					VariableHeuristic *varHeuristic,//ITC
-					ValueHeuristic *valHeuristic)
-			: Vars(Vars_init), depthLimit(limit), varHeur(varHeuristic),/*ITC*/ valHeur(valHeuristic) {}
-	NsGoal*  GOAL (void);
+        //ITC
+        VariableHeuristic *varHeur;
+        ValueHeuristic *valHeur;
+    public:
+        goalDbdsStepping(NsIntVarArray& Vars_init, unsigned limit,
+                         //ITC
+                         VariableHeuristic *varHeuristic,
+                         ValueHeuristic *valHeuristic)
+                : Vars(Vars_init), depthLimit(limit), varHeur(varHeuristic),/*ITC*/ valHeur(valHeuristic) {}
+        NsGoal  *GOAL (void);
 };
 
+class goalDbdsLabeling : public NsGoal {
+    private:
+        NsIntVarArray&  Vars;
+        int currDepth;
+        int depthLimit;
 
-class goalDbdsLabeling : public NsGoal  {
-private:
-	NsIntVarArray&  Vars;
-	int currDepth;
-	int depthLimit;
-
-	VariableHeuristic *varHeur;//ITC
-	ValueHeuristic *valHeur;
-public:
-	goalDbdsLabeling(NsIntVarArray& Vars_init, int curr, int limit, 
-	                VariableHeuristic *varHeuristic,//ITC
-					ValueHeuristic *valHeuristic)
-			: Vars(Vars_init), currDepth(curr), depthLimit(limit),
-			  varHeur(varHeuristic), valHeur(valHeuristic) {}
-	NsGoal*  GOAL (void);
+        //ITC
+        VariableHeuristic *varHeur;
+        ValueHeuristic *valHeur;
+    public:
+        goalDbdsLabeling(NsIntVarArray& Vars_init, int curr, int limit,
+                         //ITC
+                         VariableHeuristic *varHeuristic,
+                         ValueHeuristic *valHeuristic)
+                : Vars(Vars_init), currDepth(curr), depthLimit(limit),
+                  varHeur(varHeuristic), valHeur(valHeuristic) {}
+        NsGoal  *GOAL (void);
 };
 
-
-} // end namespace
-
-
-
-#endif  // NS_DBDS_H
+}								 // end namespace
+#endif							 // NS_DBDS_H
