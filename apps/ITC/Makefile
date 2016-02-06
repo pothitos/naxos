@@ -33,8 +33,6 @@ LDPROFFLAGS = $(LDDEBFLAGS) -pg
 RM = \rm -f
 
 
-
-
 ####  SOURCE AND OUTPUT FILENAMES  ####
 NHDRS_AC =  $(NDIR_AC)/naxos.h $(NDIR_AC)/queue.h $(NDIR_AC)/stack.h
 NHDRS =  $(NDIR)/naxos.h $(NDIR)/internal.h $(NDIR)/stack.h
@@ -54,9 +52,6 @@ OBJS_AC = $(NSRCS_AC:.cpp=.AC.o) $(ASRCS:.cpp=.AC.o) $(SRCS:.cpp=.AC.o)
 PROG =  itc_solver
 
 
-
-
-
 ####  BUILDING  ####
 EXEPROG = $(PROG)
 
@@ -74,8 +69,6 @@ $(ADIR)/%.o :  $(ADIR)/%.cpp $(NHDRS) $(AHDRS)
 	$(CC) $(CFLAGS) -c  $<
 
 
-
-
 ####  BUILDING AC  ####
 PROG_AC = $(PROG).AC
 
@@ -91,28 +84,6 @@ $(ADIR)/%.AC.o :  $(ADIR)/%.cpp $(NHDRS_AC) $(AHDRS)
 	$(CC) $(ACFLAGS_AC) -c  $<  -o $@
 %.AC.o :  %.cpp $(HDRS_AC)
 	$(CC) $(CFLAGS_AC) -c  $<  -o $@
-
-
-
-
-# ####  BUILDING MINGW  ####
-# WINPROG = $(PROG).mingw.exe
-# WINOBJS = $(OBJS:.o=.mingw.o)
-# 
-# .PHONY: mingw
-# mingw :  $(WINPROG)
-# 
-# $(WINPROG) :  $(WINOBJS)
-# 	$(LD) $(LDFLAGS)  $(WINOBJS)  -o $@
-# 
-# $(NDIR)/%.mingw.o :  $(NDIR)/%.cpp $(NHDRS)
-# 	$(CC) $(NCFLAGS) -c  $<  -o $@
-# $(ADIR)/%.mingw.o :  $(ADIR)/%.cpp $(NHDRS) $(AHDRS)
-# 	$(CC) $(ACFLAGS) -c  $<  -o $@
-# %.mingw.o :  %.cpp $(HDRS)
-# 	$(CC) $(CFLAGS) -c  $<  -o $@
-
-
 
 
 ####  DEBUGGING  ####
@@ -133,8 +104,6 @@ $(ADIR)/%.debug.o :  $(ADIR)/%.cpp $(NHDRS) $(AHDRS)
 	$(CC) $(CDEBFLAGS) -c  $<  -o $@
 
 
-
-
 ####  PROFILING  ####
 PROFPROG = $(PROG).prof
 PROFOBJS = $(OBJS:.o=.prof.o)
@@ -147,8 +116,6 @@ $(PROFPROG) :  $(PROFOBJS)
 
 %.prof.o :  %.cpp $(HDRS)
 	$(CC) $(CPROFFLAGS) -c  $<  -o $@
-
-
 
 
 ####  CLEANING UP  ####
