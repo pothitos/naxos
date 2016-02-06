@@ -30,12 +30,12 @@ struct  VarHeur_t {
 
 struct less_function_VarHeur : public binary_function<struct VarHeur_t, struct VarHeur_t, bool> {
 
-                        bool
-                        operator ()  (const struct VarHeur_t& X, const struct VarHeur_t& Y)
-                        {
-                                return  ( ! ( X.heur < Y.heur ) );
-                        }
-                };
+        bool
+        operator ()  (const struct VarHeur_t& X, const struct VarHeur_t& Y)
+        {
+                return  ( ! ( X.heur < Y.heur ) );
+        }
+};
 
 int
 less_function_VarHeur_for_qsort (const void *X, const void *Y)
@@ -47,15 +47,6 @@ less_function_VarHeur_for_qsort (const void *X, const void *Y)
         else
                 return   0;
 }
-
-//struct equal_f : public binary_function<struct RoomRank_t, struct RoomRank_t, bool>  {
-//
-//		bool
-//	operator()  (const struct RoomRank_t& X, const struct RoomRank_t& Y)
-//	{
-//		return  ( X.room->capacity == Y.room->capacity );
-//	}
-//};
 
 struct  PoPS_t {
 
@@ -277,28 +268,8 @@ main (int argc, char *argv[])
                 NsInt  costBest=-1;
                 unsigned  timeNow, timeBest=0;
                 int  timeLeft;
-                //ofstream  logFile;
-                if ( saveLog ) {
-                        //logFile.open( (string(argv[2]) + ".plt").c_str() );
-                        //assert_that( logFile ,  "Could not open log file for writing" );
-                        //cout	<< "#! /gnuplot\n"
-                        //	<< "\n"
-                        //	<< "set xlabel  \"Time (sec)\"\n"
-                        //	<< "set ylabel  \"Objective\"\n"
-                        //	<< "\n"
-                        //	<< "set xdata    time\n"
-                        //	<< "set timefmt  \"%M:%S\"\n"
-                        //	<< "\n"
-                        //	<< "plot  \"-\"  with linespoints  title \"" << pr.name << "\"\n"
-                        //	<< "\n"
-                        //	<< "\n"
-                        //	<< "\n"
-                        //	<< "# # # # START OF DATA # # # #\n"
-                        //	<< flush;
-                }
                 if ( pm.nextSolution() == false )
                         throw  timetableException("No solution found - Initial propagation detected an inconsistency");
-                //pm.constraintsToGraphFile("datasets/comp01.constraints.dot");
                 //  Computation of the maximum values that the second and  //
                 //   third value ordering heuristic criteria can take.     //
                 pr.max2ndVarHeurCriterion = pr.max3rdVarHeurCriterion = 0.0;
@@ -326,9 +297,6 @@ main (int argc, char *argv[])
                                 lectInfo[k].staticHeuristic = allVarsLectPeriod[k].heur;
                         }
                 }
-                //for (i=0;  i < allVarsLectPeriod.size();  ++i)
-                //cout << allVarsLectPeriod[109].index << " " << allVarsLectPeriod[109].heur << "\n";
-                //cout << allVarsLectPeriod[184].index << " " << allVarsLectPeriod[184].heur << "\n\n";
                 //  Using `qsort()' instead of STL `sort()', because of a bug of the   //
                 //   latter (on input `Test3.ctt'), that appeared on Linux machines.   //
                 qsort(allVarsLectPeriod, vLectPeriod.size(), sizeof(struct VarHeur_t), less_function_VarHeur_for_qsort);
@@ -341,12 +309,6 @@ main (int argc, char *argv[])
                         vLectRoomSortedByHeur.push_back(     vLectRoom[allVarsLectPeriod[i].index] );
                         vLectRoomSortedByHeur_ls.push_back(     vLectRoom_ls[allVarsLectPeriod[i].index] );
                 }
-                //NsDeque<int>  vLectPeriodIndexSortedByHeur(vLectPeriod.size());
-                //
-                //for (i=0;  static_cast<unsigned>(i) < vLectPeriod.size();  ++i)
-                //	vLectPeriodIndexSortedByHeur[i] = allVarsLectPeriod[i].index;
-                //for (i=0;  static_cast<unsigned>(i) < vLectPeriod.size();  ++i)
-                //	cout << vLectPeriodIndexSortedByHeur[i] << "\n";
                 delete [] allVarsLectPeriod;
                 //allVarsLectPeriod.clear();
                 // used only for the LAN search method
@@ -447,7 +409,7 @@ main (int argc, char *argv[])
                         if ( pr.valHeuristicType  ==  NORMAL )
                                 //  Default middle-value heuristic is used.
                                 pm.addGoal( new goalDomainSplittingLabeling(vLectPeriod, &varHeur) );
-                        else			 //  fair-domain-splitting
+                        else    //  fair-domain-splitting
                                 pm.addGoal( new goalDomainSplittingLabeling(vLectPeriod, &varHeur, &splitValHeur) );
                         break;
                 case  PoPS :
@@ -465,36 +427,6 @@ main (int argc, char *argv[])
                 if ( ( pr.varHeuristicType != RANDOM  &&  pr.valHeuristicType != RANDOM )  &&  argc >= 4  &&  isdigit(argv[3][0]) )
                         cerr << "Warning: Unnecessary random seed (while using a non-random search method)." << "\n";
                 assert_that( pm_ls.nextSolution() == true,  "Local Search initial propagation failed" );
-                ////TEST
-                //for (i=0;  i < 10;  ++i)   {
-                //NsDeque<double>  heuristic;
-                //heuristic.push_back(0);
-                //heuristic.push_back(1);
-                //heuristic.push_back(5);
-                //heuristic.push_back(2);
-                //heuristic.push_back(4);
-                //heuristic.push_back(3);
-                //cout << "h = ";
-                //for (NsDeque<double>::const_iterator H=heuristic.begin();
-                //		H != heuristic.end();
-                //		++H)
-                //{
-                //	cout << *H << " ";
-                //}
-                //cout << "\n";
-                //NsIndex  randomizeHeuristic (NsDeque<double>& heuristic,
-                //	const double randFactor);
-                //cout << "selection = " << randomizeHeuristic(heuristic,5) << "\n";
-                //cout << "h = ";
-                //for (NsDeque<double>::const_iterator H=heuristic.begin();
-                //		H != heuristic.end();
-                //		++H)
-                //{
-                //	cout << *H << " ";
-                //}
-                //cout << "\n";
-                //}
-                //return  0;
                 pr.solutions = 0;
                 if ( isPoPS ) {
                         pm.realTimeLimit(pr.timeLimit - DiffTime(time(0),timeStarted));
@@ -648,39 +580,12 @@ main (int argc, char *argv[])
                 if ( saveLog ) {
                         timeNow  =  DiffTime(time(0), timeStarted);
                         if ( pr.quiet ) {
-                                if ( pr.solutions  ==  0 ) {
+                                if ( pr.solutions  ==  0 )
                                         cout << "X\tX\t";
-                                } else {
-                                        //<< setw(2) << setfill('0') << timeBest/60 << ":"
-                                        //<< setw(2) << setfill('0') << timeBest%60 << "\t";
+                                else
                                         cout << timeBest << "\t" << costBest << "\t";
-                                }
                                 pm.printCspParameters();
                         }
-                        /*else
-                        		cout	//<< "# # # #  END OF DATA  # # # #\n"
-                        			<< "# Constraint checks: "
-                        			<< pm.numConstraintChecks() << ".\n"
-                        			//<< "end\n"
-                        			//<< "\n"
-                        			////<< "print  \"Local Search started at "
-                        			////<< setw(2) << setfill('0') << timeLocalSearchStarted/60 << ":"
-                        			////<< setw(2) << setfill('0') << timeLocalSearchStarted%60
-                        			////<< ".\"\n"
-                        			//<< "print  \"Stopped searching at "
-                        			//<< setw(2) << setfill('0') << timeNow/60 << ":"
-                        			//<< setw(2) << setfill('0') << timeNow%60
-                        			//<< ".\"\n"
-                        			<< "# Stopped searching at "
-                        			<< setw(2) << setfill('0') << timeNow/60 << ":"
-                        			<< setw(2) << setfill('0') << timeNow%60
-                        			<< ".\n";
-                        			//<< "\n"
-                        			//<< "\n"
-                        			//<< "\n"
-                        			//<< "pause  -1  \"Press Enter to continue...\"\n";
-
-                        			//logFile.close()*/
                 }
                 destroyInstance(pr);
         } catch (exception& exc) {
@@ -775,13 +680,6 @@ metaSearchMethodGoal (struct itcProblem_t& pr, NsIntVarArray& vLectPeriod, NsInt
                 pr.varHeuristicType_ls = STATIC;
                 return  ( new goalOnesampLabeling(vLectPeriod, &varHeur, &valHeur) );
                 break;
-        //case  DOMAIN_SPLITTING :
-        //	pr.varHeuristicType_ls  =  RANDOM;
-        //	if ( pr.valHeuristicType_ls  ==  NORMAL )
-        //		//  Default middle-value heuristic is used.
-        //		return  ( new goalDomainSplittingLabeling(vLectPeriod, &varHeur) );
-        //	else	//  fair-domain-splitting
-        //		return  ( new goalDomainSplittingLabeling(vLectPeriod, &varHeur, &splitValHeur) );
         case  PoPS :
                 pr.valHeuristicType_ls = RANDOM;
                 return  ( new AmPopsLabeling(vLectPeriod, pr.searchMethodParameter_ls[0]/100.0, &varHeur, &valHeur) );
