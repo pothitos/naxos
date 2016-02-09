@@ -6,7 +6,7 @@
 
 namespace  naxos {
 
-class goalIsampStepping : public NsGoal {
+class AmIsampStepping : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  nProbes;
@@ -14,7 +14,7 @@ class goalIsampStepping : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalIsampStepping (NsIntVarArray& Vars_init, int numProbes,
+        AmIsampStepping (NsIntVarArray& Vars_init, int numProbes,
                            VariableHeuristic *varHeuristic = new VarHeurMRV,
                            ValueHeuristic *valHeuristic = new ValHeurRand)
                 : Vars(Vars_init), nProbes(numProbes), varHeur(varHeuristic),

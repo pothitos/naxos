@@ -12,7 +12,7 @@ int fSample( int nChildren, int depth, int treeHeight );
 int fSampleMiddle( int nChildren, int depth, int treeHeight );
 int fSampleExp( int nChildren, int depth, int treeHeight );
 
-class goalFnsLabeling : public NsGoal {
+class AmFnsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int (*f) (int, int, int);
@@ -20,7 +20,7 @@ class goalFnsLabeling : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalFnsLabeling(NsIntVarArray& Vars_init,
+        AmFnsLabeling(NsIntVarArray& Vars_init,
                         int (*function)(int,int,int),
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
                         ValueHeuristic *valHeuristic = new ValHeurFirst)

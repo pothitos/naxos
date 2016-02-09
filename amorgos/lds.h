@@ -7,7 +7,7 @@
 
 namespace  naxos {
 
-class goalLds : public NsGoal {
+class AmLds : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  minDiscr;
@@ -16,7 +16,7 @@ class goalLds : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalLds(NsIntVarArray& Vars_init, int lStep=1, int lAhead=0,
+        AmLds(NsIntVarArray& Vars_init, int lStep=1, int lAhead=0,
                 int minDiscrepancy=0, int maxDiscrepancy=0,
                 VariableHeuristic *varHeuristic = new VarHeurMRV,
                 ValueHeuristic *valHeuristic = new ValHeurFirst)
@@ -26,7 +26,7 @@ class goalLds : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalLdsStepping : public NsGoal {
+class AmLdsStepping : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  minDiscr;
@@ -36,7 +36,7 @@ class goalLdsStepping : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalLdsStepping(NsIntVarArray& Vars_init, int minDiscrepancy,
+        AmLdsStepping(NsIntVarArray& Vars_init, int minDiscrepancy,
                         NsIntVar& vDiscrepancy, int lStep, int maxDiscrep,
                         int lAhead,
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
@@ -48,7 +48,7 @@ class goalLdsStepping : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalLdsLabeling : public NsGoal {
+class AmLdsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  minDiscr;
@@ -58,7 +58,7 @@ class goalLdsLabeling : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalLdsLabeling(NsIntVarArray& Vars_init, int minDiscrepancy,
+        AmLdsLabeling(NsIntVarArray& Vars_init, int minDiscrepancy,
                         NsIntVar& vDiscrepancy, int lStep = 1, int lAhead = 0,
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
                         ValueHeuristic *valHeuristic = new ValHeurFirst)
@@ -69,7 +69,7 @@ class goalLdsLabeling : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalLdsInDomain : public NsGoal {
+class AmLdsInDomain : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         const int  index;
@@ -81,7 +81,7 @@ class goalLdsInDomain : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalLdsInDomain(NsIntVarArray& Vars_init, int index_init,
+        AmLdsInDomain(NsIntVarArray& Vars_init, int index_init,
                         int minDiscrepancy, NsIntVar& vDiscrepancy, int lStep,
                         int lAhead, VariableHeuristic *varHeuristic,
                         ValueHeuristic *valHeuristic)
@@ -92,27 +92,27 @@ class goalLdsInDomain : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalLdsRemoveValue : public NsGoal {
+class AmLdsRemoveValue : public NsGoal {
     private:
         NsIntVar&  V;
         const NsInt  value;
         NsIntVar&  vDiscr;
 
     public:
-        goalLdsRemoveValue (NsIntVar& V_init, const NsInt value_init,
+        AmLdsRemoveValue (NsIntVar& V_init, const NsInt value_init,
                             NsIntVar& vDiscrepancy)
                 : V(V_init), value(value_init), vDiscr(vDiscrepancy)    {    }
 
         NsGoal  *GOAL (void);
 };
 
-class goalLdsDestructor : public NsGoal {
+class AmLdsDestructor : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         NsIntVar *vDiscr;
 
     public:
-        goalLdsDestructor(NsIntVarArray& Vars_init, NsIntVar *vDiscrepancy)
+        AmLdsDestructor(NsIntVarArray& Vars_init, NsIntVar *vDiscrepancy)
                 : Vars(Vars_init), vDiscr(vDiscrepancy) {  }
 
         NsGoal  *GOAL (void)
@@ -121,7 +121,7 @@ class goalLdsDestructor : public NsGoal {
                 return  0;
         }
 
-        ~goalLdsDestructor (void)
+        ~AmLdsDestructor (void)
         {
                 delete  vDiscr;
         }

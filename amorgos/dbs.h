@@ -6,7 +6,7 @@
 
 namespace  naxos {
 
-class goalDbsStepping : public NsGoal {
+class AmDbsStepping : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int depthLimit;
@@ -14,7 +14,7 @@ class goalDbsStepping : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalDbsStepping(NsIntVarArray& Vars_init, int limit=0,
+        AmDbsStepping(NsIntVarArray& Vars_init, int limit=0,
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
                         ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic)
@@ -24,7 +24,7 @@ class goalDbsStepping : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalDbsLabeling : public NsGoal {
+class AmDbsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int depthLimit;
@@ -32,7 +32,7 @@ class goalDbsLabeling : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalDbsLabeling(NsIntVarArray& Vars_init, int limit,
+        AmDbsLabeling(NsIntVarArray& Vars_init, int limit,
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
                         ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), depthLimit(limit),

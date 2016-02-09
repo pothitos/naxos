@@ -5,7 +5,7 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal *goalIsampStepping::GOAL (void)
+NsGoal *AmIsampStepping::GOAL (void)
 {
         if (nProbes == 0) {
                 Vars[0].removeAll();	 // exceeded number of tries => FAILURE
@@ -14,6 +14,6 @@ NsGoal *goalIsampStepping::GOAL (void)
         // cout << "Tries left: " << nProbes << endl;
         /* update remaining tries */
         if (nProbes > 0) --nProbes;
-        return (new NsgOR( new goalOnesampLabeling(Vars, varHeur, valHeur),
-                           new goalIsampStepping( *this )));
+        return (new NsgOR( new AmOnesampLabeling(Vars, varHeur, valHeur),
+                           new AmIsampStepping( *this )));
 }

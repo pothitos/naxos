@@ -4,7 +4,7 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal *goalIbroad::GOAL (void)
+NsGoal *AmIbroad::GOAL (void)
 {
         unsigned i, numVars, currSize, maxDomainSize;
         // compute maximum domain size
@@ -15,32 +15,32 @@ NsGoal *goalIbroad::GOAL (void)
                 if( maxDomainSize < currSize )
                         maxDomainSize = currSize;
         }
-        return new goalIbroadStepping(Vars, 1, maxDomainSize, varHeur,valHeur);
+        return new AmIbroadStepping(Vars, 1, maxDomainSize, varHeur,valHeur);
 }
 
-NsGoal *goalIbroadStepping::GOAL (void)
+NsGoal *AmIbroadStepping::GOAL (void)
 {
         if (currBreadthLimit > maxBreadthLimit) {
                 Vars[0].removeAll();	 //fail
                 return 0;
         }
-        return new NsgOR(new goalIbroadLabeling(Vars, currBreadthLimit,
+        return new NsgOR(new AmIbroadLabeling(Vars, currBreadthLimit,
                                                 varHeur, valHeur),
-                         new goalIbroadStepping(Vars, currBreadthLimit+1,
+                         new AmIbroadStepping(Vars, currBreadthLimit+1,
                                                 maxBreadthLimit, varHeur, valHeur));
 }
 
-NsGoal *goalIbroadLabeling::GOAL (void)
+NsGoal *AmIbroadLabeling::GOAL (void)
 {
         int index = varHeur->select(Vars);
         if (index == -1)
                 return 0;				 // all variables are bound => success
-        return(new NsgAND(new goalIbroadInDomain(Vars[index], breadthLimit,valHeur),
-                          new goalIbroadLabeling(Vars, breadthLimit,
+        return(new NsgAND(new AmIbroadInDomain(Vars[index], breadthLimit,valHeur),
+                          new AmIbroadLabeling(Vars, breadthLimit,
                                           varHeur, valHeur)));
 }
 
-NsGoal *goalIbroadInDomain::GOAL (void)
+NsGoal *AmIbroadInDomain::GOAL (void)
 {
         if (breadthLimit == 0) {
                 V.removeAll();			 //fail
@@ -51,6 +51,6 @@ NsGoal *goalIbroadInDomain::GOAL (void)
         NsInt  value = valHeur->select(V);
         return(new NsgOR(new NsgSetValue(V, value) ,
                          new NsgAND(new NsgRemoveValue(V, value),
-                                    new goalIbroadInDomain(V, breadthLimit-1,
+                                    new AmIbroadInDomain(V, breadthLimit-1,
                                                     valHeur))));
 }

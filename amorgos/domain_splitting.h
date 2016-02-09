@@ -29,7 +29,7 @@ class ValHeurMiddle : public SplitValHeuristic {
 
 ///  Constrains the domain of the variable to be a subset of [\a start..\a end].
 
-class goal_SetInterval : public NsGoal {
+class Am_SetInterval : public NsGoal {
 
     private:
 
@@ -45,7 +45,7 @@ class goal_SetInterval : public NsGoal {
     public:
 
         ///  Constructor.
-        goal_SetInterval (NsIntVar& Var_init,
+        Am_SetInterval (NsIntVar& Var_init,
                           const NsInt start_init,
                           const NsInt end_init)
                 : Var(Var_init),
@@ -55,7 +55,7 @@ class goal_SetInterval : public NsGoal {
                 assert_Ns( NsMINUS_INF <= start
                            && start <= end
                            && end   <= NsPLUS_INF ,
-                           "goal_SetInterval::goal_SetInterval: Invalid interval");
+                           "Am_SetInterval::Am_SetInterval: Invalid interval");
         }
 
         ///  Goal execution.
@@ -71,7 +71,7 @@ class goal_SetInterval : public NsGoal {
 
 ///  Goal that selects a value to separate the domain of a variable during domain-splitting.
 
-class goal_DomainSplittingInDomain : public NsGoal {
+class Am_DomainSplittingInDomain : public NsGoal {
 
     private:
 
@@ -84,7 +84,7 @@ class goal_DomainSplittingInDomain : public NsGoal {
     public:
 
         ///  Constructor.
-        goal_DomainSplittingInDomain (NsIntVar& Var_init,
+        Am_DomainSplittingInDomain (NsIntVar& Var_init,
                                       SplitValHeuristic *valHeuristic = new ValHeurMiddle)
                 : Var(Var_init),
                   valHeur(valHeuristic)    {    }
@@ -101,8 +101,8 @@ class goal_DomainSplittingInDomain : public NsGoal {
                 //std::cout << Var << "\tSplit = " << value << "\n";
                 //system("pause");
                 //cout << "Var=" << Var << "\tMiddleValue= " << value << ".\n";
-                NsGoal  *goalA = new goal_SetInterval(Var, NsMINUS_INF, intValue);
-                NsGoal  *goalB = new goal_SetInterval(Var, intValue+1, NsPLUS_INF);
+                NsGoal  *goalA = new Am_SetInterval(Var, NsMINUS_INF, intValue);
+                NsGoal  *goalB = new Am_SetInterval(Var, intValue+1, NsPLUS_INF);
                 if ( value - Var.min()  <=  Var.max() - value )
                         return  ( new NsgOR( goalA , goalB ) );
                 else
@@ -112,7 +112,7 @@ class goal_DomainSplittingInDomain : public NsGoal {
 
 ///  Domain-splitting method.
 
-class goalDomainSplittingLabeling : public NsGoal {
+class AmDomainSplittingLabeling : public NsGoal {
 
     private:
 
@@ -128,7 +128,7 @@ class goalDomainSplittingLabeling : public NsGoal {
     public:
 
         ///  Constructor.
-        goalDomainSplittingLabeling (NsIntVarArray& VarArr_init,
+        AmDomainSplittingLabeling (NsIntVarArray& VarArr_init,
                                      VariableHeuristic *varHeuristic = new VarHeurRand,
                                      SplitValHeuristic *valHeuristic = new ValHeurMiddle)
                 : VarArr(VarArr_init),
@@ -141,8 +141,8 @@ class goalDomainSplittingLabeling : public NsGoal {
                 NsInt  index =  varHeur->select(VarArr);
                 if ( index  ==  -1 )
                         return  0;	 // all variables are bound => success
-                return  ( new NsgAND( new goal_DomainSplittingInDomain(VarArr[index],valHeur) ,
-                                      new goalDomainSplittingLabeling(*this) ) );
+                return  ( new NsgAND( new Am_DomainSplittingInDomain(VarArr[index],valHeur) ,
+                                      new AmDomainSplittingLabeling(*this) ) );
         }
 };
 

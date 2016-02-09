@@ -6,27 +6,27 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal *goalDbsStepping::GOAL (void)
+NsGoal *AmDbsStepping::GOAL (void)
 {
         if ( unsigned(depthLimit) > Vars.size() ) {
                 Vars[0].removeAll();	 // fail
                 return  0;
         }
         // cout << "depth limit: " << depthLimit << endl;
-        return(new NsgOR(new goalDbsLabeling(Vars,depthLimit,varHeur,valHeur) ,
-                         new goalDbsStepping(Vars,depthLimit + 1,varHeur,valHeur)));
+        return(new NsgOR(new AmDbsLabeling(Vars,depthLimit,varHeur,valHeur) ,
+                         new AmDbsStepping(Vars,depthLimit + 1,varHeur,valHeur)));
 }
 
-NsGoal *goalDbsLabeling::GOAL (void)
+NsGoal *AmDbsLabeling::GOAL (void)
 {
         if (depthLimit == 0)
-                return( new goalOnesampLabeling( Vars, varHeur, valHeur )) ;
+                return( new AmOnesampLabeling( Vars, varHeur, valHeur )) ;
         else {
                 int  index = varHeur->select(Vars);
                 if (index == -1)
                         return  0;			 // all variables are bound => success
-                return(new NsgAND(new goalDfsInDomain(Vars[index], valHeur),
-                                  new goalDbsLabeling(Vars, depthLimit-1,
+                return(new NsgAND(new AmDfsInDomain(Vars[index], valHeur),
+                                  new AmDbsLabeling(Vars, depthLimit-1,
                                                       varHeur, valHeur)));
         }
 }

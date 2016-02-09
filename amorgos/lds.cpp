@@ -5,39 +5,39 @@ using namespace std;
 
 //  `vDiscr.min()' represents the current number of discrepancies.  //
 
-NsGoal  *goalLds::GOAL (void)
+NsGoal  *AmLds::GOAL (void)
 {
         NsIntVar  *vDiscr = new NsIntVar(Vars[0].manager(), 0,
                                          remainingChoices(Vars));
         // if maxDiscr == 0 then it is disabled (no upper discrepancy bound)
         if(maxDiscr == 0)
                 maxDiscr = remainingChoices(Vars);
-        return (new NsgOR(new goalLdsStepping(Vars,minDiscr,*vDiscr,step,
+        return (new NsgOR(new AmLdsStepping(Vars,minDiscr,*vDiscr,step,
                                               maxDiscr, lookAhead,
                                               varHeur, valHeur),
-                          new goalLdsDestructor(Vars, vDiscr)));
+                          new AmLdsDestructor(Vars, vDiscr)));
 }
 
-NsGoal *goalLdsStepping::GOAL (void)
+NsGoal *AmLdsStepping::GOAL (void)
 {
-        //cout << " > goalLdsStepping\t(minDiscr=" << minDiscr ;
+        //cout << " > AmLdsStepping\t(minDiscr=" << minDiscr ;
         //cout << ", vDiscr=" << vDiscr << ",\n\t\t\t Vars=" << Vars << ")\n";
         if (minDiscr + step-1 >= maxDiscr) {
                 Vars[0].removeAll();	 // reached maximum discrepancy => FAILURE
                 return  0;
         }
-        return new NsgOR(new goalLdsLabeling(Vars, minDiscr, vDiscr, step,
+        return new NsgOR(new AmLdsLabeling(Vars, minDiscr, vDiscr, step,
                                              lookAhead, varHeur, valHeur) ,
-                         new goalLdsStepping(Vars, (minDiscr + step), vDiscr, step,
+                         new AmLdsStepping(Vars, (minDiscr + step), vDiscr, step,
                                              maxDiscr, lookAhead, varHeur,valHeur));
 }
 
-NsGoal *goalLdsLabeling::GOAL (void)
+NsGoal *AmLdsLabeling::GOAL (void)
 {
-        //cout << " > > goalLdsLabeling\t(minDiscr=" << minDiscr;
+        //cout << " > > AmLdsLabeling\t(minDiscr=" << minDiscr;
         //cout << ", vDiscr=" << vDiscr  << ",\n\t\t\t Vars=" << Vars << ")\n";
         if (remainingChoices(Vars) + vDiscr.min() < minDiscr) {
-                //cout << " > > goalLdsLabeling:  Failure! remainingChoices(Vars)=" ;
+                //cout << " > > AmLdsLabeling:  Failure! remainingChoices(Vars)=" ;
                 //cout << remainingChoices(Vars) << "\n";
                 Vars[0].removeAll();	 // minimum discrepancy exceeded => FAILURE
                 return  0;
@@ -48,14 +48,14 @@ NsGoal *goalLdsLabeling::GOAL (void)
         int  index = varHeur->select(Vars);
         if (index == -1)
                 return  0;				 // all variables are bound => success
-        return (new NsgAND(new goalLdsInDomain(Vars, index, minDiscr, vDiscr,
+        return (new NsgAND(new AmLdsInDomain(Vars, index, minDiscr, vDiscr,
                                                step, lookAhead, varHeur, valHeur),
-                           new goalLdsLabeling(*this) ) );
+                           new AmLdsLabeling(*this) ) );
 }
 
-NsGoal *goalLdsInDomain::GOAL (void)
+NsGoal *AmLdsInDomain::GOAL (void)
 {
-        //cout << " > > > goalLdsInDomain\t(minDiscr=" << minDiscr;
+        //cout << " > > > AmLdsInDomain\t(minDiscr=" << minDiscr;
         //cout << ", vDiscr=" << vDiscr  << ",\n\t\t\t Vars=" << Vars << ")\n";
         NsIntVar&  V = Vars[index];	 // renaming for readability
         if (V.isBound())
@@ -65,10 +65,10 @@ NsGoal *goalLdsInDomain::GOAL (void)
         if (remChoices - static_cast<int>(V.size()-1) + vDiscr.min()  <  minDiscr) {
                 //  We must "consume" some values from `V', in order not to
                 //   "lose" the `minDiscr' bound, the moment the next
-                //   `goalLdsLabeling' will be executed.
-                //cout << " > > > goalLdsInDomain:  Consuming\n";
-                return  ( new NsgAND( new goalLdsRemoveValue(V, value, vDiscr),
-                                      new goalLdsInDomain(*this) ) );
+                //   `AmLdsLabeling' will be executed.
+                //cout << " > > > AmLdsInDomain:  Consuming\n";
+                return  ( new NsgAND( new AmLdsRemoveValue(V, value, vDiscr),
+                                      new AmLdsInDomain(*this) ) );
         }
         if (vDiscr.min() == minDiscr + step-1) {
                 //  We have reached the limit of discrepancies, so the only thing
@@ -79,25 +79,25 @@ NsGoal *goalLdsInDomain::GOAL (void)
                         //  chosen a variable and a value)
                         return (new NsgOR(new NsgSetValue(V, value) ,
                                           new NsgAND(new NsgRemoveValue(V, value) ,
-                                                     new goalDfsLabeling(Vars, varHeur,
+                                                     new AmDfsLabeling(Vars, varHeur,
                                                                      valHeur))));
                 } else {
-                        //cout << " > > > goalLdsInDomain:  Setting value\n";
+                        //cout << " > > > AmLdsInDomain:  Setting value\n";
                         return  ( new NsgSetValue(V, value) );
                 }
         }
         if ( vDiscr.min() >= minDiscr + step-1 )
-                throw  logic_error("goalLdsInDomain::GOAL: Too much discrepancy");
-        //cout << " > > > goalLdsInDomain:  Setting value with alternative\n";
+                throw  logic_error("AmLdsInDomain::GOAL: Too much discrepancy");
+        //cout << " > > > AmLdsInDomain:  Setting value with alternative\n";
         return  ( new NsgOR( new NsgSetValue(V, value) ,
-                             new NsgAND( new goalLdsRemoveValue(V, value, vDiscr) ,
-                                         new goalLdsInDomain(*this) ) ) );
+                             new NsgAND( new AmLdsRemoveValue(V, value, vDiscr) ,
+                                         new AmLdsInDomain(*this) ) ) );
 }
 
 // Each time we remove a value, a discrepancy is made.
-NsGoal *goalLdsRemoveValue::GOAL (void)
+NsGoal *AmLdsRemoveValue::GOAL (void)
 {
-        //cout << " > > > > goalLdsRemoveValue\n";
+        //cout << " > > > > AmLdsRemoveValue\n";
         // !!! discrepancy increased by one !!! //
         vDiscr.remove( vDiscr.min() );
         V.remove(value);

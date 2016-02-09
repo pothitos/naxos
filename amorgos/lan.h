@@ -9,7 +9,7 @@ int VarOrderHeurFiltered(const naxos::NsIntVarArray& Vars, /*unsigned **/std::de
 
 namespace naxos {
 
-class goalLan : public NsGoal {
+class AmLan : public NsGoal {
     private:
         NsIntVarArray& Vars;
         unsigned assignLimit;
@@ -17,19 +17,19 @@ class goalLan : public NsGoal {
         //VariableHeuristic *varHeur;//ITC
         ValueHeuristic *valHeur;
     public:
-        goalLan(NsIntVarArray& Vars_init, int aLimit,
+        AmLan(NsIntVarArray& Vars_init, int aLimit,
                 //VariableHeuristic *varHeuristic = new VarHeurMRV,//ITC
                 ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), assignLimit(aLimit), /*varHeur(varHeuristic),ITC*/ valHeur(valHeuristic) {}
         NsGoal *GOAL(void);
 };
 
-class goalLanDestructor : public NsGoal {
+class AmLanDestructor : public NsGoal {
     private:
         NsIntVarArray& Vars;
         unsigned *assigns;
     public:
-        goalLanDestructor(NsIntVarArray& Vars_init, unsigned *asgns)
+        AmLanDestructor(NsIntVarArray& Vars_init, unsigned *asgns)
                 : Vars(Vars_init), assigns(asgns) {}
 
         NsGoal *GOAL (void)
@@ -38,13 +38,13 @@ class goalLanDestructor : public NsGoal {
                 return 0;
         }
 
-        ~goalLanDestructor (void)
+        ~AmLanDestructor (void)
         {
                 delete assigns;
         }
 };
 
-class goalLanLabeling : public NsGoal {
+class AmLanLabeling : public NsGoal {
     private:
         NsIntVarArray& Vars;
         unsigned assignLimit;
@@ -55,7 +55,7 @@ class goalLanLabeling : public NsGoal {
         ValueHeuristic *valHeur;
         std::deque<unsigned>&  assigns;
     public:
-        goalLanLabeling (NsIntVarArray& Vars_init, /*unsigned**/std::deque<unsigned>& asgns,
+        AmLanLabeling (NsIntVarArray& Vars_init, /*unsigned**/std::deque<unsigned>& asgns,
                          unsigned aLimit,
                          //ITC
                          VariableHeuristic *varHeuristic,
@@ -66,7 +66,7 @@ class goalLanLabeling : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalLanInDomain : public NsGoal {
+class AmLanInDomain : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         const int  index;
@@ -76,7 +76,7 @@ class goalLanInDomain : public NsGoal {
         ValueHeuristic *valHeur;
         std::deque<unsigned>&  assigns;
     public:
-        goalLanInDomain(NsIntVarArray& Vars_init,int index_init,
+        AmLanInDomain(NsIntVarArray& Vars_init,int index_init,
                         /*unsigned **/std::deque<unsigned>& asgns, unsigned aLimit,
                         ValueHeuristic *valHeuristic)
                 : Vars(Vars_init), index(index_init), assignLimit(aLimit),

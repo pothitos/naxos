@@ -6,7 +6,7 @@
 
 namespace  naxos {
 
-class goalCredit : public NsGoal {
+class AmCredit : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  credit;
@@ -14,7 +14,7 @@ class goalCredit : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalCredit(NsIntVarArray& Vars_init, int cred,
+        AmCredit(NsIntVarArray& Vars_init, int cred,
                    VariableHeuristic *varHeuristic = new VarHeurMRV,
                    ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), credit(cred),

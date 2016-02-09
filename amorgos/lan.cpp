@@ -22,17 +22,17 @@ int VarOrderHeurFiltered(const NsIntVarArray& Vars, /*unsigned**/deque<unsigned>
         return index;
 }
 
-NsGoal *goalLan::GOAL (void)
+NsGoal *AmLan::GOAL (void)
 {
         unsigned *assigns = new unsigned[Vars.size()];
         for (unsigned i=0; i<Vars.size(); ++i)
                 assigns[i]=0;
         return  0;
-        //return (new NsgOR(new goalLanLabeling(Vars,assigns,assignLimit,varHeur,valHeur),ITC
-        //                  new goalLanDestructor(Vars,assigns)));
+        //return (new NsgOR(new AmLanLabeling(Vars,assigns,assignLimit,varHeur,valHeur),ITC
+        //                  new AmLanDestructor(Vars,assigns)));
 }
 
-NsGoal *goalLanLabeling::GOAL (void)
+NsGoal *AmLanLabeling::GOAL (void)
 {
         int index = VarOrderHeurFiltered(Vars, assigns, assignLimit);
         if ( index >= 0 )			 //ITC
@@ -45,13 +45,13 @@ NsGoal *goalLanLabeling::GOAL (void)
                 Vars[0].removeAll();	 // assignment possible => failure
                 return 0;
         }
-        return ( new NsgAND( new goalLanInDomain(Vars, index, assigns,
+        return ( new NsgAND( new AmLanInDomain(Vars, index, assigns,
                              assignLimit, valHeur),
-                             new goalLanLabeling(Vars, assigns, assignLimit,
+                             new AmLanLabeling(Vars, assigns, assignLimit,
                                              varHeur, valHeur)));
 }
 
-NsGoal *goalLanInDomain::GOAL (void)
+NsGoal *AmLanInDomain::GOAL (void)
 {
         NsIntVar& V = Vars[index];	 // renaming for readability
         if (V.isBound())
@@ -60,6 +60,6 @@ NsGoal *goalLanInDomain::GOAL (void)
         assigns[index]++;
         return(new NsgOR(new NsgSetValue(V, value) ,
                          new NsgAND(new NsgRemoveValue(V, value),
-                                    new goalLanInDomain (Vars, index, assigns,
+                                    new AmLanInDomain (Vars, index, assigns,
                                                     assignLimit, valHeur))));
 }

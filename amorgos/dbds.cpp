@@ -4,30 +4,30 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal *goalDbds::GOAL (void)
+NsGoal *AmDbds::GOAL (void)
 {
-        return new goalDbdsStepping( Vars,
+        return new AmDbdsStepping( Vars,
                                      0,
                                      varHeur, valHeur   );
 }
 
-NsGoal *goalDbdsStepping::GOAL (void)
+NsGoal *AmDbdsStepping::GOAL (void)
 {
         if ( depthLimit > Vars.size() ) {
                 Vars[0].removeAll();	 // fail
                 return  0;
         }
         // cout << "depth limit: " << depthLimit << endl;
-        return new NsgOR(new goalDbdsLabeling( Vars,
+        return new NsgOR(new AmDbdsLabeling( Vars,
                                                0,
                                                depthLimit,
                                                varHeur, valHeur  ),
-                         new goalDbdsStepping( Vars,
+                         new AmDbdsStepping( Vars,
                                                depthLimit + 1,
                                                varHeur, valHeur  ));
 }
 
-NsGoal *goalDbdsLabeling::GOAL (void)
+NsGoal *AmDbdsLabeling::GOAL (void)
 {
         varHeur->select(Vars);		 //ITC
         if (currDepth>0) assert( Vars[currDepth-1].isBound() );
@@ -40,23 +40,23 @@ NsGoal *goalDbdsLabeling::GOAL (void)
                 assert ( V.size() > 0 );
                 NsInt val = valHeur->select( V );
                 return new NsgAND(new NsgRemoveValue( V, val ),
-                                  new NsgAND(new goalDfsInDomain( V, valHeur),
-                                             new goalDbdsLabeling( Vars,
+                                  new NsgAND(new AmDfsInDomain( V, valHeur),
+                                             new AmDbdsLabeling( Vars,
                                                              currDepth+1,
                                                              depthLimit,
                                                              varHeur, valHeur)));
         } else if ( currDepth >= depthLimit ) {
                 // follow heuristic all the way down
                 assert ( V.size() > 0 );
-                return new NsgAND( new goalOnesampInDomain( V, valHeur ),
-                                   new goalDbdsLabeling( Vars,
+                return new NsgAND( new AmOnesampInDomain( V, valHeur ),
+                                   new AmDbdsLabeling( Vars,
                                                    currDepth+1,
                                                    depthLimit,
                                                    varHeur, valHeur));
         } else {
                 // explore all values
-                return new NsgAND(new goalDfsInDomain( V, valHeur ),
-                                  new goalDbdsLabeling( Vars,
+                return new NsgAND(new AmDfsInDomain( V, valHeur ),
+                                  new AmDbdsLabeling( Vars,
                                                         currDepth+1,
                                                         depthLimit,
                                                         varHeur, valHeur));

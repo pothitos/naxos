@@ -4,15 +4,15 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal  *goalRdfs::GOAL (void)
+NsGoal  *AmRdfs::GOAL (void)
 {
         int  *timeout = new int(timeoutLimit);
-        return (new NsgOR(new goalRdfsStepping(Vars,times,timeout,
+        return (new NsgOR(new AmRdfsStepping(Vars,times,timeout,
                                                timeoutLimit,varHeur,valHeur),
-                          new goalRdfsDestructor(Vars,timeout)));
+                          new AmRdfsDestructor(Vars,timeout)));
 }
 
-NsGoal *goalRdfsStepping::GOAL (void)
+NsGoal *AmRdfsStepping::GOAL (void)
 {
         if (times == 0) {
                 Vars[0].removeAll();	 // fail
@@ -20,12 +20,12 @@ NsGoal *goalRdfsStepping::GOAL (void)
         }
         // cout << "tries left: " << times << endl;
         *timeout = timeoutLimit;
-        return(new NsgOR(new goalRdfsLabeling(Vars,timeout,varHeur,valHeur),
-                         new goalRdfsStepping(Vars,times-1,timeout,
+        return(new NsgOR(new AmRdfsLabeling(Vars,timeout,varHeur,valHeur),
+                         new AmRdfsStepping(Vars,times-1,timeout,
                                               timeoutLimit,varHeur,valHeur)));
 }
 
-NsGoal *goalRdfsLabeling::GOAL (void)
+NsGoal *AmRdfsLabeling::GOAL (void)
 {
         (*timeout)--;
         if(*timeout <= 0) {
@@ -35,12 +35,12 @@ NsGoal *goalRdfsLabeling::GOAL (void)
         int  index = varHeur->select(Vars);
         if (index == -1)
                 return  0;				 // all variables are bound => success
-        return(new NsgAND(new goalRdfsInDomain(Vars[index], timeout, valHeur),
-                          new goalRdfsLabeling(Vars, timeout, varHeur, valHeur)));
+        return(new NsgAND(new AmRdfsInDomain(Vars[index], timeout, valHeur),
+                          new AmRdfsLabeling(Vars, timeout, varHeur, valHeur)));
 }
 
 // we need this in order to check timeout every time
-NsGoal *goalRdfsInDomain::GOAL(void)
+NsGoal *AmRdfsInDomain::GOAL(void)
 {
         (*timeout)--;
         if(*timeout <= 0) {
@@ -52,5 +52,5 @@ NsGoal *goalRdfsInDomain::GOAL(void)
         NsInt value = valHeur->select(Var);
         return ( new NsgOR( new NsgSetValue(Var,value) ,
                             new NsgAND( new NsgRemoveValue(Var,value) ,
-                                        new goalRdfsInDomain(*this))));
+                                        new AmRdfsInDomain(*this))));
 }

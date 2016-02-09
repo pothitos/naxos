@@ -7,7 +7,7 @@
 
 namespace  naxos {
 
-class goalBbs : public NsGoal {
+class AmBbs : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  lookaheadLimit;
@@ -16,7 +16,7 @@ class goalBbs : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalBbs(NsIntVarArray& Vars_init, int tim, int lahead,
+        AmBbs(NsIntVarArray& Vars_init, int tim, int lahead,
                 VariableHeuristic *varHeuristic = new VarHeurFirst,
                 ValueHeuristic *valHeuristic = new ValHeurRand)
                 : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic)
@@ -27,13 +27,13 @@ class goalBbs : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalBbsDestructor : public NsGoal {
+class AmBbsDestructor : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  *maxLevel;
 
     public:
-        goalBbsDestructor(NsIntVarArray& Vars_init, int *ml)
+        AmBbsDestructor(NsIntVarArray& Vars_init, int *ml)
                 : Vars(Vars_init), maxLevel(ml) {  }
 
         NsGoal  *GOAL (void)
@@ -42,13 +42,13 @@ class goalBbsDestructor : public NsGoal {
                 return  0;
         }
 
-        ~goalBbsDestructor (void)
+        ~AmBbsDestructor (void)
         {
                 delete  maxLevel;
         }
 };
 
-class goalBbsStepping : public NsGoal {
+class AmBbsStepping : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int lookaheadLimit;
@@ -58,7 +58,7 @@ class goalBbsStepping : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalBbsStepping(NsIntVarArray& Vars_init, int lahead, int tim, int& mLevel,
+        AmBbsStepping(NsIntVarArray& Vars_init, int lahead, int tim, int& mLevel,
                         VariableHeuristic *varHeuristic,
                         ValueHeuristic *valHeuristic)
                 : Vars(Vars_init), maxLevel(mLevel), varHeur(varHeuristic),
@@ -70,7 +70,7 @@ class goalBbsStepping : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalBbsLabeling : public NsGoal {
+class AmBbsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int lookahead;
@@ -79,7 +79,7 @@ class goalBbsLabeling : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalBbsLabeling(NsIntVarArray& Vars_init, int lAhead, int& maxLev,
+        AmBbsLabeling(NsIntVarArray& Vars_init, int lAhead, int& maxLev,
                         VariableHeuristic *varHeuristic,
                         ValueHeuristic *valHeuristic)
                 : Vars(Vars_init), maxLevel(maxLev), varHeur(varHeuristic),

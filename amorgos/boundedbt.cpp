@@ -4,15 +4,15 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal  *goalBbs::GOAL (void)
+NsGoal  *AmBbs::GOAL (void)
 {
         int *maxLevel = new int;
-        return (new NsgOR(new goalBbsStepping(Vars,lookaheadLimit,times,*maxLevel,
+        return (new NsgOR(new AmBbsStepping(Vars,lookaheadLimit,times,*maxLevel,
                                               varHeur, valHeur),
-                          new goalBbsDestructor(Vars,maxLevel)));
+                          new AmBbsDestructor(Vars,maxLevel)));
 }
 
-NsGoal *goalBbsStepping::GOAL (void)
+NsGoal *AmBbsStepping::GOAL (void)
 {
         if (times == 0) {
                 Vars[0].removeAll();	 // fail
@@ -20,13 +20,13 @@ NsGoal *goalBbsStepping::GOAL (void)
         }
         maxLevel = 0;
         // cout << "tries left: " << times << endl;
-        return(new NsgOR(new goalBbsLabeling(Vars, lookaheadLimit, maxLevel,
+        return(new NsgOR(new AmBbsLabeling(Vars, lookaheadLimit, maxLevel,
                                              varHeur, valHeur),
-                         new goalBbsStepping(Vars,lookaheadLimit,times-1,maxLevel,
+                         new AmBbsStepping(Vars,lookaheadLimit,times-1,maxLevel,
                                              varHeur, valHeur)));
 }
 
-NsGoal *goalBbsLabeling::GOAL (void)
+NsGoal *AmBbsLabeling::GOAL (void)
 {
         // compute current level
         int level = 0;
@@ -44,7 +44,7 @@ NsGoal *goalBbsLabeling::GOAL (void)
         int  index = varHeur->select(Vars);
         if (index == -1)
                 return  0;				 // all variables are bound => success
-        return(new NsgAND(new goalDfsInDomain(Vars[index], valHeur),
-                          new goalBbsLabeling(Vars, lookahead, maxLevel,
+        return(new NsgAND(new AmDfsInDomain(Vars[index], valHeur),
+                          new AmBbsLabeling(Vars, lookahead, maxLevel,
                                               varHeur, valHeur)));
 }

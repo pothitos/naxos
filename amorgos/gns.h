@@ -6,14 +6,14 @@
 
 namespace  naxos {
 
-class goalGnsLabeling : public NsGoal {
+class AmGnsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
 
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalGnsLabeling(NsIntVarArray& Vars_init,
+        AmGnsLabeling(NsIntVarArray& Vars_init,
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
                         ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic) {}

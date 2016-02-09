@@ -5,7 +5,7 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal *goalFnsLabeling::GOAL (void)
+NsGoal *AmFnsLabeling::GOAL (void)
 {
         int i, level, breadthLimit, n;
         level=0;
@@ -19,8 +19,8 @@ NsGoal *goalFnsLabeling::GOAL (void)
                 return  0;				 // all variables are bound => success
         // breadthLimit for this level
         breadthLimit = f(Vars[index].size(), level, n);
-        return(new NsgAND(new goalIbroadInDomain(Vars[index],breadthLimit,valHeur),
-                          new goalFnsLabeling( *this )));
+        return(new NsgAND(new AmIbroadInDomain(Vars[index],breadthLimit,valHeur),
+                          new AmFnsLabeling( *this )));
 }
 
 namespace naxos {

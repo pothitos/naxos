@@ -70,9 +70,9 @@ goalLsDay::GOAL (void)
         }
         return  metaSearchMethodGoal(pr, vLectPeriod, vLectPeriodSortedByHeur, varHeur, valHeur, lanAssigns);
         //if (setup.search_method == 2)
-        //	return  (new goalLds(Vars, classVars, vi, setup, days, hours, cancel, progress));
+        //	return  (new AmLds(Vars, classVars, vi, setup, days, hours, cancel, progress));
         //else
-        //	return  (new goalDfsLabeling(Vars, classVars, vi, setup, days, hours, cancel, progress));
+        //	return  (new AmDfsLabeling(Vars, classVars, vi, setup, days, hours, cancel, progress));
 }
 
 #if 0
@@ -120,8 +120,8 @@ goalLsOneSlice::GOAL (void)
                 }
         }
         if (setup.search_method == 2)
-                return  (new goalLds(Vars, classVars, vi, setup, days, hours, cancel, progress));
+                return  (new AmLds(Vars, classVars, vi, setup, days, hours, cancel, progress));
         else
-                return  (new goalDfsLabeling(Vars, classVars, vi, setup, days, hours, cancel, progress));
+                return  (new AmDfsLabeling(Vars, classVars, vi, setup, days, hours, cancel, progress));
 }
 #endif

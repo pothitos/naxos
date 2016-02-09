@@ -6,14 +6,14 @@
 
 namespace naxos {
 
-class goalIbroad : public NsGoal {
+class AmIbroad : public NsGoal {
     private:
         NsIntVarArray& Vars;
 
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalIbroad (NsIntVarArray& Vars_init,
+        AmIbroad (NsIntVarArray& Vars_init,
                     VariableHeuristic *varHeuristic = new VarHeurMRV,
                     ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic) {}
@@ -21,7 +21,7 @@ class goalIbroad : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalIbroadStepping : public NsGoal {
+class AmIbroadStepping : public NsGoal {
     private:
         NsIntVarArray& Vars;
         unsigned currBreadthLimit, maxBreadthLimit;
@@ -29,7 +29,7 @@ class goalIbroadStepping : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalIbroadStepping (NsIntVarArray& Vars_init, unsigned currBLimit,
+        AmIbroadStepping (NsIntVarArray& Vars_init, unsigned currBLimit,
                             unsigned maxBLimit,
                             VariableHeuristic *varHeuristic = new VarHeurMRV,
                             ValueHeuristic *valHeuristic = new ValHeurFirst)
@@ -40,7 +40,7 @@ class goalIbroadStepping : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalIbroadLabeling : public NsGoal {
+class AmIbroadLabeling : public NsGoal {
     private:
         NsIntVarArray& Vars;
         unsigned breadthLimit;
@@ -48,7 +48,7 @@ class goalIbroadLabeling : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalIbroadLabeling (NsIntVarArray& Vars_init, unsigned bLimit,
+        AmIbroadLabeling (NsIntVarArray& Vars_init, unsigned bLimit,
                             VariableHeuristic *varHeuristic = new VarHeurMRV,
                             ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), breadthLimit(bLimit),
@@ -57,14 +57,14 @@ class goalIbroadLabeling : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalIbroadInDomain : public NsGoal {
+class AmIbroadInDomain : public NsGoal {
     private:
         NsIntVar&  V;
         unsigned breadthLimit;
 
         ValueHeuristic *valHeur;
     public:
-        goalIbroadInDomain(NsIntVar& V_init, unsigned bLimit,
+        AmIbroadInDomain(NsIntVar& V_init, unsigned bLimit,
                            ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : V(V_init), breadthLimit(bLimit), valHeur(valHeuristic) {}
 

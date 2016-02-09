@@ -5,7 +5,7 @@
 using namespace naxos;
 using namespace std;
 
-NsGoal *goalGnsLabeling::GOAL (void)
+NsGoal *AmGnsLabeling::GOAL (void)
 {
         int i, level, breadthLimit, n;
         level=0;
@@ -20,6 +20,6 @@ NsGoal *goalGnsLabeling::GOAL (void)
         // calculate breadthLimit for this level
         // breadthLimit = ceil( Vars[index].size() * ((double)(n-level)/(double)n) );
         breadthLimit = (Vars[index].size() * (n-level)  -  1) / n   +   1;
-        return(new NsgAND(new goalIbroadInDomain(Vars[index],breadthLimit,valHeur),
-                          new goalGnsLabeling( *this )));
+        return(new NsgAND(new AmIbroadInDomain(Vars[index],breadthLimit,valHeur),
+                          new AmGnsLabeling( *this )));
 }

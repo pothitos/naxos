@@ -6,7 +6,7 @@
 
 namespace  naxos {
 
-class goalRdfs : public NsGoal {
+class AmRdfs : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  times;
@@ -15,7 +15,7 @@ class goalRdfs : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalRdfs(NsIntVarArray& Vars_init, int tim, int tout,
+        AmRdfs(NsIntVarArray& Vars_init, int tim, int tout,
                  VariableHeuristic *varHeuristic = new VarHeurMRV,
                  ValueHeuristic *valHeuristic = new ValHeurRand)
                 : Vars(Vars_init) , times(tim), timeoutLimit(tout),
@@ -23,13 +23,13 @@ class goalRdfs : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalRdfsDestructor : public NsGoal {
+class AmRdfsDestructor : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int  *timeout;
 
     public:
-        goalRdfsDestructor(NsIntVarArray& Vars_init, int *tout)
+        AmRdfsDestructor(NsIntVarArray& Vars_init, int *tout)
                 : Vars(Vars_init), timeout(tout) {  }
 
         NsGoal  *GOAL (void)
@@ -38,13 +38,13 @@ class goalRdfsDestructor : public NsGoal {
                 return  0;
         }
 
-        ~goalRdfsDestructor (void)
+        ~AmRdfsDestructor (void)
         {
                 delete  timeout;
         }
 };
 
-class goalRdfsStepping : public NsGoal {
+class AmRdfsStepping : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int times;
@@ -54,7 +54,7 @@ class goalRdfsStepping : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalRdfsStepping(NsIntVarArray& Vars_init, int tim, int *tout,
+        AmRdfsStepping(NsIntVarArray& Vars_init, int tim, int *tout,
                          int limit, VariableHeuristic *varHeuristic,
                          ValueHeuristic *valHeuristic)
                 : Vars(Vars_init), times(tim), timeout(tout), timeoutLimit(limit),
@@ -62,7 +62,7 @@ class goalRdfsStepping : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalRdfsLabeling : public NsGoal {
+class AmRdfsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
         int *timeout;
@@ -70,7 +70,7 @@ class goalRdfsLabeling : public NsGoal {
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalRdfsLabeling(NsIntVarArray& Vars_init, int *tout,
+        AmRdfsLabeling(NsIntVarArray& Vars_init, int *tout,
                          VariableHeuristic *varHeuristic,
                          ValueHeuristic *valHeuristic)
                 : Vars(Vars_init), timeout(tout), varHeur(varHeuristic),
@@ -78,14 +78,14 @@ class goalRdfsLabeling : public NsGoal {
         NsGoal  *GOAL (void);
 };
 
-class goalRdfsInDomain : public NsGoal {
+class AmRdfsInDomain : public NsGoal {
     private:
         NsIntVar& Var;
         int *timeout;
 
         ValueHeuristic *valHeur;
     public:
-        goalRdfsInDomain (NsIntVar& Var_init, int *tout,
+        AmRdfsInDomain (NsIntVar& Var_init, int *tout,
                           ValueHeuristic *valHeuristic)
                 : Var(Var_init), timeout(tout), valHeur(valHeuristic) {}
         NsGoal *GOAL(void);

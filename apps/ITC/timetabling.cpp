@@ -327,68 +327,68 @@ main (int argc, char *argv[])
                 bool  isPoPS = false;
                 switch ( pr.searchMethod ) {
                 case  DFS :
-                        pm.addGoal( new goalDfsLabeling(vLectPeriod, &varHeur, &valHeur) );
+                        pm.addGoal( new AmDfsLabeling(vLectPeriod, &varHeur, &valHeur) );
                         break;
                 case  LDS :
-                        pm.addGoal( new goalLds(vLectPeriod, pr.searchMethodParameter[0],
+                        pm.addGoal( new AmLds(vLectPeriod, pr.searchMethodParameter[0],
                                                 pr.searchMethodParameter[1], pr.searchMethodParameter[2],
                                                 pr.searchMethodParameter[3], &varHeur, &valHeur) );
                         break;
                 case  CREDIT :
-                        pm.addGoal( new goalCredit(vLectPeriod, pr.searchMethodParameter[0], &varHeur, &valHeur) );
+                        pm.addGoal( new AmCredit(vLectPeriod, pr.searchMethodParameter[0], &varHeur, &valHeur) );
                         break;
                 case  DBS :
-                        pm.addGoal( new goalDbsStepping(vLectPeriod, pr.searchMethodParameter[0], &varHeur, &valHeur) );
+                        pm.addGoal( new AmDbsStepping(vLectPeriod, pr.searchMethodParameter[0], &varHeur, &valHeur) );
                         break;
                 case  LAN :
                         lanAssigns.resize(vLectPeriod.size());
-                        pm.addGoal( new goalLanLabeling(vLectPeriod, lanAssigns, pr.searchMethodParameter[0],
+                        pm.addGoal( new AmLanLabeling(vLectPeriod, lanAssigns, pr.searchMethodParameter[0],
                                                         &varHeur, &valHeur) );
-                        //  Original `goalLan' does not take a `varHeur' argument, because it has its own    //
+                        //  Original `AmLan' does not take a `varHeur' argument, because it has its own    //
                         //   variable ordering heuristic, that uses an array named `assigns'.  In our case,  //
                         //   the variable ordering heuristic is parameterized in order to make assignments   //
                         //   to the `vLectRoom' variables.  So we need to use our heuristic to ensure that   //
                         //   the variables of both `vLectPeriod' and `vLectRoom' arrays are instantiated.    //
                         //   We constructed our `lanAssigns' array to use it with our `varHeur'.  We used    //
-                        //   a slightly changed version of `goalLanLabeling' instead of `goalLan'.          //
+                        //   a slightly changed version of `AmLanLabeling' instead of `AmLan'.          //
                         break;
                 case  DBDS :
                         pr.varHeuristicType = STATIC;
-                        pm.addGoal( new goalDbds(vLectPeriodSortedByHeur, &varHeur, &valHeur) );
-                        //  Original `goalDbds' does not take a `varHeur' argument.  It uses a static    //
+                        pm.addGoal( new AmDbds(vLectPeriodSortedByHeur, &varHeur, &valHeur) );
+                        //  Original `AmDbds' does not take a `varHeur' argument.  It uses a static    //
                         //   variable ordering heuristic, i.e. it uses the order that the variables      //
                         //   appear in their array.  (So we sorted them according the values that gives  //
                         //   the heuristic function before search starts, and we constructed the         //
                         //   `vLectPeriodSortedByHeur' array.)  We used our `varHeur' for the same       //
-                        //   reasons as in `goalLan' (see the corresponding comments above).             //
+                        //   reasons as in `AmLan' (see the corresponding comments above).             //
                         break;
                 case  IBROAD :
-                        pm.addGoal( new goalIbroad(vLectPeriod, &varHeur, &valHeur) );
+                        pm.addGoal( new AmIbroad(vLectPeriod, &varHeur, &valHeur) );
                         break;
                 case  BBS :
                         pr.varHeuristicType = STATIC;
                         pr.valHeuristicType = RANDOM;
-                        pm.addGoal( new goalBbs(vLectPeriod, pr.searchMethodParameter[0],
+                        pm.addGoal( new AmBbs(vLectPeriod, pr.searchMethodParameter[0],
                                                 pr.searchMethodParameter[1], &varHeur, &valHeur) );
                         break;
                 case  RDFS :
                         pr.valHeuristicType = RANDOM;
-                        pm.addGoal( new goalRdfs(vLectPeriod, pr.searchMethodParameter[0],
+                        pm.addGoal( new AmRdfs(vLectPeriod, pr.searchMethodParameter[0],
                                                  pr.searchMethodParameter[1], &varHeur, &valHeur) );
                         break;
                 case  GNS :
-                        pm.addGoal( new goalGnsLabeling(vLectPeriod, &varHeur, &valHeur) );
+                        pm.addGoal( new AmGnsLabeling(vLectPeriod, &varHeur, &valHeur) );
                         break;
                 case  FNS :
                         switch ( pr.searchMethodParameter[0] ) {
                         case  FSAMPLE :
-                                pm.addGoal( new goalFnsLabeling(vLectPeriod, fSample, &varHeur, &valHeur) );
+                                pm.addGoal( new AmFnsLabeling(vLectPeriod, fSample, &varHeur, &valHeur) );
                                 break;
                         case  FSAMPLE_MIDDLE :
-                                pm.addGoal( new goalFnsLabeling(vLectPeriod, fSampleMiddle, &varHeur, &valHeur));
+                                pm.addGoal( new AmFnsLabeling(vLectPeriod, fSampleMiddle, &varHeur, &valHeur));
                                 break;
                         case  FSAMPLE_EXP :
-                                pm.addGoal( new goalFnsLabeling(vLectPeriod, fSampleExp, &varHeur, &valHeur) );
+                                pm.addGoal( new AmFnsLabeling(vLectPeriod, fSampleExp, &varHeur, &valHeur) );
                                 break;
                         default :
                                 throw  timetableException("Wrong `pr.searchMethodParameter[0]' for FNS");
@@ -397,20 +397,20 @@ main (int argc, char *argv[])
                         break;
                 case  ISAMP :
                         pr.valHeuristicType = RANDOM;
-                        pm.addGoal( new goalIsampStepping(vLectPeriod, pr.searchMethodParameter[0],
+                        pm.addGoal( new AmIsampStepping(vLectPeriod, pr.searchMethodParameter[0],
                                                           &varHeur, &valHeur) );
                         break;
                 case  ONESAMP :
                         pr.varHeuristicType = STATIC;
-                        pm.addGoal( new goalOnesampLabeling(vLectPeriod, &varHeur, &valHeur) );
+                        pm.addGoal( new AmOnesampLabeling(vLectPeriod, &varHeur, &valHeur) );
                         break;
                 case  DOMAIN_SPLITTING :
                         pr.varHeuristicType  =  RANDOM;
                         if ( pr.valHeuristicType  ==  NORMAL )
                                 //  Default middle-value heuristic is used.
-                                pm.addGoal( new goalDomainSplittingLabeling(vLectPeriod, &varHeur) );
+                                pm.addGoal( new AmDomainSplittingLabeling(vLectPeriod, &varHeur) );
                         else    //  fair-domain-splitting
-                                pm.addGoal( new goalDomainSplittingLabeling(vLectPeriod, &varHeur, &splitValHeur) );
+                                pm.addGoal( new AmDomainSplittingLabeling(vLectPeriod, &varHeur, &splitValHeur) );
                         break;
                 case  PoPS :
                         pr.valHeuristicType = RANDOM;
@@ -603,68 +603,68 @@ metaSearchMethodGoal (struct itcProblem_t& pr, NsIntVarArray& vLectPeriod, NsInt
 {
         switch ( pr.searchMethod_ls ) {
         case  DFS :
-                return  ( new goalDfsLabeling(vLectPeriod, &varHeur, &valHeur) );
+                return  ( new AmDfsLabeling(vLectPeriod, &varHeur, &valHeur) );
                 break;
         case  LDS :
-                return  ( new goalLds(vLectPeriod, pr.searchMethodParameter_ls[0],
+                return  ( new AmLds(vLectPeriod, pr.searchMethodParameter_ls[0],
                                       pr.searchMethodParameter_ls[1], pr.searchMethodParameter_ls[2],
                                       pr.searchMethodParameter_ls[3], &varHeur, &valHeur) );
                 break;
         case  CREDIT :
-                return  ( new goalCredit(vLectPeriod, pr.searchMethodParameter_ls[0], &varHeur, &valHeur) );
+                return  ( new AmCredit(vLectPeriod, pr.searchMethodParameter_ls[0], &varHeur, &valHeur) );
                 break;
         case  DBS :
-                return  ( new goalDbsStepping(vLectPeriod, pr.searchMethodParameter_ls[0], &varHeur, &valHeur) );
+                return  ( new AmDbsStepping(vLectPeriod, pr.searchMethodParameter_ls[0], &varHeur, &valHeur) );
                 break;
         case  LAN :
                 lanAssigns.resize(vLectPeriod.size());
-                return  ( new goalLanLabeling(vLectPeriod, lanAssigns, pr.searchMethodParameter_ls[0],
+                return  ( new AmLanLabeling(vLectPeriod, lanAssigns, pr.searchMethodParameter_ls[0],
                                               &varHeur, &valHeur) );
-                //  Original `goalLan' does not take a `varHeur' argument, because it has its own    //
+                //  Original `AmLan' does not take a `varHeur' argument, because it has its own    //
                 //   variable ordering heuristic, that uses an array named `assigns'.  In our case,  //
                 //   the variable ordering heuristic is parameterized in order to make assignments   //
                 //   to the `vLectRoom' variables.  So we need to use our heuristic to ensure that   //
                 //   the variables of both `vLectPeriod' and `vLectRoom' arrays are instantiated.    //
                 //   We constructed our `lanAssigns' array to use it with our `varHeur'.  We used    //
-                //   a slightly changed version of `goalLanLabeling' instead of `goalLan'.          //
+                //   a slightly changed version of `AmLanLabeling' instead of `AmLan'.          //
                 break;
         case  DBDS :
                 pr.varHeuristicType_ls = STATIC;
-                return  ( new goalDbds(vLectPeriodSortedByHeur, &varHeur, &valHeur) );
-                //  Original `goalDbds' does not take a `varHeur' argument.  It uses a static    //
+                return  ( new AmDbds(vLectPeriodSortedByHeur, &varHeur, &valHeur) );
+                //  Original `AmDbds' does not take a `varHeur' argument.  It uses a static    //
                 //   variable ordering heuristic, i.e. it uses the order that the variables      //
                 //   appear in their array.  (So we sorted them according the values that gives  //
                 //   the heuristic function before search starts, and we constructed the         //
                 //   `vLectPeriodSortedByHeur' array.)  We used our `varHeur' for the same       //
-                //   reasons as in `goalLan' (see the corresponding comments above).             //
+                //   reasons as in `AmLan' (see the corresponding comments above).             //
                 break;
         case  IBROAD :
-                return  ( new goalIbroad(vLectPeriod, &varHeur, &valHeur) );
+                return  ( new AmIbroad(vLectPeriod, &varHeur, &valHeur) );
                 break;
         case  BBS :
                 pr.varHeuristicType_ls = STATIC;
                 pr.valHeuristicType_ls = RANDOM;
-                return  ( new goalBbs(vLectPeriod, pr.searchMethodParameter_ls[0],
+                return  ( new AmBbs(vLectPeriod, pr.searchMethodParameter_ls[0],
                                       pr.searchMethodParameter_ls[1], &varHeur, &valHeur) );
                 break;
         case  RDFS :
                 pr.valHeuristicType_ls = RANDOM;
-                return  ( new goalRdfs(vLectPeriod, pr.searchMethodParameter_ls[0],
+                return  ( new AmRdfs(vLectPeriod, pr.searchMethodParameter_ls[0],
                                        pr.searchMethodParameter_ls[1], &varHeur, &valHeur) );
                 break;
         case  GNS :
-                return  ( new goalGnsLabeling(vLectPeriod, &varHeur, &valHeur) );
+                return  ( new AmGnsLabeling(vLectPeriod, &varHeur, &valHeur) );
                 break;
         case  FNS :
                 switch ( pr.searchMethodParameter_ls[0] ) {
                 case  FSAMPLE :
-                        return  ( new goalFnsLabeling(vLectPeriod, fSample, &varHeur, &valHeur) );
+                        return  ( new AmFnsLabeling(vLectPeriod, fSample, &varHeur, &valHeur) );
                         break;
                 case  FSAMPLE_MIDDLE :
-                        return  ( new goalFnsLabeling(vLectPeriod, fSampleMiddle, &varHeur, &valHeur));
+                        return  ( new AmFnsLabeling(vLectPeriod, fSampleMiddle, &varHeur, &valHeur));
                         break;
                 case  FSAMPLE_EXP :
-                        return  ( new goalFnsLabeling(vLectPeriod, fSampleExp, &varHeur, &valHeur) );
+                        return  ( new AmFnsLabeling(vLectPeriod, fSampleExp, &varHeur, &valHeur) );
                         break;
                 default :
                         throw  timetableException("Wrong `pr.searchMethodParameter_ls[0]' for FNS");
@@ -673,12 +673,12 @@ metaSearchMethodGoal (struct itcProblem_t& pr, NsIntVarArray& vLectPeriod, NsInt
                 break;
         case  ISAMP :
                 pr.valHeuristicType_ls = RANDOM;
-                return  ( new goalIsampStepping(vLectPeriod, pr.searchMethodParameter_ls[0],
+                return  ( new AmIsampStepping(vLectPeriod, pr.searchMethodParameter_ls[0],
                                                 &varHeur, &valHeur) );
                 break;
         case  ONESAMP :
                 pr.varHeuristicType_ls = STATIC;
-                return  ( new goalOnesampLabeling(vLectPeriod, &varHeur, &valHeur) );
+                return  ( new AmOnesampLabeling(vLectPeriod, &varHeur, &valHeur) );
                 break;
         case  PoPS :
                 pr.valHeuristicType_ls = RANDOM;

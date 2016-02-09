@@ -6,27 +6,27 @@
 
 namespace  naxos {
 
-class goalDfsLabeling : public NsGoal {
+class AmDfsLabeling : public NsGoal {
     private:
         NsIntVarArray&  Vars;
 
         VariableHeuristic *varHeur;
         ValueHeuristic *valHeur;
     public:
-        goalDfsLabeling(NsIntVarArray& Vars_init,
+        AmDfsLabeling(NsIntVarArray& Vars_init,
                         VariableHeuristic *varHeuristic = new VarHeurMRV,
                         ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic) {}
         NsGoal  *GOAL (void);
 };
 
-class goalDfsInDomain : public NsGoal {
+class AmDfsInDomain : public NsGoal {
     private:
         NsIntVar& Var;
 
         ValueHeuristic *valHeur;
     public:
-        goalDfsInDomain (NsIntVar& Var_init,
+        AmDfsInDomain (NsIntVar& Var_init,
                          ValueHeuristic *valHeuristic = new ValHeurFirst)
                 : Var(Var_init), valHeur(valHeuristic) {}
         NsGoal *GOAL(void);
