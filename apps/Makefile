@@ -2,7 +2,7 @@
 STANDARD = -std=c++0x
 
 # Naxos Directory
-NAXOS = ..
+NAXOS = ../core
 
 ### COMPILER ###
 CXX = g++
@@ -12,7 +12,7 @@ LD = $(CXX)
 LDFLAGS = -s
 
 ### FILENAMES ###
-PROGRAMS = nqueens numpart
+PROGRAMS = nqueens send_more_money
 PR_OBJECTS = $(PROGRAMS:=.o)
 OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
 HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
