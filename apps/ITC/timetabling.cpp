@@ -498,11 +498,11 @@ main (int argc, char *argv[])
                                 pm.realTimeLimit( pr.timeLimitDirectMethodRound );
                         }
                         if ( saveLog  &&  ! pr.quiet ) {
-                                cout    << "# "
-                                        << setw(2) << setfill('0') << timeNow/60 << ":"
-                                        << setw(2) << setfill('0') << timeNow%60
-                                        << "\t" << "Using a direct method" << "\n"
-                                        << flush;
+                                cout << "# "
+                                     << setw(2) << setfill('0') << timeNow/60 << ":"
+                                     << setw(2) << setfill('0') << timeNow%60
+                                     << "\t" << "Using a direct method" << "\n"
+                                     << flush;
                         }
                         foundNewSolution = false;
                         while ( pm.nextSolution() != false ) {
@@ -513,15 +513,15 @@ main (int argc, char *argv[])
                                 if ( saveLog ) {
                                         timeNow  =  DiffTime(time(0), timeStarted);
                                         if ( ! pr.quiet )
-                                                cout    << "  "
-                                                        << setw(2) << setfill('0') << timeNow/60 << ":"
-                                                        << setw(2) << setfill('0') << timeNow%60
-                                                        << "\t" << vObjective.max()
-                                                        << "\t# = " << vObjectiveTerms[0].max() << "+" << vObjectiveTerms[1].max()
-                                                        << "+" << vObjectiveTerms[2].max() << "+" << vObjectiveTerms[3].max()
-                                                        << "  Constraint-checks: " << pm.numConstraintChecks()
-                                                        << "\n"
-                                                        << flush;
+                                                cout << "  "
+                                                     << setw(2) << setfill('0') << timeNow/60 << ":"
+                                                     << setw(2) << setfill('0') << timeNow%60
+                                                     << "\t" << vObjective.max()
+                                                     << "\t# = " << vObjectiveTerms[0].max() << "+" << vObjectiveTerms[1].max()
+                                                     << "+" << vObjectiveTerms[2].max() << "+" << vObjectiveTerms[3].max()
+                                                     << "  Constraint-checks: " << pm.numConstraintChecks()
+                                                     << "\n"
+                                                     << flush;
                                         timeBest  =  timeNow;
                                         costBest  =  vObjective.max();
                                 }
@@ -541,12 +541,12 @@ main (int argc, char *argv[])
                                 pm_ls.realTimeLimit( pr.timeLimitIndirectMethodRound );
                         }
                         if ( saveLog ) {
-                                cout    << "# "
-                                        << setw(2) << setfill('0') << timeNow/60 << ":"
-                                        << setw(2) << setfill('0') << timeNow%60
-                                        << "\t" << "Using an indirect method (Local Search for lectures on day "
-                                        << currentDay << ")" << "\n"
-                                        << flush;
+                                cout << "# "
+                                     << setw(2) << setfill('0') << timeNow/60 << ":"
+                                     << setw(2) << setfill('0') << timeNow%60
+                                     << "\t" << "Using an indirect method (Local Search for lectures on day "
+                                     << currentDay << ")" << "\n"
+                                     << flush;
                         }
                         pm_ls.restart();
                         if ( foundNewSolution ) {
@@ -563,13 +563,13 @@ main (int argc, char *argv[])
                                 writeSolution(pr, vLectPeriod_ls, vLectRoom_ls, argv[2]);
                                 if ( saveLog ) {
                                         timeNow  =  DiffTime(time(0), timeStarted);
-                                        cout    << "  "
-                                                << setw(2) << setfill('0') << timeNow/60 << ":"
-                                                << setw(2) << setfill('0') << timeNow%60
-                                                << "\t" << vObjective_ls.max()
-                                                << "\t# = " << vObjectiveTerms_ls[0].max() << "+" << vObjectiveTerms_ls[1].max()
-                                                << "+" << vObjectiveTerms_ls[2].max() << "+" << vObjectiveTerms_ls[3].max() << "\n"
-                                                << flush;
+                                        cout << "  "
+                                             << setw(2) << setfill('0') << timeNow/60 << ":"
+                                             << setw(2) << setfill('0') << timeNow%60
+                                             << "\t" << vObjective_ls.max()
+                                             << "\t# = " << vObjectiveTerms_ls[0].max() << "+" << vObjectiveTerms_ls[1].max()
+                                             << "+" << vObjectiveTerms_ls[2].max() << "+" << vObjectiveTerms_ls[3].max() << "\n"
+                                             << flush;
                                         timeBest  =  timeNow;
                                         costBest  =  vObjective.max();
                                 }
