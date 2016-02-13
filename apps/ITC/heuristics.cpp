@@ -47,7 +47,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
         NsDeque<unsigned>  varIndex;
         NsDeque<double>  heuristic;
         for (i=0;  i < vLectPeriod.size();  ++i) {
-                if ( vLectPeriod[i].isBound()  &&  ! vLectRoom[i].isBound() ) {
+                if ( vLectPeriod[i].isBound()  &&  !vLectRoom[i].isBound() ) {
                         //  This is the case that we have not a complete assignment     //
                         //   for the current lecture; we have an assigned teaching      //
                         //   period for it, but we did not provide a classroom for it.  //
@@ -61,7 +61,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
         case  NORMAL :
                 for (i=0;  i < vLectPeriod.size();  ++i) {
                         courseIndex = lectInfo[i].courseIndex;
-                        if ( ! vLectPeriod[i].isBound()
+                        if ( !vLectPeriod[i].isBound()
                              &&  ( bestIndex  ==  -1
                                    || ( vLectPeriod[i].size()  <   vLectPeriod[bestIndex].size() )
                                    || ( vLectPeriod[i].size()  ==  vLectPeriod[bestIndex].size()
@@ -84,7 +84,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
                 break;
         case  STATIC :
                 for (i=0;  i < vLectPeriod.size();  ++i) {
-                        if ( ! vLectPeriod[i].isBound()
+                        if ( !vLectPeriod[i].isBound()
                              &&  ( bestIndex  ==  -1
                                    ||   lectInfo[i].staticHeuristic > lectInfo[bestIndex].staticHeuristic ) ) {
                                 bestIndex       = i;
@@ -96,7 +96,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
                 int  numUnbound;
                 numUnbound = 0;
                 for (i=0;  i < vLectPeriod.size();  ++i)
-                        numUnbound  +=  ( ! vLectPeriod[i].isBound() );
+                        numUnbound  +=  ( !vLectPeriod[i].isBound() );
                 //cout << "\r" << static_cast<int>(100.0 * numUnbound / vLectPeriod.size())
                 //	<< "%  (" << numUnbound << "/" << vLectPeriod.size() << ")\t";
                 if ( numUnbound  ==  0 )
@@ -106,7 +106,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
                 unsigned  valNum;
                 valNum  =  0;
                 for (i=0;  i < vLectPeriod.size();  ++i) {
-                        if ( ! vLectPeriod[i].isBound() ) {
+                        if ( !vLectPeriod[i].isBound() ) {
                                 varIndex[valNum]        =  i;
                                 //  MRV / BRELAZ heuristic
                                 heuristic[valNum+1]  =
@@ -129,7 +129,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
                 //roundRobinVarPosition  =  (roundRobinVarPosition + 1) % vLectPeriod.size();
                 //int  oldPosition  =  roundRobinVarPosition;
                 //for ( ; ; )   {
-                //	if ( ! vLectPeriod[roundRobinVarPosition].isBound() )    {
+                //	if ( !vLectPeriod[roundRobinVarPosition].isBound() )    {
                 //		bestIndex  =  roundRobinVarPosition;
                 //		break;
                 //	}
@@ -142,7 +142,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
                 //int  numUnbound;
                 //numUnbound = 0;
                 //for (i=0;  i < vLectPeriod.size();  ++i)
-                //	numUnbound  +=  ( ! vLectPeriod[i].isBound() );
+                //	numUnbound  +=  ( !vLectPeriod[i].isBound() );
                 //cout << "\r" << static_cast<int>(100.0 * numUnbound / vLectPeriod.size())
                 //	<< "%  (" << numUnbound << "/" << vLectPeriod.size() << ")\t";
                 //if ( numUnbound  ==  0 )
@@ -152,7 +152,7 @@ VarHeurTimetabling::select (const NsIntVarArray& vLectPeriod)
                 ////  Find position of chosen variable
                 //numUnbound  =  0;
                 //for (i=0;  i < vLectPeriod.size();  ++i)   {
-                //	if ( ! vLectPeriod[i].isBound()  &&  random-- == 0 )    {
+                //	if ( !vLectPeriod[i].isBound()  &&  random-- == 0 )    {
                 //		bestIndex  =  i;
                 //		break;
                 //	}
@@ -221,7 +221,7 @@ randomizeHeuristicSequence (NsDeque<NsInt> value,
         while ( sumLimit  >  0 ) {
                 double  random = (rand() / (RAND_MAX + 1.0)) * heuristic.back();
                 NsIndex  i = intervalBinarySearch(heuristic,random);
-                if ( ! selectedElement[i] ) {
+                if ( !selectedElement[i] ) {
                         selectedElement[i]  =  true;
                         assignmentSequence.push_back( value[i] );
                         double  probability  =  heuristic[i+1] - heuristic[i];
@@ -263,7 +263,7 @@ unboundVarsConnecedTo (const int courseIndex, const NsDeque<struct itcCourseInfo
         for (int i=0;   i < pr.ncourses;   ++i) {
                 if ( courseInfo[courseIndex].isConnectedToCourse[i] ) {
                         for (int j = courseInfo[i].firstLectIndex;  j <= courseInfo[i].lastLectIndex;  ++j)
-                                unboundVars  +=  ( ! vLectPeriod[j].isBound() );
+                                unboundVars  +=  ( !vLectPeriod[j].isBound() );
                 }
         }
         return  unboundVars;
@@ -285,7 +285,7 @@ heurEstimationForVariable (const int index, const int courseIndex, const NsDeque
 {
         //int  unboundLecturesOfTheSameCourse = 0;
         //for (int j = courseInfo[courseIndex].firstLectIndex;   j <= courseInfo[courseIndex].lastLectIndex;   ++j)
-        //	unboundLecturesOfTheSameCourse  +=  ( ! vLectPeriod[j].isBound() );
+        //	unboundLecturesOfTheSameCourse  +=  ( !vLectPeriod[j].isBound() );
         /*cout << "   (" << pr.days << "*" << pr.hours << " - " << vLectPeriod[index].size() << ") * " << pr.max2ndVarHeurCriterion << " * " << pr.max3rdVarHeurCriterion << "\n"
         	 << " + " << unboundVarsConnecedTo(courseIndex,courseInfo,vLectPeriod,pr) << "               * " << pr.max3rdVarHeurCriterion << "\n"
         	 << " + " << varHeurObjectiveCriterion(courseIndex,courseInfo,pr,vBusyDays)    << "\n";
@@ -386,7 +386,7 @@ ValHeurTimetabling::select (const NsIntVar& V, double& piece)
                         int   d2,  dayBusy,  lectureIndexInCourse,  objectiveEstimation_minWorkingDays = 0;
                         dayBusy  =  d;
                         for (i = index - 1;
-                             i >= courseInfo[courseIndex].firstLectIndex  &&  ! vLectPeriod[i].isBound();
+                             i >= courseInfo[courseIndex].firstLectIndex  &&  !vLectPeriod[i].isBound();
                              --i) {
                                 for (d2 = dayBusy - 1;   d2 >= 0;   --d2) {
                                         lectureIndexInCourse  =  i - courseInfo[courseIndex].firstLectIndex;
@@ -398,7 +398,7 @@ ValHeurTimetabling::select (const NsIntVar& V, double& piece)
                         }
                         dayBusy  =  d;
                         for (i = index + 1;
-                             i <= courseInfo[courseIndex].lastLectIndex  &&  ! vLectPeriod[i].isBound();
+                             i <= courseInfo[courseIndex].lastLectIndex  &&  !vLectPeriod[i].isBound();
                              ++i) {
                                 for (d2= dayBusy + 1;   d2 < pr.days;   ++d2) {
                                         lectureIndexInCourse  =  i - courseInfo[courseIndex].firstLectIndex;
@@ -447,7 +447,7 @@ ValHeurTimetabling::select (const NsIntVar& V, double& piece)
                                                 } else if ( 0 < h  &&  h < pr.hours-1  &&  p-1 <= vGroup[i][j].min()
                                                             &&  vGroup[i][j].max() <= p+1 ) {
                                                         objectiveEstimation += 2;
-                                                        //if ( ! ( vIsolatedLect[i][p-1].min() == 0
+                                                        //if ( !( vIsolatedLect[i][p-1].min() == 0
                                                         //		&&  vIsolatedLect[i][p+1].min() == 0 ) )
                                                         //{
                                                         //	cout << "vGroup[" << i << "] = " << vGroup[i] << "\n";
@@ -541,8 +541,8 @@ SplitValHeurTimetabling::select (const NsIntVar& V)
         double  splitValue, meanMiddleValue = 0.0,  weightSum = 0.0;
         //cout << "X = " << V << ".\n";
         for (i=courseInfo[courseIndex].firstLectIndex;  i <= courseInfo[courseIndex].lastLectIndex;  ++i) {
-                if ( i  !=  index  &&  ! vLectPeriod[i].isBound()
-                     &&  ! intersectionEmpty2(&vLectPeriod[index], &vLectPeriod[i]) ) {
+                if ( i  !=  index  &&  !vLectPeriod[i].isBound()
+                     &&  !intersectionEmpty2(&vLectPeriod[index], &vLectPeriod[i]) ) {
                         splitValue  =  splitValueConstrLess(vLectPeriod[index], vLectPeriod[i], (index > i));
                         meanMiddleValue  +=  (1.0 / vLectPeriod[i].size()) * splitValue;
                         weightSum  +=  1.0 / vLectPeriod[i].size();
@@ -560,7 +560,7 @@ SplitValHeurTimetabling::select (const NsIntVar& V)
                 if ( i  !=  courseIndex ) {
                         if ( courseInfo[courseIndex].isConnectedToCourse[i] ) {
                                 for (j = courseInfo[i].firstLectIndex;  j <= courseInfo[i].lastLectIndex;  ++j) {
-                                        if ( ! intersectionEmpty2(&vLectPeriod[index], &vLectPeriod[j]) ) {
+                                        if ( !intersectionEmpty2(&vLectPeriod[index], &vLectPeriod[j]) ) {
                                                 splitValue  =  splitValueConstrNeq(vLectPeriod[index], vLectPeriod[j]);
                                                 meanMiddleValue  +=  (1.0 / vLectPeriod[j].size()) * splitValue;
                                                 weightSum  +=  1.0 / vLectPeriod[j].size();
@@ -578,7 +578,7 @@ SplitValHeurTimetabling::select (const NsIntVar& V)
                                 }
                         } else {
                                 for (j = courseInfo[i].firstLectIndex;  j <= courseInfo[i].lastLectIndex;  ++j) {
-                                        if ( ! intersectionEmpty2(&vLectPeriod[index], &vLectPeriod[j]) ) {
+                                        if ( !intersectionEmpty2(&vLectPeriod[index], &vLectPeriod[j]) ) {
                                                 int  availableRooms = 0;
                                                 for (NsIntVar::const_iterator  valRoom = vLectRoom[j].begin();
                                                      valRoom != vLectRoom[j].end();

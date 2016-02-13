@@ -33,7 +33,7 @@ struct less_function_VarHeur : public binary_function<struct VarHeur_t, struct V
         bool
         operator ()  (const struct VarHeur_t& X, const struct VarHeur_t& Y)
         {
-                return  ( ! ( X.heur < Y.heur ) );
+                return  ( !( X.heur < Y.heur ) );
         }
 };
 
@@ -416,7 +416,7 @@ main (int argc, char *argv[])
                         pr.valHeuristicType = RANDOM;
                         if ( pr.searchMethodParameter[0]  ==  -1 )
                                 isPoPS  =  true;
-                        if ( ! isPoPS )
+                        if ( !isPoPS )
                                 // PopsSample
                                 pm.addGoal( new AmPopsLabeling(vLectPeriod, pr.searchMethodParameter[0]/100.0, &varHeur, &valHeur) );
                         break;
@@ -441,16 +441,16 @@ main (int argc, char *argv[])
                         for (i=0;  i < samples;  ++i)
                                 popsSample[i].conf  =  confmax * i / (samples - 1.0);
                         bool  searchEnded = false;
-                        while ( ! searchEnded ) {
+                        while ( !searchEnded ) {
                                 bool  foundSolutionInThisRound = false;
-                                for (i=0;  i < samples && ! searchEnded;  ++i) {
+                                for (i=0;  i < samples && !searchEnded;  ++i) {
                                         if ( popsSample[i].suspend  ==  true )
                                                 continue;
                                         popsSample[i].suspend  =  true;
                                         time_t  timeStartedPops = time(0);
                                         srand(1);
                                         pr.conf  =  popsSample[i].conf;
-                                        if ( ! pr.quiet )
+                                        if ( !pr.quiet )
                                                 cout << "PoPS(" << popsSample[i].PieceToCover << ")\n"
                                                      << "conf = " << pr.conf << "\n";
                                         pm.addGoal( new AmPopsLabeling(vLectPeriod, popsSample[i].PieceToCover, &varHeur, &valHeur) );
@@ -461,10 +461,10 @@ main (int argc, char *argv[])
                                                 writeSolution(pr, vLectPeriod, vLectRoom, argv[2]);
                                                 foundSolutionInThisRound  =  true;
                                                 popsSample[i].suspend  =  false;
-                                                if ( ! pr.quiet )
+                                                if ( !pr.quiet )
                                                         cout << "Solution with cost " << vObjective.max() << "\n";
                                         }
-                                        if ( ! pr.quiet )
+                                        if ( !pr.quiet )
                                                 cout << "time = " << DiffTime(time(0),timeStartedPops) << "\n"
                                                      << "backtracks = " << pm.numBacktracks() << "\n"
                                                      << "\n";
@@ -476,17 +476,17 @@ main (int argc, char *argv[])
                                                 popsSample[i].PieceToCover  =  1.0;
                                         pm.restart();
                                 }
-                                if ( ! foundSolutionInThisRound ) {
+                                if ( !foundSolutionInThisRound ) {
                                         for (i=0;  i < samples;  ++i)
                                                 popsSample[i].suspend  =  false;
                                 }
-                                if ( ! pr.quiet )
+                                if ( !pr.quiet )
                                         cout << "\n";
                         }
                 }
                 bool  foundNewSolution;
                 int   currentDay = 0;
-                while ( ! isPoPS ) {
+                while ( !isPoPS ) {
                         pr.isActiveLocalSearch = false;
                         timeNow = DiffTime(time(0), timeStarted);
                         timeLeft = pr.timeLimit - timeNow;
@@ -497,7 +497,7 @@ main (int argc, char *argv[])
                                         min( pr.timeLimitDirectMethodRound , static_cast<int>(timeLeft));
                                 pm.realTimeLimit( pr.timeLimitDirectMethodRound );
                         }
-                        if ( saveLog  &&  ! pr.quiet ) {
+                        if ( saveLog  &&  !pr.quiet ) {
                                 cout << "# "
                                      << setw(2) << setfill('0') << timeNow/60 << ":"
                                      << setw(2) << setfill('0') << timeNow%60
@@ -512,7 +512,7 @@ main (int argc, char *argv[])
                                 writeSolution(pr, vLectPeriod, vLectRoom, argv[2]);
                                 if ( saveLog ) {
                                         timeNow  =  DiffTime(time(0), timeStarted);
-                                        if ( ! pr.quiet )
+                                        if ( !pr.quiet )
                                                 cout << "  "
                                                      << setw(2) << setfill('0') << timeNow/60 << ":"
                                                      << setw(2) << setfill('0') << timeNow%60

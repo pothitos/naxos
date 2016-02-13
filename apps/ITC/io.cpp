@@ -39,7 +39,7 @@ struct less_function_RoomRank : public binary_function<struct RoomRank_t, struct
                         bool
                         operator ()  (const struct RoomRank_t& X, const struct RoomRank_t& Y)
                         {
-                                return  ( ! ( X.room->capacity < Y.room->capacity ) );
+                                return  ( !( X.room->capacity < Y.room->capacity ) );
                         }
                 };
 
@@ -287,7 +287,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                 str = argv[4];
         else if ( argc == 6  &&  isdigit(argv[3][0])   &&  strcmp(argv[4],"-options") == 0 )
                 str = argv[5];
-        else if ( ( argc == 4  &&  ! isdigit(argv[3][0]) )   ||   argc >= 5 )
+        else if ( ( argc == 4  &&  !isdigit(argv[3][0]) )   ||   argc >= 5 )
                 throw  timetableException("Wrong arguments.  Run without arguments to see the available options.");
         if ( str != "" ) {
                 /* Loading an options-file */
@@ -297,7 +297,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                 for ( ; ; ) {
                         if ( alreadyReadAnOption )
                                 alreadyReadAnOption = false;
-                        else if ( ! ( optionsFile >> str ) )
+                        else if ( !( optionsFile >> str ) )
                                 break;
                         if ( str[0] == '#' ) {
                                 /* Ignore comments */
@@ -311,7 +311,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod = DFS;
                                         /* Default parameters */
                                         pr.varHeuristicType  =  NORMAL;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
                                         if ( str != "RANDOM_VAR_HEUR"  &&  str != "RANDOM_VAL_HEUR" ) {
                                                 /* Not a parameter, so continue with the next option. */
@@ -329,31 +329,31 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethodParameter[1] = 0;
                                         pr.searchMethodParameter[2] = 0;
                                         pr.searchMethodParameter[3] = 0;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
                                         pr.searchMethodParameter[0] = atoi( str.c_str() );
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
                                         pr.searchMethodParameter[1] = atoi( str.c_str() );
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
                                         pr.searchMethodParameter[2] = atoi( str.c_str() );
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
@@ -366,9 +366,9 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod             = DBS;
                                         /* Default parameters */
                                         pr.searchMethodParameter[0] = 0;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
@@ -388,9 +388,9 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                                      "Missing/Wrong first parameter for search method \"BBS\"" );
                                         /* Default parameters */
                                         pr.searchMethodParameter[1] = 0;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
@@ -425,7 +425,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod      =  DOMAIN_SPLITTING;
                                         /* Default parameters */
                                         pr.valHeuristicType  =  NORMAL;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
                                         if ( str != "FAIR" ) {
                                                 /* Not a parameter, so continue with the next option. */
@@ -437,9 +437,9 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod  =  PoPS;
                                         /* Default parameters */
                                         pr.searchMethodParameter[0] = -1;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
@@ -447,7 +447,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethodParameter[0] = atoi( str.c_str() );
                                         //assert_that( ( optionsFile >> pr.searchMethodParameter[0] ) ,
                                         //	   "Missing/Wrong parameter for search method \"PoPS\"" );
-                                        //if ( ! ( optionsFile >> str ) )
+                                        //if ( !( optionsFile >> str ) )
                                         //	break;
                                         //if ( str != "TRANSFORM" )   {
                                         //	/* Not a parameter, so continue with the next option. */
@@ -466,7 +466,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod_ls = DFS;
                                         /* Default parameters */
                                         pr.varHeuristicType_ls  =  NORMAL;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
                                         if ( str != "RANDOM_VAR_HEUR"  &&  str != "RANDOM_VAL_HEUR" ) {
                                                 /* Not a parameter, so continue with the next option. */
@@ -484,31 +484,31 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethodParameter_ls[1] = 0;
                                         pr.searchMethodParameter_ls[2] = 0;
                                         pr.searchMethodParameter_ls[3] = 0;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
                                         pr.searchMethodParameter_ls[0] = atoi( str.c_str() );
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
                                         pr.searchMethodParameter_ls[1] = atoi( str.c_str() );
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
                                         pr.searchMethodParameter_ls[2] = atoi( str.c_str() );
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 alreadyReadAnOption = true;
                                                 continue;
                                         }
@@ -521,9 +521,9 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod_ls             = DBS;
                                         /* Default parameters */
                                         pr.searchMethodParameter_ls[0] = 0;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
@@ -543,9 +543,9 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                                      "Missing/Wrong first parameter for search method \"BBS\"" );
                                         /* Default parameters */
                                         pr.searchMethodParameter_ls[1] = 0;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
@@ -580,7 +580,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod_ls         =  DOMAIN_SPLITTING;
                                         /* Default parameters */
                                         pr.varHeuristicType_ls  =  NORMAL;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
                                         if ( str != "FAIR" ) {
                                                 /* Not a parameter, so continue with the next option. */
@@ -592,9 +592,9 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethod_ls  =  PoPS;
                                         /* Default parameters */
                                         pr.searchMethodParameter_ls[0] = -1;
-                                        if ( ! ( optionsFile >> str ) )
+                                        if ( !( optionsFile >> str ) )
                                                 break;
-                                        if ( ! isdigit(str[0]) ) {
+                                        if ( !isdigit(str[0]) ) {
                                                 /* Not a parameter, so continue with the next option. */
                                                 alreadyReadAnOption = true;
                                                 continue;
@@ -602,7 +602,7 @@ createInstance (struct itcProblem_t& pr, const int argc, char *argv[])
                                         pr.searchMethodParameter_ls[0] = atoi( str.c_str() );
                                         //assert_that( ( optionsFile >> pr.searchMethodParameter_ls[0] ) ,
                                         //	   "Missing/Wrong parameter for search method \"PoPS\"" );
-                                        //if ( ! ( optionsFile >> str ) )
+                                        //if ( !( optionsFile >> str ) )
                                         //	break;
                                         //if ( str != "TRANSFORM" )   {
                                         //	/* Not a parameter, so continue with the next option. */
