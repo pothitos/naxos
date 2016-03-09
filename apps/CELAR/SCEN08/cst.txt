@@ -1,0 +1,14 @@
+Objective If there are several solutions find that one which uses the minimal
+number of assigned values.
+If there is no solution minimize the cost function with the following
+coefficients:
+
+
+             a1 =  4
+             a2 =  3
+             a3 =  2
+             a4 =  1
+             b1 =  0
+             b2 =  0
+             b3 =  0
+             b4 =  0

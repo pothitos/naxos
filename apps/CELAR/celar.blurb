@@ -1,0 +1,251 @@
+
+   -------------------------------------------------------------------------
+
+	THE CELAR RADIO LINK FREQUENCY ASSIGNMENT PROBLEM INSTANCES
+
+   -------------------------------------------------------------------------
+
+   This file  describes the   "Radio  Link  Frequency Assignment   Problem"
+   instances stored in the directories  scen01 to scen11. Anybody reporting
+   results  on these problems  should explicitely thank  the French "Centre
+   d'Electronique de l'Armement".  These instances have been made available
+   in the  framework of the   European EUCLID project CALMA  (Combinatorial
+   ALgorithms  for Military  Applications). These problems stem from a real 
+   RLFAP instance.
+ 
+   The  "Radio  Link   Frequency Assignment Problem"   (RLFAP)  consists in
+   assigning frequencies   to communication  links in such   a way  that  no
+   interferences  occurs. Domains  are   set  of integers (non   necessarily
+   consecutives).  In the simplest case  which is  considered here, only two
+   types of constraint occur:
+ 
+        1- the absolute  difference  between   two  frequencies   should  be
+           greater than a given number k (|x-y|>k);
+ 
+        2- the absolute  difference between two  frequencies should  exactly
+           be equal to a given number k' (|x-y|=k).
+ 
+   The first type of constraint is enough  to make the problem NP-hard since
+   it enables the expression of the GRAPH K-COLORABILITY problem.
+ 
+   Please inform us of   your results (mail to csp@www-bia.inra.fr).   These
+   instances have   been solved by   various  techniques: genetic alg.,  CSP
+   techniques, simulated annealing, tabu  search, integer linear programming
+   (using IPM or simplex)  in the framework of  the project.  This file will
+   be updated when new results are obtained.
+  
+   Several  techreports  that present the result  of  these tests (and other
+   randomly generated instances) are available at the following URL:
+
+      ftp://ftp.win.tue.nl/pub/techreports/CALMA/index.html
+ 
+   An overview of all the results is given in this file.  An older but nicer
+   overview of the problem and the results  is available at the previous URL
+   in  the overview.ps  file.   A  forthcoming paper  describing   the CELAR
+   instances as  well as other  RLFAP instances  will appear in  the journal
+   CONSTRAINTS (issue 3(3)  probably). You are invited to  get  the paper to
+   get more information on the instances.
+
+	Thomas SCHIEX
+	Thomas.Schiex@toulouse.inra.fr (February 1998)
+
+   -------------------------------------------------------------------------
+ 
+				 FTP SITES
+
+   -------------------------------------------------------------------------
+
+   The test set, along  with other  RLFAP instances, should be available by
+   anonymous ftp at:
+
+     Europe:
+
+        ftp://ftp.cert.fr/pub/lemaitre/FullRLFAP.tgz
+
+     United States
+
+	ftp://ftp.cs.unh.edu/pub/csp/archive/code/benchmarks/FullRLFAP.tgz
+
+   Since this file changes  over time, I advise  you  to look at  this last
+   address  which should hold  the last  release  of this  file. In case of
+   doubt, contact Thomas.Schiex@toulouse.inra.fr.
+
+   -------------------------------------------------------------------------
+	
+		       HOW TO INTERPRET THE DATA SET
+
+   -------------------------------------------------------------------------
+
+   Each instance is defined by four files:
+ 
+       var.txt   list of variables
+       dom.txt   list of domains
+       ctr.txt   list of constraints
+       cst.txt   defines the problem that should be solved (criteria if any)
+ 
+ 
+FILE 'dom.txt'
+-------------
+ 
+   This  file describes   the  domains that  are initially   allowed for the
+   variables of the problem. Each line describes  one domain. The first line
+   is a dummy domain which results from the union of all the other domains.
+ 
+   Each domain is described using fixed width fields. 
+ 
+        Field 1         Domain number
+        Field 2         Domain cardinal
+        Field 3..n      Values in the domain
+ 
+   The domain number is used in the 'var.txt' file.
+ 
+ 
+FILE 'var.txt'
+-------------
+ 
+   Each line describes a variable using fixed width fields. The fields 3 and
+   4 are not always present.
+ 
+        Field 1         Variable number
+        Field 2         Domain number (see dom.txt)
+        Field 3         Initial value (variable is assigned, optional)
+        Field 4         Mobility (index of cost of modification, optional)
+ 
+   Variable numbers are used   as    identifiers and are  not    necessarily
+   consecutive.  The mobility  may be 0,1,2,3 or  4.  0 means that the value
+   of the variable is already assigned and may not be modified. 1 to 4 means
+   that an initial value  is assigned to  the  variable and may  be modified
+   with a decreasing  cost of modification (see  cst.txt). Fields 3 and 4
+   are optional. 
+ 
+FILE 'ctr.txt'
+--------------
+ 
+   Each line defines one  binary constraint. A  constraint is defined by the
+   following fields:
+ 
+        Field 1         Number of the first variable
+        Field 2         Number of the second variable
+        Field 3         Type of the constraints (see below)
+        Field 4         Operator to use (see below)
+        Field 5         Deviation (see below)
+        Field 6         Weight Index (optional, see below)
+ 
+   The fields 1 and 2 use the variable number in file 'var.txt'. The field 3
+   may take value D, C, F,P or  L. It is useless  and refers to the original
+   meaning  of   the  constraint.   The    fields 4    and  5  define    the
+   constraint. Field  4 is the  relational operator that   should be used to
+   compare the absolute value of the difference of  the two variables to the
+   integer given in the Field 5 (called the deviation). The semantics of the
+   constraint is therefore:
+ 
+        |Field1 - Field2| Field4 Field5
+ 
+   Field 6  is optional  and is used   when constraint violation  is allowed
+   (Partial CSP). It  may  go from 0 to  4.   0 if  the  constraint must  be
+   mandatory met   1  to  4 otherwise   with  a  decreasing weight   in  the
+   optimization  criteria.  If the Weight Index  is  missing, 0  is assumed.
+   Constraints with a non null Weigth priority are said "soft".
+ 
+FILE 'cst.txt'
+-------------
+ 
+   The  problems  have various optimization  criteria.  If there are several
+   solutions meeting all the constraints (hard or soft),  we may try to find
+   the solution which  minimizes the number  of different assigned values or
+   the largest assigned value.
+ 
+   If there is no solution, you have to minimize
+ 
+        a1*nc1+...+a4*nc4+b1*nv1+...+b4*nv4 
+ 
+   where 
+ 
+        nci=number of violated constraint with Weight Index i 
+        nvi=number of modified variables with Mobility i
+ 
+        a1,..., a4, b1,...,b4 are defined (when needed) in the file cst.txt
+ 
+   -------------------------------------------------------------------------
+ 
+			 FACTS ABOUT THE PROBLEMS
+
+   -------------------------------------------------------------------------
+
+PROBLEMS 1,2,3:
+---------------
+ 
+   There are several solutions. No soft constraint, no initial assignment of
+   the variables. The optimization criterion is the number of used
+   values. Problem 1 has more than one connected component.
+ 
+   Problem 1: 916 var., 5548 con., best known solution has cost 16 (optimal)
+   Problem 2: 200 var., 1235 con., best known solution has cost 14 (optimal)
+   Problem 3: 400 var., 2760 con., best known solution has cost 14 (optimal)
+ 
+PROBLEM 4:
+----------
+ 
+   There   are   several solutions. No priority    for  the constraints. 280
+   variables are already assigned (Mobility 0).  You have to find a solution
+   minimizing the number of different values used.
+ 
+   Problem 4: 680 var., 3967 con. best known solution has cost 46 (optimal)
+ 
+PROBLEM 5:
+----------
+ 
+   There are several solutions. No priority  for the constraints, no initial
+   assignment of the  variables. You have  to find a solution minimizing the
+   largest assigned value.
+ 
+   Problem 5 400 var., 2598 con., best known solution has cost 792 (optimal)
+ 
+PROBLEMS 6,7,8:
+---------------
+ 
+   There   is no solution  satisfying both  hard  and  soft constraints.  no
+   initial assignment of the variables. Weight index of the constraints:
+        
+        Group D                 0
+        Groups P and F          1 
+        Groups C and L          2 or 3 or 4 (see ctr.txt and cst.txt)
+ 
+   Problems 6: 200 var., 1322 con., best known solution has cost 3 389. This
+   solution was later proved optimal using ad-hoc lower-bounding techniques.
+
+   Problems 7: 400 var., 2865 con., best known solution has cost 343 592.
+   Problems 8: 916 var., 5744 con., best known solution has cost 262.
+ 
+PROBLEMS 9 and 10:
+------------------
+ 
+   There is no solution  satisfying both hard and  soft constraints. All the
+   variables are already assigned. 280 among them  have a Mobility=0. Weight
+   index of the constraints:
+ 
+        Group D                 0 
+        Group P and F           1
+        Groups C and L          2 or 3 or 4 (see ctr.txt)
+ 
+   Problems 9:  680 var., 4103 con., best known solution has cost 15 571.
+                An ad-hoc lower-bouding technique yields a lb of  14 875.
+		(because of an initial ambiguous description of how VAR.TXT
+		had to be interpreted, the official lower bound of 14 969
+		is overestimated by 94).
+
+   Problems 10: 680 var., 4103 con., best known solution has cost 31 516.
+		An ad-hoc lower-bouding technique yields a lb of  31 204.
+		(because of an initial ambiguous description of how VAR.TXT
+		had to be interpreted, the official lower bound of 32 144
+		is overestimated by 940).
+PROBLEM 11:
+-----------
+ 
+   No mobility, Only Weight index 0 and 4 are used.
+ 
+   Problem 11: 680 var., 4103 con., best known solution has cost 0 (optimal)
+   If one look for an assignment which uses a minimum number of frequencies,
+   a solution exists with 22 frequencies (optimal).
+
+

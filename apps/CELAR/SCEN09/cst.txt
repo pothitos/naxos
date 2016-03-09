@@ -1,0 +1,13 @@
+Objective :If there is a solution find that one which uses the minimal number
+of assigned values.
+If there is no solution minimize the cost function with the following 
+coefficients :
+
+             a1 = 1000
+             a2 =  100
+             a3 =   10
+             a4 =    1
+             b1 = 1000
+             b2 =  100
+             b3 =   10
+             b4 =    1
