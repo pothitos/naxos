@@ -7,9 +7,9 @@
 STANDARD = -std=c++0x
 #LDFLAGS2 = -Wl,--enable-auto-import
 
-NDIR = ../naxos-beta
+NDIR = ../../core
 NDIR_AC = ../naxos-AC
-ADIR = ../amorgos
+ADIR = ../../amorgos
 
 CC = $(CPATH)g++
 WFLAGS = -pedantic -Wall -W -Wshadow

@@ -327,7 +327,7 @@ int  main (int argc, char *argv[])
 	VarHeurCelar  varHeur(info, conf);
 	ValHeurCelar  valHeur(AllVars, info, conf);
 
-	pm.addGoal( new goalDfsLabeling(AllVars, &varHeur, &valHeur) );
+	pm.addGoal( new AmDfsLabeling(AllVars, &varHeur, &valHeur) );
 
 
 	NsDeque<NsInt>  bestAllVars(AllVars.size());
