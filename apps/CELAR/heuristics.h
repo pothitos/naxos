@@ -1,90 +1,72 @@
 #ifndef HEURISTICS_H
 #define HEURISTICS_H
 
-
-
 #include <stdexcept>
 #include <string>
 
+class CelarException : public std::logic_error {
 
-class CelarException : public std::logic_error  {
+    public:
 
-	public:
-
-		CelarException (const std::string& error)
-			: logic_error("CELAR: " + error)
-		{    }
+        CelarException (const std::string& error)
+                : logic_error("CELAR: " + error)
+        {    }
 };
-
 
 // Panic Function //
 inline void
-assert_that (const bool test, const char* error)
-	//  Here we used the type `char*' for `error_message',
-	//   instead of `string', plainly for time-performance reasons.
+assert_that (const bool test, const char *error)
+//  Here we used the type `char*' for `error_message',
+//   instead of `string', plainly for time-performance reasons.
 {
-	if ( ! test )
-		throw  CelarException(error);
+        if ( ! test )
+                throw  CelarException(error);
 }
-
-
-
 
 #include <naxos.h>
 #include <amorgos.h>
 
+struct  CelarInfo {
 
-struct  CelarInfo  {
-
-	naxos::NsDeque<naxos::NsIntVarArray>  varsConnected;
+        naxos::NsDeque<naxos::NsIntVarArray>  varsConnected;
 };
 
+class VarHeurCelar : public naxos::VariableHeuristic {
 
-class VarHeurCelar : public naxos::VariableHeuristic  {
+    private:
 
-	private:
+        const CelarInfo&  info;
 
-		const CelarInfo&  info;
+        double  conf;
 
-		double  conf;
+    public:
 
+        VarHeurCelar (const CelarInfo& info_init,
+                      const double conf_init=-1)
+                : info(info_init), conf(conf_init)
+        {    }
 
-	public:
-
-		VarHeurCelar (const CelarInfo& info_init,
-			      const double conf_init=-1)
-		  : info(info_init), conf(conf_init)
-		{    }
-
-
-		int  select (const naxos::NsIntVarArray& Vars);
+        int  select (const naxos::NsIntVarArray& Vars);
 };
 
+class ValHeurCelar : public naxos::ValueHeuristic {
 
+    private:
 
+        const naxos::NsIntVarArray&  Vars;
 
-class ValHeurCelar : public naxos::ValueHeuristic  {
+        const CelarInfo&  info;
 
-	private:
+        double  conf;
 
-		const naxos::NsIntVarArray&  Vars;
+    public:
 
-		const CelarInfo&  info;
+        ValHeurCelar (const naxos::NsIntVarArray& Vars_init,
+                      const CelarInfo& info_init,
+                      const double conf_init=-1)
+                : Vars(Vars_init), info(info_init), conf(conf_init)
+        {    }
 
-		double  conf;
-
-
-	public:
-
-		ValHeurCelar (const naxos::NsIntVarArray& Vars_init,
-				const CelarInfo& info_init,
-				const double conf_init=-1)
-		  : Vars(Vars_init), info(info_init), conf(conf_init)
-		{    }
-
-
-		naxos::NsInt  select (const naxos::NsIntVar& V);
+        naxos::NsInt  select (const naxos::NsIntVar& V);
 };
-
-
-#endif  // HEURISTICS_H
+#endif							 // HEURISTICS_H
