@@ -69,4 +69,4 @@ class ValHeurCelar : public naxos::ValueHeuristic {
 
         naxos::NsInt  select (const naxos::NsIntVar& V);
 };
-#endif							 // HEURISTICS_H
+#endif // HEURISTICS_H

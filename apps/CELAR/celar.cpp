@@ -1,6 +1,5 @@
-
-//  Naxos Solver:  A Constraint Programming Library         //
-//  Copyright © 2007-2013  Nikolaos Pothitos                //
+  //  Naxos Solver:  A Constraint Programming Library         //
+ //  Copyright © 2007-2013  Nikolaos Pothitos                //
 //  See ../license/LICENSE for the license of the library.  //
 
 #include <naxos.h>
@@ -90,14 +89,6 @@ int  main (int argc, char *argv[])
                                         return  1;
                                 }
                         }
-                        //j = 0;
-                        //for (i=0;  i < cardinality;  ++i)
-                        //	for ( ;  j <= domains[index][i];  ++j)
-                        //		domainsNext[index][j]  =  domains[index][i];
-                        //j = domains[index][cardinality-1];
-                        //for (i=cardinality-1;  i >= 0;  --i)
-                        //	for ( ;  j >= domains[index][i];  --j)
-                        //		domainsPrevious[index][j]  =  domains[index][i];
                 }
                 file.close();
                 NsDeque< NsDeque<NsInt> >  domainsPrevious(domains.size()),
@@ -131,13 +122,9 @@ int  main (int argc, char *argv[])
                                                      << "/var.txt: Initial value not in domain!\n";
                                                 return  1;
                                         }
-                                        //Var.push_back( new NsIntVar(pm,varInitial,varInitial) );
                                         AllVars.push_back( NsIntVar(pm,varInitial,varInitial) );
                                 } else {
                                         --cost;
-                                        //Var.push_back( new NsIntVar(pm,
-                                        //domains[varDomain][0],
-                                        //domains[varDomain][ domains[varDomain].size()-1 ]) );
                                         AllVars.push_back(
                                                 NsInDomain(pm, domains[varDomain],
                                                            domainsPrevious[varDomain],
@@ -146,9 +133,6 @@ int  main (int argc, char *argv[])
                                                 ( AllVars.back() != varInitial ) * b[cost] );
                                 }
                         } else {
-                                //Var.push_back( new NsIntVar(pm,
-                                //	domains[varDomain][0],
-                                //	domains[varDomain][ domains[varDomain].size()-1 ]) );
                                 AllVars.push_back(
                                         NsInDomain(pm, domains[varDomain],
                                                    domainsPrevious[varDomain],
@@ -157,8 +141,6 @@ int  main (int argc, char *argv[])
                 }
                 file.close();
                 info.varsConnected.resize( AllVars.size() );
-                //for (NsIndex i=0;  i < Var.size();  ++i)
-                //	cout << "Var[" << i << "] = " << Var[i] << "\n";
                 file.open( ( string(argv[1]) + "/ctr.txt" ).c_str() );
                 if ( ! file ) {
                         cerr << argv[0] << ": could not open `"
@@ -166,8 +148,6 @@ int  main (int argc, char *argv[])
                         return  1;
                 }
                 while ( file >> varIndex >> varIndexY >> str >> str >> difference >> cost ) {
-                        //cout << "|" << varIndex << " - " << varIndexY << "| " << str << " " << difference << " (" << cost << ")\n";
-                        //cout << "|" << Var[varIndex] << " - " << Var[varIndexY] << "| " << str << " " << difference << " (" << cost << ")\n";
                         if ( str != "="  &&  str != ">" ) {
                                 cerr << argv[1] << "/ctr.txt: Invalid operand `"
                                      << str << "'!\n";
@@ -210,9 +190,7 @@ int  main (int argc, char *argv[])
                         for (i=0;  i < bestAllVars.size();  ++i)
                                 bestAllVars[i]  =  AllVars[i].value();
                 }
-                //cout << "                    \r" << ++solutions << " solutions of cost " << vObjective.value() << flush;
                 if ( bestObjective  !=  -1 ) {
-                        //cout << argv[1] << "\t" << conf << "\t" << bestObjective << "\t" << bestTime << "\n";
                         cout << bestTime << "\t" << bestObjective << "\t";
                         pm.printCspParameters();
                         ofstream  fileSolution( ( string(argv[1]) + "/sol.txt" ).c_str() );
@@ -221,9 +199,6 @@ int  main (int argc, char *argv[])
                                         fileSolution << i << "\t" << bestAllVars[indexToVar[i]] << "\n";
                         fileSolution.close();
                 }
-                //for (i=0;  i < Var.size();  ++i)
-                //	if ( Var[i]  !=  0 )
-                //		delete  Var[i];
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
         } catch (...) {

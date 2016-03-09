@@ -51,7 +51,6 @@ randomizeHeuristic (NsDeque<double>& heuristic, const double conf)
 }
 
 ///  Returns the i, with x belonging to [intervalStart[i],intervalStart[i+1]).
-
 int
 intervalBinarySearch (const NsDeque<double>& intervalStart, const double x)
 {
@@ -73,7 +72,6 @@ intervalBinarySearch (const NsDeque<double>& intervalStart, const double x)
 }
 
 //  VARIABLE ORDERING HEURISTIC  //
-
 int
 VarHeurCelar::select (const NsIntVarArray& Vars)
 {
@@ -123,7 +121,6 @@ VarHeurCelar::select (const NsIntVarArray& Vars)
 }
 
 //  VALUE ORDERING HEURISTIC  //
-
 NsInt
 ValHeurCelar::select (const NsIntVar& V)
 {
@@ -145,14 +142,6 @@ ValHeurCelar::select (const NsIntVar& V)
              val != Vars[index].end();
              ++val, ++valNum) {
                 value[valNum]  =  *val;
-                //if ( ( pr.solutions == 0  &&  ( howMuchConstrainingIs < leastConstraining
-                //	|| (howMuchConstrainingIs == leastConstraining  &&  estimation < bestEstimation ) ) )
-                //	|| ( pr.solutions > 0  &&  estimation < bestEstimation ) )
-                //{
-                //	leastConstraining = howMuchConstrainingIs;
-                //	bestEstimation    = estimation;
-                //	bestValue = *val;
-                //}
         }
         if ( conf  >=  0 ) {
                 bestValue = value[ randomizeHeuristic(heuristic,conf) ];
