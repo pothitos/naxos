@@ -7,31 +7,31 @@ using namespace std;
 unsigned
 unboundVars (const NsIntVarArray& Vars)
 {
-        unsigned  numUnbound=0;
-        for (NsIndex i=0;  i < Vars.size();  ++i)
-                numUnbound  +=  ( ! Vars[i].isBound() );
-        return  numUnbound;
+        unsigned numUnbound = 0;
+        for (NsIndex i = 0; i < Vars.size(); ++i)
+                numUnbound += (!Vars[i].isBound());
+        return numUnbound;
 }
 
-int  intervalBinarySearch (const NsDeque<double>& intervalStart,
-                           const double x);
+int intervalBinarySearch (const NsDeque<double>& intervalStart,
+                          const double x);
 
 NsIndex
 randomizeHeuristic (NsDeque<double>& heuristic, const double conf)
 {
-        double  sumHeuristic;
-        NsIndex  i;
-        sumHeuristic  =  0.0;
-        for (i=1;   i < heuristic.size();   ++i)
-                sumHeuristic  +=  heuristic[i];
-        for (i=1;   i < heuristic.size();   ++i) {
-                heuristic[i]   =  pow(heuristic[i]/sumHeuristic, conf);
+        double sumHeuristic;
+        NsIndex i;
+        sumHeuristic = 0.0;
+        for (i = 1; i < heuristic.size(); ++i)
+                sumHeuristic += heuristic[i];
+        for (i = 1; i < heuristic.size(); ++i) {
+                heuristic[i] = pow(heuristic[i]/sumHeuristic, conf);
                 assert_that( heuristic[i] >= 0.0 ,
                              "Negative `heuristic[i]'" );
         }
-        //  [0,1) is partitioned into intervals corresponding to values.
-        sumHeuristic  =  0.0;
-        for (i=1;   i < heuristic.size();   ++i)
+        // [0,1) is partitioned into intervals corresponding to values.
+        sumHeuristic = 0.0;
+        for (i = 1; i < heuristic.size(); ++i)
                 sumHeuristic  +=  heuristic[i];
         i = 0;
         heuristic[i] = 0.0;

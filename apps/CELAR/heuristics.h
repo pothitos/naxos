@@ -16,28 +16,28 @@ class CelarException : public std::logic_error {
 // Panic Function //
 inline void
 assert_that (const bool test, const char *error)
-//  Here we used the type `char*' for `error_message',
-//   instead of `string', plainly for time-performance reasons.
+// Here we used the type `char*' for `error_message', instead
+//  of `string', plainly for time-performance reasons.
 {
-        if ( ! test )
-                throw  CelarException(error);
+        if (!test)
+                throw CelarException(error);
 }
 
 #include <naxos.h>
 #include <amorgos.h>
 
-struct  CelarInfo {
+struct CelarInfo {
 
-        naxos::NsDeque<naxos::NsIntVarArray>  varsConnected;
+        naxos::NsDeque<naxos::NsIntVarArray> varsConnected;
 };
 
 class VarHeurCelar : public naxos::VariableHeuristic {
 
     private:
 
-        const CelarInfo&  info;
+        const CelarInfo& info;
 
-        double  conf;
+        double conf;
 
     public:
 
@@ -53,11 +53,11 @@ class ValHeurCelar : public naxos::ValueHeuristic {
 
     private:
 
-        const naxos::NsIntVarArray&  Vars;
+        const naxos::NsIntVarArray& Vars;
 
-        const CelarInfo&  info;
+        const CelarInfo& info;
 
-        double  conf;
+        double conf;
 
     public:
 
@@ -67,6 +67,6 @@ class ValHeurCelar : public naxos::ValueHeuristic {
                 : Vars(Vars_init), info(info_init), conf(conf_init)
         {    }
 
-        naxos::NsInt  select (const naxos::NsIntVar& V);
+        naxos::NsInt select (const naxos::NsIntVar& V);
 };
 #endif // HEURISTICS_H
