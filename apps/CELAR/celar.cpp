@@ -24,17 +24,22 @@ int main (int argc, char *argv[])
                 pm.realTimeLimit(900);
                 if (argc != 2 && argc != 3) {
                         cerr << argv[0] << ": correct syntax is: "
-                             << argv[0] << " scen_directory [conf]\n";
+                             << argv[0] << " scen_directory [hadoop|conf]\n";
                         return 1;
                 }
                 CelarInfo info;
+                bool hadoop = false;
                 double conf = -1;
                 if (argc == 3) {
-                        istringstream conf_argument(argv[2]);
-                        if (!(conf_argument >> conf)) {
-                                cerr << argv[0] << ": Wrong conf number `"
-                                     << argv[2] << "'!\n";
-                                return 1;
+                        if (string(argv[2]) == "hadoop") {
+                                hadoop = true;
+                        } else {
+                                istringstream conf_argument(argv[2]);
+                                if (!(conf_argument >> conf)) {
+                                        cerr << argv[0] << ": Wrong conf number `"
+                                             << argv[2] << "'!\n";
+                                        return 1;
+                                }
                         }
                 }
                 ifstream file;
