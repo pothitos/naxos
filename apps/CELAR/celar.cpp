@@ -12,6 +12,7 @@
 #include <sstream>
 #include <algorithm>
 #include <ctime>
+#include <cstdlib>
 
 using namespace std;
 using namespace naxos;
@@ -22,9 +23,9 @@ int main (int argc, char *argv[])
                 time_t timeBegin = time(0);
                 NsProblemManager pm;
                 pm.realTimeLimit(900);
-                if (argc != 2 && argc != 3) {
+                if (argc != 2 && argc != 3 && argc != 6) {
                         cerr << argv[0] << ": correct syntax is: "
-                             << argv[0] << " scen_directory [hadoop|conf]\n";
+                             << argv[0] << " scen_directory [conf|hadoop <hadoop_options>]\n";
                         return 1;
                 }
                 CelarInfo info;
@@ -185,24 +186,51 @@ int main (int argc, char *argv[])
                 pm.minimize( vObjective );
                 VarHeurCelar  varHeur(info, conf);
                 ValHeurCelar  valHeur(AllVars, info, conf);
-                pm.addGoal( new AmDfsLabeling(AllVars, &varHeur, &valHeur) );
-                NsDeque<NsInt>  bestAllVars(AllVars.size());
-                NsInt  bestObjective=-1;
-                double  bestTime=-1;
-                while ( pm.nextSolution()  !=  false ) {
-                        bestTime = difftime(time(0),timeBegin);
-                        bestObjective = vObjective.value();
-                        for (i=0;  i < bestAllVars.size();  ++i)
-                                bestAllVars[i] = AllVars[i].value();
-                }
-                if (bestObjective  !=  -1) {
-                        cout << bestTime << "\t" << bestObjective << "\t";
-                        pm.printCspParameters();
-                        ofstream  fileSolution( ( string(argv[1]) + "/sol.txt" ).c_str() );
-                        for (i=0;  i < indexToVar.size();  ++i)
-                                if (indexToVar[i]  != indexToVar.max_size())
-                                        fileSolution << i << "\t" << bestAllVars[indexToVar[i]] << "\n";
-                        fileSolution.close();
+                NsDeque<NsInt> bestAllVars(AllVars.size());
+                if (!hadoop) {
+                        pm.addGoal(new AmDfsLabeling(AllVars, &varHeur, &valHeur));
+                        NsInt bestObjective = -1;
+                        while (pm.nextSolution() != false) {
+                                bestObjective = vObjective.value();
+                                for (i = 0; i < bestAllVars.size(); ++i)
+                                        bestAllVars[i] = AllVars[i].value();
+                        }
+                        if (bestObjective != -1) {
+                                cout << bestTime << "\t" << bestObjective << "\t";
+                                pm.printCspParameters();
+                                ofstream fileSolution((string(argv[1]) + "/sol.txt").c_str());
+                                for (i = 0; i < indexToVar.size(); ++i)
+                                        if (indexToVar[i] != indexToVar.max_size())
+                                                fileSolution << i << "\t"
+                                                             << bestAllVars[indexToVar[i]] << "\n";
+                                fileSolution.close();
+                        }
+                } else {
+                        // MapExplore specific code follows //
+                        srand(time(0));
+                        double maxSplitTime, splitTime, simulationRatio;
+                        if (!(argc == 6 &&
+                              istringstream(argv[3]) >> maxSplitTime &&
+                              istringstream(argv[4]) >> splitTime &&
+                              istringstream(argv[5]) >> simulationRatio)) {
+                                cerr << "Usage: " << argv[0]
+                                     << " <N> <max_split_time> <split_time> <simulation_ratio>\n";
+                                return 1;
+                        }
+                        while (pm.readSplit()) {
+                                pm.timeLimit(maxSplitTime);
+                                pm.addGoal(new AmDfsLabeling(AllVars, &varHeur, &valHeur));
+                                NsInt bestObjective = -1;
+                                while (pm.nextSolution() != false) {
+                                        bestObjective = vObjective.value();
+                                        for (i = 0; i < bestAllVars.size(); ++i)
+                                                bestAllVars[i] = AllVars[i].value();
+                                }
+                                if (bestObjective != -1) {
+                                        cout << bestObjective << "\n";
+                                }
+                                pm.simulate(splitTime, simulationRatio);
+                        }
                 }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";

@@ -34,7 +34,7 @@ int main (int argc, char *argv[])
                       istringstream(argv[4]) >> simulationRatio)) {
                         cerr << "Usage: " << argv[0]
                              << " <N> <max_split_time> <split_time> <simulation_ratio>\n";
-                        return  1;
+                        return 1;
                 }
                 while (pm.readSplit()) {
                         pm.timeLimit(maxSplitTime);
