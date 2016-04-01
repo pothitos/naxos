@@ -266,39 +266,49 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 
 #include <sstream>
 
-const char  *NsProblemManager::SPLIT_HEADER = "Split:";
+const char *NsProblemManager::SPLIT_HEADER = "Split:";
+const char *NsProblemManager::SPLIT_HEADER_OPTIMIZE = "ObjMapSplit:";
 
-///  Explore specific search tree splits described in standard input.
-bool
-Ns_StackSearch::readSplit (string& splitEnd)
+/// Explores specific search tree splits described in standard input.
+bool Ns_StackSearch::readSplit (string& splitEnd)
 {
-        if ( !getline(cin,mapperLine) || mapperLine.empty() )
-                return  false;
-        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
+        if (!getline(cin,mapperLine) || mapperLine.empty())
+                return false;
+        if (fileMapperInput.is_open() && !mapperLine.empty()) {
                 fileMapperInput << fixed
                                 << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
                                 << "\t" << mapper
                                 << "\t" << mapperLine << "\n";
         }
-        if ( fileMapperInput.is_open() )
+        if (fileMapperInput.is_open())
                 mapperLineStartTime = clock();
-        istringstream  line(mapperLine);
-        string  lineHeader;
-        assert_Ns( line >> lineHeader &&
-                   lineHeader == NsProblemManager::SPLIT_HEADER ,
-                   "Ns_StackSearch::readSplit: Wrong split line header");
-        NsUInt  node;
+        istringstream line(mapperLine);
+        string lineHeader;
+        assert_Ns(line >> lineHeader,
+                  "Ns_StackSearch::readSplit: Cannot read split line header");
+        if (lineHeader == NsProblemManager::SPLIT_HEADER_OPTIMIZE) {
+                assert_Ns(line >> bestObjective,
+                          "Ns_StackSearch::readSplit: Cannot read split line header objective");
+                if (vObjective != 0)
+                        vObjective->remove(bestObjective, NsPLUS_INF);
+                assert_Ns(line >> lineHeader,
+                          "Ns_StackSearch::readSplit: Cannot read split line header mapper");
+        } else {
+                assert_Ns(lineHeader == NsProblemManager::SPLIT_HEADER,
+                          "Ns_StackSearch::readSplit: Wrong split line header");
+        }
+        NsUInt node;
         startNode.clear();
-        while ( line >> node )
+        while (line >> node)
                 startNode.push_back(node);
         line.clear();    // Clears read failure.
         getline(line, splitEnd);
-        istringstream  lineRest(splitEnd);
+        istringstream lineRest(splitEnd);
         endNode.clear();
-        while ( lineRest >> node )
+        while (lineRest >> node)
                 endNode.push_back(node);
         updateMatchesEndNode();
-        return  true;
+        return true;
 }
 
 /// When the time for normal search is exhausted, this function is called to output the remaining search tree splits.
@@ -308,13 +318,13 @@ NsProblemManager::simulate (const double splitTime, const double simulationRatio
         cout << "SolveEnd\t" << time(0) << "\t";
         searchNodes.currentPath();
         cout << "\n";
-        if ( timeIsUp ) {
+        if (timeIsUp) {
                 cout << "SimulateStart\t" << time(0) << "\t";
                 searchNodes.currentPath();
                 cout << "\n";
                 timeLimit(0);
                 splitTimeLimit(splitTime, simulationRatio);
-                while ( nextSolution() != false )
+                while (nextSolution() != false)
                         /*VOID*/ ;
                 cout << " -" << splitEnd << "\n";
                 splitTimeLimit(0, simulationRatio);
@@ -370,7 +380,7 @@ destroy_goal (NsGoal *g)
 inline double
 DiffTime (time_t time2, time_t time1)
 {
-        return  (time2 - time1);
+        return (time2 - time1);
 }
 
 }  // end namespace
@@ -513,7 +523,7 @@ Ns_QueueItem::getNextConstraint (void)
                         }
                         break;
                 default:
-                        throw  NsException("Ns_QueueItem::getNextConstraint: Invalid `constr->revisionType'");
+                        throw NsException("Ns_QueueItem::getNextConstraint: Invalid `constr->revisionType'");
                         break;
                 };
         }
@@ -539,7 +549,7 @@ NsProblemManager::add (const Ns_ExprConstr& expr, const NsInt weight)
 {
         assert_Ns( firstNextSolution ,
                    "NsProblemManager::add: Cannot add a constraint because search has already started" );
-        assert_Ns( vMinObj == 0 ,
+        assert_Ns( vObjective == 0 ,
                    "NsProblemManager::add: `NsProblemManager::minimize()' should not be used together with soft constraints" );
         vSoftConstraintsTerms.push_back( weight * expr.post() );
 }
@@ -579,11 +589,10 @@ NsProblemManager::arcConsistent (void)
 }
 
 ///  Backtracks the search process to the previous choice point.
-bool
-NsProblemManager::backtrack (void)
+bool NsProblemManager::backtrack (void)
 {
-        NsGoal  *goalNextChoice;
-        for ( ; ; ) {
+        NsGoal *goalNextChoice;
+        for (;;) {
                 if ( backtrackLim != 0  &&  nBacktracks >= backtrackLim )
                         return  false;
                 ++nBacktracks;
@@ -596,8 +605,8 @@ NsProblemManager::backtrack (void)
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
                 searchNodes.top().stackAND.push( goalNextChoice );
-                if ( vMinObj != 0 ) {
-                        vMinObj->remove(bestMinObjValue, NsPLUS_INF/*, 0*/);
+                if (vObjective != 0) {
+                        vObjective->remove(bestObjective, NsPLUS_INF);
                         if ( foundInconsistency ) {
                                 foundInconsistency  =  false;
                                 getQueue().clear();
@@ -635,8 +644,8 @@ NsProblemManager::restart (void)
         assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
                                      numSearchTreeNodes() ) ) ,
                    "NsProblemManager::restart: First push should succeed");
-        if ( vMinObj  !=  0 )
-                vMinObj->remove( bestMinObjValue, NsPLUS_INF/*, 0*/ );
+        if (vObjective != 0)
+                vObjective->remove(bestObjective, NsPLUS_INF);
 }
 
 ///  Finds next solution of the problem. Returns false when no solution found.
@@ -648,7 +657,7 @@ NsProblemManager::nextSolution (void)
         if ( firstNextSolution ) {
                 firstNextSolution  =  false;
                 //  Soft constraints objective.
-                if ( vMinObj == 0   &&  !vSoftConstraintsTerms.empty() )
+                if ( vObjective == 0   &&  !vSoftConstraintsTerms.empty() )
                         minimize( - NsSum( vSoftConstraintsTerms ) );
                 isArcCons  =  arcConsistent();
                 //  Throwing away unnesessary `bitsetsStore' in the first frame.
@@ -771,19 +780,19 @@ NsProblemManager::nextSolution (void)
                         } else if ( searchNodes.top().stackAND.empty()
                                     &&  searchNodes.top().delayedGoal ==
                                     searchNodes.gend() ) {
-                                if ( vMinObj != 0 ) {
-                                        assert_Ns( bestMinObjValue >
-                                                   vMinObj->max(),
+                                if ( vObjective != 0 ) {
+                                        assert_Ns( bestObjective >
+                                                   vObjective->max(),
                                                    "NsProblemManager::"
                                                    "nextSolution: Wrong "
                                                    "objective value");
-                                        bestMinObjValue = vMinObj->max();
+                                        bestObjective = vObjective->max();
                                         //  We have taken care about the
                                         //   rare (and odd) case where the
-                                        //   domain of vMinObj has been
+                                        //   domain of vObjective has been
                                         //   augmented.
                                 }
-                                searchNodes.solutionNode(vMinObj);
+                                searchNodes.solutionNode(vObjective);
                                 return  true;
                         }
                 }

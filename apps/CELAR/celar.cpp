@@ -136,24 +136,24 @@ int main (int argc, char *argv[])
                                                            domainsPrevious[varDomain],
                                                            domainsNext[varDomain]) );
                                         vObjectiveTerms.push_back(
-                                                ( AllVars.back() != varInitial ) * b[cost] );
+                                                ( AllVars.back() != varInitial ) * b[cost]);
                                 }
                         } else {
                                 AllVars.push_back(
                                         NsInDomain(pm, domains[varDomain],
                                                    domainsPrevious[varDomain],
-                                                   domainsNext[varDomain]) );
+                                                   domainsNext[varDomain]));
                         }
                 }
                 file.close();
-                info.varsConnected.resize( AllVars.size() );
-                file.open( ( string(argv[1]) + "/ctr.txt" ).c_str() );
+                info.varsConnected.resize(AllVars.size());
+                file.open((string(argv[1]) + "/ctr.txt").c_str());
                 if (! file) {
                         cerr << argv[0] << ": could not open `"
                              << argv[1] << "/ctr.txt'!\n";
                         return 1;
                 }
-                while ( file >> varIndex >> varIndexY >> str >> str >> difference >> cost ) {
+                while (file >> varIndex >> varIndexY >> str >> str >> difference >> cost) {
                         if (str != "="  &&  str != ">") {
                                 cerr << argv[1] << "/ctr.txt: Invalid operand `"
                                      << str << "'!\n";
@@ -164,28 +164,28 @@ int main (int argc, char *argv[])
                         info.varsConnected[i].push_back(AllVars[j]);
                         if (cost == 0) {
                                 if (str == "=") {
-                                        pm.add( NsAbs( AllVars[i] - AllVars[j] ) == difference );
+                                        pm.add( NsAbs(AllVars[i] - AllVars[j]) == difference );
                                 } else {
-                                        pm.add( NsAbs( AllVars[i] - AllVars[j] )  >  difference );
+                                        pm.add( NsAbs(AllVars[i] - AllVars[j]) > difference );
                                 }
                         } else {
                                 --cost;
                                 if (str == "=") {
                                         vObjectiveTerms.push_back(
-                                                ( NsAbs( AllVars[i] - AllVars[j] ) !=
-                                                  difference ) * a[cost] );
+                                                ( NsAbs(AllVars[i] - AllVars[j] ) !=
+                                                  difference ) * a[cost]);
                                 } else {
                                         vObjectiveTerms.push_back(
-                                                ( NsAbs( AllVars[i] - AllVars[j] ) <=
-                                                  difference ) * a[cost] );
+                                                ( NsAbs(AllVars[i] - AllVars[j] ) <=
+                                                  difference ) * a[cost]);
                                 }
                         }
                 }
                 file.close();
-                NsIntVar  vObjective = NsSum(vObjectiveTerms);
-                pm.minimize( vObjective );
-                VarHeurCelar  varHeur(info, conf);
-                ValHeurCelar  valHeur(AllVars, info, conf);
+                NsIntVar vObjective = NsSum(vObjectiveTerms);
+                pm.minimize(vObjective);
+                VarHeurCelar varHeur(info, conf);
+                ValHeurCelar valHeur(AllVars, info, conf);
                 NsDeque<NsInt> bestAllVars(AllVars.size());
                 if (!hadoop) {
                         pm.addGoal(new AmDfsLabeling(AllVars, &varHeur, &valHeur));
@@ -228,6 +228,9 @@ int main (int argc, char *argv[])
                                 }
                                 if (bestObjective != -1) {
                                         cout << bestObjective << "\n";
+                                        pm.restart();
+                                        // We restart and disable optimisation in order
+                                        // to have a well-defined reference search tree.
                                 }
                                 pm.simulate(splitTime, simulationRatio);
                         }

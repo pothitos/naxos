@@ -5276,7 +5276,7 @@ class  NsProblemManager {
 
         NsProblemManager (void)
                 :  foundInconsistency(false),
-                   vMinObj(0),
+                   vObjective(0),
                    timeLim(0),
                    firstNextSolution(true),
                    calledTimeLimit(false),
@@ -5368,18 +5368,18 @@ class  NsProblemManager {
     private:
 
         ///  Our objective is to minimize this constrained variable.
-        NsIntVar  *vMinObj;
+        NsIntVar *vObjective;
 
-        ///  The minimum upper limit of `vMinObj' found so far (initially +oo).
-        NsInt      bestMinObjValue;
+        ///  The minimum upper limit of `vObjective' found so far (initially +oo).
+        NsInt bestObjective;
 
     public:
 
         void
-        minimize (NsIntVar& VarObj)
+        minimize (NsIntVar& VarObjective)
         {
-                vMinObj          =  &VarObj;
-                bestMinObjValue  =   NsPLUS_INF;
+                vObjective = &VarObjective;
+                bestObjective = NsPLUS_INF;
         }
 
         void
@@ -5391,10 +5391,10 @@ class  NsProblemManager {
         void
         objectiveUpperLimit (NsInt max)
         {
-                assert_Ns( vMinObj != 0 ,  "NsProblemManager::objectiveUpperLimit: No cost variable exists" );
-                if ( bestMinObjValue  >  max + 1 ) {
-                        bestMinObjValue = max + 1;
-                        vMinObj->remove(bestMinObjValue, NsPLUS_INF/*, 0*/);
+                assert_Ns(vObjective != 0, "NsProblemManager::objectiveUpperLimit: No cost variable exists");
+                if (bestObjective  >  max + 1) {
+                        bestObjective = max + 1;
+                        vObjective->remove(bestObjective, NsPLUS_INF);
                 }
         }
 
