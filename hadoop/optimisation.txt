@@ -1,0 +1,10 @@
+Send the Splits with the minimum (obj,mapper) header or, initially, send the one full split
+
+ +-----------------------+     +-------+----------------+     +----------------+
+ | ObjMapSplit: oo * 0 - | --> | celar | init obj <- oo | --> | finally obj=o2 | -->
+ +-----------------------+     +-------+----------------+     +----------------+
+
+ if o2=oo -->         --> disable optimisation --> simulate --> ObjMapSplit: oo * ... (same as non-opt)
+ if o2<oo --> restart                                       --> ObjMapSplit: oo mapperId ...
+
+--> enable optimisation
