@@ -267,7 +267,6 @@ NsProblemManager::constraintsToGraphFile (const char *fileName)
 #include <sstream>
 
 const char *NsProblemManager::SPLIT_HEADER = "Split:";
-const char *NsProblemManager::SPLIT_HEADER_OPTIMIZE = "ObjMapSplit:";
 
 /// Explores specific search tree splits described in standard input.
 bool Ns_StackSearch::readSplit (string& splitEnd)
@@ -286,17 +285,8 @@ bool Ns_StackSearch::readSplit (string& splitEnd)
         string lineHeader;
         assert_Ns(line >> lineHeader,
                   "Ns_StackSearch::readSplit: Cannot read split line header");
-        if (lineHeader == NsProblemManager::SPLIT_HEADER_OPTIMIZE) {
-                assert_Ns(line >> bestObjective,
-                          "Ns_StackSearch::readSplit: Cannot read split line header objective");
-                if (vObjective != 0)
-                        vObjective->remove(bestObjective, NsPLUS_INF);
-                assert_Ns(line >> lineHeader,
-                          "Ns_StackSearch::readSplit: Cannot read split line header mapper");
-        } else {
-                assert_Ns(lineHeader == NsProblemManager::SPLIT_HEADER,
-                          "Ns_StackSearch::readSplit: Wrong split line header");
-        }
+        assert_Ns(lineHeader == NsProblemManager::SPLIT_HEADER,
+                  "Ns_StackSearch::readSplit: Wrong split line header");
         NsUInt node;
         startNode.clear();
         while (line >> node)
