@@ -190,7 +190,9 @@ int main (int argc, char *argv[])
                 if (!hadoop) {
                         pm.addGoal(new AmDfsLabeling(AllVars, &varHeur, &valHeur));
                         NsInt bestObjective = -1;
+                        double bestTime = -1;
                         while (pm.nextSolution() != false) {
+                                bestTime = difftime(time(0),timeBegin);
                                 bestObjective = vObjective.value();
                                 for (i = 0; i < bestAllVars.size(); ++i)
                                         bestAllVars[i] = AllVars[i].value();
