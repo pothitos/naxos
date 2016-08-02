@@ -1,7 +1,10 @@
 language: cpp
-script:
- - cd core/ && make && cd -
- - cd apps/ && make && cd -
- - cd apps/ITC/ && make && cd -
- - cd apps/CELAR/ && make && cd -
- - cd hadoop/ && make && cd -
+
+env:
+  - BUILD_DIR=core/
+  - BUILD_DIR=apps/
+  - BUILD_DIR=apps/ITC/
+  - BUILD_DIR=apps/CELAR/
+  - BUILD_DIR=hadoop/
+
+script: cd $BUILD_DIR && make
