@@ -2,7 +2,7 @@
 STANDARD = -std=c++0x
 
 # Naxos Directory
-NAXOS = ../core
+NAXOS = ../../core
 
 ### COMPILER ###
 CXX = g++
