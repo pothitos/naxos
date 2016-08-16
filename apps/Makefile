@@ -35,4 +35,4 @@ clean:
 ### TESTING ###
 .PHONY: test
 test:
-	test $(./nqueens 8 | wc -l) -eq 92
+	test `./nqueens 8 | wc -l` -eq 92
