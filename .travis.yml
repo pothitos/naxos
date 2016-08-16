@@ -5,6 +5,6 @@ env:
   - BUILD_DIR=apps/
   - BUILD_DIR=apps/ITC/
   - BUILD_DIR=apps/CELAR/
-  - BUILD_DIR=hadoop/
+  - BUILD_DIR=apps/hadoop/
 
-script: cd $BUILD_DIR && make
+script: cd $BUILD_DIR && make && make test

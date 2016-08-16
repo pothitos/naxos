@@ -21,3 +21,7 @@ all: $(OBJECTS)
 .PHONY: clean
 clean:
 	$(RM)  $(OBJECTS)
+
+### TESTING ###
+.PHONY: test
+test: ;

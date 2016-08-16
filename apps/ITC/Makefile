@@ -124,3 +124,7 @@ TODEL = $(PROG) $(PROG).exe $(OBJS) $(PROG_AC) $(PROG_AC).exe $(OBJS_AC) $(DEBPR
 .PHONY: clean
 clean :
 	$(RM)  $(TODEL)
+
+### TESTING ###
+.PHONY: test
+test: ;

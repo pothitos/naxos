@@ -31,3 +31,8 @@ $(PROGRAMS):   %:   $(OBJECTS) %.o
 .PHONY: clean
 clean:
 	$(RM)  $(PROGRAMS) $(PR_OBJECTS)
+
+### TESTING ###
+.PHONY: test
+test:
+	test $(./nqueens 8 | wc -l) -eq 92

@@ -31,3 +31,7 @@ $(PROGRAMS):   %:   $(OBJECTS) %.o
 .PHONY: clean
 clean:
 	$(RM)  $(PROGRAMS) $(PR_OBJECTS)
+
+### TESTING ###
+.PHONY: test
+test: ;
