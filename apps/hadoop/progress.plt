@@ -1,4 +1,4 @@
-#! /gnuplot
+#! /usr/bin/env gnuplot
 
 set terminal svg size 1680,844 name "Search_Tree"
 set output "progress.svg"
