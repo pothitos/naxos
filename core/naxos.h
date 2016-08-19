@@ -3,9 +3,9 @@
 ///
 ///  This file is part of
 ///   Naxos Solver: A Constraint Programming Library
-///   Copyright © 2007-2015  Nikolaos Pothitos
+///   Copyright 2007-2016 Nikolaos Pothitos
 ///
-///  See ../license/LICENSE for the license of the library.
+///  See 'license' folder for the license of the library.
 
 //   In the comments, words beginning with a backslash `\' should be
 //    ignored by the reader, because they are used by the `doxygen' program
