@@ -10,7 +10,7 @@ domains containing integers.
 _Naxos Solver_ User's Manual is available here, in an
 [English](http://di.uoa.gr/~pothitos/naxos/naxos_en.pdf) and a
 [Greek](http://di.uoa.gr/~pothitos/naxos/naxos_el.pdf) version
-[[BibTeX](http://di.uoa.gr/~pothitos/naxos/naxos.bib)].
+[[BibTeX](manual/naxos.bib)].
 
 _Amorgos_, a search methods library written by Foivos Theocharis, is
 also included.
