@@ -7,7 +7,7 @@
 STANDARD = -std=c++0x
 #LDFLAGS2 = -Wl,--enable-auto-import
 
-NDIR = ../../core
+NDIR = ../../core/bounds-consistency
 NDIR_AC = ../naxos-AC
 ADIR = ../../amorgos
 

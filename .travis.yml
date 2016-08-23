@@ -1,7 +1,7 @@
 language: cpp
 
 env:
-  - BUILD_DIR=core/
+  - BUILD_DIR=core/bounds-consistency/
   - BUILD_DIR=apps/
   - BUILD_DIR=apps/ITC/
   - BUILD_DIR=apps/CELAR/
