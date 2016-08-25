@@ -19,4 +19,4 @@ env:
 script: cd $BUILD_DIR && make && make test && cd -
 
 after_success:
-  - coveralls -r $BUILD_DIR
+  - coveralls -b $BUILD_DIR
