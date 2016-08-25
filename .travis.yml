@@ -4,7 +4,7 @@
 language: cpp
 
 before_install:
-  - pip install cpp-coveralls
+  - pip install --user cpp-coveralls
 
 env:
   global:
