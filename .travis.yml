@@ -10,7 +10,6 @@ env:
   global:
     - COVERAGE="--coverage"
   matrix:
-    - BUILD_DIR="core/bounds-consistency/"
     - BUILD_DIR="apps/"
     - BUILD_DIR="apps/ITC/"
     - BUILD_DIR="apps/CELAR/"
