@@ -16,4 +16,4 @@ env:
 script: cd $BUILD_DIR && make && make test && cd -
 
 after_success:
-  - coveralls --gcov-options "\-lp"
+  - coveralls --gcov-options "\-lp" -b $BUILD_DIR
