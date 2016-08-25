@@ -1,10 +1,19 @@
 language: cpp
 
+before_install:
+  - pip install --user cpp-coveralls
+
 env:
-  - BUILD_DIR=core/bounds-consistency/
-  - BUILD_DIR=apps/
-  - BUILD_DIR=apps/ITC/
-  - BUILD_DIR=apps/CELAR/
-  - BUILD_DIR=apps/hadoop/
+  global:
+    - COVERAGE="--coverage"
+  matrix:
+    - BUILD_DIR="core/bounds-consistency/"
+    - BUILD_DIR="apps/"
+    - BUILD_DIR="apps/ITC/"
+    - BUILD_DIR="apps/CELAR/"
+    - BUILD_DIR="apps/hadoop/"
 
 script: cd $BUILD_DIR && make && make test
+
+after_success:
+  - coveralls --gcov-options "\-lp"

@@ -7,8 +7,8 @@ NAXOS = ../core/bounds-consistency
 ### COMPILER ###
 CXX = g++
 WARNINGS = -pedantic -Wall -W -Wshadow
-CXXFLAGS = $(WARNINGS) $(STANDARD) -O2
-LD = $(CXX)
+CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
+LD = $(CXX) $(COVERAGE)
 LDFLAGS = -s
 
 ### FILENAMES ###
