@@ -16,7 +16,7 @@ env:
     - BUILD_DIR="apps/CELAR/"
     - BUILD_DIR="apps/hadoop/"
 
-script: cd $BUILD_DIR && make && make test
+script: cd $BUILD_DIR && make && make test && cd -
 
 after_success:
-  - coveralls
+  - coveralls -b $BUILD_DIR
