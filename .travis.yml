@@ -4,7 +4,7 @@
 language: cpp
 
 before_install:
-  - pip install --user cpp-coveralls
+  - pip install cpp-coveralls
 
 env:
   global:
@@ -19,4 +19,4 @@ env:
 script: cd $BUILD_DIR && make && make test && cd -
 
 after_success:
-  - coveralls -b $BUILD_DIR
+  - coveralls -r $BUILD_DIR
