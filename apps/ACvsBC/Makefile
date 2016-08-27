@@ -5,8 +5,8 @@
 STANDARD = -std=c++0x
 
 # Naxos Directory
-NAXOS = ../naxos-beta
-NAXOS_AC = ../naxos-AC
+NAXOS = ../../core/bounds-consistency
+NAXOS_AC = ../../core/arc-consistency
 
 
 
@@ -40,7 +40,7 @@ HEADERS_AC = $(addprefix $(NAXOS_AC)/, naxos.h queue.h stack.h)
 ####  BUILDING  ####
 
 .PHONY: all
-all: $(PROGRAMS)
+all: $(PROGRAMS) AC
 
 $(OBJECTS):   %.o:   %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $<  -o $@
@@ -72,3 +72,7 @@ $(PROGRAMS_AC):   %:   $(OBJECTS_AC) %.o
 .PHONY: clean
 clean:
 	$(RM)  $(PROGRAMS) $(PR_OBJECTS) $(PROGRAMS_AC) $(PR_OBJECTS_AC)
+
+### TESTING ###
+.PHONY: test
+test: ;
