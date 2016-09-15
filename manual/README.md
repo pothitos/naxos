@@ -2,10 +2,10 @@
 
 ![Naxos Solver Logo](https://rawgit.com/pothitos/naxos-solver/master/manual/logo/logo.svg)
 
+_Naxos Solver_ is a constraint satisfaction problems _solver_. "_Naxos_" is the name of the Greek island where the solver was built in the beginning. It is implemented and maintained by the author, under the supervision of Assistant Professor Panagiotis Stamatopoulos at the Department of Informatics and Telecommunications of the National and Kapodistrian University of Athens. The aim of this handbook is to provide all the information needed by an application developer of the library.
+
 
 # Introduction
-
-_Naxos Solver_ is a constraint satisfaction problems _solver_. "_Naxos_" is the name of the Greek island where the solver was built in the beginning. It is implemented and maintained by the author, under the supervision of Assistant Professor Panagiotis Stamatopoulos at the Department of Informatics and Telecommunications of the National and Kapodistrian University of Athens. The aim of this handbook is to provide all the information needed by an application developer of the library.
 
 A _constraint satisfaction problem_ (CSP) contains a set of _constrained variables_, that can be simply called _variables_; each variable corresponds to a _domain_. Constrained variables are connected to each other via a set of _constraints_. Generally speaking, a constraint that involves specific constrained variables is a set with all valid combinations of values that can be assigned. For example, if we take the variables _x_ and _y_ with domains {0,1,2,3}, the equality constraint can be declared as _C_({_x_,_y_}, {(0,0),(1,1),(2,2),(3,3)}). Although this notation for the constraint is as generic as possible, in practice (i.e. in Constraint Programming) we use simple relations to describe the constraint networks. In the above example the constraint can be simply written as _x_ = _y_. A _solution_ to a constraint satisfaction problem is a valid assignment of a value to every constraint variable, that satisfies all the constraints. Finally, it should be noted that the advantage of Constraint Programming is that it allows the separation of the problem declaration process and the solution generation mechanism.
 
@@ -387,7 +387,7 @@ Finally there is a special independent expression category, that can be assigned
 \item
 `NsInverse(` $VarArr$`,` $maxdom$ `)`
 \end{itemize}
-$maxdom$ is the size of the inverse array that will be created. If this argument does not exist, it is taken that $maxdom = \max_{V  VarArr} { V.\mathrm{max} }$. In any case, $maxdom$ should be greater or equal than this value. E.g.
+$maxdom$ is the size of the inverse array that will be created. If this argument does not exist, it is taken that $maxdom = \max_{V ∈ VarArr} { V.\mathrm{max} }$. In any case, $maxdom$ should be greater or equal than this value. E.g.
 
 ```c++
 NsIntVarArray  VarArrB = NsInverse(VarArrA);
