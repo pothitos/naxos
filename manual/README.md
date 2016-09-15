@@ -13,7 +13,7 @@ _Naxos Solver_ is a library that solves constraint satisfaction problems, that w
 
 Part of the solver design and its naming conventions are influenced by the Standard Template Library (STL) modelling for C++. E.g. several iterators are used and implemented.
 
-There is _no_ distinction between handle-classes and implementation-classes, as in _Ilog Solver_. This distinction exists in _Ilog Solver_, because it attempts to automatically manage memory resources à la Java. In every handle-class there exists a reference to an implementation-class instance. It is possible that many handle-class instances point to the same implementation-class instance. The implementation-class instance is destructed only when all the handle-class instances that point to it are destructed. (Something similar happens with the references in Java.) Thus, in a function in _Ilog Solver_ it is possible to construct automatic variables-instances in order to describe a constraint; the constraint and the variables involved will continue to exist after the function returns. In the same circumstance in _Naxos Solver_ we would have a segmentation fault.
+There is _no_ distinction between handle-classes and implementation-classes, as in _Ilog Solver_. This distinction exists in _Ilog Solver_, because it attempts to automatically manage memory resources Ã  la Java. In every handle-class there exists a reference to an implementation-class instance. It is possible that many handle-class instances point to the same implementation-class instance. The implementation-class instance is destructed only when all the handle-class instances that point to it are destructed. (Something similar happens with the references in Java.) Thus, in a function in _Ilog Solver_ it is possible to construct automatic variables-instances in order to describe a constraint; the constraint and the variables involved will continue to exist after the function returns. In the same circumstance in _Naxos Solver_ we would have a segmentation fault.
 
 
 # Error Handling\label{error}
@@ -297,13 +297,13 @@ In order to connect the variables, we take advantage of the overloaded operators
 Expressions for constraint are denoted _ExprConstr_ and they are a subcategory of the general expression category _Expression_. They are mainly used as `NsProblemManager::add()` arguments and for the creation of meta-constraints. The following are _ExprConstr_:
 
  * $_Expression1_ \; \mathrm{op} \; _Expression2_,
-   \quad   \mathrm{op} \in { `<`, `<=`, `>`, `>=`,
+   \quad   \mathrm{op} âˆˆ { `<`, `<=`, `>`, `>=`,
    `==`, `!=` }$
 
  * `!(` _ExprConstr_ `)`
 
  * $_ExprConstr1_ \; \mathrm{op} \; _ExprConstr2_,
-   \quad   \mathrm{op} \in { `&&`, `||` }$
+   \quad   \mathrm{op} âˆˆ { `&&`, `||` }$
 
  * `NsIfThen(` $_ExprConstr1_$  `,`  $_ExprConstr2_$ `)`
 
@@ -334,7 +334,7 @@ Apart from _ExprConstr_, the following also belong to the category of general ex
 \begin{itemize}
 \item
 $_Expression1_ \; \mathrm{op} \; _Expression2_,
-\quad   \mathrm{op} \in { `+`, `-`, `*`, `/`, `%` }$
+\quad   \mathrm{op} âˆˆ  { `+`, `-`, `*`, `/`, `%` }$
 
 \item
 `NsAbs(` $Expression$ `)`
@@ -387,7 +387,7 @@ Finally there is a special independent expression category, that can be assigned
 \item
 `NsInverse(` $VarArr$`,` $maxdom$ `)`
 \end{itemize}
-$maxdom$ is the size of the inverse array that will be created. If this argument does not exist, it is taken that $maxdom = \max_{V \in VarArr} { V.\mathrm{max} }$. In any case, $maxdom$ should be greater or equal than this value. E.g.
+$maxdom$ is the size of the inverse array that will be created. If this argument does not exist, it is taken that $maxdom = \max_{V  VarArr} { V.\mathrm{max} }$. In any case, $maxdom$ should be greater or equal than this value. E.g.
 
 ```c++
 NsIntVarArray  VarArrB = NsInverse(VarArrA);
@@ -400,9 +400,9 @@ VarArrC = NsInverse(VarArrA, 100);
 
 The _Inverse_ constraint is applied between two arrays of constrained variables. Let $Arr$ be an array that contains variables with positive values in their domains. We want $ArrInv$ to be the "inverse" array of $Arr$. Still, let $D_x$ be the domain of the constrained variable $x$. Then it holds that:
 \[
-\forall v \in D_{ArrInv[i]}, \quad D_{Arr[v]} \ni i \; .
+\forall v âˆˆ D_{ArrInv[i]}, \quad D_{Arr[v]} \ni i \; .
 \]
-If there is no $v$ such that $i \in D_{Arr[v]}$, then the domain of $ArrInv[i]$ will _only_ contain the special value $-1$.
+If there is no $v$ such that $i âˆˆ D_{Arr[v]}$, then the domain of $ArrInv[i]$ will _only_ contain the special value $-1$.
 
 In a simpler notation, we can write that it holds:
 \[
@@ -547,9 +547,9 @@ Our code is summarized into the following triptych:
 \item
 Constrained variables (`NsIntVar`) declaration, together with their domains.
 \item
-Constraints statement (`pm.add(·)`).
+Constraints statement (`pm.add(Â·)`).
 \item
-Goals declaration (`pm.addGoal(new NsgLabeling(·))`) and search for solutions (`pm.nextSolution()`).
+Goals declaration (`pm.addGoal(new NsgLabeling(Â·))`) and search for solutions (`pm.nextSolution()`).
 \end{enumerate}
 
 The first thing to do is to create a problem manager (`pm`), to store the whole constraint network. The declaration is
@@ -573,9 +573,9 @@ for (i=0;  i < N;  ++i)
         R.push_back( NsIntVar(pm,min,max) );
 ```
 
-...in the way we insert items into a list. In place of `min` and `max` we put the minimum and maximum domain value, respectively. Next, we declare the existing constraints through `pm.add(·)` calls...
+...in the way we insert items into a list. In place of `min` and `max` we put the minimum and maximum domain value, respectively. Next, we declare the existing constraints through `pm.add(Â·)` calls...
 
-Before the end, if we solve an _optimization_ problem, it remains to declare the parameter to optimize. When we find out this parameter-variable, we will pass it as an argument of `pm.minimize(·)`. This method is unnecessary when we seek for _any_ solution of the problem.
+Before the end, if we solve an _optimization_ problem, it remains to declare the parameter to optimize. When we find out this parameter-variable, we will pass it as an argument of `pm.minimize(Â·)`. This method is unnecessary when we seek for _any_ solution of the problem.
 
 We can now add a goal to be satisfied through the statement:
 
@@ -590,7 +590,7 @@ Finally, we execute `pm.nextSolution()` to find a solution. This function is cal
 **Note:**
 After the `pm.nextSolution()` call, we refer to a constraint variable, e.g. `NsIntVar X`, by its const method `NsIntVar::value()`. For example, it is wrong to write `cout<<X+1;` the correct is `cout<<X.value()+1`.
 
-_If we have previously called `pm.minimize(·)`_, the solver guarantees that each new solution will be better from the previous one. In case `pm.nextSolution()` returns `false`, then either the solution cost cannot be further improved, or there is not any other solution. Thus we should have stored somewhere the last solution (and perhaps its cost too), in order to print it in the end, as in the following code for example:
+_If we have previously called `pm.minimize(Â·)`_, the solver guarantees that each new solution will be better from the previous one. In case `pm.nextSolution()` returns `false`, then either the solution cost cannot be further improved, or there is not any other solution. Thus we should have stored somewhere the last solution (and perhaps its cost too), in order to print it in the end, as in the following code for example:
 
 ```c++
 NsDeque<NsInt>  bestR(N);
