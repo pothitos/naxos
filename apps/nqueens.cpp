@@ -1,7 +1,3 @@
-  // Naxos Solver: A Constraint Programming Library      //
- // Copyright 2007-2016 Nikolaos Pothitos               //
-// See 'license' folder for the license of the library //
-
 #include <naxos.h>
 #include <iostream>
 #include <cstdlib>
