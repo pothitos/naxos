@@ -2,53 +2,106 @@
 
 ![Naxos Solver Logo](https://rawgit.com/pothitos/naxos-solver/master/manual/logo/logo.svg)
 
-_Naxos Solver_ is a constraint satisfaction problems _solver_. "_Naxos_" is the name of the Greek island where the solver was built in the beginning. It is implemented and maintained by the author, under the supervision of Assistant Professor Panagiotis Stamatopoulos at the Department of Informatics and Telecommunications of the National and Kapodistrian University of Athens. The aim of this handbook is to provide all the information needed by an application developer of the library.
+_Naxos Solver_ is a constraint satisfaction problems _solver_. "_Naxos_"
+is the name of the Greek island where the solver was built in the
+beginning. It is implemented and maintained by the author, under the
+supervision of Assistant Professor Panagiotis Stamatopoulos at the
+Department of Informatics and Telecommunications of the National and
+Kapodistrian University of Athens. The aim of this handbook is to
+provide all the information needed by an application developer of the
+library.
 
 
 # Introduction
 
-A _constraint satisfaction problem_ (CSP) contains a set of _constrained variables_, that can be simply called _variables_; each variable corresponds to a _domain_. Constrained variables are connected to each other via a set of _constraints_. Generally speaking, a constraint that involves specific constrained variables is a set with all valid combinations of values that can be assigned. For example, if we take the variables _x_ and _y_ with domains {0,1,2,3}, the equality constraint can be declared as _C_({_x_,_y_}, {(0,0),(1,1),(2,2),(3,3)}). Although this notation for the constraint is as generic as possible, in practice (i.e. in Constraint Programming) we use simple relations to describe the constraint networks. In the above example the constraint can be simply written as _x_ = _y_. A _solution_ to a constraint satisfaction problem is a valid assignment of a value to every constraint variable, that satisfies all the constraints. Finally, it should be noted that the advantage of Constraint Programming is that it allows the separation of the problem declaration process and the solution generation mechanism.
+A _constraint satisfaction problem_ (CSP) contains a set of _constrained
+variables_, that can be simply called _variables_; each variable
+corresponds to a _domain_. Constrained variables are connected to each
+other via a set of _constraints_. Generally speaking, a constraint that
+involves specific constrained variables is a set with all valid
+combinations of values that can be assigned. For example, if we take the
+variables _x_ and _y_ with domains {0,1,2,3}, the equality constraint
+can be declared as _C_({_x_,_y_}, {(0,0),(1,1),(2,2),(3,3)}). Although
+this notation for the constraint is as generic as possible, in practice
+(i.e. in Constraint Programming) we use simple relations to describe the
+constraint networks. In the above example the constraint can be simply
+written as _x_ = _y_. A _solution_ to a constraint satisfaction problem
+is a valid assignment of a value to every constraint variable, that
+satisfies all the constraints. Finally, it should be noted that the
+advantage of Constraint Programming is that it allows the separation of
+the problem declaration process and the solution generation mechanism.
 
-_Naxos Solver_ is a library that solves constraint satisfaction problems, that was designed for the C++ object-oriented programming environment. The solver is threadsafe, i.e. safe to use in a multithreaded environment. "Internal" classes, methods, functions, etc. that are not stated in this manual, should not be used by the application developer, as they may change in future. Still, to avoid misunderstandings, we should not name our own variables, classes, etc. with names that begin with `Ns` as this is the prefix for the solver built-in classes and constants. Finally, note that the solver does not check for any possible overflows (e.g. during the addition of two big integers) for performance reasons.
+_Naxos Solver_ is a library that solves constraint satisfaction
+problems, that was designed for the C++ object-oriented programming
+environment. The solver is threadsafe, i.e. safe to use in a
+multithreaded environment. "Internal" classes, methods, functions, etc.
+that are not stated in this manual, should not be used by the
+application developer, as they may change in future. Still, to avoid
+misunderstandings, we should not name our own variables, classes, etc.
+with names that begin with `Ns` as this is the prefix for the solver
+built-in classes and constants. Finally, note that the solver does not
+check for any possible overflows (e.g. during the addition of two big
+integers) for performance reasons.
 
-Part of the solver design and its naming conventions are influenced by the Standard Template Library (STL) modelling for C++. E.g. several iterators are used and implemented.
+Part of the solver design and its naming conventions are influenced by
+the Standard Template Library (STL) modelling for C++. E.g. several
+iterators are used and implemented.
 
-There is _no_ distinction between handle-classes and implementation-classes, as in _Ilog Solver_. This distinction exists in _Ilog Solver_, because it attempts to automatically manage memory resources à la Java. In every handle-class there exists a reference to an implementation-class instance. It is possible that many handle-class instances point to the same implementation-class instance. The implementation-class instance is destructed only when all the handle-class instances that point to it are destructed. (Something similar happens with the references in Java.) Thus, in a function in _Ilog Solver_ it is possible to construct automatic variables-instances in order to describe a constraint; the constraint and the variables involved will continue to exist after the function returns. In the same circumstance in _Naxos Solver_ we would have a segmentation fault.
+There is _no_ distinction between handle-classes and
+implementation-classes, as in _Ilog Solver_. This distinction exists in
+_Ilog Solver_, because it attempts to automatically manage memory
+resources à la Java. In every handle-class there exists a reference to
+an implementation-class instance. It is possible that many handle-class
+instances point to the same implementation-class instance. The
+implementation-class instance is destructed only when all the
+handle-class instances that point to it are destructed; something
+similar happens with the references in Java. Thus, in a function in
+_Ilog Solver_ it is possible to construct automatic variables-instances
+in order to describe a constraint; the constraint and the variables
+involved will continue to exist after the function returns. In the same
+circumstance in _Naxos Solver_ we would have a segmentation fault.
 
 
 # Error Handling\label{error}
 
-When we write code, error handling is the first thing to take care of. In _Naxos Solver_ we should catch exceptions of type `NsException`. This class is a `logic_error` subclass, which inherits from `exception`. So it suffices to catch `exception` instances; this base class has a method `what()` that returns a string describing the error occurred.
+When we write code, error handling is the first thing to take care of.
+In _Naxos Solver_ we should catch exceptions of type `NsException`. This
+class is a `logic_error` subclass, which inherits from `exception`. So
+it suffices to catch `exception` instances; this base class has a method
+`what()` that returns a string describing the error occurred.
 
 ```c++
 #include <naxos.h>
 using namespace naxos;
 using namespace std;
 
-int  main (void)
+int main (void)
 {
-    try  {
+    try {
 
         // ... CODE OF THE PROGRAM ... //
 
-    } catch (exception& exc)  {
+    } catch (exception& exc) {
         cerr << exc.what() << "\n";
-
-    } catch (...)  {
+        return 1;
+    } catch (...) {
         cerr << "Unknown exception" << "\n";
+        return 1;
     }
 }
 ```
 
-It is not a good programming practice to to use exceptions inside the algorithms body. In most cases, exceptions should "wrap" our programs.
+It is not a good programming practice to to use exceptions inside the
+algorithms body. In most cases, exceptions should "wrap" our programs.
 
 
 # Constrained Variables
 
-The solver supports _finite domain integer constrained variables_. The class that implements them is called `NsIntVar` and contains the following methods.
+The solver supports _finite domain integer constrained variables_. The
+class that implements them is called `NsIntVar` and contains the
+following methods.
 
 #### `NsIntVar(NsProblemManager& pm, NsInt min, NsInt max)`
-
 A constructor function for a constraint variable. Argument `pm` is the problem manager that the variable belongs to (see \S~\ref{NsProblemManager}). `min` and `max` are the bounds of its domain, that is also designated `[min..max]`.
 
 Data-type `NsInt` can at least represent the integers that can be represented by data-type `long`. The minimum value that an `NsInt` can hold, equals to the constant `NsMINUS_INF` and the maximum equals to `NsPLUS_INF`. (The maximum value of the unsigned data-type `NsUInt` is `NsUPLUS_INF`.)
@@ -492,34 +545,34 @@ while (pm.nextSolution() != false)
 ```
 
 
-## `SEND + MORE = MONEY`
+## _SEND_ + _MORE_ = _MONEY_
 
-Another example is a known _cryptarithm_ problem. In those problems we have some arithmetic relations between words, such as `SEND + MORE = MONEY`. Each letter of the words represents a specific digit (from 0 to 9); thus, each word represents a decimal number. Two different letters should not represent the same digit. E.g. for the equation `SEND + MORE = MONEY`, we will put the same digit in the positions where `E` appears. The same applies for the rest of the letters, that should however be assigned different digits than the one for `E`. After all the assignments the relation of the cryptarithm should be valid. This is the problem declaration for the solver:
+Another example is a known _cryptarithm_ problem. In those problems we have some arithmetic relations between words, such as _SEND_ + _MORE_ = _MONEY_. Each letter of the words represents a specific digit (from 0 to 9); thus, each word represents a decimal number. Two different letters should not represent the same digit. E.g. for the equation _SEND_ + _MORE_ = _MONEY_, we will put the same digit in the positions where `E` appears. The same applies for the rest of the letters, that should however be assigned different digits than the one for `E`. After all the assignments the relation of the cryptarithm should be valid. This is the problem declaration for the solver:
 
 ```c++
-NsProblemManager  pm;
+NsProblemManager pm;
 
-NsIntVar  S(pm,1,9), E(pm,0,9), N(pm,0,9), D(pm,0,9), 
-          M(pm,1,9), O(pm,0,9), R(pm,0,9), Y(pm,0,9);
+NsIntVar S(pm,1,9), E(pm,0,9), N(pm,0,9), D(pm,0,9), 
+         M(pm,1,9), O(pm,0,9), R(pm,0,9), Y(pm,0,9);
 
-NsIntVar  send  =           1000*S + 100*E + 10*N + D;
-NsIntVar  more  =           1000*M + 100*O + 10*R + E;
-NsIntVar  money = 10000*M + 1000*O + 100*N + 10*E + Y;
+NsIntVar send  =           1000*S + 100*E + 10*N + D;
+NsIntVar more  =           1000*M + 100*O + 10*R + E;
+NsIntVar money = 10000*M + 1000*O + 100*N + 10*E + Y;
 
-pm.add( send + more == money );
+pm.add(send + more == money);
 
 NsIntVarArray  letters;
-letters.push_back( S );
-letters.push_back( E );
-letters.push_back( N );
-letters.push_back( D );
-letters.push_back( M );
-letters.push_back( O );
-letters.push_back( R );
-letters.push_back( Y );
+letters.push_back(S);
+letters.push_back(E);
+letters.push_back(N);
+letters.push_back(D);
+letters.push_back(M);
+letters.push_back(O);
+letters.push_back(R);
+letters.push_back(Y);
 pm.add( NsAllDiff(letters) );
 
-pm.addGoal( new NsgLabeling(letters) );
+pm.addGoal(new NsgLabeling(letters));
 if (pm.nextSolution() != false)   {
     cout << "    " << send.value() << "\n"
          << " +  " << more.value() << "\n"
