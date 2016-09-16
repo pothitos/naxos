@@ -50,7 +50,7 @@ iterators are used and implemented.
 There is _no_ distinction between handle-classes and
 implementation-classes, as in _Ilog Solver_. This distinction exists in
 _Ilog Solver_, because it attempts to automatically manage memory
-resources Ã  la Java. In every handle-class there exists a reference to
+resources Ã la Java. In every handle-class there exists a reference to
 an implementation-class instance. It is possible that many handle-class
 instances point to the same implementation-class instance. The
 implementation-class instance is destructed only when all the
@@ -101,31 +101,56 @@ The solver supports _finite domain integer constrained variables_. The
 class that implements them is called `NsIntVar` and contains the
 following methods.
 
+
 #### `NsIntVar(NsProblemManager& pm, NsInt min, NsInt max)`
-A constructor function for a constraint variable. Argument `pm` is the problem manager that the variable belongs to; see the [Problem Manager](#problem-manager) section for more. `min` and `max` are the bounds of its domain, that is also designated `[min..max]`.
 
-Data-type `NsInt` can at least represent the integers that can be represented by data-type `long`. The minimum value that an `NsInt` can hold, equals to the constant `NsMINUS_INF` and the maximum equals to `NsPLUS_INF`. (The maximum value of the unsigned data-type `NsUInt` is `NsUPLUS_INF`.)
+A constructor function for a constraint variable. Argument `pm` is the
+problem manager that the variable belongs to; see the [Problem
+Manager](#problem-manager) section for more. `min` and `max` are the
+bounds of its domain, that is also designated `[min..max]`.
 
-The minimum of a domain must be strictly greater than `NsMINUS_INF` and the maximum value must be strictly less than `NsPLUS_INF`, as those constants represent infinity, as we will see below.
+Data-type `NsInt` can at least represent the integers that can be
+represented by data-type `long`. The minimum value that an `NsInt` can
+hold, equals to the constant `NsMINUS_INF` and the maximum equals to
+`NsPLUS_INF`. (The maximum value of the unsigned data-type `NsUInt` is
+`NsUPLUS_INF`.)
+
+The minimum of a domain must be strictly greater than `NsMINUS_INF` and
+the maximum value must be strictly less than `NsPLUS_INF`, as those
+constants represent infinity, as we will see below.
+
 
 #### `NsIntVar()`
-This constructor creates a variable that can be initialized afterwords by assigning an expression to it (using the overloaded operator `=`), as on the third line of the following example.
+
+This constructor creates a variable that can be initialized afterwords
+by assigning an expression to it using the overloaded operator `=`, as
+on the third line of the following example.
 
 ```c++
-NsIntVar X(pm,0,3), Y(pm,-1,15), Z;
-NsIntVar W = X + 3*Y;
+NsIntVar X(pm, 0, 3), Y(pm, -1, 15), Z;
+NsIntVar W = X + 3 * Y;
 Z = W * W;
 ```
 
-On the second line of the example, we used another constructor function, that takes an _Expression_ as argument; here the expression is `X + 3*Y`.
+On the second line of the example, we used another constructor function,
+that takes an _Expression_ as argument; here the expression is `X + 3 *
+Y`.
+
 
 #### `void remove(NsInt val)`
+
 Removes the value `val` from the domain of the variable.
 
+
 #### `void remove(NsInt min, NsInt max)`
-Removes every value of the domain that is in the range [`min`,`max`]. Instead of removing those values one by one using `remove(val)`, it is more efficient to call this method.
+
+Removes every value of the domain that is in the range [`min`,`max`].
+Instead of removing those values one by one using `remove(val)`, it is
+more efficient to call this method.
+
 
 #### `void removeAll()`
+
 "Empties" the domain of the variable. Practically, the solver only informs the problem manager that an inconsistency occurred, due to an empty domain. This method is useful when we want to make search fail. E.g. when we want a goal to fail during its execution, we call this method for any variable. In order to show that a goal succeeds, we make `GOAL()` return `0`; but in order to show that a goal failed, this is a—less elegant—way to do it. (For more information about the goals mechanism see \S~\ref{goals}.)
 
 #### `void set(NsInt val)`
