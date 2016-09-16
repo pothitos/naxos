@@ -50,7 +50,7 @@ iterators are used and implemented.
 There is _no_ distinction between handle-classes and
 implementation-classes, as in _Ilog Solver_. This distinction exists in
 _Ilog Solver_, because it attempts to automatically manage memory
-resources Ã la Java. In every handle-class there exists a reference to
+resources à la Java. In every handle-class there exists a reference to
 an implementation-class instance. It is possible that many handle-class
 instances point to the same implementation-class instance. The
 implementation-class instance is destructed only when all the
