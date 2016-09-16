@@ -50,7 +50,7 @@ iterators are used and implemented.
 There is _no_ distinction between handle-classes and
 implementation-classes, as in _Ilog Solver_. This distinction exists in
 _Ilog Solver_, because it attempts to automatically manage memory
-resources à la Java. In every handle-class there exists a reference to
+resources Ã  la Java. In every handle-class there exists a reference to
 an implementation-class instance. It is possible that many handle-class
 instances point to the same implementation-class instance. The
 implementation-class instance is destructed only when all the
@@ -126,7 +126,7 @@ Removes the value `val` from the domain of the variable.
 Removes every value of the domain that is in the range [`min`,`max`]. Instead of removing those values one by one using `remove(val)`, it is more efficient to call this method.
 
 #### `void removeAll()`
-"Empties" the domain of the variable. Practically, the solver only informs the problem manager that an inconsistency occurred, due to an empty domain. This method is useful when we want to make search fail. E.g. when we want a goal to fail during its execution, we call this method for any variable. In order to show that a goal succeeds, we make `GOAL()` return `0`; but in order to show that a goal failed, this is a---less elegant---way to do it. (For more information about the goals mechanism see \S~\ref{goals}.)
+"Empties" the domain of the variable. Practically, the solver only informs the problem manager that an inconsistency occurred, due to an empty domain. This method is useful when we want to make search fail. E.g. when we want a goal to fail during its execution, we call this method for any variable. In order to show that a goal succeeds, we make `GOAL()` return `0`; but in order to show that a goal failed, this is a—less elegant—way to do it. (For more information about the goals mechanism see \S~\ref{goals}.)
 
 #### `void set(NsInt val)`
 Assigns the value `val` to the variable; thus, the variable becomes _bound_ (instantiated).
@@ -298,7 +298,7 @@ If we wish to maximize an _Expression_, we can simply put a `-` in front of it a
 #### `void objectiveUpperLimit(NsInt max)`
 During search, this method defines an upper bound for the solution cost equal to `max`; the solution cost is expressed by the `NsProblemManager::minimize()` argument. In other words, the constraint *cost_variable* <= `max` is imposed.
 
-Besides, after the beginning of search---when `nextSolution()` is called for the first time---we cannot add more constraints by calling `NsProblemManager::add`, e.g. via `pm.add(X <= 5)`. Only this function (`objectiveUpperLimit`) can impose such a constraint, but only onto the cost variable.
+Besides, after the beginning of search—when `nextSolution()` is called for the first time—we cannot add more constraints by calling `NsProblemManager::add`, e.g. via `pm.add(X <= 5)`. Only this function (`objectiveUpperLimit`) can impose such a constraint, but only onto the cost variable.
 
 #### `void timeLimit(unsigned long secs)`
 Search will last at most `secs` seconds. After this deadline, `nextSolution()` will return `false`.
@@ -319,10 +319,10 @@ Returns how many times the solver has backtracked during search.
 Returns how many goals have been executed.
 
 #### `unsigned long numVars()`
-Returns the number of the constrained variables that have been created. Note that the number includes intermediate\slash auxiliary variables---if any---that the solver has automatically constructed.
+Returns the number of the constrained variables that have been created. Note that the number includes intermediate\slash auxiliary variables—if any—that the solver has automatically constructed.
 
 #### `unsigned long numConstraints()`
-Returns the number of the problem constraints. Note that the number includes intermediate\slash auxiliary constraints---if any---that the solver has automatically created.
+Returns the number of the problem constraints. Note that the number includes intermediate\slash auxiliary constraints—if any—that the solver has automatically created.
 
 #### `unsigned long numSearchTreeNodes()`
 Returns the number of nodes of the search tree that the solver has already visited.
@@ -335,7 +335,7 @@ Restores the constrained variables (i.e. their domains) to the state they were i
 
 This method also cancels all the goals that were about to be executed. That is, if we wish to begin search (with a `nextSolution()` call) after a `restart()`, we have to declare a goal to be executed (using `addGoal()`), otherwise there is no goal!
 
-`restart()` does _not_ affect the variable that was the argument of `minimize()`�also known as _objective_ or _cost variable_.  That is, it does _not_ restore this variable to its initial state. For example, if the objective variable had initially the domain `[0..100]` and before `restart()` had the domain `[0..10]`, then after `restart()` is called, the domain will be kept `[0..10]`.
+`restart()` does _not_ affect the variable that was the argument of `minimize()`—also known as _objective_ or _cost variable_.  That is, it does _not_ restore this variable to its initial state. For example, if the objective variable had initially the domain `[0..100]` and before `restart()` had the domain `[0..10]`, then after `restart()` is called, the domain will be kept `[0..10]`.
 
 We cannot call this function inside goals, but outside them. E.g. we can call it at the code "level" we call `nextSolution()`.
 
@@ -407,7 +407,7 @@ $_Expression1_ \; \mathrm{op} \; _Expression2_,
 \item
 $IntArr$`[` $Expression$ `]`
 \end{itemize}
-An _Expression_---except from describing a constraint---can be assigned to a variable. E.g. we can write
+An _Expression_—except from describing a constraint—can be assigned to a variable. E.g. we can write
 
 ```c++
 NsIntVar  X = Y + 3/Z;
@@ -695,9 +695,9 @@ The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 \caption{Three arc-consistent constraint networks\label{3-graphs}}
 \end{figure}
 
-A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution---but if the constraint network is not arc-consistent, we are sure that there is no solution. So we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method---such as depth first search (DFS), or limited discrepancy search (LDS) etc.---has to explore.
+A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. So we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS), or limited discrepancy search (LDS) etc.—has to explore.
 
-It is known that in most problems arc-consistency does not suffice to find a solution (see also Fig.~\ref{3-graphs}). After a specific point, we should begin searching, by repeating the assignment of values to variables and by checking every time---e.g. after every assignment---if the constraint network is arc-consistent, according to the _maintaining arc-consistency_ (MAC) methodology. If an assignment causes an inconsistency, then it should be canceled and another value should be chosen.
+It is known that in most problems arc-consistency does not suffice to find a solution (see also Fig.~\ref{3-graphs}). After a specific point, we should begin searching, by repeating the assignment of values to variables and by checking every time—e.g. after every assignment—if the constraint network is arc-consistent, according to the _maintaining arc-consistency_ (MAC) methodology. If an assignment causes an inconsistency, then it should be canceled and another value should be chosen.
 
 In order to facilitate, or, better, to guide search, a _goals mechanism_ has been implemented in the solver. The application developer that uses the solver can declare their own goals, or they can use the built-in ones. A goal often makes an assignment to a constrained variable, or it removes a value from the domain. If search reaches a dead-end, the solver automatically cancels the goals that guided to it and the constraint network with its variables is restored back to the state before those goals were executed.
 
@@ -722,9 +722,9 @@ class  NsGoal  {
 };
 ```
 
-The `NsgAND` and `NsgOR` meta-goal classes derive from the above `NsGoal` class. `NsgAND` and `NsgOR` constructor functions take two arguments (of `NsGoal*` type), that represent their two subgoals. Every `NsGoal` member-function---apart from `GOAL()`---has to do with meta-goals. The application developer that wants to define their own goals, has to take only care of `GOAL()`.
+The `NsgAND` and `NsgOR` meta-goal classes derive from the above `NsGoal` class. `NsgAND` and `NsgOR` constructor functions take two arguments (of `NsGoal*` type), that represent their two subgoals. Every `NsGoal` member-function—apart from `GOAL()`—has to do with meta-goals. The application developer that wants to define their own goals, has to take only care of `GOAL()`.
 
-Every custom goal defined by the application developer should be a class that (directly or indirectly) extends `NsGoal`. Subsequently, function `GOAL()` should be defined in every goal class. Evidently, the goal class may also contain other member-functions---except from the ones also contained in the basic class, to avoid misunderstandings.
+Every custom goal defined by the application developer should be a class that (directly or indirectly) extends `NsGoal`. Subsequently, function `GOAL()` should be defined in every goal class. Evidently, the goal class may also contain other member-functions—except from the ones also contained in the basic class, to avoid misunderstandings.
 
 `GOAL()` is a critical method, as the solver executes it every time it tries to satisfy a goal. This method returns a pointer to another `NsGoal` instance, i.e. it returns the next goal to be satisfied. If the pointer equals to `0`, this means that the current goal succeeded (was satisfied) and thus no other goal has to be created.
 
@@ -798,7 +798,7 @@ We observe the operator `new` in the return value of `GOAL()` (when it is not `0
 \caption{The combination of the goals that compose `NsgLabeling`\label{NsgLabeling}}
 \end{figure}
 
-Regarding the practical meaning of the example, when we ask the solver to satisfy the goal `NsgLabeling(VarArr)`, we except that all the variables of `VarArr` will be assigned values. Thus, the function `GOAL()` of `NsgLabeling` chooses a variable (specifically, the one with the smallest domain size according to the first-fail heuristic). Then it asks (via the goal `NsgInDomain` that assigns to a variable, its domain minimum value) to instantiate the variable _and_ to satisfy the goal `this`. This goal---that refers to a kind of "recursion"---constructs another `NsgLabeling` instance, that is identical to the current one. In fact, `this` tells the solver to assign values to the rest of `VarArr` variables. When `GOAL()` returns `0`, we have finished (Fig.~\ref{NsgLabeling}).
+Regarding the practical meaning of the example, when we ask the solver to satisfy the goal `NsgLabeling(VarArr)`, we except that all the variables of `VarArr` will be assigned values. Thus, the function `GOAL()` of `NsgLabeling` chooses a variable (specifically, the one with the smallest domain size according to the first-fail heuristic). Then it asks (via the goal `NsgInDomain` that assigns to a variable, its domain minimum value) to instantiate the variable _and_ to satisfy the goal `this`. This goal—that refers to a kind of "recursion"—constructs another `NsgLabeling` instance, that is identical to the current one. In fact, `this` tells the solver to assign values to the rest of `VarArr` variables. When `GOAL()` returns `0`, we have finished (Fig.~\ref{NsgLabeling}).
 
 While `NsgLabeling` chooses a variable to be instantiated, `NsgInDomain` chooses the value to assign to the variable. More specifically, it always chooses the minimum value of the domain of the variable. Then it calls the built-in goal `NsgSetValue` that simply assigns the value to the variable. If it is proved afterwards that this value does not guide to a solution, it is removed from the domain by the goal `NsgRemoveValue` and another value will be assigned (by `NsgInDomain(*this)`).
 
