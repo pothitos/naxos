@@ -295,7 +295,7 @@ we declare that it initially contains `5` elements. The _data_type_ does not hav
 Before the problem statement, we should declare a _problem manager_ (class `NsProblemManager`). This manager holds all the information needed about the variables, the constraint network being built and the goals that are going to be executed. The constructor function does not have any argument. The other functions follow.
 
 #### `void add(`_ExprConstr_`)`
-Adds the constraint described by the constraint expression _ExprConstr_ (see \S~\ref{ExprConstr}). In a constraint expression we can use condition operators (`<`, `==`, `!=`, etc.), or built-in expressions like `NsAllDiff()` that states that all the variables of an array must have different values. E.g.
+Adds the constraint described by the constraint expression _ExprConstr_ (see the [Expressions for Constraints](#expressions-for-constraints) section). In a constraint expression we can use condition operators (`<`, `==`, `!=`, etc.), or built-in expressions like `NsAllDiff()` that states that all the variables of an array must have different values. E.g.
 
 ```c++
 pm.add( 3*VarX != VarY/2 );
@@ -365,12 +365,12 @@ This method also cancels all the goals that were about to be executed. That is, 
 We cannot call this function inside goals, but outside them. E.g. we can call it at the code "level" we call `nextSolution()`.
 
 
-# Expressions\label{expressions}
+# Expressions
 
 In order to connect the variables, we take advantage of the overloaded operators and we create expressions and combinations of them. A simple expression can be even a variable or an integer. An expression is designated _Expression_.
 
 
-## Expressions for Constraints\label{ExprConstr}
+## Expressions for Constraints
 
 Expressions for constraint are denoted _ExprConstr_ and they are a subcategory of the general expression category _Expression_. They are mainly used as `NsProblemManager::add()` arguments and for the creation of meta-constraints. The following are _ExprConstr_:
 
@@ -457,7 +457,7 @@ In order to understand the constraint usability, we will see an example. Let the
 
 ## Expressions for Arrays
 
-Finally there is a special independent expression category, that can be assigned to arrays of constrained variables (`NsIntVarArray`). It contains the following expressions for the Inverse constraint (see \S~\ref{Inverse}).
+Finally there is a special independent expression category, that can be assigned to arrays of constrained variables (`NsIntVarArray`). It contains the following expressions for the Inverse constraint (see [The Inverse Constraint](#the-inverse-constraint) section).
 \begin{itemize}
 \item
 `NsInverse(` $VarArr$ `)`
@@ -474,7 +474,7 @@ VarArrC = NsInverse(VarArrA, 100);
 ```
 
 
-### The Inverse Constraint\label{Inverse}
+### The Inverse Constraint
 
 The _Inverse_ constraint is applied between two arrays of constrained variables. Let $Arr$ be an array that contains variables with positive values in their domains. We want $ArrInv$ to be the "inverse" array of $Arr$. Still, let $D_x$ be the domain of the constrained variable $x$. Then it holds that:
 \[
