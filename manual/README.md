@@ -62,7 +62,7 @@ involved will continue to exist after the function returns. In the same
 circumstance in _Naxos Solver_ we would have a segmentation fault.
 
 
-# Error Handling\label{error}
+# Error Handling
 
 When we write code, error handling is the first thing to take care of.
 In _Naxos Solver_ we should catch exceptions of type `NsException`. This
@@ -102,7 +102,7 @@ class that implements them is called `NsIntVar` and contains the
 following methods.
 
 #### `NsIntVar(NsProblemManager& pm, NsInt min, NsInt max)`
-A constructor function for a constraint variable. Argument `pm` is the problem manager that the variable belongs to (see \S~\ref{NsProblemManager}). `min` and `max` are the bounds of its domain, that is also designated `[min..max]`.
+A constructor function for a constraint variable. Argument `pm` is the problem manager that the variable belongs to; see the [Problem Manager](#problem-manager) section for more. `min` and `max` are the bounds of its domain, that is also designated `[min..max]`.
 
 Data-type `NsInt` can at least represent the integers that can be represented by data-type `long`. The minimum value that an `NsInt` can hold, equals to the constant `NsMINUS_INF` and the maximum equals to `NsPLUS_INF`. (The maximum value of the unsigned data-type `NsUInt` is `NsUPLUS_INF`.)
 
@@ -265,7 +265,7 @@ NsDeque<int>  arr(5);
 we declare that it initially contains `5` elements. The _data_type_ does not have any sense to be `NsIntVar`, because in this case we can use directly `NsIntVarArray`, instead of `NsDeque`. `NsDeque` is actually an extension of `std::deque`, which is included in C++ standard library. The difference in `NsDeque` is that it always checks that we are inside the array bounds; if we exceed them, the corresponding exception is thrown.
 
 
-# Problem Manager\label{NsProblemManager}
+# Problem Manager
 
 Before the problem statement, we should declare a _problem manager_ (class `NsProblemManager`). This manager holds all the information needed about the variables, the constraint network being built and the goals that are going to be executed. The constructor function does not have any argument. The other functions follow.
 
@@ -335,7 +335,7 @@ Restores the constrained variables (i.e. their domains) to the state they were i
 
 This method also cancels all the goals that were about to be executed. That is, if we wish to begin search (with a `nextSolution()` call) after a `restart()`, we have to declare a goal to be executed (using `addGoal()`), otherwise there is no goal!
 
-`restart()` does _not_ affect the variable that was the argument of `minimize()`---also known as _objective_ or _cost variable_.  That is, it does _not_ restore this variable to its initial state. For example, if the objective variable had initially the domain `[0..100]` and before `restart()` had the domain `[0..10]`, then after `restart()` is called, the domain will be kept `[0..10]`.
+`restart()` does _not_ affect the variable that was the argument of `minimize()`梐lso known as _objective_ or _cost variable_.  That is, it does _not_ restore this variable to its initial state. For example, if the objective variable had initially the domain `[0..100]` and before `restart()` had the domain `[0..10]`, then after `restart()` is called, the domain will be kept `[0..10]`.
 
 We cannot call this function inside goals, but outside them. E.g. we can call it at the code "level" we call `nextSolution()`.
 
@@ -593,17 +593,13 @@ If we execute the code we take the result:
 
 In the previous sections we stated some problems-examples; but what are the steps in order to state and solve another problem?
 
-In \S~\ref{error} we saw the source code basis to solve a problem. Under the comment `CODE OF THE PROGRAM` we insert the main part of our code.
+In the [Error Handling](#error-handling) section, we saw the source code basis to solve a problem. Under the comment `CODE OF THE PROGRAM` we insert the main part of our code.
 
-Our code is summarized into the following triptych:
-\begin{enumerate}
-\item
-Constrained variables (`NsIntVar`) declaration, together with their domains.
-\item
-Constraints statement (`pm.add(路)`).
-\item
-Goals declaration (`pm.addGoal(new NsgLabeling(路))`) and search for solutions (`pm.nextSolution()`).
-\end{enumerate}
+Our code is summarized into the following triptych.
+
+ 1. Constrained variables (`NsIntVar`) declaration, together with their domains.
+ 2. Constraints statement (`pm.add(路)`).
+ 3. Goals declaration (`pm.addGoal(new NsgLabeling(路))`) and search for solutions (`pm.nextSolution()`).
 
 The first thing to do is to create a problem manager (`pm`), to store the whole constraint network. The declaration is
 
