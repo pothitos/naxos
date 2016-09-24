@@ -151,7 +151,7 @@ more efficient to call this method.
 
 #### `void removeAll()`
 
-"Empties" the domain of the variable. Practically, the solver only informs the problem manager that an inconsistency occurred, due to an empty domain. This method is useful when we want to make search fail. E.g. when we want a goal to fail during its execution, we call this method for any variable. In order to show that a goal succeeds, we make `GOAL()` return `0`; but in order to show that a goal failed, this is a—less elegant—way to do it. (For more information about the goals mechanism see \S~\ref{goals}.)
+"Empties" the domain of the variable. Practically, the solver only informs the problem manager that an inconsistency occurred, due to an empty domain. This method is useful when we want to make search fail. E.g. when we want a goal to fail during its execution, we call this method for any variable. In order to show that a goal succeeds, we make `GOAL()` return `0`; but in order to show that a goal failed, this is a—less elegant—way to do it. For more information about the goals mechanism see the [Search via Goals](#search-via-goals) section.
 
 #### `void set(NsInt val)`
 Assigns the value `val` to the variable; thus, the variable becomes _bound_ (instantiated).
@@ -499,7 +499,7 @@ In this case the solver gives the possibility to use both modellings. However, t
 # Examples
 
 
-## _N_ Queens Problem\label{queens}
+## _N_ Queens Problem
 
 A real problem will be declared as an example.
 
@@ -634,7 +634,7 @@ NsProblemManager  pm;
 
 Next, we declare the constrained variables of the problem. Remember that  while a simple variable (e.g. `int x`) stores only one value (e.g. `x=5`), a _constrained_ variable stores a _range_, or, better, a domain. E.g. with the declaration `NsIntVar V(pm,0,5)`, the domain of `V` is the integer values range `[0..5]`.
 
-When there are many constrained variables, then we use constrained variables arrays `NsIntVarArray`, as in the $N$ Queens problem for example (\S~\ref{queens}). E.g.
+When there are many constrained variables, then we use constrained variables arrays `NsIntVarArray`, as in the [_N_ Queens problem](#n-queens-problem) for example. E.g.
 
 ```c++
 NsIntVarArray  R;
@@ -690,7 +690,7 @@ for (i=0;  i < N;  ++i)
 The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
 
-# Search via Goals\label{goals}
+# Search via Goals
 
 ## Introduction
 
