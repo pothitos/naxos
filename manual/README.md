@@ -1,6 +1,6 @@
 # Naxos Solver User's Guide
 
-![Naxos Solver Logo](https://rawgit.com/pothitos/naxos-solver/master/manual/logo/logo.svg)
+![Naxos Solver Logo](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg)
 
 _Naxos Solver_ is a constraint satisfaction problems _solver_. "_Naxos_"
 is the name of the Greek island where the solver was built in the
@@ -805,23 +805,7 @@ class NsgLabeling : public NsGoal  {
 
 We observe the operator `new` in the return value of `GOAL()` (when it is not `0`) and in the meta-goals (`NsgAND` and `NsgOR`) constructor functions. `new` is necessary when constructing a pointer to a goal. The solver is responsible to destruct the goal when it becomes useless, using the `delete` operator. That is why _all the goals that we create must be constructed with the `new` operator and we must NOT `delete` them by ourselves_.
 
-\begin{figure}[htb]
-{\small
-\latintext
-\[
-\entrymodifiers={+<1em>[F]}
-\xymatrix{
-    *{}       &      *{}       & `NsgLabeling`\ar[ddl]\ar[ddr] &            *{}                               \\
-    *{}       &      *{}       &          *{\txt{AND}}          &            *{}                               \\
-    *{}       & `NsgInDomain`\ar[ddl]\ar[ddr]  &   *{}         & *+<1em>[F--]{`this`}\ar@{.>}@/_2em/[uul] \\
-    *{}       &  *{\txt{OR}}   &              *{}               &            *{}                               \\
-`NsgSetValue` &      *{}       &  `NsgRemoveValue` \ar@{.}[r]^{\txt{\scriptsize\hspace{30pt} AND}} & *+<1em>[F--]{`this`}\ar@{.>}@/_2em/[uull]
-}
-\]
-\greektext
-}
-\caption{The combination of the goals that compose `NsgLabeling`\label{NsgLabeling}}
-\end{figure}
+![The combination of the goals that compose NsgLabeling](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/NsgLabeling.svg)
 
 Regarding the practical meaning of the example, when we ask the solver to satisfy the goal `NsgLabeling(VarArr)`, we except that all the variables of `VarArr` will be assigned values. Thus, the function `GOAL()` of `NsgLabeling` chooses a variable (specifically, the one with the smallest domain size according to the first-fail heuristic). Then it asks (via the goal `NsgInDomain` that assigns to a variable, its domain minimum value) to instantiate the variable _and_ to satisfy the goal `this`. This goal—that refers to a kind of "recursion"—constructs another `NsgLabeling` instance, that is identical to the current one. In fact, `this` tells the solver to assign values to the rest of `VarArr` variables. When `GOAL()` returns `0`, we have finished (Fig.~\ref{NsgLabeling}).
 
