@@ -605,9 +605,9 @@ if (pm.nextSolution() != false)   {
 }
 ```
 
-If we execute the code we take the result:
+If we execute the code we take the result
 
-```c++
+```
     9567
  +  1085
  = 10652
