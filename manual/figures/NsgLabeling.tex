@@ -1,0 +1,26 @@
+% We used dvisvgm to render this.
+\documentclass{article}
+  \usepackage[all,dvips]{xy}
+  \usepackage[labelformat=empty]{caption}
+  \pagestyle{empty}
+\begin{document}
+
+% The following command transformed \vl to \texttt,
+% but for now it doesn't render beautifully in SVG.
+\newcommand{\vl}[1]{#1}
+
+\begin{figure}[htb]
+\[
+\entrymodifiers={+<1em>[F]}
+\xymatrix{
+    *{}       &      *{}       & \vl{NsgLabeling}\ar[ddl]\ar[ddr] &                     *{}                     \\
+    *{}       &      *{}       &           *{\txt{AND}}           &                     *{}                     \\
+    *{}       & \vl{NsgInDomain}\ar[ddl]\ar[ddr]  &   *{}         & *+<1em>[F--]{\vl{this}}\ar@{.>}@/_2em/[uul] \\
+    *{}       &  *{\txt{OR}}   &               *{}                &            *{}                              \\
+\vl{NsgSetValue} &   *{}       &  \vl{NsgRemoveValue} \ar@{.}[r]^{\txt{\scriptsize\hspace{24pt} AND}} & *+<1em>[F--]{\vl{this}}\ar@{.>}@/_2em/[uull]
+}
+\]
+\caption{The combination of the goals that compose \vl{NsgLabeling}}
+\end{figure}
+
+\end{document}

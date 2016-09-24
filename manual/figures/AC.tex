@@ -1,0 +1,35 @@
+% We used dvisvgm to render this.
+\documentclass{article}
+  \usepackage[all,dvips]{xy}
+  \usepackage[labelformat=empty]{caption}
+  \pagestyle{empty}
+  \usepackage{subfigure}
+\begin{document}
+
+\begin{figure}
+\centering
+\subfigure[\small There is no solution]{
+ \entrymodifiers={+<2em>[o][F]}
+ \xymatrix@+2.2em{
+ *{}  &  \txt{$V_A$\\$\{1,2\}$} \ar@{-}[dl]_{\displaystyle V_B \neq V_A} \ar@{-}[dr]^{\displaystyle V_A \neq V_C}  &  *{}   \\
+ \txt{$V_B$\\$\{1,2\}$} \ar@{-}[rr]_{\displaystyle V_B \neq V_C}  &    *{}    &  \txt{$V_C$\\$\{1,2\}$}
+ }
+}\\[1em]
+\subfigure[\small There are two solutions]{
+ \entrymodifiers={+<2em>[o][F]}
+ \xymatrix@+2.2em{
+ *{}  &  \txt{$V_A$\\$\{1,2\}$} \ar@{-}[dl]_{\displaystyle V_B \neq V_A} \ar@{-}[dr]^{\displaystyle V_A \neq V_C}  &  *{}   \\
+ \txt{$V_B$\\$\{1,2\}$} \ar@{-}[rr]_{\displaystyle V_B \neq V_C}  &    *{}    &  \txt{$V_C$\\$\{2,3\}$}
+ }
+}\\[1em]
+\subfigure[\small There is a unique solution]{
+ \entrymodifiers={+<2em>[o][F]}
+ \xymatrix@+2.2em{
+ *{}  &  \txt{$V_A$\\$\{1,2\}$} \ar@{-}[dl]_{\displaystyle V_B \neq V_A} \ar@{-}[dr]^{\displaystyle V_A \neq V_C}  &  *{}   \\
+ \txt{$V_B$\\$\{1,2\}$} \ar@{-}[rr]^{\displaystyle V_B \neq V_C}_{\displaystyle \lnot((V_B=2)\land(V_C=3))}  &    *{}    &  \txt{$V_C$\\$\{2,3\}$}
+ }
+}\\[1em]
+\caption{Three arc-consistent constraint networks}
+\end{figure}
+
+\end{document}

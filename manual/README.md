@@ -694,31 +694,7 @@ The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
 ## Introduction
 
-\begin{figure}[htbp]
-\centering
-\subfigure[\small There is no solution]{
- \entrymodifiers={+<2em>[o][F]}
- \xymatrix@+2.2em{
- *{}  &  \txt{$V_A$\\${1,2}$} \ar@{-}[dl]_{\displaystyle V_B \neq V_A} \ar@{-}[dr]^{\displaystyle V_A \neq V_\varGamma}  &  *{}   \\
- \txt{$V_B$\\${1,2}$} \ar@{-}[rr]_{\displaystyle V_B \neq V_\varGamma}  &    *{}    &  \txt{$V_\varGamma$\\${1,2}$}
- }
-}\\[1em]
-\subfigure[\small There are two solutions]{
- \entrymodifiers={+<2em>[o][F]}
- \xymatrix@+2.2em{
- *{}  &  \txt{$V_A$\\${1,2}$} \ar@{-}[dl]_{\displaystyle V_B \neq V_A} \ar@{-}[dr]^{\displaystyle V_A \neq V_\varGamma}  &  *{}   \\
- \txt{$V_B$\\${1,2}$} \ar@{-}[rr]_{\displaystyle V_B \neq V_\varGamma}  &    *{}    &  \txt{$V_\varGamma$\\${2,3}$}
- }
-}\\[1em]
-\subfigure[\small There is a unique solution]{
- \entrymodifiers={+<2em>[o][F]}
- \xymatrix@+2.2em{
- *{}  &  \txt{$V_A$\\${1,2}$} \ar@{-}[dl]_{\displaystyle V_B \neq V_A} \ar@{-}[dr]^{\displaystyle V_A \neq V_\varGamma}  &  *{}   \\
- \txt{$V_B$\\${1,2}$} \ar@{-}[rr]^{\displaystyle V_B \neq V_\varGamma}_{\displaystyle \lnot((V_B=2)\land(V_\varGamma=3))}  &    *{}    &  \txt{$V_\varGamma$\\${2,3}$}
- }
-}\\[1em]
-\caption{Three arc-consistent constraint networks\label{3-graphs}}
-\end{figure}
+![Three arc-consistent constraint networks](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/AC.svg)
 
 A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. So we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS), or limited discrepancy search (LDS) etc.—has to explore.
 
