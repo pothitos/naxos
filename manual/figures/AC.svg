@@ -46,19 +46,18 @@
 <glyph d='M168 402H309V431H168V615H146C145 521 109 425 18 422V402H103V124C103 13 177 -10 230 -10C293 -10 326 52 326 124V181H304V126C304 54 275 12 236 12C168 12 168 105 168 122V402Z' glyph-name='t' horiz-adv-x='380' unicode='t' vert-adv-y='380'/>
 <glyph d='M605 336C627 399 671 401 688 402V431C663 429 645 429 614 429C585 429 583 429 529 431V402C574 400 586 373 586 354C586 353 586 346 582 336L490 74L390 357C385 369 385 371 385 374C385 402 422 402 443 402V431C415 429 374 429 345 429C313 429 311 429 255 431V402C293 402 306 400 317 387C322 381 334 348 341 328L256 84L160 356C155 369 155 371 155 375C155 402 194 402 213 402V431C188 429 138 429 111 429C83 429 81 429 18 431V402C69 402 79 398 90 366L216 8C220 -3 223 -10 234 -10C243 -10 248 -7 253 9L353 294L453 9C458 -7 463 -10 472 -10C483 -10 486 -3 490 8L605 336Z' glyph-name='w' horiz-adv-x='707' unicode='w' vert-adv-y='707'/>
 </font>
+<font horiz-adv-x='0' id='cmsy10'>
+<font-face ascent='775' descent='960' font-family='cmsy10' units-per-em='1000'/>
+<glyph d='M611 320C611 353 608 356 576 356H90C73 356 55 356 55 336S73 316 90 316H571V125C571 107 571 89 591 89S611 107 611 125V320Z' glyph-name='logicalnot' horiz-adv-x='666' unicode='¬' vert-adv-y='666'/>
+<glyph d='M356 577C348 594 342 598 333 598C320 598 317 591 311 577L62 18C56 5 55 3 55 -2C55 -13 64 -22 75 -22C82 -22 90 -20 98 -1L333 529L568 -1C577 -22 587 -22 591 -22C602 -22 611 -13 611 -2C611 0 611 2 605 14L356 577Z' glyph-name='logicaland' horiz-adv-x='666' unicode='∧' vert-adv-y='666'/>
+<glyph d='M283 617C283 657 309 721 418 728C423 729 427 733 427 739C427 750 419 750 408 750C308 750 217 699 216 625V397C216 358 216 326 176 293C141 264 103 262 81 261C76 260 72 256 72 250C72 240 78 240 88 239C154 235 202 199 213 150C216 139 216 137 216 101V-97C216 -139 216 -171 264 -209C303 -239 369 -250 408 -250C419 -250 427 -250 427 -239C427 -229 421 -229 411 -228C348 -224 299 -192 286 -141C283 -132 283 -130 283 -94V116C283 162 275 179 243 211C222 232 193 242 165 250C247 273 283 319 283 377V617Z' glyph-name='braceleft' horiz-adv-x='500' unicode='{' vert-adv-y='500'/>
+<glyph d='M216 -117C216 -157 190 -221 81 -228C76 -229 72 -233 72 -239C72 -250 83 -250 92 -250C189 -250 282 -201 283 -125V103C283 142 283 174 323 207C358 236 396 238 418 239C423 240 427 244 427 250C427 260 421 260 411 261C345 265 297 301 286 350C283 361 283 363 283 399V597C283 639 283 671 235 709C195 740 126 750 92 750C83 750 72 750 72 739C72 729 78 729 88 728C151 724 200 692 213 641C216 632 216 630 216 594V384C216 338 224 321 256 289C277 268 306 258 334 250C252 227 216 181 216 123V-117Z' glyph-name='braceright' horiz-adv-x='500' unicode='}' vert-adv-y='500'/>
+</font>
 <font horiz-adv-x='0' id='cmmi8'>
 <font-face ascent='750' descent='250' font-family='cmmi8' units-per-em='1000'/>
 <glyph d='M185 119C139 46 98 36 62 33C52 32 40 31 40 14C40 11 42 0 54 0C63 0 69 3 139 3C207 3 230 0 235 0S255 0 255 19C255 32 242 33 237 33C216 34 195 42 195 64C195 79 203 92 222 121L290 231H564L585 62C585 48 567 33 520 33C505 33 492 33 492 14C492 13 493 0 509 0C519 0 557 2 566 3H629C719 3 736 0 744 0C748 0 764 0 764 19C764 33 751 33 735 33C680 33 679 42 676 67L597 685C594 707 593 714 576 714C558 714 552 704 546 694L185 119ZM311 264L518 593L560 264H311Z' glyph-name='A' horiz-adv-x='795' unicode='A' vert-adv-y='795'/>
 <glyph d='M169 79C160 41 158 33 84 33C65 33 53 33 53 14C53 0 66 0 83 0H454C619 0 742 117 742 214C742 287 679 346 579 357C695 379 795 455 795 543C795 618 722 683 596 683H247C229 683 216 683 216 664C216 650 228 650 245 650C278 650 307 650 307 634C307 630 306 629 303 616L169 79ZM325 369L386 613C395 647 396 650 437 650H581C679 650 701 586 701 545C701 460 610 369 482 369H325ZM256 33C247 35 244 35 244 42C244 50 246 58 248 64L318 341H521C614 341 645 278 645 222C645 124 549 33 429 33H256Z' glyph-name='B' horiz-adv-x='801' unicode='B' vert-adv-y='801'/>
 <glyph d='M796 677C797 681 799 687 799 692C799 699 793 704 786 704S776 701 768 692L698 615C689 628 636 704 519 704C287 704 53 489 53 259C53 85 185 -21 344 -21C475 -21 586 59 640 137C673 186 686 234 686 240C686 249 680 253 671 253C659 253 657 248 654 237C612 99 477 12 357 12C255 12 148 72 148 225C148 257 159 424 270 549C345 633 447 671 526 671C652 671 704 570 704 475C704 461 700 442 700 430C700 417 713 417 717 417C730 417 732 421 736 439L796 677Z' glyph-name='C' horiz-adv-x='757' unicode='C' vert-adv-y='757'/>
-</font>
-<font horiz-adv-x='0' id='cmsy10'>
-<font-face ascent='775' descent='960' font-family='cmsy10' units-per-em='1000'/>
-<glyph d='M630 677C638 691 638 693 638 696C638 703 632 716 618 716C606 716 603 710 596 696L147 -177C139 -191 139 -193 139 -196C139 -204 146 -216 159 -216C171 -216 174 -210 181 -196L630 677Z' glyph-name='negationslash' horiz-adv-x='0' unicode='' vert-adv-y='0'/>
-<glyph d='M611 320C611 353 608 356 576 356H90C73 356 55 356 55 336S73 316 90 316H571V125C571 107 571 89 591 89S611 107 611 125V320Z' glyph-name='logicalnot' horiz-adv-x='666' unicode='¬' vert-adv-y='666'/>
-<glyph d='M356 577C348 594 342 598 333 598C320 598 317 591 311 577L62 18C56 5 55 3 55 -2C55 -13 64 -22 75 -22C82 -22 90 -20 98 -1L333 529L568 -1C577 -22 587 -22 591 -22C602 -22 611 -13 611 -2C611 0 611 2 605 14L356 577Z' glyph-name='logicaland' horiz-adv-x='666' unicode='∧' vert-adv-y='666'/>
-<glyph d='M283 617C283 657 309 721 418 728C423 729 427 733 427 739C427 750 419 750 408 750C308 750 217 699 216 625V397C216 358 216 326 176 293C141 264 103 262 81 261C76 260 72 256 72 250C72 240 78 240 88 239C154 235 202 199 213 150C216 139 216 137 216 101V-97C216 -139 216 -171 264 -209C303 -239 369 -250 408 -250C419 -250 427 -250 427 -239C427 -229 421 -229 411 -228C348 -224 299 -192 286 -141C283 -132 283 -130 283 -94V116C283 162 275 179 243 211C222 232 193 242 165 250C247 273 283 319 283 377V617Z' glyph-name='braceleft' horiz-adv-x='500' unicode='{' vert-adv-y='500'/>
-<glyph d='M216 -117C216 -157 190 -221 81 -228C76 -229 72 -233 72 -239C72 -250 83 -250 92 -250C189 -250 282 -201 283 -125V103C283 142 283 174 323 207C358 236 396 238 418 239C423 240 427 244 427 250C427 260 421 260 411 261C345 265 297 301 286 350C283 361 283 363 283 399V597C283 639 283 671 235 709C195 740 126 750 92 750C83 750 72 750 72 739C72 729 78 729 88 728C151 724 200 692 213 641C216 632 216 630 216 594V384C216 338 224 321 256 289C277 268 306 258 334 250C252 227 216 181 216 123V-117Z' glyph-name='braceright' horiz-adv-x='500' unicode='}' vert-adv-y='500'/>
 </font>
 <font horiz-adv-x='0' id='cmmi12'>
 <font-face ascent='750' descent='250' font-family='cmmi12' units-per-em='1000'/>
@@ -88,8 +87,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <path d='M216.852 95.7773L217.137 95.5352' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
 <text class='f3' x='138.695' y='121.78'>V</text>
 <text class='f2' x='145.519' y='123.573'>B</text>
-<text class='f1' x='156.118' y='121.78'></text>
-<text class='f4' x='156.118' y='121.78'>=</text>
+<text class='f4' x='156.118' y='121.78'>≠</text>
 <text class='f3' x='168.544' y='121.78'>V</text>
 <text class='f2' x='175.368' y='123.573'>A</text>
 <path d='M151.035 158.652L217.137 95.5352' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
@@ -97,8 +95,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <path d='M253.379 95.7773L253.02 95.5195' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
 <text class='f3' x='287.948' y='121.78'>V</text>
 <text class='f2' x='294.773' y='123.573'>A</text>
-<text class='f1' x='304.935' y='121.78'></text>
-<text class='f4' x='304.935' y='121.78'>=</text>
+<text class='f4' x='304.935' y='121.78'>≠</text>
 <text class='f3' x='317.36' y='121.78'>V</text>
 <text class='f2' x='324.184' y='123.573'>C</text>
 <path d='M319.117 158.668L253.02 95.5195' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
@@ -114,8 +111,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <circle cx='159.262' cy='175.785' fill='#000000' r='0.169991'/>
 <text class='f3' x='213.192' y='187.076'>V</text>
 <text class='f2' x='220.016' y='188.869'>B</text>
-<text class='f1' x='230.615' y='187.076'></text>
-<text class='f4' x='230.615' y='187.076'>=</text>
+<text class='f4' x='230.615' y='187.076'>≠</text>
 <text class='f3' x='243.041' y='187.076'>V</text>
 <text class='f2' x='249.865' y='188.869'>C</text>
 <path d='M310.891 175.785H159.262' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
@@ -159,8 +155,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <path d='M216.852 269.629L217.137 269.387' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339984'/>
 <text class='f3' x='138.695' y='295.631'>V</text>
 <text class='f2' x='145.519' y='297.424'>B</text>
-<text class='f1' x='156.118' y='295.631'></text>
-<text class='f4' x='156.118' y='295.631'>=</text>
+<text class='f4' x='156.118' y='295.631'>≠</text>
 <text class='f3' x='168.544' y='295.631'>V</text>
 <text class='f2' x='175.368' y='297.424'>A</text>
 <path d='M151.035 332.504L217.137 269.383' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
@@ -168,8 +163,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <path d='M253.379 269.629L253.02 269.371' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339984'/>
 <text class='f3' x='287.948' y='295.631'>V</text>
 <text class='f2' x='294.773' y='297.424'>A</text>
-<text class='f1' x='304.935' y='295.631'></text>
-<text class='f4' x='304.935' y='295.631'>=</text>
+<text class='f4' x='304.935' y='295.631'>≠</text>
 <text class='f3' x='317.36' y='295.631'>V</text>
 <text class='f2' x='324.184' y='297.424'>C</text>
 <path d='M319.117 332.52L253.02 269.371' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
@@ -185,8 +179,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <circle cx='159.262' cy='349.637' fill='#000000' r='0.169993'/>
 <text class='f3' x='213.192' y='360.928'>V</text>
 <text class='f2' x='220.016' y='362.721'>B</text>
-<text class='f1' x='230.615' y='360.928'></text>
-<text class='f4' x='230.615' y='360.928'>=</text>
+<text class='f4' x='230.615' y='360.928'>≠</text>
 <text class='f3' x='243.041' y='360.928'>V</text>
 <text class='f2' x='249.865' y='362.721'>C</text>
 <path d='M310.891 349.637H159.262' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
@@ -233,8 +226,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <path d='M216.852 443.48L217.137 443.234' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
 <text class='f3' x='138.695' y='469.482'>V</text>
 <text class='f2' x='145.519' y='471.276'>B</text>
-<text class='f1' x='156.118' y='469.482'></text>
-<text class='f4' x='156.118' y='469.482'>=</text>
+<text class='f4' x='156.118' y='469.482'>≠</text>
 <text class='f3' x='168.544' y='469.482'>V</text>
 <text class='f2' x='175.368' y='471.276'>A</text>
 <path d='M151.035 506.355L217.137 443.238' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
@@ -242,8 +234,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <path d='M253.379 443.48L253.02 443.223' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
 <text class='f3' x='287.948' y='469.482'>V</text>
 <text class='f2' x='294.773' y='471.276'>A</text>
-<text class='f1' x='304.935' y='469.482'></text>
-<text class='f4' x='304.935' y='469.482'>=</text>
+<text class='f4' x='304.935' y='469.482'>≠</text>
 <text class='f3' x='317.36' y='469.482'>V</text>
 <text class='f2' x='324.184' y='471.276'>C</text>
 <path d='M319.117 506.371L253.02 443.223' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
@@ -259,8 +250,7 @@ text.f5 {font-family:cmr10;font-size:9.96264px}
 <circle cx='159.262' cy='523.488' fill='#000000' r='0.169993'/>
 <text class='f3' x='213.192' y='518.175'>V</text>
 <text class='f2' x='220.016' y='519.968'>B</text>
-<text class='f1' x='230.615' y='518.175'></text>
-<text class='f4' x='230.615' y='518.175'>=</text>
+<text class='f4' x='230.615' y='518.175'>≠</text>
 <text class='f3' x='243.041' y='518.175'>V</text>
 <text class='f2' x='249.865' y='519.968'>C</text>
 <text class='f1' x='175.182' y='535.443'>¬</text>
