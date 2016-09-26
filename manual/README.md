@@ -66,9 +66,10 @@ circumstance in _Naxos Solver_ we would have a segmentation fault.
 
 When we write code, error handling is the first thing to take care of.
 In _Naxos Solver_ we should catch exceptions of type `NsException`. This
-class is a `logic_error` subclass, which inherits from `exception`. So
-it suffices to catch `exception` instances; this base class has a method
-`what()` that returns a string describing the error occurred.
+class is a `logic_error` subclass, which inherits from `exception`.
+Therefore, it suffices to catch `exception` instances; this base class
+has a method `what()` that returns a string describing the error
+occurred.
 
 ```c++
 #include <naxos.h>
@@ -267,39 +268,69 @@ variable to an output stream, by writing e.g. `cout << Var;`.
 
 # Constrained Variable Arrays
 
-The default (flexible) array class, that contains constrained variables, is `NsIntVarArray`. The `i`-th variable of the array `VarArr` is accessed as usually, via `VarArr[i]`. The default data-type for `i` is `NsIndex`.
+The default (flexible) array class, that contains constrained variables,
+is `NsIntVarArray`. The `i`-th variable of the array `VarArr` is
+accessed as usually, via `VarArr[i]`. The default data-type for `i` is
+`NsIndex`.
 
-An `NsIntVarArray` is initially empty. We can insert a constrained variable to it, either in front of it, or at its back, in the way that we insert elements into a linked list. Its constructor function does not have any arguments. The description for the rest of the class functions follow.
+An `NsIntVarArray` is initially empty. We can insert a constrained
+variable to it, either in front of it, or at its back, in the way that
+we insert elements into a linked list. Its constructor function does not
+have any arguments. The description for the rest of the class functions
+follow.
+
 
 #### `NsIndex size()`
+
 Returns the size of the array.
 
+
 #### `bool empty()`
+
 Returns `true` if the array is empty.
 
+
 #### `NsIntVar& back()`
+
 The last constrained variable of the array.
 
+
 #### `NsIntVar& front()`
+
 The first constrained variable of the array.
 
+
 #### `void push_back(`_Expression_`)`
-Inserts at the end of the array the variable that is described by the _Expression_. In the following section it is explained that an _Expression_ can be simply a constrained variable, or a combination of variables. E.g.
+
+Inserts at the end of the array the variable that is described by the
+_Expression_. In the following section it is explained that an
+_Expression_ can be simply a constrained variable, or a combination of
+variables. E.g.
 
 ```c++
-VarArr.push_back( NsIntVar(pm, 10, 30) );
-VarArr.push_back( 3*VarX + VarY );
-VarArr.push_back( VarX > 11 );
+VarArr.push_back(NsIntVar(pm, 10, 30));
+VarArr.push_back(3 * VarX + VarY);
+VarArr.push_back(VarX > 11);
 ```
 
-The first statement above inserts at the end of `VarArr` a new constrained variable with domain `[10..30]`.
+The first statement above inserts at the end of `VarArr` a new
+constrained variable with domain `[10..30]`.
 
-The last statement inserts a constrained variable at the end of the array. This variable will equal `1` if it holds that `VarX > 11`, otherwise it will equal `0`. (It is possible that its domain will be `[0..1]`, if `VarX` contains some values less than `11` and some other values greater than `11`.) So we have a _meta-constraint_.
+The last statement inserts a constrained variable at the end of the
+array. This variable will equal `1` if it holds that `VarX > 11`,
+otherwise it will equal `0`. (It is possible that its domain will be
+`[0..1]`, if `VarX` contains some values less than `11` and some other
+values greater than `11`.) Therefore, we have a _meta-constraint_.
+
 
 #### `void push_front(`_Expression_`)`
-Like `push_back()` but the insertion takes place at the beginning of the array.
 
-Iterators for arrays follow. We can use them in order to iterate easily through the variables of an array.
+Like `push_back()` but the insertion takes place at the beginning of the
+array.
+
+Iterators for arrays follow. We can use them in order to iterate easily
+through the variables of an array.
+
 
 #### `NsIntVarArray::iterator`
 With this iterator we can access all the variables of the array in turn. E.g. the following code removes the value `2` from every variable of `VarArr`:
@@ -745,7 +776,7 @@ The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
 ![Three arc-consistent constraint networks](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/AC.svg)
 
-A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. So we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS), or limited discrepancy search (LDS) etc.—has to explore.
+A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. Therefore, we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS), or limited discrepancy search (LDS) etc.—has to explore.
 
 It is known that in most problems arc-consistency does not suffice to find a solution (see also Fig.~\ref{3-graphs}). After a specific point, we should begin searching, by repeating the assignment of values to variables and by checking every time—e.g. after every assignment—if the constraint network is arc-consistent, according to the _maintaining arc-consistency_ (MAC) methodology. If an assignment causes an inconsistency, then it should be canceled and another value should be chosen.
 
