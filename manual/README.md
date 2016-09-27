@@ -355,26 +355,40 @@ Finally, the operator `<<` has been overloaded for the arrays too. We can type a
 
 ## Generic Arrays
 
-In case we want to create an array with the philosophy and methods of `NsIntVarArray`, we can use the template class `NsDeque<`_data_type_`>`. E.g. with
+In case we want to create an array with the philosophy and methods of
+`NsIntVarArray`, we can use the template class `NsDeque<`_data_type_`>`.
+E.g. with
 
 ```c++
-NsDeque<int>  arr;
+NsDeque<int> arr;
 ```
 
 we declare that `arr` is a flexible array of integers, initially empty. With
 
 ```c++
-NsDeque<int>  arr(5);
+NsDeque<int> arr(5);
 ```
 
-we declare that it initially contains `5` elements. The _data_type_ does not have any sense to be `NsIntVar`, because in this case we can use directly `NsIntVarArray`, instead of `NsDeque`. `NsDeque` is actually an extension of `std::deque`, which is included in C++ standard library. The difference in `NsDeque` is that it always checks that we are inside the array bounds; if we exceed them, the corresponding exception is thrown.
+we declare that it initially contains `5` elements. The _data_type_ does
+not have any sense to be `NsIntVar`, because in this case we can use
+directly `NsIntVarArray`, instead of `NsDeque`. `NsDeque` is actually an
+extension of `std::deque`, which is included in C++ standard library.
+The difference in `NsDeque` is that it always checks that we are inside
+the array bounds; if we exceed them, the corresponding exception is
+thrown.
 
 
 # Problem Manager
 
-Before the problem statement, we should declare a _problem manager_ (class `NsProblemManager`). This manager holds all the information needed about the variables, the constraint network being built and the goals that are going to be executed. The constructor function does not have any argument. The other functions follow.
+Before the problem statement, we should declare a _problem manager_
+(class `NsProblemManager`). This manager holds all the information
+needed about the variables, the constraint network being built and the
+goals that are going to be executed. The constructor function does not
+have any argument. The other functions follow.
+
 
 #### `void add(`_ExprConstr_`)`
+
 Adds the constraint described by the constraint expression _ExprConstr_ (see the [Expressions for Constraints](#expressions-for-constraints) section). In a constraint expression we can use condition operators (`<`, `==`, `!=`, etc.), or built-in expressions like `NsAllDiff()` that states that all the variables of an array must have different values. E.g.
 
 ```c++
