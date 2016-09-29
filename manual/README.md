@@ -274,8 +274,8 @@ accessed as usually, via `VarArr[i]`. The default data-type for `i` is
 `NsIndex`.
 
 An `NsIntVarArray` is initially empty. We can insert a constrained
-variable to it, either in front of it, or at its back, in the way that
-we insert elements into a linked list. Its constructor function does not
+variable to it, either in front of it or at its back, in the way that we
+insert elements into a linked list. Its constructor function does not
 have any arguments. The description for the rest of the class functions
 follow.
 
@@ -304,7 +304,7 @@ The first constrained variable of the array.
 
 Inserts at the end of the array the variable that is described by the
 _Expression_. In the following section it is explained that an
-_Expression_ can be simply a constrained variable, or a combination of
+_Expression_ can be simply a constrained variable or a combination of
 variables. E.g.
 
 ```c++
@@ -333,24 +333,30 @@ through the variables of an array.
 
 
 #### `NsIntVarArray::iterator`
-With this iterator we can access all the variables of the array in turn. E.g. the following code removes the value `2` from every variable of `VarArr`:
+
+With this iterator we can access all the variables of the array in turn.
+E.g. the following code removes the value `2` from every variable of
+`VarArr`.
 
 ```c++
-for (NsIntVarArray::iterator  V = VarArr.begin();
-                         V != VarArr.end();   ++V)
-        V->remove(2);
+for (NsIntVarArray::iterator V = VarArr.begin(); V != VarArr.end(); ++V)
+    V->remove(2);
 ```
+
 
 #### `NsIntVarArray::const_iterator`
-This is an iterator like the above one, but it is useful only when we do not modify the constrained variables. E.g. we can use it in order to print the variables of an array.
+
+This is an iterator like the above one, but it is useful only when we do
+not modify the constrained variables. E.g. we can use it in order to
+print the variables of an array.
 
 ```c++
-for (NsIntVarArray::const_iterator  V=VarArr.begin();
-                               V != VarArr.end(); ++V)
-        cout << *V << "\n";
+for (NsIntVarArray::const_iterator V=VarArr.begin(); V != VarArr.end(); ++V)
+    cout << *V << "\n";
 ```
 
-Finally, the operator `<<` has been overloaded for the arrays too. We can type an array by writing for example `cout<<VarArr;`.
+Finally, the operator `<<` has been overloaded for the arrays too. We
+can type an array by writing for example `cout << VarArr;`.
 
 
 ## Generic Arrays
@@ -363,7 +369,8 @@ E.g. with
 NsDeque<int> arr;
 ```
 
-we declare that `arr` is a flexible array of integers, initially empty. With
+we declare that `arr` is a flexible array of integers, initially empty.
+With
 
 ```c++
 NsDeque<int> arr(5);
@@ -389,16 +396,23 @@ have any argument. The other functions follow.
 
 #### `void add(`_ExprConstr_`)`
 
-Adds the constraint described by the constraint expression _ExprConstr_ (see the [Expressions for Constraints](#expressions-for-constraints) section). In a constraint expression we can use condition operators (`<`, `==`, `!=`, etc.), or built-in expressions like `NsAllDiff()` that states that all the variables of an array must have different values. E.g.
+Adds the constraint described by the constraint expression _ExprConstr_
+(see the [Expressions for Constraints](#expressions-for-constraints)
+section). In a constraint expression we can use condition operators
+(`<`, `==`, `!=`, etc.) or built-in expressions like `NsAllDiff()` that
+states that all the variables of an array must have different values.
+E.g.
 
 ```c++
-pm.add( 3*VarX != VarY/2 );
-pm.add( VarW == -2 || VarW >= 5 );
-pm.add( NsAllDiff(VarArr) );
+pm.add(3 * VarX != VarY / 2);
+pm.add(VarW == -2 || VarW >= 5);
+pm.add(NsAllDiff(VarArr));
 ```
 
+
 #### `void addGoal(NsGoal* goal)`
-Adds `goal` into the list with the goals that have to be executed\slash satisfied (see \S~\ref{goals}).
+
+Adds `goal` into the list with the goals that have to be executed/satisfied (see \S~\ref{goals}).
 
 #### `bool nextSolution()`
 Finds the next solution. The goals that have been added are going to be satisfied. If there is no solution, `false` is returned.
@@ -438,10 +452,10 @@ Returns how many times the solver has backtracked during search.
 Returns how many goals have been executed.
 
 #### `unsigned long numVars()`
-Returns the number of the constrained variables that have been created. Note that the number includes intermediate\slash auxiliary variables—if any—that the solver has automatically constructed.
+Returns the number of the constrained variables that have been created. Note that the number includes intermediate/auxiliary variables—if any—that the solver has automatically constructed.
 
 #### `unsigned long numConstraints()`
-Returns the number of the problem constraints. Note that the number includes intermediate\slash auxiliary constraints—if any—that the solver has automatically created.
+Returns the number of the problem constraints. Note that the number includes intermediate/auxiliary constraints—if any—that the solver has automatically created.
 
 #### `unsigned long numSearchTreeNodes()`
 Returns the number of nodes of the search tree that the solver has already visited.
@@ -450,7 +464,7 @@ Returns the number of nodes of the search tree that the solver has already visit
 Stores into a file named `fileName` a representation of the search tree. The file format is called `dot` and the application Graphviz can graphically display it.
 
 #### `void restart()`
-Restores the constrained variables (i.e. their domains) to the state they were initially, a little bit after the _first_ `nextSolution()` was called. More specifically, it restores the state that existed immediately before the first `nextSolution()` call, but keeps the changes that were made in order to achieve the first arc-consistency of the constraint network (see \S~\ref{goals} for the arc-consistency definition). In other words, this function restores the constraint\slash variable network to the first arc-consistency state that took ever place (before the execution of any goal).
+Restores the constrained variables (i.e. their domains) to the state they were initially, a little bit after the _first_ `nextSolution()` was called. More specifically, it restores the state that existed immediately before the first `nextSolution()` call, but keeps the changes that were made in order to achieve the first arc-consistency of the constraint network (see \S~\ref{goals} for the arc-consistency definition). In other words, this function restores the constraint/variable network to the first arc-consistency state that took ever place (before the execution of any goal).
 
 This method also cancels all the goals that were about to be executed. That is, if we wish to begin search (with a `nextSolution()` call) after a `restart()`, we have to declare a goal to be executed (using `addGoal()`), otherwise there is no goal!
 
@@ -726,7 +740,7 @@ The first thing to do is to create a problem manager (`pm`), to store the whole 
 NsProblemManager  pm;
 ```
 
-Next, we declare the constrained variables of the problem. Remember that  while a simple variable (e.g. `int x`) stores only one value (e.g. `x=5`), a _constrained_ variable stores a _range_, or, better, a domain. E.g. with the declaration `NsIntVar V(pm,0,5)`, the domain of `V` is the integer values range `[0..5]`.
+Next, we declare the constrained variables of the problem. Remember that  while a simple variable (e.g. `int x`) stores only one value (e.g. `x=5`), a _constrained_ variable stores a _range_ or, better, a domain. E.g. with the declaration `NsIntVar V(pm,0,5)`, the domain of `V` is the integer values range `[0..5]`.
 
 When there are many constrained variables, then we use constrained variables arrays `NsIntVarArray`, as in the [_N_ Queens problem](#n-queens-problem) for example. E.g.
 
@@ -758,7 +772,7 @@ Finally, we execute `pm.nextSolution()` to find a solution. This function is cal
 **Note:**
 After the `pm.nextSolution()` call, we refer to a constraint variable, e.g. `NsIntVar X`, by its const method `NsIntVar::value()`. For example, it is wrong to write `cout<<X+1;` the correct is `cout<<X.value()+1`.
 
-_If we have previously called `pm.minimize(·)`_, the solver guarantees that each new solution will be better from the previous one. In case `pm.nextSolution()` returns `false`, then either the solution cost cannot be further improved, or there is not any other solution. Thus we should have stored somewhere the last solution (and perhaps its cost too), in order to print it in the end, as in the following code for example:
+_If we have previously called `pm.minimize(·)`_, the solver guarantees that each new solution will be better from the previous one. In case `pm.nextSolution()` returns `false`, then either the solution cost cannot be further improved or there is not any other solution. Thus we should have stored somewhere the last solution (and perhaps its cost too), in order to print it in the end, as in the following code for example:
 
 ```c++
 NsDeque<NsInt>  bestR(N);
@@ -790,11 +804,11 @@ The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
 ![Three arc-consistent constraint networks](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/AC.svg)
 
-A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. Therefore, we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS), or limited discrepancy search (LDS) etc.—has to explore.
+A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_.  Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. Therefore, we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS) or limited discrepancy search (LDS) etc.—has to explore.
 
 It is known that in most problems arc-consistency does not suffice to find a solution (see also Fig.~\ref{3-graphs}). After a specific point, we should begin searching, by repeating the assignment of values to variables and by checking every time—e.g. after every assignment—if the constraint network is arc-consistent, according to the _maintaining arc-consistency_ (MAC) methodology. If an assignment causes an inconsistency, then it should be canceled and another value should be chosen.
 
-In order to facilitate, or, better, to guide search, a _goals mechanism_ has been implemented in the solver. The application developer that uses the solver can declare their own goals, or they can use the built-in ones. A goal often makes an assignment to a constrained variable, or it removes a value from the domain. If search reaches a dead-end, the solver automatically cancels the goals that guided to it and the constraint network with its variables is restored back to the state before those goals were executed.
+In order to facilitate or, better, to guide search, a _goals mechanism_ has been implemented in the solver. The application developer that uses the solver can declare their own goals or they can use the built-in ones. A goal often makes an assignment to a constrained variable or it removes a value from the domain. If search reaches a dead-end, the solver automatically cancels the goals that guided to it and the constraint network with its variables is restored back to the state before those goals were executed.
 
 Generally speaking, a goal can assign or remove values to one or more variables, or it can be used to choose a variable in order to be successively assigned a value. In this way it defines the search method. While a goal terminates, it can optionally generate another goal; this possibility provides recursion characteristics to the goals mechanism. Last but not least, there are also the AND and OR _meta-goals_. They are called "meta-goals" because each of them is used to manipulate two _other_ goals, namely _subgoals_. An AND-goal succeeds if its two subgoals succeed both, while an OR-goal succeeds if one or more of its subgoals succeed.
 
@@ -881,9 +895,9 @@ Regarding the practical meaning of the example, when we ask the solver to satisf
 
 While `NsgLabeling` chooses a variable to be instantiated, `NsgInDomain` chooses the value to assign to the variable. More specifically, it always chooses the minimum value of the domain of the variable. Then it calls the built-in goal `NsgSetValue` that simply assigns the value to the variable. If it is proved afterwards that this value does not guide to a solution, it is removed from the domain by the goal `NsgRemoveValue` and another value will be assigned (by `NsgInDomain(*this)`).
 
-Usually, when we face difficult and big problems, we should define our own goals, like `NsgLabeling` and `NsgInDomain`. The aim is to make search more efficient by using heuristic functions to take better decisions\slash choices.
+Usually, when we face difficult and big problems, we should define our own goals, like `NsgLabeling` and `NsgInDomain`. The aim is to make search more efficient by using heuristic functions to take better decisions/choices.
 
 
 # Acknowledgements
 
-I am grateful to Prof. Panagiotis Stamatopoulos, not only for his continuous and steady guidance, but also because he inspired, encouraged and embraced this attempt. I also thank Kyriakos Zervoudakis, a B.Sc. and M.Sc. graduate of the Department of Informatics and Telecommunications, that helped me in my first steps in Constraint Programming in 2004. Finally, many thanks to all the students of the Department that used the solver, either in the context of diploma theses, or through the Logic Programming course; we managed to improve the solver through the interaction and conversations between us. Unfortunately the name list is too big to quote, but I personally thank you one and all!
+I am grateful to Prof. Panagiotis Stamatopoulos, not only for his continuous and steady guidance, but also because he inspired, encouraged and embraced this attempt. I also thank Kyriakos Zervoudakis, a B.Sc. and M.Sc. graduate of the Department of Informatics and Telecommunications, that helped me in my first steps in Constraint Programming in 2004. Finally, many thanks to all the students of the Department that used the solver, either in the context of diploma theses or through the Logic Programming course; we managed to improve the solver through the interaction and conversations between us. Unfortunately the name list is too big to quote, but I personally thank you one and all!
