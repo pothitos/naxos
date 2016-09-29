@@ -560,16 +560,19 @@ designated _Expression_.
 
 ## Expressions for Constraints
 
-Expressions for constraint are denoted _ExprConstr_, and they are a subcategory of the general expression category _Expression_. They are mainly used as `NsProblemManager::add()` arguments and for the creation of meta-constraints. The following are _ExprConstr_:
+Expressions for constraint are denoted _ExprConstr_, and they are a
+subcategory of the general expression category _Expression_. They are
+mainly used as `NsProblemManager::add()` arguments and for the creation
+of meta-constraints. The following are _ExprConstr_:
 
- * $_Expression1_ \; \mathrm{op} \; _Expression2_,
-   \quad   \mathrm{op} ∈ { `<`, `<=`, `>`, `>=`,
+ * $_Expression1_ op _Expression2_,
+   \quad   op ∈ { `<`, `<=`, `>`, `>=`,
    `==`, `!=` }$
 
  * `!(` _ExprConstr_ `)`
 
- * $_ExprConstr1_ \; \mathrm{op} \; _ExprConstr2_,
-   \quad   \mathrm{op} ∈ { `&&`, `||` }$
+ * $_ExprConstr1_ op _ExprConstr2_,
+   \quad   op ∈ { `&&`, `||` }$
 
  * `NsIfThen(` $_ExprConstr1_$  `,`  $_ExprConstr2_$ `)`
 
@@ -599,8 +602,8 @@ VarX < VarY
 Apart from _ExprConstr_, the following also belong to the category of general expressions _Expression_:
 \begin{itemize}
 \item
-$_Expression1_ \; \mathrm{op} \; _Expression2_,
-\quad   \mathrm{op} ∈  { `+`, `-`, `*`, `/`, `%` }$
+$_Expression1_ op _Expression2_,
+\quad   op ∈  { `+`, `-`, `*`, `/`, `%` }$
 
 \item
 `NsAbs(` $Expression$ `)`
@@ -651,13 +654,13 @@ Finally there is a special independent expression category, that can be assigned
 `NsInverse(` $VarArr$ `)`
 
 \item
-`NsInverse(` $VarArr$`,` $maxdom$ `)`
+`NsInverse(`_VarArr_`,`_maxdom_`)`
 \end{itemize}
-$maxdom$ is the size of the inverse array that will be created. If this argument does not exist, it is taken that $maxdom = \max_{V ∈ VarArr} { V.\mathrm{max} }$. In any case, $maxdom$ should be greater or equal than this value. E.g.
+_maxdom_ is the size of the inverse array that will be created. If this argument does not exist, it is taken that _maxdom_ = max{_V_.max | _V_ ∈ _VarArr_}. In any case, _maxdom_ should be greater or equal than this value. E.g.
 
 ```c++
-NsIntVarArray  VarArrB = NsInverse(VarArrA);
-NsIntVarArray  VarArrC;
+NsIntVarArray VarArrB = NsInverse(VarArrA);
+NsIntVarArray VarArrC;
 VarArrC = NsInverse(VarArrA, 100);
 ```
 
@@ -666,22 +669,22 @@ VarArrC = NsInverse(VarArrA, 100);
 
 The _Inverse_ constraint is applied between two arrays of constrained variables. Let $Arr$ be an array that contains variables with positive values in their domains. We want $ArrInv$ to be the "inverse" array of $Arr$. Still, let $D_x$ be the domain of the constrained variable $x$. Then it holds that:
 \[
-\forall v ∈ D_{ArrInv[i]}, \quad D_{Arr[v]} \ni i \; .
+∀ v ∈ D_{ArrInv[i]}, \quad D_{Arr[v]} \ni i.
 \]
 If there is no $v$ such that $i ∈ D_{Arr[v]}$, then the domain of $ArrInv[i]$ will _only_ contain the special value $-1$.
 
 In a simpler notation, we can write that it holds:
 \[
-Arr[ArrInv[i]] = i \quad \textrm{and} \quad ArrInv[Arr[i]] = i \; .
+Arr[ArrInv[i]] = i \quad \textrm{and} \quad ArrInv[Arr[i]] = i.
 \]
-That is why the constraint is called "Inverse."  Of course, the above relations would have sense, if the variables of the two arrays were bound and if the unique value that each variable had was designated with the variable name itself. It should also apply that $\forall i$, $ArrInv[i] \neq -1$.
+That is why the constraint is called "Inverse."  Of course, the above relations would have sense, if the variables of the two arrays were bound and if the unique value that each variable had was designated with the variable name itself. It should also apply that $∀ i$, $ArrInv[i] ≠ -1$.
 
 
 #### Usefulness of the Constraint
 
 This constraint can be used in dual modelings of a problem. E.g. suppose that we have a number of tasks to assign to some workers. One modelling could be to have a variable for each task with the set of workers as domain. Another modelling is to have a variable for each worker with the set of tasks as domain. Obviously there exist some constraints in the problem. Some constraints may be declared more easily using the first modelling, but there may be other constraints that would be declared more easily and naturally using the second modelling.
 
-In this case the solver gives the possibility to use both modellings. However, the variables of the two modellings are not irrelevant. We should declare something like  \[  X[i] = j \iff Y[j] = i \; . \]   This is done using an Inverse constraint.
+In this case the solver gives the possibility to use both modellings. However, the variables of the two modellings are not irrelevant. We should declare something like  \[  X[i] = j ⇔ Y[j] = i. \]   This is done using an Inverse constraint.
 
 
 # Examples
@@ -725,11 +728,11 @@ So in each column $0,1,...,N-1$ we will have a queen. It remains to find out the
 
 Regarding the constraints, first of all no two queens should share the same line, i.e.
 \begin{equation} \label{n-queens-1}
-X_i \neq X_j, \quad \forall i \neq j \; .
+X_i ≠ X_j, \quad ∀ i ≠ j.
 \end{equation}
 They should not also share the same diagonal, consequently
 \begin{equation} \label{n-queens-2}
-X_i+i \neq X_j+j \;\;\;\textrm{and}\;\;\; X_i-i \neq X_j-j, \quad \forall i \neq j \; .
+X_i+i ≠ X_j+j and X_i-i ≠ X_j-j, \quad ∀ i ≠ j.
 \end{equation}
 $X_i+i$ corresponds to the first diagonal and $X_i-i$ to the second diagonal for the queen of column $i$.
 
