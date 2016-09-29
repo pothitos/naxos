@@ -412,23 +412,41 @@ pm.add(NsAllDiff(VarArr));
 
 #### `void addGoal(NsGoal* goal)`
 
-Adds `goal` into the list with the goals that have to be executed/satisfied (see \S~\ref{goals}).
+Adds `goal` into the list with the goals that have to be
+executed/satisfied (see the [Search via Goals](#search-via-goals)
+section).
+
 
 #### `bool nextSolution()`
-Finds the next solution. The goals that have been added are going to be satisfied. If there is no solution, `false` is returned.
+
+Finds the next solution. The goals that have been added are going to be
+satisfied. If there is no solution, `false` is returned.
+
 
 #### `void minimize(`_Expression_`)`
-It gives solver the instruction to minimize the value of _Expression_. Every time that the solver finds a solution, the _Expression_ will be less than the one of the previous solution (branch-and-bound algorithm). In fact, if `nextSolution()` gives a solution and the _Expression_ maximum value is _a_, the constraint _Expression_ < _a_ is imposed, for the next time `nextSolution()` is called. Therefore, after each solution, the _Expression_ gets reduced. If it cannot be further reduced, `nextSolution()` returns `false` and we should have stored somewhere the last (best) solution. E.g.
+
+It gives solver the instruction to minimize the value of _Expression_.
+Every time that the solver finds a solution, the _Expression_ will be
+less than the one of the previous solution (branch-and-bound algorithm).
+In fact, if `nextSolution()` gives a solution and the _Expression_
+maximum value is _a_, the constraint _Expression_ < _a_ is imposed, for
+the next time `nextSolution()` is called. Therefore, after each
+solution, the _Expression_ gets reduced. If it cannot be further
+reduced, `nextSolution()` returns `false` and we should have stored
+somewhere the last (best) solution. E.g.
 
 ```c++
-pm.minimize( VarX + VarY );
+pm.minimize(VarX + VarY);
 while (pm.nextSolution() != false)
     {  /* STORE SOLUTION */  }
 ```
 
-If we wish to maximize an _Expression_, we can simply put a `-` in front of it and call `minimize(`-_Expression_`)`.
+If we wish to maximize an _Expression_, we can simply put a `-` in front
+of it and call `minimize(`-_Expression_`)`.
+
 
 #### `void objectiveUpperLimit(NsInt max)`
+
 During search, this method defines an upper bound for the solution cost equal to `max`; the solution cost is expressed by the `NsProblemManager::minimize()` argument. In other words, the constraint *cost_variable* <= `max` is imposed.
 
 Besides, after the beginning of search—when `nextSolution()` is called for the first time—we cannot add more constraints by calling `NsProblemManager::add`, e.g. via `pm.add(X <= 5)`. Only this function (`objectiveUpperLimit`) can impose such a constraint, but only onto the cost variable.
@@ -464,7 +482,7 @@ Returns the number of nodes of the search tree that the solver has already visit
 Stores into a file named `fileName` a representation of the search tree. The file format is called `dot` and the application Graphviz can graphically display it.
 
 #### `void restart()`
-Restores the constrained variables (i.e. their domains) to the state they were initially, a little bit after the _first_ `nextSolution()` was called. More specifically, it restores the state that existed immediately before the first `nextSolution()` call, but keeps the changes that were made in order to achieve the first arc-consistency of the constraint network (see \S~\ref{goals} for the arc-consistency definition). In other words, this function restores the constraint/variable network to the first arc-consistency state that took ever place (before the execution of any goal).
+Restores the constrained variables (i.e. their domains) to the state they were initially, a little bit after the _first_ `nextSolution()` was called. More specifically, it restores the state that existed immediately before the first `nextSolution()` call, but keeps the changes that were made in order to achieve the first arc-consistency of the constraint network (see the [Search via Goals](#search-via-goals) section for the arc-consistency definition). In other words, this function restores the constraint/variable network to the first arc-consistency state that took ever place (before the execution of any goal).
 
 This method also cancels all the goals that were about to be executed. That is, if we wish to begin search (with a `nextSolution()` call) after a `restart()`, we have to declare a goal to be executed (using `addGoal()`), otherwise there is no goal!
 
