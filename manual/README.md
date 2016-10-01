@@ -767,16 +767,16 @@ A real problem will be declared as an example.
 
 In the _N_ queens problem we should place _N_ queens on an _N_ x _N_ chessboard, so that no queen is attacked. In other words we should place _N_ items on an _N_ x _N_ grid, in a way that no two items share the same line, column or diagonal. The following table displays an example for _N_ = 8, i.e. 8 queens that are not attacked.
 
-   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
----|---|---|---|---|---|---|---|---|
- 1 |   |   |   |   |   | ★ |   |   |
- 2 |   |   | ★ |   |   |   |   |   |
- 3 |   |   |   |   | ★ |   |   |   |
- 4 |   |   |   |   |   |   | ★ |   |
- 5 | ★ |   |   |   |   |   |   |   |
- 6 |   |   |   | ★ |   |   |   |   |
- 7 |   | ★ |   |   |   |   |   |   |
- 8 |   |   |   |   |   |   |   | ★ |
+       | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+-------|---|---|---|---|---|---|---|---|
+ __1__ |   |   |   |   |   | ♛ |   |   |
+ __2__ |   |   | ♛ |   |   |   |   |   |
+ __3__ |   |   |   |   | ♛ |   |   |   |
+ __4__ |   |   |   |   |   |   | ♛ |   |
+ __5__ | ♛ |   |   |   |   |   |   |   |
+ __6__ |   |   |   | ♛ |   |   |   |   |
+ __7__ |   | ♛ |   |   |   |   |   |   |
+ __8__ |   |   |   |   |   |   |   | ♛ |
 
 Thus, in each column $0,1,...,N-1$ we will have a queen. It remains to find out the _line_ where each queen will be placed. Therefore we ask to assign values to the variables $X_i$ with $0 \leq X_i \leq N-1$, where $X_i$ is the line on which the queen of column $i$ is placed.
 
