@@ -565,98 +565,147 @@ subcategory of the general expression category _Expression_. They are
 mainly used as `NsProblemManager::add()` arguments and for the creation
 of meta-constraints. The following are _ExprConstr_:
 
- * _Expression1_ op _Expression2_,
-   op ∈ { `<`, `<=`, `>`, `>=`,
-   `==`, `!=` }
+ * _Expression1_ op _Expression2_, op ∈ {`<`, `<=`, `>`, `>=`, `==`,
+   `!=`}
 
  * `!(`_ExprConstr_`)`
 
- * $_ExprConstr1_ op _ExprConstr2_,
-   op ∈ { `&&`, `||` }$
+ * _ExprConstr1_ op _ExprConstr2_, op ∈ {`&&`, `||`}
 
- * `NsIfThen(` $_ExprConstr1_$  `,`  $_ExprConstr2_$ `)`
+ * `NsIfThen(`_ExprConstr1_`, `_ExprConstr2_`)`
 
- * `NsEquiv(` $_ExprConstr1_$  `,`  $_ExprConstr2_$ `)`
+ * `NsEquiv(`_ExprConstr1_`, `_ExprConstr2_`)`
 
- * `NsCount(` $VarArr$`,` $IntArr_1$`,` $IntArr_2$ `)`
+ * `NsCount(`_VarArr_`, `_IntArr1_`, `_IntArr2_`)`
 
- * `NsAllDiff(` $VarArr$ `)`
+ * `NsAllDiff(`_VarArr_`)`
 
-Therefore, the definition is recursive. The last expression means that the constrained variables inside $VarArr$ (an `NsIntVarArray`) are different between them. If we use the expression `NsAllDiff(`$VarArr$`,`$Capacity$`)`, where $Capacity$ is a positive integer, then there will be more constraint propagation. E.g. if $VarArr = {`[1..2]`, \: `[1..2]`, \: `[1..5]`}$, then by declaring `NsAllDiff(`$VarArr`,``1``)` it infers that $VarArr = {`[1..2]`, `[1..2]`, `[3..5]`}$, but using the simple expression `NsAllDiff(` $VarArr$ `)` we would have a value removal only when a variable of $VarArr$ becomes assigned. However, this more powerful consistency may "cost" in terms of time. Finally, the integer $Capacity$ is the maximum number of occurrences that a value can have inside the array $VarArr$.
+Therefore, the definition is recursive. The last expression means that
+the constrained variables inside _VarArr_ (an `NsIntVarArray`) are
+different between them. If we use the expression `NsAllDiff(`_VarArr_`,
+`_Capacity_`)`, where _Capacity_ is a positive integer, then there will
+be more constraint propagation. E.g. if _VarArr_ = {`[1..2]`, `[1..2]`,
+`[1..5]`}, then by declaring `NsAllDiff(`_VarArr_`, 1)` it infers that
+_VarArr_ = {`[1..2]`, `[1..2]`, `[3..5]`}, but using the simple
+expression `NsAllDiff(`_VarArr_`)` we would have a value removal only
+when a variable of _VarArr_ becomes assigned. However, this more
+powerful consistency may "cost" in terms of time. Finally, the integer
+_Capacity_ is the maximum number of occurrences that a value can have
+inside the array _VarArr_.
 
-On the other hand, the array $VarArr$ as declared in the expression `NsCount($VarArr$,$Values$,$Occurrences$)` consists of _constrained_ variables, but the other two arrays, namely $Values$ and $Occurrences$, contain integers, as their type is `NsDeque<NsInt>`. The array $Values$ contains the _values_ to be distributed inside $VarArr$, while the array $Occurrences$ contains how many times each value (in $Values$) appears inside $VarArr$. E.g. if $Values[i] = `34`$ and the corresponding $Occurrences[i] = `2`$, then the value `34` will be assigned to exactly `2` constrained variables in $VarArr$.
+On the other hand, the array _VarArr_ as declared in the expression
+`NsCount(`_VarArr_`, `_Values_`, `_Occurrences_`)` consists of
+_constrained_ variables, but the other two arrays, namely _Values_ and
+_Occurrences_, contain integers, as their type is `NsDeque<NsInt>`. The
+array _Values_ contains the _values_ to be distributed inside _VarArr_,
+while the array _Occurrences_ contains how many times each value (in
+_Values_) appears inside _VarArr_. E.g. if _Values_`[i] = 34` and the
+corresponding _Occurrences_`[i] = 2`, then the value `34` will be
+assigned to exactly `2` constrained variables in _VarArr_.
 
-The constraint `NsIfThen($p$,$q$)` implies the logical proposition $p \Rightarrow q$, and the constraint `NsEquiv($p$,$q$)` means $p \Leftrightarrow q$. The two constraints can also be expressed with an equivalent way as `( !$p$ || $q$ )` and `( $p$ == $q$ )` respectively.
+The constraint `NsIfThen(`_p_`, `_q_`)` implies the logical proposition
+_p_ ⇒ _q_, and the constraint `NsEquiv(`_p_`, `_q_`)` means _p_ ⇔ _q_.
+The two constraints can also be expressed with an equivalent way as
+`(!_p_ || _q_)` and `(_p_ == _q_)` respectively.
 
 Some examples of expressions for constraints follow:
 
 ```c++
 VarX < VarY
-!( X==Y  ||  X+Y==-3 )
-(X==Y) != 1
+!(X == Y || X + Y == -3)
+(X == Y) != 1
 ```
 
 
 ## General Expressions
 
-Apart from _ExprConstr_, the following also belong to the category of general expressions _Expression_:
-\begin{itemize}
-\item
-$_Expression1_ op _Expression2_,
-op ∈  { `+`, `-`, `*`, `/`, `%` }$
+Apart from _ExprConstr_, the following also belong to the category of
+general expressions _Expression_:
 
-\item
-`NsAbs(` $Expression$ `)`
+ * _Expression1_ op _Expression2_, op ∈  {`+`, `-`, `*`, `/`, `%`}
 
-\item
-`NsMin(` $VarArr$ `)`
+ * `NsAbs(`_Expression_`)`
 
-\item
-`NsMax(` $VarArr$ `)`
+ * `NsMin(`_VarArr_`)`
 
-\item
-`NsSum(` $VarArr$ `)`
+ * `NsMax(`_VarArr_`)`
 
-\item
-`NsSum(` $VarArr$`,` $start$`,` $length$ `)`
+ * `NsSum(`_VarArr_`)`
 
-\item
-$IntArr$`[` $Expression$ `]`
-\end{itemize}
-An _Expression_—except from describing a constraint—can be assigned to a variable. E.g. we can write
+ * `NsSum(`_VarArr_`, `_start_`, `_length_`)`
+
+ * _IntArr_`[`_Expression_`]`
+
+An _Expression_—except from describing a constraint—can be assigned to a
+variable. E.g. we can write
 
 ```c++
-NsIntVar  X = Y + 3/Z;
-NsIntVar  W = NsSum(VarArrA) - (NsMin(VarArrB) == 10);
+NsIntVar X = Y + 3 / Z;
+NsIntVar W = NsSum(VarArrA) - (NsMin(VarArrB) == 10);
 ```
 
-Note that instead of writing `VarArr[0] + VarArr[1] + VarArr[2]`, it is more efficient to use the equivalent expression `NsSum(VarArr,0,3)`. The second and third argument of `NsSum` are respectively the position of the first element of `VarArr` that will be included in the sum and the number of the next elements that (together with the first element) will be included in the sum. If neither of these two arguments exist, then all the array is included in the sum.
+Note that instead of writing `VarArr[0] + VarArr[1] + VarArr[2]`, it is
+more efficient to use the equivalent expression `NsSum(VarArr, 0, 3)`.
+The second and third argument of `NsSum` are respectively the position
+of the first element of `VarArr` that will be included in the sum and
+the number of the next elements that (together with the first element)
+will be included in the sum. If neither of these two arguments exist,
+then all the array is included in the sum.
 
-`NsSum` is the more efficient expression, because for the other expression, _an intermediate variable will be created_ that will be equal to `VarArr[0] + VarArr[1]`; the variable `VarArr[2]` will be afterwards added to the intermediate variable. This intermediate variable will not be created if we use `NsSum`.
+`NsSum` is the more efficient expression, because for the other
+expression, _an intermediate variable will be created_ that will be
+equal to `VarArr[0] + VarArr[1]`; the variable `VarArr[2]` will be
+afterwards added to the intermediate variable. This intermediate
+variable will not be created if we use `NsSum`.
 
-`NsAbs` gives the absolute value. `NsMin` and `NsMax` give respectively the minimum and the maximum of the array that they accept as an argument.
+`NsAbs` gives the absolute value. `NsMin` and `NsMax` give respectively
+the minimum and the maximum of the array that they accept as an
+argument.
 
 
 ### The Element Constraint
 
-A separate paragraph for the last expression _IntArr[ Expression ]_ is dedicated, because it has to do with the special _element_ constraint. The name "element" comes from logic programming. For simplicity reasons we take that the $Expression$ is simply the constrained variable $VarIndex$, that is used as an "index" in the array of integers $IntArr$. Note that $IntArr$ is an array containing _integer_ values, because it is an `NsDeque<NsInt>` instance; it does _not_ contain constrained variables, as it is not an `NsIntVarArray` instance.
+A separate paragraph for the last expression _IntArr_`[`_Expression_`]`
+is dedicated, because it has to do with the special _element_
+constraint. The name "element" comes from logic programming. For
+simplicity reasons we take that the _Expression_ is simply the
+constrained variable _VarIndex_, that is used as an "index" in the array
+of integers _IntArr_. Note that _IntArr_ is an array containing
+_integer_ values, because it is an `NsDeque<NsInt>` instance; it does
+_not_ contain constrained variables, as it is not an `NsIntVarArray`
+instance.
 
-In order to understand the constraint usability, we will see an example. Let the array `NsDeque<NsInt> grades` contains eight students' grades. Also, let the domain of $VarIndex$ contain all the array positions, that is `[0..7]`. If we want the domain of the constrained variable $VarValue$ to contain every grade, we declare the constraint _VarValue_ == `grades`[_VarIndex_].
+In order to understand the constraint usability, we will see an example.
+Let the array `NsDeque<NsInt> grades` contains eight students' grades.
+Also, let the domain of _VarIndex_ contain all the array positions, that
+is `[0..7]`. If we want the domain of the constrained variable
+_VarValue_ to contain every grade, we declare the constraint _VarValue_`
+== grades[`_VarIndex_`]`.
 
-(In case we declare another constraint, e.g. _VarValue_ >= 9, the domain of _VarIndex_ will be limited in order to contain only the students' numbers whose grades are 9 or 10.) We saw that the expression _VarValue_ == _IntArr[VarIndex]_ declares an element constraint, but the same constraint can also be declared with a logic programming style as `NsElement`(_VarIndex_,_IntArr_,_VarValue_).
+(In case we declare another constraint, e.g. _VarValue_` >= 9`, the
+domain of _VarIndex_ will be limited in order to contain only the
+students' numbers whose grades are `9` or `10`.) We saw that the
+expression _VarValue_` == `_IntArr_`[`_VarIndex_`]` declares an element
+constraint, but the same constraint can also be declared with a logic
+programming style as `NsElement(`_VarIndex_`, `_IntArr_`,
+`_VarValue_`)`.
 
 
 ## Expressions for Arrays
 
-Finally there is a special independent expression category, that can be assigned to arrays of constrained variables (`NsIntVarArray`). It contains the following expressions for the Inverse constraint (see [The Inverse Constraint](#the-inverse-constraint) section).
-\begin{itemize}
-\item
-`NsInverse(` $VarArr$ `)`
+Finally there is a special independent expression category, that can be
+assigned to arrays of constrained variables (`NsIntVarArray`). It
+contains the following expressions for the Inverse constraint (see [The
+Inverse Constraint](#the-inverse-constraint) section).
 
-\item
-`NsInverse(`_VarArr_`,`_maxdom_`)`
-\end{itemize}
-_maxdom_ is the size of the inverse array that will be created. If this argument does not exist, it is taken that _maxdom_ = max{_V_.max | _V_ ∈ _VarArr_}. In any case, _maxdom_ should be greater or equal than this value. E.g.
+ * `NsInverse(`_VarArr_`)`
+
+ * `NsInverse(`_VarArr_`, `_maxdom_`)`
+
+_maxdom_ is the size of the inverse array that will be created. If this
+argument does not exist, it is taken that _maxdom_ = max{_V_.max | _V_ ∈
+_VarArr_}. In any case, _maxdom_ should be greater or equal than this
+value. E.g.
 
 ```c++
 NsIntVarArray VarArrB = NsInverse(VarArrA);
@@ -667,24 +716,40 @@ VarArrC = NsInverse(VarArrA, 100);
 
 ### The Inverse Constraint
 
-The _Inverse_ constraint is applied between two arrays of constrained variables. Let $Arr$ be an array that contains variables with positive values in their domains. We want $ArrInv$ to be the "inverse" array of $Arr$. Still, let $D_x$ be the domain of the constrained variable $x$. Then it holds that:
-\[
-∀ v ∈ D_{ArrInv[i]}, D_{Arr[v]} \ni i.
-\]
-If there is no $v$ such that $i ∈ D_{Arr[v]}$, then the domain of $ArrInv[i]$ will _only_ contain the special value $-1$.
+The _Inverse_ constraint is applied between two arrays of constrained
+variables. Let _Arr_ be an array that contains variables with positive
+values in their domains. We want _ArrInv_ to be the "inverse" array of
+_Arr_. Still, let D*_x* be the domain of the constrained variable _x_.
+Then it holds that:
+
+∀ v ∈ D*_ArrInv*[*i*], D*_Arr*[*v*] ∍ *i*.
+
+If there is no _v_ such that _i_ ∈ D*_Arr[*v*]*, then the domain of
+*ArrInv*[*i*] will _only_ contain the special value -1.
 
 In a simpler notation, we can write that it holds:
-\[
-Arr[ArrInv[i]] = i and ArrInv[Arr[i]] = i.
-\]
-That is why the constraint is called "Inverse."  Of course, the above relations would have sense, if the variables of the two arrays were bound and if the unique value that each variable had was designated with the variable name itself. It should also apply that $∀ i$, $ArrInv[i] ≠ -1$.
+
+_Arr_[_ArrInv_[_i_]] = _i_ and _ArrInv_[_Arr_[_i_]] = _i_.
+
+That is why the constraint is called "Inverse."  Of course, the above
+relations would have sense if the variables of the two arrays were bound
+and if the unique value that each variable had was designated with the
+variable name itself. It should also apply that ∀ _i_, _ArrInv_[_i_] ≠
+-1.
 
 
 #### Usefulness of the Constraint
 
-This constraint can be used in dual modelings of a problem. E.g. suppose that we have a number of tasks to assign to some workers. One modelling could be to have a variable for each task with the set of workers as domain. Another modelling is to have a variable for each worker with the set of tasks as domain. Obviously there exist some constraints in the problem. Some constraints may be declared more easily using the first modelling, but there may be other constraints that would be declared more easily and naturally using the second modelling.
+This constraint can be used in dual modelings of a problem. E.g. suppose
+that we have a number of tasks to assign to some workers. One modelling
+could be to have a variable for each task with the set of workers as
+domain. Another modelling is to have a variable for each worker with the
+set of tasks as domain. Obviously, there exist some constraints in the
+problem. Some constraints may be declared more easily using the first
+modelling, but there may be other constraints that would be declared
+more easily and naturally using the second modelling.
 
-In this case the solver gives the possibility to use both modellings. However, the variables of the two modellings are not irrelevant. We should declare something like  \[  X[i] = j ⇔ Y[j] = i. \]   This is done using an Inverse constraint.
+In this case, the solver gives the possibility to use both modellings. However, the variables of the two modellings are not irrelevant. We should declare something like _X_[_i_] = _j_ ⇔ _Y_[_j_] = _i_. This is done using an Inverse constraint.
 
 
 # Examples
@@ -694,35 +759,20 @@ In this case the solver gives the possibility to use both modellings. However, t
 
 A real problem will be declared as an example.
 
-\begin{figure}[htb]
-\centering
-\begin{tabular}{r|c|c|c|c|c|c|c|c|}
-\hhline{~*8{-}}
 1 &   &   &   &   &   & $\bullet$ &   &   \\
-\hhline{~*8{-}}
 2 &   &   & $\bullet$ &   &   &   &   &   \\
-\hhline{~*8{-}}
 3 &   &   &   &   & $\bullet$ &   &   &   \\
-\hhline{~*8{-}}
 4 &   &   &   &   &   &   & $\bullet$ &   \\
-\hhline{~*8{-}}
 5 & $\bullet$ &   &   &   &   &   &   &   \\
-\hhline{~*8{-}}
 6 &   &   &   & $\bullet$ &   &   &   &   \\
-\hhline{~*8{-}}
 7 &   & $\bullet$ &   &   &   &   &   &   \\
-\hhline{~*8{-}}
 8 &   &   &   &   &   &   &   & $\bullet$ \\
-\hhline{~*8{-}}
-\multicolumn{1}{r}{}  & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} \\
-\end{tabular}
 \caption{8 queens that are not attacked\label{n-queens}}
-\end{figure}
 
 
 ### Definition
 
-In the $N$ queens problem we should place $N$ queens on an $N \times N$ chessboard, so that no queen is attacked. In other words we should place $N$ items on an $N \times N$ grid, in a way that no two items share the same line, column or diagonal. Figure~\ref{n-queens} displays an example for $N=8$.
+In the $N$ queens problem we should place $N$ queens on an $N x N$ chessboard, so that no queen is attacked. In other words we should place $N$ items on an $N x N$ grid, in a way that no two items share the same line, column or diagonal. Figure~\ref{n-queens} displays an example for $N=8$.
 
 So in each column $0,1,...,N-1$ we will have a queen. It remains to find out the _line_ where each queen will be placed. Therefore we ask to assign values to the variables $X_i$ with $0 \leq X_i \leq N-1$, where $X_i$ is the line on which the queen of column $i$ is placed.
 
