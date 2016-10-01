@@ -976,10 +976,10 @@ NsProblemManager pm;
 
 Next, we declare the constrained variables of the problem.
 Remember that while a simple variable (e.g. `int x`) stores
-only one value (e.g. `x=5`), a _constrained_ variable stores
-a _range_ or, better, a domain. E.g. with the declaration
-`NsIntVar V(pm,0,5)`, the domain of `V` is the integer
-values range `[0..5]`.
+only one value (e.g. `x = 5`), a _constrained_ variable
+stores a _range_ or, better, a domain. E.g. with the
+declaration `NsIntVar V(pm,0,5)`, the domain of `V` is the
+integer values range `[0..5]`.
 
 When there are many constrained variables, then we use
 constrained variables arrays `NsIntVarArray`, as in the [_N_
@@ -999,9 +999,16 @@ for (i = 0; i < N; ++i)
     R.push_back(NsIntVar(pm,min,max));
 ```
 
-...in the way we insert items into a list. In place of `min` and `max` we put the minimum and maximum domain value, respectively. Next, we declare the existing constraints through `pm.add(·)` calls...
+...in the way we insert items into a list. In place of `min`
+and `max` we put the minimum and maximum domain value,
+respectively. Next, we declare the existing constraints
+through `pm.add(·)` calls...
 
-Before the end, if we solve an _optimization_ problem, it remains to declare the parameter to optimize. When we find out this parameter-variable, we will pass it as an argument of `pm.minimize(·)`. This method is unnecessary when we seek for _any_ solution of the problem.
+Before the end, if we solve an _optimization_ problem, it
+remains to declare the parameter to optimize. When we find
+out this parameter-variable, we will pass it as an argument
+of `pm.minimize(·)`. This method is unnecessary when we seek
+for _any_ solution of the problem.
 
 We can now add a goal to be satisfied through the statement:
 
@@ -1009,20 +1016,35 @@ We can now add a goal to be satisfied through the statement:
 pm.addGoal(new NsgLabeling(R));
 ```
 
-This goal instructs the solver to assign values to the constrained variables of the array `R`. If we do not state this goal, the solver will not instantiate the variables `R[i]`, but it will only check the satisfaction of the constraints between _ranges_, and the variables will not become fixed.
+This goal instructs the solver to assign values to the
+constrained variables of the array `R`. If we do not state
+this goal, the solver will not instantiate the variables
+`R[i]`, but it will only check the satisfaction of the
+constraints between _ranges_, and the variables will not
+become fixed.
 
-Finally, we execute `pm.nextSolution()` to find a solution. This function is called inside a loop; every time it returns `true`, we have another unique problem solution.
+Finally, we execute `pm.nextSolution()` to find a solution.
+This function is called inside a loop; every time it returns
+`true`, we have another unique problem solution.
 
-**Note:**
-After the `pm.nextSolution()` call, we refer to a constraint variable, e.g. `NsIntVar X`, by its const method `NsIntVar::value()`. For example, it is wrong to write `cout<<X+1;` the correct is `cout<<X.value()+1`.
+**Note:** After the `pm.nextSolution()` call, we refer to a
+constraint variable, e.g. `NsIntVar X`, by its const method
+`NsIntVar::value()`. For example, it is wrong to write
+`cout << X + 1;` the correct is `cout << X.value() + 1;`.
 
-_If we have previously called `pm.minimize(·)`_, the solver guarantees that each new solution will be better from the previous one. In case `pm.nextSolution()` returns `false`, then either the solution cost cannot be further improved, or there is not any other solution. Thus we should have stored somewhere the last solution (and perhaps its cost too), in order to print it in the end, as in the following code for example:
+_If we have previously called `pm.minimize(·)`_, the solver
+guarantees that each new solution will be better from the
+previous one. In case `pm.nextSolution()` returns `false`,
+then either the solution cost cannot be further improved, or
+there is not any other solution. Thus we should have stored
+somewhere the last solution (and perhaps its cost too), in
+order to print it in the end, as in the following code for
+example:
 
 ```c++
 NsDeque<NsInt> bestR(N);
 
 while (pm.nextSolution() != false) {
-
     // Record the (current) best solution.
     for (i = 0; i < N; ++i)
         bestR[i] = R[i].value();
@@ -1031,7 +1053,14 @@ while (pm.nextSolution() != false) {
 // Print the best solution...
 ```
 
-Note that when `nextSolution` seeks a solution, the constrained variables should not be destructed. Hence, it makes no sense to define a local constrained variable in a function and call `nextSolution` in another function. Finally, a constrained variable definition should be straight; we cannot write something like the following, because in every iteration, the variable `vSum` is actually redefined:
+Note that when `nextSolution` seeks a solution, the
+constrained variables should not be destructed. Hence, it
+makes no sense to define a local constrained variable in a
+function and call `nextSolution` in another function.
+Finally, a constrained variable definition should be
+straight; we cannot write something like the following,
+because in every iteration, the variable `vSum` is actually
+redefined:
 
 ```c++
 NsIntVar vSum;
@@ -1144,4 +1173,15 @@ Usually, when we face difficult and big problems, we should define our own goals
 
 # Acknowledgements
 
-I am grateful to Prof. Panagiotis Stamatopoulos, not only for his continuous and steady guidance, but also because he inspired, encouraged and embraced this attempt. I also thank Kyriakos Zervoudakis, a B.Sc. and M.Sc. graduate of the Department of Informatics and Telecommunications, that helped me in my first steps in Constraint Programming in 2004. Finally, many thanks to all the students of the Department that used the solver, either in the context of diploma theses or through the Logic Programming course; we managed to improve the solver through the interaction and conversations between us. Unfortunately the name list is too big to quote, but I personally thank you one and all!
+I am grateful to Prof. Panagiotis Stamatopoulos, not only
+for his continuous and steady guidance, but also because he
+inspired, encouraged and embraced this attempt. I also thank
+Kyriakos Zervoudakis, a B.Sc. and M.Sc. graduate of the
+Department of Informatics and Telecommunications, that
+helped me in my first steps in Constraint Programming in
+2004. Finally, many thanks to all the students of the
+Department that used the solver, either in the context of
+diploma theses or through the Logic Programming course; we
+managed to improve the solver through the interaction and
+conversations between us. Unfortunately the name list is too
+big to quote, but I personally thank you one and all!
