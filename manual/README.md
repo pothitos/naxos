@@ -749,7 +749,10 @@ problem. Some constraints may be declared more easily using the first
 modelling, but there may be other constraints that would be declared
 more easily and naturally using the second modelling.
 
-In this case, the solver gives the possibility to use both modellings. However, the variables of the two modellings are not irrelevant. We should declare something like _X_[_i_] = _j_ ⇔ _Y_[_j_] = _i_. This is done using an Inverse constraint.
+In this case, the solver gives the possibility to use both modellings.
+However, the variables of the two modellings are not irrelevant. We
+should declare something like _X_[_i_] = _j_ ⇔ _Y_[_j_] = _i_. This is
+done using an Inverse constraint.
 
 
 # Examples
@@ -759,22 +762,23 @@ In this case, the solver gives the possibility to use both modellings. However, 
 
 A real problem will be declared as an example.
 
-1 &   &   &   &   &   & $\bullet$ &   &   \\
-2 &   &   & $\bullet$ &   &   &   &   &   \\
-3 &   &   &   &   & $\bullet$ &   &   &   \\
-4 &   &   &   &   &   &   & $\bullet$ &   \\
-5 & $\bullet$ &   &   &   &   &   &   &   \\
-6 &   &   &   & $\bullet$ &   &   &   &   \\
-7 &   & $\bullet$ &   &   &   &   &   &   \\
-8 &   &   &   &   &   &   &   & $\bullet$ \\
-\caption{8 queens that are not attacked\label{n-queens}}
-
 
 ### Definition
 
-In the $N$ queens problem we should place $N$ queens on an $N x N$ chessboard, so that no queen is attacked. In other words we should place $N$ items on an $N x N$ grid, in a way that no two items share the same line, column or diagonal. Figure~\ref{n-queens} displays an example for $N=8$.
+In the _N_ queens problem we should place _N_ queens on an _N_ x _N_ chessboard, so that no queen is attacked. In other words we should place _N_ items on an _N_ x _N_ grid, in a way that no two items share the same line, column or diagonal. The following table displays an example for _N_ = 8, i.e. 8 queens that are not attacked.
 
-So in each column $0,1,...,N-1$ we will have a queen. It remains to find out the _line_ where each queen will be placed. Therefore we ask to assign values to the variables $X_i$ with $0 \leq X_i \leq N-1$, where $X_i$ is the line on which the queen of column $i$ is placed.
+   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+---|---|---|---|---|---|---|---|---|
+ 1 |   |   |   |   |   | ★ |   |   |
+ 2 |   |   | ★ |   |   |   |   |   |
+ 3 |   |   |   |   | ★ |   |   |   |
+ 4 |   |   |   |   |   |   | ★ |   |
+ 5 | ★ |   |   |   |   |   |   |   |
+ 6 |   |   |   | ★ |   |   |   |   |
+ 7 |   | ★ |   |   |   |   |   |   |
+ 8 |   |   |   |   |   |   |   | ★ |
+
+Thus, in each column $0,1,...,N-1$ we will have a queen. It remains to find out the _line_ where each queen will be placed. Therefore we ask to assign values to the variables $X_i$ with $0 \leq X_i \leq N-1$, where $X_i$ is the line on which the queen of column $i$ is placed.
 
 Regarding the constraints, first of all no two queens should share the same line, i.e.
 \begin{equation} \label{n-queens-1}
