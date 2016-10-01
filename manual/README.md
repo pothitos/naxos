@@ -1075,11 +1075,11 @@ The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
 ## Introduction
 
-![Three arc-consistent constraint networks](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/AC.svg)
-
 A pair of variables $(x,x')$ is _consistent_, if for each value $v$ in the domain of $x$, there is a value $v'$ in the domain of $x'$ such that every constraint that connects the two variables is satisfied. When every pair of variables is consistent, then we say that the constraint network is _arc-consistent_. Arc-consistency does not necessarily mean that we have a solution—but if the constraint network is not arc-consistent, we are sure that there is no solution. Therefore, we have to combine arc-consistency with a search method. Besides, arc-consistency reduces the search space that a search method—such as depth first search (DFS) or limited discrepancy search (LDS) etc.—has to explore.
 
-It is known that in most problems arc-consistency does not suffice to find a solution (see also Fig.~\ref{3-graphs}). After a specific point, we should begin searching, by repeating the assignment of values to variables and by checking every time—e.g. after every assignment—if the constraint network is arc-consistent, according to the _maintaining arc-consistency_ (MAC) methodology. If an assignment causes an inconsistency, then it should be canceled, and another value should be chosen.
+It is known that in most problems arc-consistency does not suffice to find a solution (see also the following figure). After a specific point, we should begin searching, by repeating the assignment of values to variables and by checking every time—e.g. after every assignment—if the constraint network is arc-consistent, according to the _maintaining arc-consistency_ (MAC) methodology. If an assignment causes an inconsistency, then it should be canceled, and another value should be chosen.
+
+![Three arc-consistent constraint networks](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/AC.svg)
 
 In order to facilitate or, better, to guide search, a _goals mechanism_ has been implemented in the solver. The application developer that uses the solver can declare their own goals, or they can use the built-in ones. A goal often makes an assignment to a constrained variable, or it removes a value from the domain. If search reaches a dead-end, the solver automatically cancels the goals that guided to it, and the constraint network with its variables is restored back to the state before those goals were executed.
 
@@ -1162,9 +1162,9 @@ class NsgLabeling : public NsGoal {
 
 We observe the operator `new` in the return value of `GOAL()` (when it is not `0`) and in the meta-goals (`NsgAND` and `NsgOR`) constructor functions. `new` is necessary when constructing a pointer to a goal. The solver is responsible to destruct the goal when it becomes useless, using the `delete` operator. That is why _all the goals that we create must be constructed with the `new` operator, and we must **not** `delete` them by ourselves_.
 
-![The combination of the goals that compose NsgLabeling](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/NsgLabeling.svg)
+Regarding the practical meaning of the example, when we ask the solver to satisfy the goal `NsgLabeling(VarArr)`, we except that all the variables of `VarArr` will be assigned values. Thus, the function `GOAL()` of `NsgLabeling` chooses a variable (specifically, the one with the smallest domain size according to the first-fail heuristic). Then it asks (via the goal `NsgInDomain` that assigns to a variable, its domain minimum value) to instantiate the variable _and_ to satisfy the goal `this`. This goal—that refers to a kind of "recursion"—constructs another `NsgLabeling` instance, that is identical to the current one. In fact, `this` tells the solver to assign values to the rest of `VarArr` variables. When `GOAL()` returns `0`, we have finished.
 
-Regarding the practical meaning of the example, when we ask the solver to satisfy the goal `NsgLabeling(VarArr)`, we except that all the variables of `VarArr` will be assigned values. Thus, the function `GOAL()` of `NsgLabeling` chooses a variable (specifically, the one with the smallest domain size according to the first-fail heuristic). Then it asks (via the goal `NsgInDomain` that assigns to a variable, its domain minimum value) to instantiate the variable _and_ to satisfy the goal `this`. This goal—that refers to a kind of "recursion"—constructs another `NsgLabeling` instance, that is identical to the current one. In fact, `this` tells the solver to assign values to the rest of `VarArr` variables. When `GOAL()` returns `0`, we have finished (Fig.~\ref{NsgLabeling}).
+![The combination of the goals that compose NsgLabeling](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/NsgLabeling.svg)
 
 While `NsgLabeling` chooses a variable to be instantiated, `NsgInDomain` chooses the value to assign to the variable. More specifically, it always chooses the minimum value of the domain of the variable. Then it calls the built-in goal `NsgSetValue` that simply assigns the value to the variable. If it is proved afterwards that this value does not guide to a solution, it is removed from the domain by the goal `NsgRemoveValue`, and another value will be assigned (by `NsgInDomain(*this)`).
 
