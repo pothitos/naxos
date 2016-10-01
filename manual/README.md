@@ -606,7 +606,7 @@ assigned to exactly `2` constrained variables in _VarArr_.
 The constraint `NsIfThen(`_p_`, `_q_`)` implies the logical proposition
 _p_ ⇒ _q_, and the constraint `NsEquiv(`_p_`, `_q_`)` means _p_ ⇔ _q_.
 The two constraints can also be expressed with an equivalent way as
-`(!_p_ || _q_)` and `(_p_ == _q_)` respectively.
+`(!`_p_` || `_q_`)` and `(`_p_` == `_q_`)` respectively.
 
 Some examples of expressions for constraints follow:
 
@@ -724,7 +724,7 @@ Then it holds that:
 
 ∀ v ∈ D*_ArrInv*[*i*], D*_Arr*[*v*] ∍ *i*.
 
-If there is no _v_ such that _i_ ∈ D*_Arr[*v*]*, then the domain of
+If there is no _v_ such that _i_ ∈ D*_Arr*[*v*], then the domain of
 *ArrInv*[*i*] will _only_ contain the special value -1.
 
 In a simpler notation, we can write that it holds:
