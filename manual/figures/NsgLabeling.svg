@@ -3,24 +3,15 @@
 <svg height='213.369pt' version='1.1' viewBox='41.0331 66.0332 384.387 213.369' width='384.387pt' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
 <style type='text/css'>
 <![CDATA[
-text.f0 {font-family:cmmi12;font-size:11.9552px}
+text.f0 {font-family:monospace;font-size:11.9552px}
+tspan.f0 {font-family:monospace;font-size:11.9552px}
 text.f1 {font-family:cmr8;font-size:7.97011px}
 text.f2 {font-family:cmr12;font-size:11.9552px}
 ]]>
 </style>
 <g id='page1'>
 <path d='M315.41 66.2032H275.832C275.832 66.2032 275.832 66.2032 275.832 66.2032V88.5351C275.832 88.5351 275.832 88.5351 275.832 88.5351H354.988C354.988 88.5351 354.988 88.5351 354.988 88.5351V66.2032C354.988 66.2032 354.988 66.2032 354.988 66.2032Z' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
-<text class='f0' x='281.686' y='80.357'>N<tspan x='292.309'>s</tspan>
-<tspan x='297.823'>g</tspan>
-<tspan x='303.857'>L</tspan>
-<tspan x='311.822'>a</tspan>
-<tspan x='317.966'>b</tspan>
-<tspan x='322.944'>e</tspan>
-<tspan x='328.369'>l</tspan>
-<tspan x='332.119'>i</tspan>
-<tspan x='336.112'>n</tspan>
-<tspan x='343.1'>g</tspan>
-</text>
+<text class='f0' x='281.686' y='80.357'>NsgLabeling</text>
 <path d='M297.906 88.5703L297.941 88.5352' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
 <path d='M210.312 144.523C211.883 143.738 213.59 143.27 215.344 143.145' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339983'/>
 <path d='M210.312 144.523C211.687 143.434 212.832 142.078 213.68 140.543' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339983'/>
@@ -31,21 +22,9 @@ text.f2 {font-family:cmr12;font-size:11.9552px}
 <path d='M397.012 145.621C395.555 144.637 393.922 143.953 392.199 143.605' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339983'/>
 <path d='M397.012 145.621L328.746 88.5352' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
 <path d='M397.012 145.621L396.926 145.582' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
-<text class='f2' x='302.165' y='120.614'>A<tspan x='310.94'>N</tspan>
-<tspan x='319.715'>D</tspan>
-</text>
+<text class='f2' x='302.165' y='120.614'>AND</text>
 <path d='M192.949 144.523H147.945C147.945 144.523 147.945 144.523 147.945 144.523V166.727C147.945 166.727 147.945 166.727 147.945 166.727H237.949C237.949 166.727 237.949 166.727 237.949 166.727V144.523C237.949 144.523 237.949 144.523 237.949 144.523Z' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
-<text class='f0' x='153.799' y='158.547'>N<tspan x='164.421'>s</tspan>
-<tspan x='169.935'>g</tspan>
-<tspan x='175.97'>I</tspan>
-<tspan x='182.072'>n</tspan>
-<tspan x='189.06'>D</tspan>
-<tspan x='199.104'>o</tspan>
-<tspan x='204.732'>m</tspan>
-<tspan x='214.971'>a</tspan>
-<tspan x='221.116'>i</tspan>
-<tspan x='225.109'>n</tspan>
-</text>
+<text class='f0' x='153.799' y='158.547'>NsgInDomain</text>
 <path d='M177.297 166.758V166.727' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
 <path d='M98.3633 222.715C99.8945 221.852 101.578 221.301 103.32 221.094' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339983'/>
 <path d='M98.3633 222.715C99.6836 221.559 100.762 220.152 101.535 218.574' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339983'/>
@@ -70,45 +49,16 @@ text.f2 {font-family:cmr12;font-size:11.9552px}
 <path d='M406.371 165.848H411.352' fill='none' stroke='#000000' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
 <path d='M419.77 165.848H424.75' fill='none' stroke='#000000' stroke-miterlimit='10.0375' stroke-width='0.339986'/>
 <rect height='0.199235' width='0.199235' x='424.95' y='165.748'/>
-<text class='f0' x='398.723' y='159.776'>t<tspan x='402.95'>h</tspan>
-<tspan x='409.689'>i</tspan>
-<tspan x='413.682'>s</tspan>
-</text>
+<text class='f0' x='398.723' y='159.776'>this</text>
 <path d='M354.98 85.3281C356.527 86.1523 357.898 87.2773 359.012 88.6367' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
 <path d='M354.98 85.3281C356.664 85.8203 358.43 85.9727 360.176 85.7734' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
 <path d='M406.379 145.613C397.516 115.723 380.383 95.6289 354.98 85.3281' fill='none' stroke='#000000' stroke-dasharray='0.00996262,1.99252' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
-<text class='f2' x='184.088' y='198.804'>O<tspan x='193.193'>R</tspan>
-</text>
+<text class='f2' x='184.088' y='198.804'>OR</text>
 <path d='M82.6172 222.715H41.2031C41.2031 222.715 41.2031 222.715 41.2031 222.715V245.047C41.2031 245.047 41.2031 245.047 41.2031 245.047H124.035C124.035 245.047 124.035 245.047 124.035 245.047V222.715C124.035 222.715 124.035 222.715 124.035 222.715Z' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
-<text class='f0' x='47.0553' y='236.87'>N<tspan x='57.6779'>s</tspan>
-<tspan x='63.1919'>g</tspan>
-<tspan x='69.2261'>S</tspan>
-<tspan x='77.1215'>e</tspan>
-<tspan x='82.5469'>t</tspan>
-<tspan x='86.7741'>V</tspan>
-<tspan x='96.1997'>a</tspan>
-<tspan x='102.345'>l</tspan>
-<tspan x='106.094'>u</tspan>
-<tspan x='112.757'>e</tspan>
-</text>
+<text class='f0' x='47.0553' y='236.87'>NsgSetValue</text>
 <path d='M315.41 222.715H261.859C261.859 222.715 261.859 222.715 261.859 222.715V245.047C261.859 245.047 261.859 245.047 261.859 245.047H368.961C368.961 245.047 368.961 245.047 368.961 245.047V222.715C368.961 222.715 368.961 222.715 368.961 222.715Z' fill='none' stroke='#000000' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
-<text class='f0' x='267.713' y='236.87'>N<tspan x='278.336'>s</tspan>
-<tspan x='283.85'>g</tspan>
-<tspan x='289.884'>R</tspan>
-<tspan x='298.893'>e</tspan>
-<tspan x='304.318'>m</tspan>
-<tspan x='314.557'>o</tspan>
-<tspan x='320.185'>v</tspan>
-<tspan x='326.273'>e</tspan>
-<tspan x='331.699'>V</tspan>
-<tspan x='341.124'>a</tspan>
-<tspan x='347.269'>l</tspan>
-<tspan x='351.019'>u</tspan>
-<tspan x='357.681'>e</tspan>
-</text>
-<text class='f1' x='371.456' y='230.892'>A<tspan x='377.799'>N</tspan>
-<tspan x='384.142'>D</tspan>
-</text>
+<text class='f0' x='267.713' y='236.87'>NsgRemoveValue</text>
+<text class='f1' x='371.456' y='230.892'>AND</text>
 <path d='M392.871 233.883H368.961V233.883' fill='none' stroke='#000000' stroke-dasharray='0.00996273,1.83927' stroke-linecap='square' stroke-linejoin='bevel' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
 <rect height='0.199235' width='0.199235' x='392.97' y='223.777'/>
 <path d='M392.969 223.879H397.953' fill='none' stroke='#000000' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
@@ -124,58 +74,10 @@ text.f2 {font-family:cmr12;font-size:11.9552px}
 <path d='M406.371 244.105H411.352' fill='none' stroke='#000000' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
 <path d='M419.77 244.105H424.75' fill='none' stroke='#000000' stroke-miterlimit='10.0375' stroke-width='0.339985'/>
 <rect height='0.199235' width='0.199235' x='424.95' y='244.005'/>
-<text class='f0' x='398.723' y='238.032'>t<tspan x='402.95'>h</tspan>
-<tspan x='409.689'>i</tspan>
-<tspan x='413.682'>s</tspan>
-</text>
+<text class='f0' x='398.723' y='238.032'>this</text>
 <path d='M237.937 156.891C239.66 157.238 241.293 157.926 242.746 158.91' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339982'/>
 <path d='M237.937 156.891C239.695 156.883 241.43 156.523 243.047 155.84' fill='none' stroke='#000000' stroke-linecap='round' stroke-miterlimit='10.0375' stroke-width='0.339982'/>
 <path d='M397.429 223.891C350.472 185.012 297.309 162.68 237.937 156.891' fill='none' stroke='#000000' stroke-dasharray='0.00996262,1.99252' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10.0375' stroke-width='0.339981'/>
-<text class='f2' x='88.4137' y='277.077'>T<tspan x='96.868'>h</tspan>
-<tspan x='103.371'>e</tspan>
-<tspan x='112.476'>c</tspan>
-<tspan x='117.679'>o</tspan>
-<tspan x='123.532'>m</tspan>
-<tspan x='132.961'>b</tspan>
-<tspan x='139.465'>i</tspan>
-<tspan x='142.716'>n</tspan>
-<tspan x='149.22'>a</tspan>
-<tspan x='155.073'>t</tspan>
-<tspan x='159.625'>i</tspan>
-<tspan x='162.877'>o</tspan>
-<tspan x='168.73'>n</tspan>
-<tspan x='179.135'>o</tspan>
-<tspan x='184.988'>f</tspan>
-<tspan x='192.467'>t</tspan>
-<tspan x='197.019'>h</tspan>
-<tspan x='203.523'>e</tspan>
-<tspan x='212.627'>g</tspan>
-<tspan x='218.48'>o</tspan>
-<tspan x='224.333'>a</tspan>
-<tspan x='230.186'>l</tspan>
-<tspan x='233.438'>s</tspan>
-<tspan x='241.957'>t</tspan>
-<tspan x='246.509'>h</tspan>
-<tspan x='253.013'>a</tspan>
-<tspan x='258.866'>t</tspan>
-<tspan x='267.32'>c</tspan>
-<tspan x='272.523'>o</tspan>
-<tspan x='278.376'>m</tspan>
-<tspan x='288.131'>p</tspan>
-<tspan x='294.959'>o</tspan>
-<tspan x='300.812'>s</tspan>
-<tspan x='305.43'>e</tspan>
-<tspan x='314.534'>N</tspan>
-<tspan x='323.31'>s</tspan>
-<tspan x='327.927'>g</tspan>
-<tspan x='333.78'>L</tspan>
-<tspan x='341.094'>a</tspan>
-<tspan x='346.947'>b</tspan>
-<tspan x='353.776'>e</tspan>
-<tspan x='358.978'>l</tspan>
-<tspan x='362.23'>i</tspan>
-<tspan x='365.482'>n</tspan>
-<tspan x='371.985'>g</tspan>
-</text>
+<text class='f2' x='88.4137' y='277.077'>The combination of the goals that compose <tspan class='f0'>NsgLabeling</tspan></text>
 </g>
 </svg>
