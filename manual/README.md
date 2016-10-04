@@ -780,7 +780,7 @@ _ArrInv_ to be the "inverse" array of _Arr_. Still, let
 D*_x* be the domain of the constrained variable _x_. Then it
 holds that:
 
-∀ v ∈ D*_ArrInv*[*i*], D*_Arr*[*v*] ∍ *i*.
+∀ v ∈ D*_ArrInv*[*i*], D*_Arr*[*v*] ∋ *i*.
 
 If there is no _v_ such that _i_ ∈ D*_Arr*[*v*], then the
 domain of *ArrInv*[*i*] will _only_ contain the special
