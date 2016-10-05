@@ -952,7 +952,7 @@ class  NsIntVar {
         ///  @{
         ///  \name  Auxiliary AC algorithm data-members
 
-    private:
+    public:
 
         ///  Pair of a constraint and the inconsistencies that has provoked.
 
@@ -969,8 +969,6 @@ class  NsIntVar {
                         : constr(constr_init), failures(0)
                 {   }
         };
-
-    public:
 
         ///  An array of the constraints that the variable is involved in.
         NsDeque<ConstraintAndFailure>  constraints;
