@@ -11,15 +11,15 @@ int main (int argc, char *argv[])
                 int N = (argc > 1) ? atoi(argv[1]) : 8;
                 NsProblemManager pm;
                 NsIntVarArray Var, VarPlus, VarMinus;
-                for (int i=0; i < N; ++i) {
+                for (int i = 0; i < N; ++i) {
                         Var.push_back(NsIntVar(pm, 0, N-1));
-                        VarPlus.push_back( Var[i] + i);
+                        VarPlus.push_back(Var[i] + i);
                         VarMinus.push_back(Var[i] - i);
                 }
                 pm.add(NsAllDiff(Var));
                 pm.add(NsAllDiff(VarPlus));
                 pm.add(NsAllDiff(VarMinus));
-                pm.addGoal( new NsgLabeling(Var));
+                pm.addGoal(new NsgLabeling(Var));
                 while (pm.nextSolution() != false)
                         cout << Var << "\n";
         } catch (exception& exc) {
