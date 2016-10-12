@@ -59,8 +59,7 @@ Ns_ConstrXinDomain::ArcCons (void)
         VarX->removeRange((*domainPrevious)[VarX->max()-min]+1, NsPLUS_INF, this);
 }
 
-void
-Ns_ConstrXinDomain::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXinDomain::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
 }
@@ -529,34 +528,9 @@ Ns_ConstrXeqYplusC::ArcCons (void)
         //}
 }
 
-void
-Ns_ConstrXeqYplusC::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqYplusC::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
-        //if (VarX == Qitem.getVarFired())  {
-        //      VarY->removeRange(NsMINUS_INF, VarX->min()-C-1, this);
-        //      VarY->removeRange(VarX->max()-C+1, NsPLUS_INF, this);
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,
-        //      "Ns_ConstrXeqYplusC::LocalArcCons: Wrong getVarFired");
-        //      VarX->removeRange(NsMINUS_INF, VarY->min()+C-1, this);
-        //      VarX->removeRange(VarY->max()+C+1, NsPLUS_INF, this);
-        //}
-        //NsInt  SupportVal;
-        //
-        //if (VarX == Qitem.getVarFired())  {
-        //      SupportVal = Qitem.getW() - C;
-        //      if (VarY->contains( SupportVal ))
-        //              VarY->removeSingle( SupportVal , this);
-        //
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,
-        //                      "Ns_ConstrXeqYplusC::LocalArcCons: Wrong getVarFired");
-        //
-        //      SupportVal = Qitem.getW() + C;
-        //      if (VarX->contains( SupportVal ))
-        //              VarX->removeSingle( SupportVal , this);
-        //}
 }
 
 void
@@ -581,33 +555,9 @@ Ns_ConstrXeqCminusY::ArcCons (void)
         //}
 }
 
-void
-Ns_ConstrXeqCminusY::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqCminusY::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
-        //if (VarX == Qitem.getVarFired())  {
-        //      VarY->removeRange(NsMINUS_INF, C-VarX->max()-1, this);
-        //      VarY->removeRange(C-VarX->min()+1, NsPLUS_INF, this);
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,
-        //      "Ns_ConstrXeqCminusY::LocalArcCons: Wrong getVarFired");
-        //      VarX->removeRange(NsMINUS_INF, C-VarY->max()-1, this);
-        //      VarX->removeRange(C-VarY->min()+1, NsPLUS_INF, this);
-        //}
-        //NsInt  SupportVal;
-        //
-        //if (VarX == Qitem.getVarFired())  {
-        //      SupportVal = C - Qitem.getW();
-        //      if (VarY->contains( SupportVal ))
-        //              VarY->removeSingle( SupportVal , this);
-        //
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,  "Ns_ConstrXeqCminusY::LocalArcCons: Wrong getVarFired");
-        //
-        //      SupportVal = C - Qitem.getW();
-        //      if (VarX->contains( SupportVal ))
-        //              VarX->removeSingle( SupportVal , this);
-        //}
 }
 
 void
@@ -644,45 +594,9 @@ Ns_ConstrXeqYtimesC::ArcCons (void)
 }
 
 void
-Ns_ConstrXeqYtimesC::LocalArcCons (Ns_QueueItem& Qitem)
+Ns_ConstrXeqYtimesC::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
-        //if ( VarX  ==  Qitem.getVarFired() )  {
-        //      if ( C  >=  0 )    {
-        //              VarY->removeRange(NsMINUS_INF, VarX->min()/C-1, this);
-        //              VarY->removeRange(VarX->max()/C+1, NsPLUS_INF, this);
-        //      }  else  {
-        //              VarY->removeRange(NsMINUS_INF, VarX->max()/C-1, this);
-        //              VarY->removeRange(VarX->min()/C+1, NsPLUS_INF, this);
-        //      }
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,  "Ns_ConstrXeqYtimesC::LocalArcCons: Wrong getVarFired");
-        //      if ( C  >=  0 )    {
-        //              VarX->removeRange(NsMINUS_INF, VarY->min()*C-1, this);
-        //              VarX->removeRange(VarY->max()*C+1, NsPLUS_INF, this);
-        //      }  else  {
-        //              VarX->removeRange(NsMINUS_INF, VarY->max()*C-1, this);
-        //              VarX->removeRange(VarY->min()*C+1, NsPLUS_INF, this);
-        //      }
-        //}
-        //if ( Qitem.getVarFired()->isBound()  &&  ( !VarX->isBound()  ||  !VarY->isBound() ) )   {
-        //if ( VarX->min() == 0   &&  VarX->max() == 19 )    {
-        //      cout << "Bug?:\t" << *VarX << " = " << C << "*" << *VarY << ".\tVarX=" << VarX << " VarY=" << VarY << " fired=" << *Qitem.getVarFired() << "\n";
-        //abort();
-        //}
-        //NsInt  SupportVal;
-        //
-        //if (VarX == Qitem.getVarFired())  {
-        //      SupportVal = Qitem.getW() / C;
-        //      if (Qitem.getW() % C == 0  &&  VarY->contains( SupportVal ))
-        //              VarY->removeSingle( SupportVal , this);
-        //
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,  "Ns_ConstrXeqYtimesC::LocalArcCons: Wrong getVarFired");
-        //      SupportVal = Qitem.getW() * C;
-        //      if (VarX->contains( SupportVal ))
-        //              VarX->removeSingle( SupportVal , this);
-        //}
 }
 
 void

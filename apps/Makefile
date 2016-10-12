@@ -6,7 +6,7 @@ NAXOS = ../core/bounds-consistency
 
 ### COMPILER ###
 CXX = g++
-WARNINGS = -pedantic -Wall -W -Wshadow
+WARNINGS = -pedantic -Wall -W -Wshadow -Werror
 CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
 LD = $(CXX) $(COVERAGE)
 LDFLAGS = -s
@@ -20,17 +20,17 @@ HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
 ### BUILDING ###
 .PHONY: all
 all: $(PROGRAMS)
-$(OBJECTS):   %.o:   %.cpp $(HEADERS)
-	$(CXX) $(CXXFLAGS) -c $<  -o $@
-$(PR_OBJECTS):   %.o:   %.cpp $(HEADERS)
-	$(CXX) $(CXXFLAGS) -I$(NAXOS) -c  $<
-$(PROGRAMS):   %:   $(OBJECTS) %.o
-	$(LD) $(LDFLAGS) $^  -o $@
+$(OBJECTS): %.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(PR_OBJECTS): %.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -I$(NAXOS) -c $<
+$(PROGRAMS): %: $(OBJECTS) %.o
+	$(LD) $(LDFLAGS) $^ -o $@
 
 ### CLEANING ###
 .PHONY: clean
 clean:
-	$(RM)  $(PROGRAMS) $(PR_OBJECTS)
+	$(RM) $(PROGRAMS) $(PR_OBJECTS)
 
 ### TESTING ###
 .PHONY: test

@@ -17,8 +17,7 @@
 using namespace naxos;
 using namespace std;
 
-void
-array_min_minmax (const NsIntVarArray *VarArr, NsInt& min, NsInt& minmax)
+void array_min_minmax (const NsIntVarArray *VarArr, NsInt& min, NsInt& minmax)
 {
         NsIntVarArray::const_iterator  V = VarArr->begin();
         min = V->min();
@@ -149,96 +148,14 @@ Ns_ConstrXeqMax::ArcCons (void)
         //}
 }
 
-void
-Ns_ConstrXeqMin::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqMin::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
-        //NsIntVarArray::iterator  V;
-        //if ( VarX  ==  Qitem.getVarFired() )    {
-        //      //if ( Qitem.getW()  <  VarX->min() )  {
-        //              for (V = VarArr->begin();   V != VarArr->end();   ++V)
-        //                      V->removeRange(NsMINUS_INF, VarX->min()-1, this);
-        //      //}
-        //}  else  {
-        //      //if ( Qitem.getW()  >  Qitem.getVarFired()->max() )
-        //      VarX->removeRange(Qitem.getVarFired()->max()+1, NsPLUS_INF, this);
-        //      if ( Qitem.getVarFired()->min()  >  VarX->min() )    {
-        //              NsInt  min, minmax;
-        //              array_min_minmax(VarArr, min, minmax);
-        //              VarX->removeRange(NsMINUS_INF, min-1, this);
-        //              VarX->removeRange(minmax+1, NsPLUS_INF, this);
-        //              //for (V = VarArr->begin();
-        //              //              V != VarArr->end();
-        //              //              ++V)
-        //              //{
-        //              //      if ( V->min()  <=  VarX->min() )
-        //              //              break;
-        //              //}
-        //              //if ( V  ==  VarArr->end() )    {
-        //              //      VarX->remove(NsMINUS_INF,
-        //              //              Qitem.getVarFired()->min()-1, this);
-        //              //}
-        //      }
-        //      //if ( VarX->contains(Qitem.getW()) )   {
-        //      //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //      //              if ( V->contains( Qitem.getW() ) )
-        //      //                      break;
-        //      //      }
-        //      //      if ( V  ==  VarArr->end() )
-        //      //              VarX->removeSingle( Qitem.getW() , this);
-        //      //}
-        //}
 }
 
-void
-Ns_ConstrXeqMax::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqMax::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
-        //NsIntVarArray::iterator  V;
-        //if ( VarX  ==  Qitem.getVarFired() )    {
-        //      //if ( Qitem.getW() > VarX->max() )    {
-        //              for (V = VarArr->begin();   V != VarArr->end();   ++V)
-        //                      V->removeRange(VarX->max()+1, NsPLUS_INF, this);
-        //      //}
-        //}  else  {
-        //      //if ( Qitem.getW() < Qitem.getVarFired()->min() )    {
-        //      VarX->removeRange(NsMINUS_INF, Qitem.getVarFired()->min()-1, this);
-        //      //}
-        //      if ( Qitem.getVarFired()->max()  <  VarX->max() )    {
-        //              NsInt  maxmin, max;
-        //              array_maxmin_max(VarArr, maxmin, max);
-        //              VarX->removeRange(NsMINUS_INF, maxmin-1, this);
-        //              VarX->removeRange(max+1, NsPLUS_INF, this);
-        //              //for (V = VarArr->begin();
-        //              //              V != VarArr->end();
-        //              //              ++V)
-        //              //{
-        //              //      if ( V->max()  >=  VarX->max() )
-        //              //              break;
-        //              //}
-        //              //if ( V  ==  VarArr->end() )    {
-        //              //      VarX->removeRange(Qitem.getVarFired()->max()+1,
-        //              //                      NsPLUS_INF, this);
-        //              //}
-        //      }
-        //      //if ( VarX->contains(Qitem.getW()) )    {
-        //      //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //      //              if ( V->contains( Qitem.getW() ) )
-        //      //                      break;
-        //      //      }
-        //      //      if ( V  ==  VarArr->end() )
-        //      //              VarX->removeSingle( Qitem.getW() , this);
-        //      //}
-        //}
-        //              //for (V = VarArr->begin();
-        //              //              V != VarArr->end();
-        //              //              ++V)
-        //              //{
-        //              //      if ( !V->isBound() )
-        //              //              break;
-        //              //}
-        //              //if ( V  ==  VarArr->end()  &&  !VarX->isBound() )
-        //              //      cout << VarX << "  =  max" << VarArr << "\n";
 }
 
 Ns_ConstrXeqSum::Ns_ConstrXeqSum (NsIntVar *X, NsIntVarArray *VarArr_init)
@@ -315,14 +232,9 @@ Ns_ConstrXeqSum::ArcCons (void)
         }
 }
 
-// bounds-consistency only
-void
-Ns_ConstrXeqSum::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqSum::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
-        //if (Qitem.getVarFired()->min() < Qitem.getW()  &&  Qitem.getW() < Qitem.getVarFired()->max())
-        //      return; // bounds-consistency does not care
         ArcCons();
-        //throw  NsException("Ns_ConstrXeqSum::LocalArcCons: unimplemented");
 }
 
 //#ifndef Ns_AllDiff_Test
