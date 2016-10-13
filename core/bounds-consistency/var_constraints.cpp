@@ -1,12 +1,10 @@
-///  \file
-///  \brief  Algorithms that impose the constraints over variables.
+/// \file
+/// \brief Algorithms that impose the constraints over variables.
 ///
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// \internal
+/// Naxos Solver: A Constraint Programming Library
+/// Copyright 2007-2016 Nikolaos Pothitos
+/// See LICENSE in the root folder.
 
 #include "naxos.h"
 #include "internal.h"
@@ -499,33 +497,16 @@ Ns_ConstrMetaXeqYneqC::LocalArcCons (Ns_QueueItem& Qitem)
         }
 }
 
-void
-Ns_ConstrXeqYplusC::ArcCons (void)
+void Ns_ConstrXeqYplusC::ArcCons (void)
 {
-        bool  modification;
+        bool modification;
         do {
-                modification  =  false;
-                //if ( VarX->min()  <  VarY->min()+C )
+                modification = false;
                 VarX->removeRange(NsMINUS_INF, VarY->min()+C-1, this, modification);
-                //if ( VarX->max()  >  VarY->max()+C )
                 VarX->removeRange(VarY->max()+C+1, NsPLUS_INF, this, modification);
-                //if ( VarY->min()  <  VarX->min()-C )
                 VarY->removeRange(NsMINUS_INF, VarX->min()-C-1, this, modification);
-                //if ( VarY->max()  >  VarX->max()-C )
                 VarY->removeRange(VarX->max()-C+1, NsPLUS_INF, this, modification);
-        }  while ( modification );
-        //NsIntVar::const_iterator  v;
-        //
-        //for (v = VarX->begin();  v != VarX->end();  ++v)  {
-        //
-        //      if ( !VarY->contains( *v - C ) )
-        //              VarX->removeSingle( *v , this);
-        //}
-        //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-        //
-        //      if ( !VarX->contains( *v + C ) )
-        //              VarY->removeSingle( *v , this);
-        //}
+        } while (modification);
 }
 
 void Ns_ConstrXeqYplusC::LocalArcCons (Ns_QueueItem& /*Qitem*/)
@@ -544,15 +525,6 @@ Ns_ConstrXeqCminusY::ArcCons (void)
                 VarY->removeRange(NsMINUS_INF, C-VarX->max()-1, this, modification);
                 VarY->removeRange(C-VarX->min()+1, NsPLUS_INF, this, modification);
         }  while ( modification );
-        //NsIntVar::const_iterator  v;
-        //for (v = VarX->begin();  v != VarX->end();  ++v)  {
-        //      if ( !VarY->contains( C - *v ) )
-        //              VarX->removeSingle( *v , this);
-        //}
-        //for (v = VarY->begin();  v != VarY->end();  ++v)  {
-        //      if ( !VarX->contains( C - *v ) )
-        //              VarY->removeSingle( *v , this);
-        //}
 }
 
 void Ns_ConstrXeqCminusY::LocalArcCons (Ns_QueueItem& /*Qitem*/)
@@ -625,31 +597,9 @@ Ns_ConstrXeqY::ArcCons (void)
         //}
 }
 
-void
-Ns_ConstrXeqY::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqY::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
-        //if (VarX == Qitem.getVarFired())  {
-        //      //if ( VarY->min()  <  VarX->min() )
-        //              VarY->removeRange(NsMINUS_INF, VarX->min()-1, this);
-        //      //if ( VarY->max()  >  VarX->max() )
-        //              VarY->removeRange(VarX->max()+1, NsPLUS_INF, this);
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,
-        //      "Ns_ConstrXeqY::LocalArcCons: Wrong getVarFired");
-        //      //if ( VarX->min()  <  VarY->min() )
-        //              VarX->removeRange(NsMINUS_INF, VarY->min()-1, this);
-        //      //if ( VarX->max()  >  VarY->max() )
-        //              VarX->removeRange(VarY->max()+1, NsPLUS_INF, this);
-        //}
-        //if (VarX == Qitem.getVarFired())  {
-        //      if (VarY->contains( Qitem.getW() ))
-        //              VarY->removeSingle( Qitem.getW() , this);
-        //}  else  {
-        //      assert_Ns( VarY == Qitem.getVarFired() ,  "Ns_ConstrXeqY::LocalArcCons: Wrong getVarFired");
-        //      if (VarX->contains( Qitem.getW() ))
-        //              VarX->removeSingle( Qitem.getW() , this);
-        //}
 }
 
 void
@@ -756,7 +706,7 @@ Ns_ConstrXeqYdivC::ArcCons (void)
 }
 
 void
-Ns_ConstrXeqYdivC::LocalArcCons (Ns_QueueItem& Qitem)
+Ns_ConstrXeqYdivC::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
         ////cout << *VarX << " == " << *VarY << " / " << C << "\n";
@@ -860,7 +810,7 @@ Ns_ConstrXeqCdivY::ArcCons (void)
 }
 
 void
-Ns_ConstrXeqCdivY::LocalArcCons (Ns_QueueItem& Qitem)
+Ns_ConstrXeqCdivY::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
         ////cout << *VarX << " == " << *VarY << " / " << C << "\n";
@@ -1034,7 +984,7 @@ Ns_ConstrXeqAbsY::ArcCons (void)
 }
 
 void
-Ns_ConstrXeqAbsY::LocalArcCons (Ns_QueueItem& Qitem)
+Ns_ConstrXeqAbsY::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
         //if (VarX == Qitem.getVarFired())  {
@@ -1378,12 +1328,8 @@ Ns_ConstrXeqYplusZ::ArcCons (void)
         }
 }
 
-// bounds-consistency only
-void
-Ns_ConstrXeqYplusZ::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqYplusZ::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
-        //if (Qitem.getVarFired()->min() < Qitem.getW()  &&  Qitem.getW() < Qitem.getVarFired()->max())
-        //      return; // bounds-consistency does not care
         ArcCons();
 }
 
