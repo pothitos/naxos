@@ -1464,8 +1464,7 @@ product_min_max (const NsIntVar *VarY, const NsIntVar *VarZ, NsInt& min, NsInt& 
 
 namespace {
 
-void
-product_prune_bound (NsIntVar *VarX, NsIntVar *VarY, NsIntVar *VarZ,
+void product_prune_bound (NsIntVar *VarX, NsIntVar *VarY, NsIntVar *VarZ,
                      bool& changed_minmax, const Ns_Constraint *constraint)
 {
         while ( ( VarY->min() * VarZ->min() < VarX->min()  &&  VarY->min() * VarZ->max() < VarX->min() )
@@ -1482,11 +1481,9 @@ product_prune_bound (NsIntVar *VarX, NsIntVar *VarY, NsIntVar *VarZ,
         }
 }
 
-}                                                                // namespace
+} // namespace
 
-// bounds-consistency only
-void
-Ns_ConstrXeqYtimesZ::ArcCons (void)
+void Ns_ConstrXeqYtimesZ::ArcCons (void)
 {
         NsInt  min, max;
         bool  changed_minmax;
@@ -1500,11 +1497,7 @@ Ns_ConstrXeqYtimesZ::ArcCons (void)
         } while ( changed_minmax );
 }
 
-// bounds-consistency only
-void
-Ns_ConstrXeqYtimesZ::LocalArcCons (Ns_QueueItem& Qitem)
+void Ns_ConstrXeqYtimesZ::LocalArcCons (Ns_QueueItem& /*Qitem*/)
 {
-        //if (Qitem.getVarFired()->min() < Qitem.getW()  &&  Qitem.getW() < Qitem.getVarFired()->max())
-        //      return; // bounds-consistency does not care
         ArcCons();
 }
