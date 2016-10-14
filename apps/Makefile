@@ -35,4 +35,6 @@ clean:
 ### TESTING ###
 .PHONY: test
 test:
-	./nqueens | sort | cmp - verification/nqueens_8_sorted_results.txt
+	./nqueens 4  | sort | cmp - verification/nqueens_4_sorted_results.txt
+	./nqueens    | sort | cmp - verification/nqueens_8_sorted_results.txt
+	./nqueens 12 | sort | cmp - verification/nqueens_12_sorted_results.txt
