@@ -35,4 +35,4 @@ clean:
 ### TESTING ###
 .PHONY: test
 test:
-	test `./nqueens 8 | wc -l` -eq 92
+	./nqueens | sort | cmp - verification/nqueens_8_sorted_results.txt
