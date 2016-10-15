@@ -8,8 +8,8 @@ NAXOS = ../core/bounds-consistency
 CXX = g++
 WARNINGS = -pedantic -Wall -W -Wshadow -Werror
 CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
-LD = $(CXX) $(COVERAGE)
-LDFLAGS = -s
+LD = $(CXX)
+LDFLAGS = -s $(COVERAGE)
 
 ### FILENAMES ###
 PROGRAMS = nqueens send_more_money

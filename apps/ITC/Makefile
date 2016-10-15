@@ -1,34 +1,28 @@
 ### COMPILING AND LINKING OPTIONS ###
-
-# Uncomment the following line, for Sun compilation at di.uoa.gr domain.
-#CPATH = /usr/sfw/bin/
-
 # Uncomment the following line, for gcc versions greater than 4.2.
 STANDARD = -std=c++0x
-#LDFLAGS2 = -Wl,--enable-auto-import
 
 NDIR = ../../core/bounds-consistency
 NDIR_AC = ../../naxos-AC
 ADIR = ../../amorgos
 
 CC = $(CPATH)g++
-WFLAGS = -pedantic -Wall -W -Wshadow
+WFLAGS = -pedantic -Wall -W -Wshadow -Werror
 COMPFLAGS = $(WFLAGS) $(STANDARD) -I$(NDIR) -I$(ADIR)
 COMPFLAGS_AC = $(WFLAGS) $(STANDARD) -I$(NDIR_AC) -I$(ADIR)
-CFLAGS = $(COMPFLAGS) -O
-CFLAGS_AC = $(COMPFLAGS_AC) -O
+CFLAGS = $(COMPFLAGS) -O2 $(COVERAGE)
+CFLAGS_AC = $(COMPFLAGS_AC) -O2 $(COVERAGE)
 CDEBFLAGS = $(COMPFLAGS) -g3
-NCFLAGS = $(WFLAGS) $(STANDARD) -O
-ACFLAGS = $(WFLAGS) $(STANDARD) -I$(NDIR) -O
-ACFLAGS_AC = $(WFLAGS) $(STANDARD) -I$(NDIR_AC) -O
+NCFLAGS = $(WFLAGS) $(STANDARD) -O2 $(COVERAGE)
+ACFLAGS = $(WFLAGS) $(STANDARD) -I$(NDIR) -O2 $(COVERAGE)
+ACFLAGS_AC = $(WFLAGS) $(STANDARD) -I$(NDIR_AC) -O2 $(COVERAGE)
 NCDEBFLAGS = $(WFLAGS) -g3
 ACDEBFLAGS = $(WFLAGS) -I$(NDIR) -g3
 CPROFFLAGS = $(CDEBFLAGS) -pg
 
 LD = $(CC)
-LDFLAGS = -s $(LDFLAGS2)
-LDDEBFLAGS = $(LDFLAGS2)
-LDPROFFLAGS = $(LDDEBFLAGS) -pg
+LDFLAGS = -s $(COVERAGE)
+LDPROFFLAGS = -pg
 
 RM = \rm -f
 
@@ -94,7 +88,7 @@ DEBOBJS = $(OBJS:.o=.debug.o)
 debug: $(DEBPROG)
 
 $(DEBPROG): $(DEBOBJS)
-	$(LD) $(LDDEBFLAGS) $(DEBOBJS) -o $@
+	$(LD) $(DEBOBJS) -o $@
 
 $(NDIR)/%.debug.o: $(NDIR)/%.cpp $(NHDRS)
 	$(CC) $(NCDEBFLAGS) -c $< -o $@
