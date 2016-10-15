@@ -19,6 +19,7 @@
    @date 25 October 2007
 */
 
+#include <cstdlib>
 #include <string>
 #include <vector>
 #include <fstream>
