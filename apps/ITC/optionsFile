@@ -95,7 +95,7 @@
 #   The application interchanges a direct method with an indirect         #
 #    one (Local Search), and the following parameters define the time     #
 #    that will be spent by the corresponding method at each round.        #
-#    A zero value is interpeted as infinity.                              #
+#    A zero value is interpreted as infinity.                             #
 #                                                                         #
 #      timeLimitDirectMethodRound    <seconds>                            #
 #      timeLimitIndirectMethodRound  <seconds>                            #
@@ -142,9 +142,9 @@ searchMethod  DFS
 #searchMethod  IBROAD
 #searchMethod  PoPS
 
-timeLimit                        900
-timeLimitDirectMethodRound       900
-timeLimitIndirectMethodRound     0
+timeLimit 900
+timeLimitDirectMethodRound 0
+timeLimitIndirectMethodRound 0
 
 
 # Heuristics Parameters #
