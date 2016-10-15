@@ -126,5 +126,7 @@ clean :
 	$(RM)  $(TODEL)
 
 ### TESTING ###
+SECONDS=$(shell cd datasets && yes | ./benchmark_my_linux_machine | grep "seconds" | grep -o "[[:digit:]]*")
 .PHONY: test
-test: ;
+test:
+	echo $(SECONDS)
