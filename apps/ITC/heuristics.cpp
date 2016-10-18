@@ -1,4 +1,3 @@
-//#include <internal.h>
 #include "heuristics.h"
 #include "error.h"
 #include <cstdlib>
@@ -696,7 +695,7 @@ howMuchConstrainingValue (const int period, const NsIntVarArray& vLectPeriod, co
                           const NsIntVarArray& vRooms, const struct itcProblem_t& pr)
 {
         double  howMuchConstraining = 0.0, valuesToRemove;
-        int  i, j, limit;
+        NsInt  i, j, limit;
         //  Counting the percentage of the values of the variables of the lectures    //
         //   of the same course that will be removed due to the examined assignment.  //
         limit = period;

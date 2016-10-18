@@ -133,4 +133,4 @@ test:
 	# Execute the curriculum based course timetabling solver
 	./itc_solver datasets/ITC01.ctt ITC01.sol -options optionsFile
 	# Validate the last solution found
-	verification/validator ITC01.sol
+	verification/validator datasets/ITC01.ctt ITC01.sol
