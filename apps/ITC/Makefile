@@ -131,6 +131,6 @@ test:
 	sed -i "s/^\(timeLimit\) .*/\1 $$AVAILABLE_SECONDS/" optionsFile && \
 	sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $$AVAILABLE_SECONDS/" optionsFile
 	# Execute the curriculum based course timetabling solver
-	./itc_solver datasets/ITC01.ctt ITC01.sol -options optionsFile
+	./itc_solver datasets/comp01.ctt comp01.sol -options optionsFile
 	# Validate the last solution found
-	verification/validator datasets/ITC01.ctt ITC01.sol
+	verification/validator datasets/comp01.ctt comp01.sol
