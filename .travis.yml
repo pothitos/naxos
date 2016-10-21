@@ -16,9 +16,7 @@ env:
     - BUILD_DIR="apps/ITC/"
     - BUILD_DIR="apps/hadoop/"
 
-script:
-    - echo "$(nproc) available cores"
-    - cd $BUILD_DIR && make -j $((2 * $(nproc))) && make test && cd -
+script: cd $BUILD_DIR && make -j && make test && cd -
 
 after_success:
   - coveralls -b $BUILD_DIR
