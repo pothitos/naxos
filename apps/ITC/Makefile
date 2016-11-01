@@ -122,15 +122,4 @@ clean:
 ### TESTING ###
 .PHONY: test
 test:
-	# Compile the official validator
-	g++ verification/validator.cc -o verification/validator
-	# Find and configure the available time for searching a solution
-	AVAILABLE_SECONDS=$(shell cd datasets && \
-		yes | ./benchmark_my_linux_machine | \
-		grep "seconds" | grep -o "[[:digit:]]*") && \
-	sed -i "s/^\(timeLimit\) .*/\1 $$AVAILABLE_SECONDS/" optionsFile && \
-	sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $$AVAILABLE_SECONDS/" optionsFile
-	# Execute the curriculum based course timetabling solver
-	./itc_solver datasets/comp01.ctt comp01.sol -options optionsFile
-	# Validate the last solution found
-	verification/validator datasets/comp01.ctt comp01.sol
+	verification/test.sh
