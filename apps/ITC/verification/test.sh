@@ -9,11 +9,11 @@ cd -
 sed -i "s/^\(timeLimit\) .*/\1 $AVAILABLE_SECONDS/" optionsFile && \
 sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
 # Execute the curriculum based course timetabling solver
-./itc_solver datasets/comp01.ctt comp01.sol -options optionsFile
+./itc_solver datasets/$DATASET solution.txt -options optionsFile
 # Compile the official validator
 g++ verification/validator.cc -o verification/validator
 # Validate the last solution found
-verification/validator datasets/comp01.ctt comp01.sol > validation.txt
+verification/validator datasets/$DATASET solution.txt > validation.txt
 # Calculate the constraint categories were no hard constraints were violated
 CATEGORIES=$(grep -c "^Violations of [[:alpha:]]* (hard) : 0$" validation.txt)
 # The constraint categories are four
