@@ -132,15 +132,9 @@
 #                                                                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+metaSearchMethod NONE
 
-
-metaSearchMethod  NONE
-
-
-searchMethod  DFS
-#searchMethod  LDS
-#searchMethod  IBROAD
-#searchMethod  PoPS
+searchMethod DFS
 
 timeLimit 900
 timeLimitDirectMethodRound 900
