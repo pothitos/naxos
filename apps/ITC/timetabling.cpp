@@ -516,7 +516,7 @@ main (int argc, char *argv[])
                                                 cout << "  "
                                                      << setw(2) << setfill('0') << timeNow/60 << ":"
                                                      << setw(2) << setfill('0') << timeNow%60
-                                                     << "\t" << vObjective.max()
+                                                     << "\tcost " << vObjective.max()
                                                      << "\t# = " << vObjectiveTerms[0].max() << "+" << vObjectiveTerms[1].max()
                                                      << "+" << vObjectiveTerms[2].max() << "+" << vObjectiveTerms[3].max()
                                                      << "  Constraint-checks: " << pm.numConstraintChecks()
@@ -566,7 +566,7 @@ main (int argc, char *argv[])
                                         cout << "  "
                                              << setw(2) << setfill('0') << timeNow/60 << ":"
                                              << setw(2) << setfill('0') << timeNow%60
-                                             << "\t" << vObjective_ls.max()
+                                             << "\tcost " << vObjective_ls.max()
                                              << "\t# = " << vObjectiveTerms_ls[0].max() << "+" << vObjectiveTerms_ls[1].max()
                                              << "+" << vObjectiveTerms_ls[2].max() << "+" << vObjectiveTerms_ls[3].max() << "\n"
                                              << flush;
