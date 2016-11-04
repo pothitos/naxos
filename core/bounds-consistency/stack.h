@@ -1,104 +1,95 @@
-///  \file
-///  \brief Stack implementation.
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///   See 'LICENSE' at the top folder.
+/// \file
+/// \brief Stack implementation.
+/// \internal
+/// This file is part of
+///  Naxos Solver: A Constraint Programming Library
+///  Copyright 2007-2016 Nikolaos Pothitos
+///  See 'LICENSE' at the top folder.
 
 #ifndef Ns_STACK_H
 #define Ns_STACK_H
 
 template <class TemplType>
-class  NsStack {
+class NsStack {
 
     protected:
 
-        struct  StackNode_t {
-                TemplType  theData;
-                StackNode_t  *next;
+        struct StackNode_t {
+                TemplType theData;
+                StackNode_t *next;
                 StackNode_t (const TemplType& T)
-                        : theData(T), next(0)  {   }
+                        : theData(T), next(0) { }
         };
 
-        StackNode_t  *stackTopNode;
+        StackNode_t *stackTopNode;
 
     public:
 
-        typedef  TemplType  value_type;
+        typedef TemplType value_type;
 
-        typedef  unsigned long  size_type;
+        typedef unsigned long size_type;
 
     private:
 
-        size_type  nFrames;
+        size_type nFrames;
 
     public:
 
         NsStack (void)
-                : stackTopNode(0), nFrames(0)  {  }
-
-        //NsStack (const NsStack& stackOther);
+                : stackTopNode(0), nFrames(0) { }
 
         NsStack (const NsStack& stackOther)
         {
-                *this  =  stackOther;
+                *this = stackOther;
         }
 
-        NsStack&  operator = (const NsStack& stackOther);
+        NsStack& operator = (const NsStack& stackOther);
 
         ~NsStack (void)
         {
                 clear();
         }
 
-        size_type  size (void)  const
+        size_type size (void) const
         {
-                return  nFrames;
+                return nFrames;
         }
 
-        void  clear (void)
+        void clear (void)
         {
-                while ( !empty() )
+                while (!empty())
                         pop();
         }
 
-        bool  empty (void)  const
+        bool empty (void) const
         {
-                return  (stackTopNode == 0);
+                return (stackTopNode == 0);
         }
 
-        TemplType&  top (void)
+        TemplType& top (void)
         {
-                assert_Ns( stackTopNode != 0 ,  "NsStack::top: Stack is empty");
-                return  stackTopNode->theData;
+                assert_Ns(stackTopNode != 0, "NsStack::top: Stack is empty");
+                return stackTopNode->theData;
         }
 
-        const TemplType&  top (void)  const
+        const TemplType& top (void) const
         {
-                assert_Ns( stackTopNode != 0 ,  "NsStack::top: Stack is empty");
-                return  stackTopNode->theData;
+                assert_Ns(stackTopNode != 0, "NsStack::top: Stack is empty");
+                return stackTopNode->theData;
         }
 
-        //TemplType&  top_MinusOne (void)
-        //{
-        //    assert_Ns( stackTopNode!=0 && stackTopNode->next!=0 ,  "NsStack::top_MinusOne: There is no second item in the stackTopNode");
-        //    return  stackTopNode->next->theData;
-        //}
-
-        void  pop (void)
+        void pop (void)
         {
-                assert_Ns( !empty() ,  "NsStack::pop: Stack is empty");
-                StackNode_t  *current = stackTopNode;
+                assert_Ns(!empty(), "NsStack::pop: Stack is empty");
+                StackNode_t *current = stackTopNode;
                 stackTopNode = current->next;
                 delete current;
                 --nFrames;
         }
 
-        void  push (const TemplType newData)
+        void push (const TemplType newData)
         {
-                StackNode_t  *newNode = new StackNode_t(newData);
-                //newNode->theData = newData;
+                StackNode_t *newNode = new StackNode_t(newData);
                 newNode->next = stackTopNode;
                 stackTopNode = newNode;
                 ++nFrames;
@@ -112,7 +103,7 @@ class  NsStack {
 
         class iterator {
             private:
-                StackNode_t  *currNode;
+                StackNode_t *currNode;
 
             public:
                 iterator (void)
@@ -123,42 +114,42 @@ class  NsStack {
                         : currNode(startNode)
                 {    }
 
-                bool  operator == (const iterator& b)  const
+                bool operator == (const iterator& b) const
                 {
-                        return  ( currNode  ==  b.currNode );
+                        return (currNode == b.currNode);
                 }
 
-                bool  operator != (const iterator& b)  const
+                bool operator != (const iterator& b) const
                 {
-                        return  ( !( *this  ==  b ) );
+                        return  (!(*this == b));
                 }
 
-                TemplType&  operator * (void)  const
+                TemplType& operator * (void) const
                 {
                         assert_Ns(currNode != 0,
                                   "NsStack::iterator::*: Bad request `*(something.end())'");
-                        return  currNode->theData;
+                        return currNode->theData;
                 }
 
-                TemplType  *operator -> (void)  const
+                TemplType *operator -> (void) const
                 {
                         assert_Ns(currNode != 0,
                                   "NsStack::iterator::->: Bad request `*(something.end())'");
-                        return  &currNode->theData;
+                        return &currNode->theData;
                 }
 
-                iterator&  end (void)
+                iterator& end (void)
                 {
                         currNode = 0;
-                        return  *this;
+                        return *this;
                 }
 
-                iterator&  operator ++ (void)
+                iterator& operator ++ (void)
                 {
                         assert_Ns(currNode != 0,
                                   "NsStack::iterator::++: Bad request `++(something.end())'");
                         currNode = currNode->next;
-                        return  *this;
+                        return *this;
                 }
         };
 
