@@ -1,12 +1,10 @@
 ///  \file
-///  \brief  Stack implementation.
-///
+///  \brief Stack implementation.
 ///  \internal
 ///  This file is part of
 ///   Naxos Solver: A Constraint Programming Library
 ///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+///   See 'LICENSE' at the top folder.
 
 #ifndef Ns_STACK_H
 #define Ns_STACK_H
@@ -239,21 +237,10 @@ class  NsStack {
         }
 };
 
-//template <class TemplType>
-//void  NsStack<TemplType>::clear (void)
-
-//template <class TemplType>
-//void  NsStack<TemplType>::pop (void)
-
-//template <class TemplType>
-//void  NsStack<TemplType>::push (const TemplType newData)
-
 template <class TemplType>
 NsStack<TemplType>&
 NsStack<TemplType>::operator = (const NsStack& stackOther)
 {
-        //assert_Ns( nFrames == 0  &&  stackTopNode == 0 ,
-        //      "NsStack::operator=: Non empty `*this'");
         nFrames  =  stackOther.nFrames;
         StackNode_t       **currNode       =  &stackTopNode;
         StackNode_t *const *currNodeOther  =  &stackOther.stackTopNode;
@@ -266,6 +253,6 @@ NsStack<TemplType>::operator = (const NsStack& stackOther)
                 currNode       =  &(*currNode)->next;
                 currNodeOther  =  &(*currNodeOther)->next;
         }
-        return  *this;
+        return *this;
 }
-#endif                                                   // Ns_STACK_H
+#endif // Ns_STACK_H
