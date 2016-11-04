@@ -14,7 +14,7 @@ sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
 # Set the search method
 sed -i "s/^\(searchMethod\) .*/\1 $METHOD/" optionsFile
 # Execute the curriculum based course timetabling solver
-./itc_solver datasets/$DATASET solution.txt -options optionsFile
+./itc_solver datasets/$DATASET solution.txt -options optionsFile | tee progress.txt
 # Compile the official validator
 g++ verification/validator.cc -o verification/validator
 # Validate the last solution found
@@ -23,3 +23,9 @@ verification/validator datasets/$DATASET solution.txt > validation.txt
 CATEGORIES=$(grep -c "^Violations of [[:alpha:]]* (hard) : 0$" validation.txt)
 # The constraint categories are four
 test $CATEGORIES -eq 4
+# Get the solution cost calculated by the validator
+COST_VALIDATOR=$(grep -o "Cost = [[:digit:]]*" validation.txt | grep -o "[[:digit:]]*")
+# Get the solution cost calculated by the solver
+COST_SOLVER=$(grep -o "cost [[:digit:]]*" progress.txt | grep -o "[[:digit:]]*" | tail -1)
+# The two costs should be equal
+test $COST_VALIDATOR -eq $COST_SOLVER
