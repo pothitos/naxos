@@ -41,7 +41,7 @@ env:
       METHOD="BBS 100"
       DATASET="comp09.ctt"
     - DIRECTORY="apps/ITC/"
-      METHOD="RDFS"
+      METHOD="RDFS 100 1000"
       DATASET="comp10.ctt"
     - DIRECTORY="apps/ITC/"
       METHOD="ISAMP 1000"
