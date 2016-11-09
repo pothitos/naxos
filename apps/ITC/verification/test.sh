@@ -8,11 +8,18 @@ cd datasets
 AVAILABLE_SECONDS=$(yes | ./benchmark_my_linux_machine | \
                     grep "seconds" | grep -o "[[:digit:]]*")
 cd -
-# Set the available time
-sed -i "s/^\(timeLimit\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
-sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
 # Set the search method
 sed -i "s/^\(searchMethod\) .*/\1 $METHOD/" optionsFile
+# Set the available time
+sed -i "s/^\(timeLimit\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
+if [ -z "$METHOD_LOCAL_SEARCH" ]
+then
+    sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
+else
+    sed -i "s/^\(timeLimitDirectMethodRound\) .*/\1 $(($AVAILABLE_SECONDS / 4))/" optionsFile
+    sed -i "s/^\(timeLimitIndirectMethodRound\) .*/\1 $(($AVAILABLE_SECONDS / 4))/" optionsFile
+    sed -i "s/^\(metaSearchMethod\) .*/\1 $METHOD_LOCAL_SEARCH/" optionsFile
+fi
 # Execute the curriculum based course timetabling solver
 ./itc_solver datasets/$DATASET solution.txt -options optionsFile | tee progress.txt
 # Compile the official validator
