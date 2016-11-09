@@ -5,7 +5,7 @@
 STANDARD = -std=c++0x
 
 # Naxos Directory
-NAXOS = ../../naxos
+NAXOS = ../../core/bounds-consistency
 # Amorgos Directory
 AMORGOS = ..
 

@@ -134,10 +134,10 @@
 
 metaSearchMethod NONE
 
-searchMethod DFS
+searchMethod DOMAIN_SPLITTING FAIR
 
-timeLimit 900
-timeLimitDirectMethodRound 900
+timeLimit 456
+timeLimitDirectMethodRound 456
 timeLimitIndirectMethodRound 0
 
 
