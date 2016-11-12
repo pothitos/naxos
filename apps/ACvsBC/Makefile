@@ -1,7 +1,4 @@
-#  Uncomment the following line, for Sun compilation at di.uoa.gr domain.
-#CPATH = /usr/sfw/bin/
-
-#  Comment out the following line, for gcc versions less than 4.3.
+# Comment out the following line, for gcc versions less than 4.3.
 STANDARD = -std=c++0x
 
 # Naxos Directory
