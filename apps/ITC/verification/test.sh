@@ -21,7 +21,8 @@ else
     sed -i "s/^\(metaSearchMethod\) .*/\1 $METHOD_LOCAL_SEARCH/" optionsFile
 fi
 # Execute the curriculum based course timetabling solver
-./itc_solver datasets/$DATASET solution.txt -options optionsFile | tee progress.txt
+./itc_solver datasets/$DATASET solution.txt -options optionsFile > progress.txt
+cat progress.txt
 # Compile the official validator
 g++ verification/validator.cc -o verification/validator
 # Validate the last solution found
