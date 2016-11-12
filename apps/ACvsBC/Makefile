@@ -10,11 +10,11 @@ NAXOS_AC = ../../core/arc-consistency
 ####  COMPILER  ####
 
 CXX      = $(CPATH)g++
-WARNINGS = -pedantic -Wall -W -Wshadow
-CXXFLAGS = $(WARNINGS) $(STANDARD) -O
+WARNINGS = -pedantic -Wall -W -Wshadow -Werror
+CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
 
 LD = $(CXX)
-LDFLAGS = -s
+LDFLAGS = -s $(COVERAGE)
 
 
 

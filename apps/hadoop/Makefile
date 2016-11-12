@@ -6,10 +6,10 @@ NAXOS = ../../core/bounds-consistency
 
 ### COMPILER ###
 CXX = g++
-WARNINGS = -pedantic -Wall -W -Wshadow
-CXXFLAGS = $(WARNINGS) $(STANDARD) -O2
+WARNINGS = -pedantic -Wall -W -Wshadow -Werror
+CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
 LD = $(CXX)
-LDFLAGS = -s
+LDFLAGS = -s $(COVERAGE)
 
 ### FILENAMES ###
 PROGRAMS = nqueens numpart
