@@ -11,8 +11,20 @@ env:
     - COVERAGE="--coverage"
   matrix:
     - DIRECTORY="apps/"
+
     - DIRECTORY="apps/ACvsBC/"
+
     - DIRECTORY="apps/CELAR/"
+      DATASET="SCEN06"
+    - DIRECTORY="apps/CELAR/"
+      DATASET="SCEN07"
+    - DIRECTORY="apps/CELAR/"
+      DATASET="SCEN08"
+    - DIRECTORY="apps/CELAR/"
+      DATASET="SCEN09"
+    - DIRECTORY="apps/CELAR/"
+      DATASET="SCEN10"
+
     - DIRECTORY="apps/ITC/"
       METHOD="DFS"
       DATASET="comp01.ctt"
@@ -59,6 +71,7 @@ env:
     - DIRECTORY="apps/ITC/"
       METHOD="ONESAMP"
       DATASET="comp14.ctt"
+
     - DIRECTORY="apps/hadoop/"
 
 script:

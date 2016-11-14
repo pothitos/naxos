@@ -155,9 +155,11 @@ $(PROFPROG) :  $(PROFOBJS)
 TODEL = $(PROG) $(PROG).exe $(OBJS) $(PROG_AC) $(PROG_AC).exe $(OBJS_AC) $(DEBPROG) $(DEBPROG).exe $(DEBOBJS) $(PROFPROG) $(PROFPROG).exe $(PROFOBJS)
 
 .PHONY: clean
-clean :
-	$(RM)  $(TODEL)
+clean:
+	$(RM) $(TODEL)
 
 ### TESTING ###
 .PHONY: test
-test: ;
+test:
+	# The second field of the output should be the objective value
+	./$(PROG) $(DATASET) | grep "^[^	]*	[[:digit:]]\+	"
