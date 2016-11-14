@@ -22,7 +22,8 @@ int main (int argc, char *argv[])
         try {
                 time_t timeBegin = time(0);
                 NsProblemManager pm;
-                pm.realTimeLimit(900);
+                // For normal usage the time limit should be 900 seconds.
+                pm.realTimeLimit(60);
                 if (argc != 2 && argc != 3 && argc != 6) {
                         cerr << argv[0] << ": correct syntax is: "
                              << argv[0] << " scen_directory [conf|hadoop <hadoop_options>]\n";
