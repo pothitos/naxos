@@ -127,7 +127,7 @@ int  main (int argc, char *argv[])
 			
 		// GOALS //
 
-		pm.addGoal(new goalDfsLabeling(Vars,new VarHeurCouples));
+		pm.addGoal(new AmDfsLabeling(Vars,new VarHeurCouples));
 
 
 		// SOLVING //

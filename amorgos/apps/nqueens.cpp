@@ -64,7 +64,7 @@ int  main (int argc, char *argv[])
 		// GOALS //
 
 		//pm.addGoal(new goalLan(Var, 100, new ValHeurNqueensMiddle(N)));
-		pm.addGoal(new goalIsampStepping(Var, 100));
+		pm.addGoal(new AmIsampStepping(Var, 100));
 		//pm.addGoal(new goalFnsLabeling(Var, fSample, new VarHeurMRV, new ValHeurNqueensMiddle(N)));
 
 

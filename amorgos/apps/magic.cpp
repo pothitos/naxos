@@ -58,7 +58,7 @@ int  main (int argc, char *argv[])
 
 		// GOALS //
 
-		pm.addGoal(new goalDfsLabeling(Var));
+		pm.addGoal(new AmDfsLabeling(Var));
 
 
 		// SOLVING //

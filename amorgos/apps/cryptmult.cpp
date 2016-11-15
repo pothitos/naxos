@@ -92,7 +92,7 @@ int  main ()
 
 		// GOALS //
 
-		pm.addGoal( new goalDfsLabeling(Vars) );
+		pm.addGoal( new AmDfsLabeling(Vars) );
 
 
 		// SOLVING //

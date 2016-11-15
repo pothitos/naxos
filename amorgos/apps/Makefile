@@ -1,6 +1,3 @@
-#  Uncomment the following line, for Sun compilation at di.uoa.gr domain.
-#CPATH = /usr/sfw/bin/
-
 #  Comment out the following line, for gcc versions less than 4.3.
 STANDARD = -std=c++0x
 
@@ -27,11 +24,11 @@ LDFLAGS = -s $(COVERAGE)
 PROGRAMS = cryptmult golfer graphcolor knump magic mapcolor nqueens placement sudoku vertexcover
 PR_OBJECTS = $(PROGRAMS:=.o)
 
-OBJECTS_NAXOS = $(addprefix $(NAXOS)/, problemmanager.o intvar.o expressions.o constraints.o)
+OBJECTS_NAXOS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
 OBJECTS_AMORGOS = $(addprefix $(AMORGOS)/, boundedbt.o credit.o dbds.o dbs.o dfs.o fns.o gns.o heuristics.o ibroad.o isamp.o lan.o lds.o onesamp.o rdfs.o)
 OBJECTS = $(OBJECTS_NAXOS) $(OBJECTS_AMORGOS)
 
-HEADERS_NAXOS = $(addprefix $(NAXOS)/, naxos.h queue.h stack.h)
+HEADERS_NAXOS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
 HEADERS_AMORGOS = $(addprefix $(AMORGOS)/, heuristics.h onesamp.h dfs.h)
 
 
