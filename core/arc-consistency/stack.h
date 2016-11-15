@@ -4,7 +4,7 @@
 ///  \internal
 ///  This file is part of
 ///   <b> Naxos Solver: </b>  A Constraint Programming Library. \n
-///   Copyright © 2007-2012  Nikolaos Pothitos.
+///   Copyright 2007-2012  Nikolaos Pothitos.
 ///
 ///  See ../license/LICENSE for the license of the library.
 
