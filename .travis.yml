@@ -74,6 +74,8 @@ env:
 
     - DIRECTORY="apps/hadoop/"
 
+    - DIRECTORY="amorgos/apps/"
+
 script:
     - cd $DIRECTORY
     - make -j
