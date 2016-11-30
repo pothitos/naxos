@@ -1,29 +1,18 @@
-
   //  Naxos Solver:  A Constraint Programming Library         //
- //  Copyright 2007-2013  Nikolaos Pothitos                  //
+ //  Copyright 2007-2016 Nikolaos Pothitos                  //
 //  See ../license/LICENSE for the license of the library.  //
 
-
-
-
-
 #include <naxos.h>
-
 #include <iostream>
 #include <cstdlib>
 
-using namespace std;
 using namespace naxos;
+using namespace std;
 
-
-int  main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-    try  {
-
-      //time_t  timeBegin=time(0);
-
-
-      int  N = (argc > 1) ? atoi(argv[1]) : 8;
+    try {
+      int N = (argc > 1)? atoi(argv[1]) : 8;
       NsProblemManager  pm;
 
       NsIntVarArray  Var, VarPlus, VarMinus;
@@ -36,33 +25,23 @@ int  main (int argc, char *argv[])
       pm.add( NsAllDiff(VarPlus) );
       pm.add( NsAllDiff(VarMinus) );
 
-      pm.addGoal( new NsgLabeling(Var) );
+      pm.addGoal(new NsgLabeling(Var));
 
       //bool  AcMode = true;//( string(argv[0]).find(".AC") != string::npos );
 
-      unsigned  solutions=0;
+      unsigned solutions=0;
       //if ( AcMode )
       //    cout << N << "\t" << solutions << "\t";
       //cout << difftime(time(0),timeBegin) << "\n";
-      while ( pm.nextSolution()  !=  false )   {
-	      ++solutions;	//watch solutions==9798635
-
-          //if ( ++solutions % 1000 == 0 )   {
-          //    if ( AcMode )
-          //        cout << N << "\t" << solutions << "\t";
-          //    cout << difftime(time(0),timeBegin) << "\n";
-          //}
-          //if ( solutions  >=  14770000 )
-              //cout << "Solution: " << Var << "\n";
-      }
-
+      while (pm.nextSolution() != false)
+              ++solutions
       //cout << difftime(time(0),timeBegin) << "\tX\t";
       //pm.printCspParameters();
-
-    } catch (exception& exc)  {
+    } catch (exception& exc) {
 	cerr << exc.what() << "\n";
-
-    } catch (...)  {
-	cerr << "Unknown exception" << "\n";
+        return 1;
+    } catch (...) {
+	cerr << "Unknown exception\n";
+        return 1;
     }
 }
