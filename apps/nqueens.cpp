@@ -2,8 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 
-using namespace std;
 using namespace naxos;
+using namespace std;
 
 int main (int argc, char *argv[])
 {
@@ -26,7 +26,7 @@ int main (int argc, char *argv[])
                 cerr << exc.what() << "\n";
                 return 1;
         } catch (...) {
-                cerr << "Unknown exception" << "\n";
+                cerr << "Unknown exception\n";
                 return 1;
         }
 }

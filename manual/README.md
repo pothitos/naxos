@@ -97,7 +97,7 @@ int main (void)
         cerr << exc.what() << "\n";
         return 1;
     } catch (...) {
-        cerr << "Unknown exception" << "\n";
+        cerr << "Unknown exception\n";
         return 1;
     }
 }
