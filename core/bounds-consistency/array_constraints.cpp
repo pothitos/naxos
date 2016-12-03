@@ -1,13 +1,5 @@
-///  \file
-///  \brief  Algorithms that impose (global) constraints over arrays of
-///           constrained variables.
-///
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// Algorithms that impose (global) constraints over arrays of constrained variables
+// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 #include "internal.h"

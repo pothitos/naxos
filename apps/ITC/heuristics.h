@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #ifndef HEURISTICS_H
 #define HEURISTICS_H
 

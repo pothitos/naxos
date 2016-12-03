@@ -1,12 +1,5 @@
-///  \file
-///  \brief  Constraint finite domain integer variables implementation.
-///
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// Constraint finite domain integer variables implementation
+// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 

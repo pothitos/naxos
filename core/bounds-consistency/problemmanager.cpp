@@ -1,13 +1,5 @@
-///  \file
-///  \brief  Data structures and algorithms for a constraint satisfaction
-///           problem management and solving.
-///
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// Data structures and algorithms for a constraint satisfaction problem management and solving
+// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 

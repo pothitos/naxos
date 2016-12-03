@@ -1,16 +1,5 @@
-///  \file
-///  \brief  Stack implementation.
-///
-///  \internal
-///  This file is part of
-///   <b> Naxos Solver: </b>  A Constraint Programming Library. \n
-///   Copyright 2007-2012  Nikolaos Pothitos.
-///
-///  See ../license/LICENSE for the license of the library.
-
-
-
-
+/// Stack implementation
+// Part of https://github.com/pothitos/naxos
 
 #ifndef Ns_STACK_H
 #define Ns_STACK_H

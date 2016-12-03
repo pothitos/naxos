@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #ifndef STRTOK_H
 #define STRTOK_H
 

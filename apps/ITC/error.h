@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #ifndef ERROR_H
 #define ERROR_H
 

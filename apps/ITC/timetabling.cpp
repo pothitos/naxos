@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #include "timetabling.h"
 #include "heuristics.h"
 #include "localSearch.h"

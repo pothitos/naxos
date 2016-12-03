@@ -1,13 +1,5 @@
-///  \file
-///  \brief  Constraint finite domain integer variables implementation,
-///           based on bit-set.
-///
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// Constraint finite domain integer variables implementation, based on bit-set
+// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 
@@ -15,13 +7,13 @@ using namespace naxos;
 
 namespace {
 
-///  Returns the position in the bit-set of the corresponding bit to the value \a val.
-
-///  This method performs a simple subtraction, to find out
-///   the corresponding bit number for the value \a val.
-///   However, it takes care about overflow issues, because
-///   the limit for a bit number is \a NsUPLUS_INF and not
-///   \a NsPLUS_INF!
+/// Returns the position in the bit-set of the corresponding bit to the value \a val.
+///
+/// This method performs a simple subtraction, to find out
+/// the corresponding bit number for the value \a val.
+/// However, it takes care about overflow issues, because
+/// the limit for a bit number is \a NsUPLUS_INF and not
+/// \a NsPLUS_INF!
 
 inline NsUInt
 correspondingBit (const NsInt val, const NsInt minDom)

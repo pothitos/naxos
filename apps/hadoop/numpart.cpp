@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #include <naxos.h>
 #include <iostream>
 #include <cstdlib>

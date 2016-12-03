@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #ifndef ITC_TIMETABLING_H
 #define ITC_TIMETABLING_H
 

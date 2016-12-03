@@ -1,10 +1,5 @@
-/// \file
-/// \brief Algorithms that impose the constraints over variables.
-///
-/// \internal
-/// Naxos Solver: A Constraint Programming Library
-/// Copyright 2007-2016 Nikolaos Pothitos
-/// See LICENSE in the root folder.
+/// Algorithms that impose the constraints over variables
+// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 #include "internal.h"

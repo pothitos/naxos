@@ -1,11 +1,6 @@
-///  \file
-///  \brief  Definitions of internal and public classes of Naxos.
+/// Definitions of internal and public classes of Naxos
 ///
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// Part of https://github.com/pothitos/naxos
 
 //   In the comments, words beginning with a backslash `\' should be
 //    ignored by the reader, because they are used by the `doxygen' program

@@ -1,15 +1,4 @@
-
-  //  Naxos Solver:  A Constraint Programming Library         //
- //  Copyright 2007-2012  Nikolaos Pothitos                  //
-//  See ../license/LICENSE for the license of the library.  //
-
-
-
-
-
-//#define Ns_AllDiff_Test
-
-
+// Part of https://github.com/pothitos/naxos
 
 #ifndef Ns_NAXOS_H
 #define Ns_NAXOS_H

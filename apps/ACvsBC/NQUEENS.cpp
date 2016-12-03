@@ -1,4 +1,4 @@
-// Part of github.com/pothitos/Naxos Solver
+// Part of https://github.com/pothitos/naxos
 
 #include <naxos.h>
 #include <iostream>

@@ -1,13 +1,5 @@
-///  \file
-///  \brief  Processing the expressions between integer constrained
-///           variables.
-///
-///  \internal
-///  This file is part of
-///   Naxos Solver: A Constraint Programming Library
-///   Copyright 2007-2016 Nikolaos Pothitos
-///
-///  See 'license' folder for the license of the library.
+/// Processing the expressions between integer constrained variables
+// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 #include "internal.h"

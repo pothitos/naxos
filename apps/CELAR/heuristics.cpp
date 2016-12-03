@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #include "heuristics.h"
 #include <cmath>
 

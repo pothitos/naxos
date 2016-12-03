@@ -1,3 +1,5 @@
+// Part of https://github.com/pothitos/naxos
+
 #ifndef LOCALSEARCH_H
 #define LOCALSEARCH_H
 
