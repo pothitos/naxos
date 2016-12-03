@@ -7,7 +7,7 @@
 using namespace naxos;
 using namespace std;
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
         try {
                 int N = (argc > 1) ? atoi(argv[1]) : 8;
