@@ -87,7 +87,7 @@ occurred.
 using namespace naxos;
 using namespace std;
 
-int main (void)
+int main(void)
 {
     try {
 
@@ -1142,12 +1142,12 @@ follows.
 ```c++
 class NsGoal {
     public:
-        virtual bool isGoalAND (void) const;
-        virtual bool isGoalOR (void) const;
-        virtual NsGoal* getFirstSubGoal (void) const;
-        virtual NsGoal* getSecondSubGoal (void) const;
+        virtual bool isGoalAND(void) const;
+        virtual bool isGoalOR(void) const;
+        virtual NsGoal* getFirstSubGoal(void) const;
+        virtual NsGoal* getSecondSubGoal(void) const;
 
-        virtual NsGoal* GOAL (void) = 0;
+        virtual NsGoal* GOAL(void) = 0;
 };
 ```
 
@@ -1184,10 +1184,12 @@ class NsgInDomain : public NsGoal {
         NsIntVar& Var;
 
     public:
-        NsgInDomain (NsIntVar& Var_init)
-          : Var(Var_init) { }
+        NsgInDomain(NsIntVar& Var_init)
+          : Var(Var_init)
+        {
+        }
 
-        NsGoal* GOAL (void)
+        NsGoal* GOAL(void)
         {
             if (Var.isBound())
                 return 0;
@@ -1207,7 +1209,7 @@ class NsgLabeling : public NsGoal {
         NsgLabeling (NsIntVarArray& VarArr_init)
           : VarArr(VarArr_init) { }
 
-        NsGoal* GOAL (void)
+        NsGoal* GOAL(void)
         {
             int index = -1;
             NsUInt minDom = NsUPLUS_INF;
