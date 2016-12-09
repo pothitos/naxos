@@ -1,4 +1,4 @@
-/// Algorithms that impose (global) constraints over arrays of constrained variables
+// Algorithms that impose (global) constraints over arrays of constrained variables
 // Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"

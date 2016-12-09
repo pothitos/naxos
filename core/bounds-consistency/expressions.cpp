@@ -1,4 +1,4 @@
-/// Processing the expressions between integer constrained variables
+// Processing the expressions between integer constrained variables
 // Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"

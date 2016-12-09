@@ -1,4 +1,4 @@
-/// Data structures and algorithms for a constraint satisfaction problem management and solving
+// Data structures and algorithms for a constraint satisfaction problem management and solving
 // Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"

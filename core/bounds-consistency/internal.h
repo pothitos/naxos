@@ -1,4 +1,4 @@
-/// Internal functions declarations. These functions are used in more than one file
+// Internal functions declarations. These functions are used in more than one file
 // Part of https://github.com/pothitos/naxos
 
 #ifndef Ns_INTERNAL_H

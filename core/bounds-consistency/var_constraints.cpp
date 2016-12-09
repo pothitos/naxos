@@ -1,4 +1,4 @@
-/// Algorithms that impose the constraints over variables
+// Algorithms that impose the constraints over variables
 // Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
