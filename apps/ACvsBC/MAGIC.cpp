@@ -1,18 +1,13 @@
 // Part of https://github.com/pothitos/naxos
 
 #include <naxos.h>
-
 #include <iostream>
 #include <cstdlib>
 
-using namespace std;
 using namespace naxos;
+using namespace std;
 
-
-
-
-
-int  main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     try  {
 
