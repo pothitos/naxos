@@ -1,20 +1,14 @@
 #! /bin/sh
 
-echo "#CSP\tAC_Time\tCost\tBC_Time\tCost\tn\td\tSum|Di|\te"
+echo "#CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
 echo
-w
-echo
-echo "#N\tSols\tAC Time\tBC Time"
-INSTANCE=1
-while [ $INSTANCE -le 100 ]
+PARAM=1
+while [ $PARAM -le 100 ]
 do
-    echo
-    CSPs/NQUEENS.AC "$INSTANCE" > temp.dat
-    CSPs/NQUEENS "$INSTANCE" | paste temp.dat -
-    rm temp.dat
-    INSTANCE=$(($INSTANCE + 1))
+    NQUEENS.AC $PARAM
+    NQUEENS $PARAM
+    PARAM=$(($PARAM + 1))
 done
-w
 echo
 for INSTANCE in NW41 NW32 NW40 NW08 NW15 NW21 NW22 NW12 NW39 NW20 NW23 NW37 NW26 NW10 NW34 NW43 NW42 NW28 NW25 NW38
 do
