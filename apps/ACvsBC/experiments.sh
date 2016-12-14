@@ -5,9 +5,9 @@ echo
 PARAM=1
 while [ $PARAM -le 100 ]
 do
-    time -o AC_Time.txt -f "%e" NQUEENS.AC $PARAM > /dev/null
-    time -o BC_Time.txt -f "%e" NQUEENS $PARAM | tail -1 > n_d_e.
-    echo "NQUEENS\t$PARAM\t$((cat n_d_e.txt))\t$((cat AC_Time.txt))\t$((cat BC_Time.txt))"
+    time -o AC_Time.txt -f "%e" ./nqueens.AC $PARAM > /dev/null
+    time -o BC_Time.txt -f "%e" ./nqueens $PARAM | tail -1 > n_d_e.txt
+    echo "NQueens\t$PARAM\t$((cat n_d_e.txt))\t$((cat AC_Time.txt))\t$((cat BC_Time.txt))"
     PARAM=$(($PARAM + 1))
 done
 echo
