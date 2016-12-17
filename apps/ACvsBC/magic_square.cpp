@@ -10,10 +10,6 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     try  {
-
-		time_t  timeBegin=time(0);
-
-
 		int  N = (argc > 1) ? atoi(argv[1]) : 3;
 		int i,j,sum;
 		NsProblemManager  pm;
@@ -63,24 +59,14 @@ int main(int argc, char *argv[])
 
 		// SOLVING //
 
-		char  solved = 'N';
-		if ( pm.nextSolution()  !=  false )   {
-
-			solved  =  'Y';
-
-			//cout << "Solution:" << endl;
-			//for(i=0; i<N; ++i)
-			//	cout << Rows[i] << endl;
-		}
-
-		cout << difftime(time(0),timeBegin) << "\t" << solved << "\n";
+		if (! pm.nextSolution())
+                        return 1;
 		pm.printCspParameters();
-
-
     } catch (exception& exc)  {
 	cerr << exc.what() << "\n";
-
+        return 1;
     } catch (...)  {
 	cerr << "Unknown exception" << "\n";
+        return 1;
     }
 }
