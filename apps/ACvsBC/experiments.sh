@@ -1,7 +1,7 @@
 #! /bin/sh
 set -e
 
-echo "#CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
+echo "CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
 echo
 PARAM=10
 while [ $PARAM -le 15 ]
