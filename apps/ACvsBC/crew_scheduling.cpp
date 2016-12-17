@@ -75,7 +75,9 @@ main (int argc, char *argv[])
                 pm.printCspParameters();
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
+                return 1;
         } catch (...) {
                 cerr << "Unknown exception" << "\n";
+                return 1;
         }
 }

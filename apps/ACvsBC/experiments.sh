@@ -16,4 +16,11 @@ do
     time -o BC_Time.txt -f "%e" ./magic_square $PARAM | tail -1 > n_d_e.txt
     echo "MagicSq\t$PARAM\t$(cat n_d_e.txt)\t$(cat AC_Time.txt)\t$(cat BC_Time.txt)"
 done
+echo
+for PARAM in OR-Library/*
+do
+    time -o AC_Time.txt -f "%e" ./crew_scheduling.AC $PARAM > /dev/null
+    time -o BC_Time.txt -f "%e" ./crew_scheduling $PARAM | tail -1 > n_d_e.txt
+    echo "CrewSch\t$(basename $PARAM .txt)\t$(cat n_d_e.txt)\t$(cat AC_Time.txt)\t$(cat BC_Time.txt)"
+done
 rm n_d_e.txt AC_Time.txt BC_Time.txt
