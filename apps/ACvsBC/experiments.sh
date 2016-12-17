@@ -23,4 +23,11 @@ do
     time -o BC_Time.txt -f "%e" ./crew_scheduling $PARAM | tail -1 > n_d_e.txt
     echo "CrewSch\t$(basename $PARAM .txt)\t$(cat n_d_e.txt)\t$(cat AC_Time.txt)\t$(cat BC_Time.txt)"
 done
+echo
+for PARAM in $(seq 9 14)
+do
+    time -o AC_Time.txt -f "%e" ./tsp.AC HA30.pl $PARAM > /dev/null
+    time -o BC_Time.txt -f "%e" ./tsp HA30.pl $PARAM | tail -1 > n_d_e.txt
+    echo "TSP\t$PARAM\t$(cat n_d_e.txt)\t$(cat AC_Time.txt)\t$(cat BC_Time.txt)"
+done
 rm n_d_e.txt AC_Time.txt BC_Time.txt

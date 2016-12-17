@@ -14,7 +14,6 @@ int
 main (int argc, char *argv[])
 {
         try {
-                time_t  timeBegin=time(0);
                 //  Checking input arguments.
                 if ( argc != 3  &&  argc != 4 ) {
                         cerr << "Correct syntax is:\t" << argv[0]
@@ -97,12 +96,10 @@ main (int argc, char *argv[])
                 pm.minimize( vCost );
                 pm.addGoal( new NsgLabeling(R) );
                 NsDeque<NsInt>  bestR(N);
-                NsInt           bestCost = -1;
                 while ( pm.nextSolution()  !=  false ) {
                         //  Recording the (current) best solution.
                         for (i=0;  i < N;  ++i)
                                 bestR[i]   = R[i].value();
-                        bestCost  =  vCost.value();
                 }
                 ////  Printing the best solution.
                 //if ( bestCost  !=  -1 )    {
@@ -115,7 +112,6 @@ main (int argc, char *argv[])
                 //	cout << "]\n";
                 //	cout << "C = " << bestCost << "\n";
                 //}
-                cout << difftime(time(0),timeBegin) << "\t" << bestCost << "\t";
                 pm.printCspParameters();
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
