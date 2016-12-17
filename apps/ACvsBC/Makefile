@@ -20,7 +20,7 @@ LDFLAGS = -s $(COVERAGE)
 
 ####  FILENAMES  ####
 
-PROGRAMS = nqueens magic_square TSP CREW_SCHEDULING
+PROGRAMS = nqueens magic_square tsp crew_scheduling
 PROGRAMS_AC = $(PROGRAMS:=.AC)
 
 PR_OBJECTS = $(PROGRAMS:=.o)
