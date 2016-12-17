@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
                 pm.add(NsAllDiff(VarPlus));
                 pm.add(NsAllDiff(VarMinus));
                 pm.addGoal(new NsgLabeling(Var));
-                pm.printCspParameters();
                 while (pm.nextSolution() != false)
                         cout << Var << "\n";
+                pm.printCspParameters();
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
                 return 1;
