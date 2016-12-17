@@ -14,7 +14,6 @@ int
 main (int argc, char *argv[])
 {
         try {
-                time_t  timeBegin=time(0);
                 //  Checking input arguments.
                 if ( argc != 2  &&  argc != 3 ) {
                         cerr << "Correct syntax is:\t" << argv[0]
@@ -192,7 +191,6 @@ main (int argc, char *argv[])
                                 bestIncludePairing[pairing] = vIncludePairing[pairing].value();
                         bestCost  =  vCost.value();
                 }
-                cout << difftime(time(0),timeBegin) << "\t" << bestCost << "\t";
                 pm.printCspParameters();
                 ////  Printing the best solution.
                 //if ( bestCost  !=  -1 )    {
