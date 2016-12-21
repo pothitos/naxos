@@ -1,6 +1,5 @@
 #! /bin/sh
 set -e
-find / -name time
 
 echo "CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
 echo
