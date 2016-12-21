@@ -1,7 +1,7 @@
 #! /bin/sh
 set -e
+alias time='/usr/bin/time'
 
-help 1>&2
 echo "CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
 echo
 NQUEENS_RANGE=$(seq 10 15)
