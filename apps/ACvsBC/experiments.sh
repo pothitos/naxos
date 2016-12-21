@@ -1,6 +1,6 @@
 #! /bin/sh
 set -e
-alias time='/usr/bin/time'
+find / -name time
 
 echo "CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
 echo
