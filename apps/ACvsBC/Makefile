@@ -72,4 +72,5 @@ clean:
 
 ### TESTING ###
 .PHONY: test
-test: ;
+test:
+	./verification.sh
