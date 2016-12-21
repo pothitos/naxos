@@ -2,6 +2,7 @@
 set -e
 
 echo $SHELL 1>&2
+time echo
 echo "CSP\tParam\tn\td\te\tAC_Time\tBC_Time"
 echo
 NQUEENS_RANGE=$(seq 10 15)
