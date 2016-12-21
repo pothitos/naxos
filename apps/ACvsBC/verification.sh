@@ -6,6 +6,7 @@ sed -i 's/^\(MAGIC_SQUARE_RANGE\)=.*/\1=$(seq 5 6)/' experiments.sh
 sed -i 's/^\(CREW_SCHEDULING_RANGE\)=.*/\1=OR-Library\/NW41.txt/' experiments.sh
 sed -i 's/^\(TSP_RANGE\)=.*/\1=$(seq 8 9)/' experiments.sh
 # Execute the measurements
-./experiments.sh | tee ACvsBC.dat
+./experiments.sh > ACvsBC.dat
+cat ACvsBC.dat
 # Restore the original script
 mv experiments.sh.bak experiments.sh
