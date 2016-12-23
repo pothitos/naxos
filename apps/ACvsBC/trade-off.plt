@@ -3,7 +3,7 @@
 #set termoption enhanced
 #set termoption dash
 set terminal epslatex color
-set output "ratios_times.tex"
+set output "trade-off.tex"
 set size 0.66
 
 set tics nomirror
