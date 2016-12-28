@@ -6,7 +6,7 @@
 
 # Settings for LaTeX output
 set terminal epslatex color
-set output "trade-off.tex"
+set output "ACvsBC.tex"
 set size 0.66
 
 set border 3
