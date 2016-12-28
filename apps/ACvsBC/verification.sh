@@ -11,4 +11,4 @@ cat ACvsBC.dat
 # Restore the original script
 mv experiments.sh.bak experiments.sh
 # Graphically plot the results
-#./trade-off.plt
+./trade-off.plt
