@@ -1272,9 +1272,9 @@ functions to take better decisions/choices.
 
 I am grateful to Prof. Panagiotis Stamatopoulos, not only
 for his continuous and steady guidance, but also because he
-inspired, encouraged and embraced this attempt. I also thank
-Kyriakos Zervoudakis, a B.Sc. and M.Sc. graduate of the
-Department of Informatics and Telecommunications, that
+inspired, encouraged, and embraced this attempt. I also
+thank Kyriakos Zervoudakis, a B.Sc. and M.Sc. graduate of
+the Department of Informatics and Telecommunications, that
 helped me in my first steps in Constraint Programming in
 2004. Finally, many thanks to all the students of the
 Department that used the solver, either in the context of
