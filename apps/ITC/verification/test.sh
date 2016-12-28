@@ -9,7 +9,7 @@ AVAILABLE_SECONDS=$(yes | ./benchmark_my_linux_machine | \
                     grep "seconds" | grep -o "[[:digit:]]*")
 cd -
 # Set the search method
-sed -i "s/^\(searchMethod\) .*/\1 $METHOD/" optionsFile
+sed -i.bak "s/^\(searchMethod\) .*/\1 $METHOD/" optionsFile
 # Set the available time
 sed -i "s/^\(timeLimit\) .*/\1 $AVAILABLE_SECONDS/" optionsFile
 if [ -z "$METHOD_LOCAL_SEARCH" ]
@@ -23,6 +23,8 @@ fi
 # Execute the curriculum based course timetabling solver
 ./itc_solver datasets/$DATASET solution.txt -options optionsFile > progress.txt
 cat progress.txt
+# Restore the original file
+mv optionsFile.bak optionsFile
 # Compile the official validator
 g++ verification/validator.cc -o verification/validator
 # Validate the last solution found
