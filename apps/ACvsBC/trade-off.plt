@@ -1,4 +1,4 @@
-#! /usr/bin/env gnuplot
+#! /usr/bin/gnuplot
 
 # Settings for direct output to screen window
 #set termoption enhanced

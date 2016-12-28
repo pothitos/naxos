@@ -5,7 +5,7 @@ language: cpp
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq time
+  - sudo apt-get install -qq time gnuplot
   - pip install --user cpp-coveralls
 
 env:
