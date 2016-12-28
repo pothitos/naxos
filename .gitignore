@@ -1,7 +1,7 @@
 # Compiled Object files
 *.o
 
-# Executables
+# Naxos Executables
 *.AC
 celar_solver
 crew_scheduling
@@ -12,3 +12,14 @@ numpart
 send_more_money
 tsp
 validator
+
+# Amorgos Executables
+cryptmult
+golfer
+graphcolor
+knump
+magic
+mapcolor
+placement
+sudoku
+vertexcover
