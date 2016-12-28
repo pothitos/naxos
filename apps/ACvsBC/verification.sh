@@ -12,3 +12,5 @@ cat ACvsBC.dat
 mv experiments.sh.bak experiments.sh
 # Graphically plot the results
 ./ACvsBC.plt
+# Clean up
+rm ACvsBC.plt ACvsBC.eps

@@ -39,3 +39,5 @@ COST_VALIDATOR=$(grep -o "Cost = [[:digit:]]*" validation.txt | grep -o "[[:digi
 COST_SOLVER=$(grep -o "cost [[:digit:]]*" progress.txt | grep -o "[[:digit:]]*" | tail -1)
 # The two costs should be equal
 test $COST_VALIDATOR -eq $COST_SOLVER
+# Clean up
+rm progress.txt solution.txt validation.txt

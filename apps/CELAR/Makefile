@@ -161,5 +161,4 @@ clean:
 ### TESTING ###
 .PHONY: test
 test:
-	# The second field of the output should be the objective value
-	./$(PROG) $(DATASET) | grep "^[^	]*	[[:digit:]]\+	"
+	./verification.sh
