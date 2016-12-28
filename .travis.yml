@@ -4,6 +4,8 @@
 language: cpp
 
 before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq time gnuplot
   - pip install --user cpp-coveralls
 
 env:
@@ -13,8 +15,6 @@ env:
     - DIRECTORY="apps/"
 
     - DIRECTORY="apps/ACvsBC/"
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq time gnuplot
 
     - DIRECTORY="apps/CELAR/"
       DATASET="SCEN06"
