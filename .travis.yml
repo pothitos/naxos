@@ -13,8 +13,8 @@ env:
     - DIRECTORY="apps/"
 
     - DIRECTORY="apps/ACvsBC/"
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq time gnuplot
+      sudo apt-get update -qq
+      sudo apt-get install -qq time gnuplot
 
     - DIRECTORY="apps/CELAR/"
       DATASET="SCEN06"
