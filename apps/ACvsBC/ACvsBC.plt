@@ -33,9 +33,11 @@ set label "BC efficient" at 100000, 1 rotate offset 2, +0.5
 
 plot "ACvsBC.dat" index 1 using ($4/$3):($6/$7) linestyle 2 linecolor 3 \
                   title "\\small $N$ Queens instance:", \
-               "" index 2 using ($4/$3):($6/$7) linestyle 1 \
+               "" index 4 using ($4/$3):($6/$7) linestyle 1 \
                   title "\\small Magic Square instance:", \
-               "" index 3 using ($4/$3):($6/$7) linestyle 3 linecolor 4 \
-                  title "\\small Crew Scheduling instance:"
+               "" index 2 using ($4/$3):($6/$7) linestyle 3 linecolor 4 \
+                  title "\\small Crew Scheduling instance:", \
+               "" index 3 using ($4/$3):($6/$7) \
+                  title "\\small TSP instance:"
 
 set output
