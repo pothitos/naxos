@@ -4,81 +4,76 @@
 #define Ns_QUEUE_H
 
 template <class TemplType>
-class Queue  {
-  private:
+class Queue {
+    private:
 
-    class queuenode {
-      public:
-        TemplType  thedata;
-        queuenode  *next;
-        queuenode (const TemplType& T)
-         : thedata(T), next(0)  {   }
-    };
+        class queuenode {
+            public:
+                TemplType  thedata;
+                queuenode  *next;
+                queuenode (const TemplType& T)
+                        : thedata(T), next(0)  {   }
+        };
 
-    queuenode  *start, *end;
+        queuenode  *start, *end;
 
+    public:
+        Queue (void)
+                : start(0), end(0)  {  }
 
-  public:
-    Queue (void)
-     : start(0), end(0)  {  }
+        ~Queue (void)
+        {
+                clear();
+        }
 
-    ~Queue (void)
-    {
-      clear();
-    }
+        void  clear (void);
 
-    void  clear (void);
+        bool  empty (void)
+        {
+                return  (start == 0);
+        }
 
-    bool  empty (void)
-    {
-        return  (start == 0);
-    }
+        TemplType&  top (void)
+        {
+                assert_exc( !empty() ,  "Queue::top: Queue is empty");
+                return  start->thedata;
+        }
 
-    TemplType&  top (void)
-    {
-        assert_exc( !empty() ,  "Queue::top: Queue is empty");
-        return  start->thedata;
-    }
+        void  pop (void);
 
-    void  pop (void);
-
-    void  push (const TemplType newdata);
+        void  push (const TemplType newdata);
 };
-
-
 
 template <class TemplType>
 void  Queue<TemplType>::clear (void)
 {
-  while ( !empty() )
-      pop();
+        while ( !empty() )
+                pop();
 }
-
 
 template <class TemplType>
 void  Queue<TemplType>::pop (void)
 {
-  assert_exc( !empty() ,  "Queue::pop: Queue is empty");
-  queuenode  *temp = start;
-  start = start->next;
-  if (start == 0)
-      end = 0;
-  delete temp;
+        assert_exc( !empty() ,  "Queue::pop: Queue is empty");
+        queuenode  *temp = start;
+        start = start->next;
+        if (start == 0)
+                end = 0;
+        delete temp;
 }
 
 template <class TemplType>
 void  Queue<TemplType>::push (const TemplType newdata)
 {
-  queuenode  *newnode = new queuenode(newdata);
-  //newnode->thedata = newdata;
-  assert_exc(end==0  ||  end->next==0,   "Queue::push: Wrong end pointer/node");
-  if (end != 0)  {
-      end->next = newnode;
-  } else  {
-      assert_exc(start == 0,  "Queue::push: Wrong start pointer");
-      start = newnode;
-  }
-  end = newnode;
+        queuenode  *newnode = new queuenode(newdata);
+        //newnode->thedata = newdata;
+        assert_exc(end==0  ||  end->next==0,   "Queue::push: Wrong end pointer/node");
+        if (end != 0) {
+                end->next = newnode;
+        } else {
+                assert_exc(start == 0,  "Queue::push: Wrong start pointer");
+                start = newnode;
+        }
+        end = newnode;
 }
-
-#endif  // Ns_QUEUE_H
+#endif							 // Ns_QUEUE_H
