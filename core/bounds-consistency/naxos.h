@@ -1,5 +1,5 @@
-// Definitions of internal and public classes of Naxos
-// Part of https://github.com/pothitos/naxos
+/// @file Definitions of internal and public classes of Naxos
+/// Part of https://github.com/pothitos/naxos
 
 //   In the comments, words beginning with a backslash `\' should be
 //    ignored by the reader, because they are used by the `doxygen' program

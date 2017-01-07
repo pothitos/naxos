@@ -1,5 +1,5 @@
-// Constraint finite domain integer variables implementation
-// Part of https://github.com/pothitos/naxos
+/// @file Constraint finite domain integer variables implementation
+/// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
 
