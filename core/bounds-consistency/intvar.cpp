@@ -67,7 +67,7 @@ void Ns_QueueItem::add(const NsInt removedVal,
 bool NsIntVar::removeRange(const NsInt first, const NsInt last,
                             const Ns_Constraint *constr, bool& modified)
 {
-        bool  rangeEmpty = true;
+        bool rangeEmpty = true;
         // Check for bounds modifications.
         if ((first <= min() && min() <= last) ||
             (first <= max() && max() <= last)) {
@@ -81,15 +81,15 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
         // Check for modifications of the intermediate values of the
         // domain, if necessary. (E.g. when they must be stored for arc
         // consistency constraints checks.)
-        if (rangeEmpty  ||  storeRemovedValues() ) {
-                NsInt  newFirst = (first != NsMINUS_INF) ? first - 1 : first;
-                NsInt  newLast = (last != NsPLUS_INF) ? last + 1 : last;
+        if (rangeEmpty || storeRemovedValues() ) {
+                NsInt newFirst = (first != NsMINUS_INF) ? first - 1 : first;
+                NsInt newLast = (last != NsPLUS_INF) ? last + 1 : last;
                 while ((newFirst = next(newFirst)) < newLast) {
-                        rangeEmpty  =  false;
+                        rangeEmpty = false;
                         // Uncomment the following for AC-3:
-                        //if (queueItem == 0)    {
-                        //      pm->getQueue().push(Ns_QueueItem(this));
-                        //      queueItem = &pm->getQueue().back();
+                        //if (queueItem == 0) {
+                        //        pm->getQueue().push(Ns_QueueItem(this));
+                        //        queueItem = &pm->getQueue().back();
                         //}
                         //queueItem->boundChangedBy(constr);
                         if (!storeRemovedValues())
@@ -104,12 +104,12 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
         if (!rangeEmpty) {
                 if (!domain.removeRange(first, last)) {
                         pm->foundAnInconsistency();
-                        return  false;
+                        return false;
                 } else {
-                        modified  =  true;
+                        modified = true;
                 }
         }
-        return  true;
+        return true;
 }
 
 void NsIntVar::addConstraint(Ns_Constraint *constr)
@@ -150,7 +150,7 @@ NsIntVar::operator = (const Ns_Expression& expr)
         expr.post(*this);
         pm->removeLastVar();
         pm->addVar(this);
-        return  *this;
+        return *this;
 }
 
 /// Makes the variable transparent to backtracking/store; useful for temporary variables
@@ -173,7 +173,7 @@ NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
         assert_Ns(PointArray.empty() && !addedConstraint,
                   "NsIntVarArray::operator=: Some constraints already imposed on `*this'");
         expr.post(*this);
-        return  *this;
+        return *this;
 }
 
 void NsIntVarArray::push_front(const NsIntVar& Var)
@@ -194,8 +194,8 @@ void NsIntVarArray::push_front(const Ns_Expression& expr)
 
 void NsIntVarArray::push_back(const NsIntVar& Var)
 {
-        assert_Ns(!addedConstraint,  "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
-        NsIntVar  *NewVar = new NsIntVar(Var);
+        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+        NsIntVar *NewVar = new NsIntVar(Var);
         PointArray.push_back(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
         NewVar->manager().removeLastVar();
