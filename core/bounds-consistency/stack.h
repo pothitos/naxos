@@ -10,10 +10,15 @@ class NsStack {
     protected:
 
         struct StackNode_t {
+
                 TemplType theData;
+
                 StackNode_t *next;
+
                 StackNode_t (const TemplType& T)
-                        : theData(T), next(0) { }
+                  : theData(T), next(0)
+                {
+                }
         };
 
         StackNode_t *stackTopNode;
@@ -31,7 +36,9 @@ class NsStack {
     public:
 
         NsStack (void)
-                : stackTopNode(0), nFrames(0) { }
+          : stackTopNode(0), nFrames(0)
+        {
+        }
 
         NsStack (const NsStack& stackOther)
         {
@@ -90,24 +97,28 @@ class NsStack {
                 ++nFrames;
         }
 
-        // Declaration necessary so the following
-        // 'friend' statement sees this 'iterator'
-        // instead of std::iterator:
+        // Declaration necessary so the following 'friend' statement
+        // sees this 'iterator' instead of std::iterator:
         class iterator;
         friend class iterator;
 
         class iterator {
+
             private:
+
                 StackNode_t *currNode;
 
             public:
+
                 iterator (void)
-                        : currNode(0)
-                {    }
+                  : currNode(0)
+                {
+                }
 
                 iterator (StackNode_t *startNode)
-                        : currNode(startNode)
-                {    }
+                  : currNode(startNode)
+                {
+                }
 
                 bool operator == (const iterator& b) const
                 {
@@ -116,7 +127,7 @@ class NsStack {
 
                 bool operator != (const iterator& b) const
                 {
-                        return  (!(*this == b));
+                        return (!(*this == b));
                 }
 
                 TemplType& operator * (void) const
@@ -148,78 +159,83 @@ class NsStack {
                 }
         };
 
-        iterator  begin (void)
+        iterator begin (void)
         {
-                return  iterator(stackTopNode);
+                return iterator(stackTopNode);
         }
 
-        iterator  end (void)
+        iterator end (void)
         {
-                iterator  iter_end(stackTopNode);
-                return  iter_end.end();
+                iterator iter_end(stackTopNode);
+                return iter_end.end();
         }
 
         class const_iterator {
+
             private:
-                const StackNode_t  *currNode;
+
+                const StackNode_t *currNode;
 
             public:
+
                 const_iterator (void)
-                        : currNode(0)
-                {    }
+                  : currNode(0)
+                {
+                }
 
                 const_iterator (const StackNode_t *startNode)
                         : currNode(startNode)
-                {    }
-
-                bool  operator == (const const_iterator& b)  const
                 {
-                        return  ( currNode  ==  b.currNode );
                 }
 
-                bool  operator != (const const_iterator& b)  const
+                bool operator == (const const_iterator& b) const
                 {
-                        return  ( !( *this  ==  b ) );
+                        return (currNode == b.currNode);
                 }
 
-                const TemplType&  operator * (void)  const
+                bool operator != (const const_iterator& b) const
+                {
+                        return (!(*this == b));
+                }
+
+                const TemplType& operator * (void) const
                 {
                         assert_Ns(currNode != 0,
                                   "NsStack::const_iterator::*: Bad request `*(something.end())'");
-                        return  currNode->theData;
+                        return currNode->theData;
                 }
 
-                const TemplType  *operator -> (void)  const
+                const TemplType *operator -> (void) const
                 {
                         assert_Ns(currNode != 0,
                                   "NsStack::const_iterator::->: Bad request `*(something.end())'");
-                        return  &currNode->theData;
+                        return &currNode->theData;
                 }
 
-                const_iterator&  end (void)
+                const_iterator& end (void)
                 {
                         currNode = 0;
-                        return  *this;
+                        return *this;
                 }
 
-                const_iterator&  operator ++ (void)
+                const_iterator& operator ++ (void)
                 {
                         assert_Ns(currNode != 0,
                                   "NsStack::const_iterator::++: Bad request `++(something.end())'");
                         currNode = currNode->next;
-                        return  *this;
+                        return *this;
                 }
         };
 
-        const_iterator  begin (void)  const
+        const_iterator begin (void) const
         {
-                return  const_iterator(stackTopNode);
+                return const_iterator(stackTopNode);
         }
 
-        const_iterator  end (void)  const
+        const_iterator end (void) const
         {
-                const_iterator  iter_end(stackTopNode);
-                return  iter_end.end();
+                const_iterator iter_end(stackTopNode);
+                return iter_end.end();
         }
 };
 
@@ -227,17 +243,17 @@ template <class TemplType>
 NsStack<TemplType>&
 NsStack<TemplType>::operator = (const NsStack& stackOther)
 {
-        nFrames  =  stackOther.nFrames;
-        StackNode_t       **currNode       =  &stackTopNode;
-        StackNode_t *const *currNodeOther  =  &stackOther.stackTopNode;
-        for ( ; ; ) {
-                if ( *currNodeOther  ==  0 ) {
-                        *currNode  =  *currNodeOther;
+        nFrames = stackOther.nFrames;
+        StackNode_t **currNode = &stackTopNode;
+        StackNode_t *const *currNodeOther = &stackOther.stackTopNode;
+        for (;;) {
+                if (*currNodeOther == 0) {
+                        *currNode = *currNodeOther;
                         break;
                 }
-                *currNode  =  new StackNode_t(**currNodeOther);
-                currNode       =  &(*currNode)->next;
-                currNodeOther  =  &(*currNodeOther)->next;
+                *currNode = new StackNode_t(**currNodeOther);
+                currNode = &(*currNode)->next;
+                currNodeOther = &(*currNodeOther)->next;
         }
         return *this;
 }
