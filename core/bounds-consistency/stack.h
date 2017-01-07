@@ -15,7 +15,7 @@ class NsStack {
 
                 StackNode_t *next;
 
-                StackNode_t (const TemplType& T)
+                StackNode_t(const TemplType& T)
                   : theData(T), next(0)
                 {
                 }
@@ -35,52 +35,52 @@ class NsStack {
 
     public:
 
-        NsStack (void)
+        NsStack(void)
           : stackTopNode(0), nFrames(0)
         {
         }
 
-        NsStack (const NsStack& stackOther)
+        NsStack(const NsStack& stackOther)
         {
                 *this = stackOther;
         }
 
         NsStack& operator = (const NsStack& stackOther);
 
-        ~NsStack (void)
+        ~NsStack(void)
         {
                 clear();
         }
 
-        size_type size (void) const
+        size_type size(void) const
         {
                 return nFrames;
         }
 
-        void clear (void)
+        void clear(void)
         {
                 while (!empty())
                         pop();
         }
 
-        bool empty (void) const
+        bool empty(void) const
         {
                 return (stackTopNode == 0);
         }
 
-        TemplType& top (void)
+        TemplType& top(void)
         {
                 assert_Ns(stackTopNode != 0, "NsStack::top: Stack is empty");
                 return stackTopNode->theData;
         }
 
-        const TemplType& top (void) const
+        const TemplType& top(void) const
         {
                 assert_Ns(stackTopNode != 0, "NsStack::top: Stack is empty");
                 return stackTopNode->theData;
         }
 
-        void pop (void)
+        void pop(void)
         {
                 assert_Ns(!empty(), "NsStack::pop: Stack is empty");
                 StackNode_t *current = stackTopNode;
@@ -89,7 +89,7 @@ class NsStack {
                 --nFrames;
         }
 
-        void push (const TemplType newData)
+        void push(const TemplType newData)
         {
                 StackNode_t *newNode = new StackNode_t(newData);
                 newNode->next = stackTopNode;
@@ -110,12 +110,12 @@ class NsStack {
 
             public:
 
-                iterator (void)
+                iterator(void)
                   : currNode(0)
                 {
                 }
 
-                iterator (StackNode_t *startNode)
+                iterator(StackNode_t *startNode)
                   : currNode(startNode)
                 {
                 }
@@ -144,7 +144,7 @@ class NsStack {
                         return &currNode->theData;
                 }
 
-                iterator& end (void)
+                iterator& end(void)
                 {
                         currNode = 0;
                         return *this;
@@ -159,12 +159,12 @@ class NsStack {
                 }
         };
 
-        iterator begin (void)
+        iterator begin(void)
         {
                 return iterator(stackTopNode);
         }
 
-        iterator end (void)
+        iterator end(void)
         {
                 iterator iter_end(stackTopNode);
                 return iter_end.end();
@@ -178,12 +178,12 @@ class NsStack {
 
             public:
 
-                const_iterator (void)
+                const_iterator(void)
                   : currNode(0)
                 {
                 }
 
-                const_iterator (const StackNode_t *startNode)
+                const_iterator(const StackNode_t *startNode)
                         : currNode(startNode)
                 {
                 }
@@ -212,7 +212,7 @@ class NsStack {
                         return &currNode->theData;
                 }
 
-                const_iterator& end (void)
+                const_iterator& end(void)
                 {
                         currNode = 0;
                         return *this;
@@ -227,12 +227,12 @@ class NsStack {
                 }
         };
 
-        const_iterator begin (void) const
+        const_iterator begin(void) const
         {
                 return const_iterator(stackTopNode);
         }
 
-        const_iterator end (void) const
+        const_iterator end(void) const
         {
                 const_iterator iter_end(stackTopNode);
                 return iter_end.end();
