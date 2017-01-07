@@ -820,12 +820,6 @@ class  NsIntVar {
                   arcsConnectedTo(0),
                   constraintNeedsRemovedValues(false),
                   queueItem(0)
-#ifdef  Ns_LOCAL_SEARCH
-                ,
-                  lsVal(NsMINUS_INF),
-                  lsIdx(NsINDEX_INF)
-                  //lsInUnassignQueue(false)
-#endif  // Ns_LOCAL_SEARCH
         {   }
 
         NsIntVar (NsProblemManager& pm_init, const NsInt min_init, const NsInt max_init);
@@ -1011,209 +1005,6 @@ class  NsIntVar {
         //{
         //      return  domain.queueItem;
         //}
-
-#ifdef  Ns_LOCAL_SEARCH
-
-        ///  @{
-        ///  \name  Local Search
-
-    private:
-
-        ///  The value assigned to the variable by Local Search.  lsVal==NsMINUS_INF means that the variable is not assigned.
-        NsInt  lsVal;
-
-        ///  The position of the variable in the array to be instantiated by Local Search.
-        NsIndex  lsIdx;
-
-        ///  True, if the variable is an auxiliary/intermediate variable.
-        bool
-        lsIsIntermediate (void)  const
-        {
-                return  ( lsIdx  ==  NsINDEX_INF );
-        }
-
-        struct  VarPointerToPointer_t;
-
-        ///  Describes a Variable-List_Iterator pair.
-        struct  VarPointer_t {
-
-                ///  Pointer to a constrained variable.
-                NsIntVar  *Var;
-
-                ///  Pointer to the item of the list Var->lsPointersToSupportTuples that points to this.
-                NsList<VarPointerToPointer_t>::iterator  pointerToPointersToSupportTuples;
-
-                ///  Constructor.
-                VarPointer_t (NsIntVar *Var_init)
-                        : Var(Var_init),
-                          pointerToPointersToSupportTuples(
-                                  --Var->lsPointersToSupportTuples.end() )
-                {   }
-        };
-
-        /////  A list with the variables-values pairs that support (via constraints) the current assignment.
-        //NsList<VarPointer_t>  lsSupportTuple;
-
-        ///  A list with the support tuples that support a variable assignment.
-        NsList< NsList<VarPointer_t> >  lsSupportTuples;
-
-        void  findSupporters (NsList< NsList<NsIntVar *> >& supportTuples);
-
-        ///  Describes a Variable-List_Iterator pair.
-
-        struct  VarPointerToPointer_t {
-
-                ///  Pointer to a constrained variable.
-                NsIntVar  *Var;
-
-                ///  Pointer to the item of the list Var->lsSupportTuples that points to this.
-                NsList< NsList<VarPointer_t> >::iterator  pointerToSupportTuples;
-
-                ///  Constructor.
-                VarPointerToPointer_t (NsIntVar *Var_init)
-                        : Var(Var_init),
-                          pointerToSupportTuples(
-                                  --Var->lsSupportTuples.end() )
-                {   }
-        };
-
-        ///  A list with pointers to lsSupportTuples of other (intermediate) variables that are supported by this.
-        NsList<VarPointerToPointer_t>  lsPointersToSupportTuples;
-
-        ///  Pointer to the item of the list NsProblemManager::lsConflictingVars, if there is any that concerns `*this.'
-        NsList<NsIntVar *>::iterator  lsPointerToConflictingVariablesItem;
-
-    public:
-
-        ///  Contains a list with pointers to items of lists that concern a specific (violated) constraint.
-
-        struct  LsPointersToTuples_t {
-
-                ///  Contains pointers to items of lists that concern a specific (violated) constraint.
-
-                struct  LsPointersToTuplesOfVar_t {
-
-                        ///  Pointer to a variables list item.
-                        NsList< NsList<NsIntVar *> >::iterator  varsListItem;
-
-                        ///  Pointer to a pointers list item.
-                        NsList< NsList<LsPointersToTuples_t>::iterator >::iterator  pointersListItem;
-
-                        ///  Constructor.
-                        LsPointersToTuplesOfVar_t (
-                                NsList< NsList<NsIntVar *> >::iterator  varsListItem_init,
-                                NsList< NsList<LsPointersToTuples_t>::iterator >::iterator  pointersListItem_init)
-                                : varsListItem(varsListItem_init),
-                                  pointersListItem(pointersListItem_init)
-                        {   }
-                };
-
-                ///  A list containing pointers (to lists that are included in NsIntVar's).
-                NsList<LsPointersToTuplesOfVar_t>  tuple;
-
-                ///  Pointer to a variables list item (of NsProblemManager).
-                NsList< NsList<NsIntVar *> >::iterator  varsListItem;
-
-                /////  The ID of the violated constraint.
-                //NsIndex  constraint_ID;
-        };
-
-    private:
-
-        ///  A list containing the violated constraints (a violated constraint is practically the list of its variables) that `*this' takes part in.
-        NsList< NsList<NsIntVar *> >  lsViolatedConstrs;
-
-        ///  Auxiliary list for lsViolatedConstraints: contains pointers to a list with other entities that are involved in the corresponding violated constraints.
-        NsList< NsList<LsPointersToTuples_t>::iterator >  lsPointersToTuples;
-
-        /////  A list containing the IDs of the violated constraints that `*this' takes part in.
-        //NsSet<NsIndex>  lsViolatedConstrsIDs;
-
-        void  lsDeleteSupportTuples (void);
-
-        void  lsDeleteAssignmentDependencies (void);
-
-    public:
-
-        ///  An accessor to lsViolatedConstrs.
-        const NsList< NsList<NsIntVar *> >&
-        lsViolatedConstraints (void)  const
-        {
-                return  lsViolatedConstrs;
-        }
-
-        /////  An accessor to lsViolatedConstrsIDs.
-        //const NsSet<NsIndex>&
-        //lsViolatedConstraintsIDs (void)  const
-        //{
-        //      return  lsViolatedConstrs;
-        //}
-
-        ///  True, if there has been assigned a value (by Local Search) to the variable.
-        bool
-        lsIsBound (void)  const
-        {
-                return  ( lsVal  !=  NsMINUS_INF );
-        }
-
-        ///  If the constrained variable is instantiated, the method returns its value.
-        NsInt
-        lsValue (void)  const
-        {
-                assert_Ns( lsIsBound() ,
-                           "NsIntVar::lsValue: `*this': Not a bound NsIntVar" );
-                return  lsVal;
-        }
-
-        ///  Used when we want to declare that the variable is \b not an auxiliary/intermediate one.
-        void
-        lsNotIntermediate (const NsIndex index)
-        {
-                lsIdx  =  index;
-        }
-
-        ///  Returns the position of the variable in the array to be instantiated by Local Search.
-        NsIndex
-        lsIndex (void)  const
-        {
-                assert_Ns( !lsIsIntermediate() ,
-                           "NsIntVar::lsIndex: Variable is intermediate" );
-                return  lsIdx;
-        }
-
-        /////  True if the variable is going to be unassigned.
-        //bool  lsInUnassignQueue;
-
-        //void  lsSet (const NsInt val);
-
-        void  lsSet (const NsInt val,
-                     const NsList<NsIntVar *> supportTuple=
-                             NsList<NsIntVar *>(),
-                     const Ns_Constraint *constrFired=0);
-
-        ///  Undo the assignment of the variable.
-        void  lsUnset (void);
-
-        //void  lsUnsetCommit (void);
-
-        /////  Retains the current value of the variable, or un-assigns it if it is not supported.
-        //      void
-        //lsRefresh (void)
-        //{
-        //      for (NsList<VarPointer_t>::const_iterator var_val=lsSupportTuple.begin();
-        //                      var_val != lsSupportTuple.end();
-        //                      ++var_val)
-        //      {
-        //              if ( var_val->Var->lsValue()  !=  var_val->value )
-        //              {
-        //                      lsUnsetCommit();
-        //                      return;
-        //              }
-        //      }
-        //}
-
-        ///  @}
-#endif                                   // Ns_LOCAL_SEARCH
 
         void  transparent (void);
 };
@@ -1489,25 +1280,6 @@ class  NsIntVarArray {
         {
                 return  PointArray.empty();
         }
-
-#ifdef  Ns_LOCAL_SEARCH
-
-        ///  @{
-        ///  \name  Local Search
-
-        ///  Signifies that the variables belonging to the array will be instantiated by a Local Search method.
-        void
-        lsLabeling (void)
-        {
-                for (NsIndex i=0;  i < size();  ++i)
-                        (*this)[i].lsNotIntermediate(i);
-                //  `Lock' the array in order to disallow the
-                //   addition of new variables to it.
-                addConstraint();
-        }
-
-        ///  @}
-#endif  // Ns_LOCAL_SEARCH
 };
 
 std::ostream&
@@ -1559,15 +1331,6 @@ class  Ns_Constraint {
         virtual void  ArcCons      (void) = 0;
 
         virtual void  LocalArcCons (Ns_QueueItem& Qitem) = 0;
-
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons (NsIntVar *varFired)
-        {
-                // to suppress warnings
-                varFired  =  varFired;
-                throw  NsException("Ns_Constraint::lsFixedCons: Unimplemented");
-        }
-#endif  // Ns_LOCAL_SEARCH
 
         ///  @}
 
@@ -1679,9 +1442,6 @@ class Ns_ConstrXlessthanY : public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif  // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXlesseqthanY : public Ns_Constraint {
@@ -1713,9 +1473,6 @@ class Ns_ConstrXlesseqthanY : public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif                                   // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqYplusC : public Ns_Constraint {
@@ -1750,9 +1507,6 @@ class Ns_ConstrXeqYplusC : public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif                                   // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqCminusY : public Ns_Constraint {
@@ -1824,9 +1578,6 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif  // Ns_LOCAL_SEARCH
 };
 
 //  The following constraint is somehow `stronger' than the simple `X == Y + C*Z'.
@@ -1908,9 +1659,6 @@ class Ns_ConstrXeqYplusZ: public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif                                   // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqYtimesZ: public Ns_Constraint {
@@ -2635,9 +2383,6 @@ class Ns_ConstrXneqY : public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif  // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrXeqAbsY : public Ns_Constraint {
@@ -2702,9 +2447,6 @@ class Ns_ConstrAllDiff : public Ns_Constraint {
 
         virtual void  ArcCons      (void);
         virtual void  LocalArcCons (Ns_QueueItem& Qitem);
-#ifdef  Ns_LOCAL_SEARCH
-        virtual void  lsFixedCons  (NsIntVar *varFired);
-#endif  // Ns_LOCAL_SEARCH
 };
 
 class Ns_ConstrAllDiffStrong : public Ns_Constraint {
@@ -5648,40 +5390,6 @@ class  NsProblemManager {
         }
 
         ///  @}
-
-#ifdef  Ns_LOCAL_SEARCH
-
-        ///  @{
-        ///  \name  Local Search
-
-    public:
-
-        ///  A list containing the variables that are included in violated constraints.
-        NsList<NsIntVar *>  lsConflictingVariables;
-
-        ///  An accessor to lsConflictingVariables.
-        const NsList<NsIntVar *>&
-        lsConflictingVars (void)  const
-        {
-                return  lsConflictingVariables;
-        }
-
-        ///  A list containing the violated constraints (a violated constraint is practically the list of its variables).
-        NsList< NsList<NsIntVar *> >  lsViolatedConstrs;
-
-        ///  Auxiliary list for lsViolatedConstraints: contains pointers to other entities that are involved in the corresponding violated constraints.
-        NsList<NsIntVar::LsPointersToTuples_t>  lsPointersToTuples;
-
-        ///  An accessor to lsViolatedConstrs.
-        const NsList< NsList<NsIntVar *> >&
-        lsViolatedConstraints (void)  const
-        {
-                return  lsViolatedConstrs;
-        }
-
-        ///  @}
-
-#endif  // Ns_LOCAL_SEARCH
 
         ///  Saves the bitsetDomain--before being modified--for future backtracking purposes.
         void

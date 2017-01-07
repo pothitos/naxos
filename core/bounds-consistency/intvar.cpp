@@ -171,12 +171,6 @@ NsIntVar::NsIntVar (NsProblemManager& pm_init, const NsInt min_init, const NsInt
           arcsConnectedTo(0),
           constraintNeedsRemovedValues(false),
           queueItem(0)
-#ifdef  Ns_LOCAL_SEARCH
-        ,
-          lsVal(NsMINUS_INF),
-          lsIdx(NsINDEX_INF)
-//lsInUnassignQueue(false)
-#endif                                                   // Ns_LOCAL_SEARCH
 {
         pm->addVar(this);
         //domain  =  new Ns_BitSet(pm_init, min_init, max_init);
