@@ -2,7 +2,7 @@
 STANDARD = -std=c++0x
 
 # Naxos Directory
-NAXOS = ../core/bounds-consistency
+NAXOS = ../../core/bounds-consistency
 
 ### COMPILER ###
 CXX = g++
@@ -12,7 +12,7 @@ LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)
 
 ### FILENAMES ###
-PROGRAMS = nqueens send_more_money
+PROGRAMS = nqueens
 PR_OBJECTS = $(PROGRAMS:=.o)
 OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
 HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
@@ -35,4 +35,4 @@ clean:
 ### TESTING ###
 .PHONY: test
 test:
-	verification/test.sh
+	./verification.sh
