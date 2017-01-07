@@ -732,11 +732,6 @@ NsProblemManager::nextSolution (void)
                         } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(),
                                                       searchNodes.gbegin(),
                                                       numSearchTreeNodes() ) ) ) {
-#ifdef DEBUG_SPLITS
-                                cout << "Node\t" << time(0) << "\t";
-                                searchNodes.currentPath();
-                                cout << "\n";
-#endif
                                 searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
                         } else {
                                 destroy_goal( CurrGoal->getFirstSubGoal() );
