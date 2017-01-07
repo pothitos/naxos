@@ -5695,8 +5695,9 @@ class  NsProblemManager {
         }
 };
 
-}  // end namespace
-#endif  // Ns_NAXOS_H
+} // end namespace
+
+#endif // Ns_NAXOS_H
 
 ///  \example  nqueens.orig.cpp
 ///

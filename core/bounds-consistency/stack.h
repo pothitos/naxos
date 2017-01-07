@@ -241,4 +241,5 @@ NsStack<TemplType>::operator = (const NsStack& stackOther)
         }
         return *this;
 }
+
 #endif // Ns_STACK_H
