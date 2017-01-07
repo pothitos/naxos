@@ -1,12 +1,13 @@
 #  Comment out the following line, for gcc versions less than 4.3.
 STANDARD = -std=c++0x
+
 # Naxos Directory
 NAXOS = ../../core/bounds-consistency
+
 # Amorgos Directory
 AMORGOS = ..
 
-# COMPILER
-
+# Compiler Options
 CXX      = $(CPATH)g++
 WARNINGS = -pedantic -Wall -W -Wshadow -Werror
 CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
@@ -14,8 +15,7 @@ CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
 LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)
 
-# FILENAMES
-
+# Filenames
 PROGRAMS = cryptmult golfer graphcolor knump magic mapcolor nqueens placement sudoku vertexcover
 PR_OBJECTS = $(PROGRAMS:=.o)
 
@@ -25,8 +25,6 @@ OBJECTS = $(OBJECTS_NAXOS) $(OBJECTS_AMORGOS)
 
 HEADERS_NAXOS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
 HEADERS_AMORGOS = $(addprefix $(AMORGOS)/, heuristics.h onesamp.h dfs.h)
-
-# BUILDING
 
 .PHONY: all
 all: $(PROGRAMS)
@@ -43,12 +41,9 @@ $(PR_OBJECTS):   %.o:   %.cpp
 $(PROGRAMS):   %:   $(OBJECTS) %.o
 	$(LD) $(LDFLAGS) $^  -o $@
 
-# CLEANING
-
 .PHONY: clean
 clean:
 	$(RM)  $(PROGRAMS) $(PR_OBJECTS)
 
-# TESTING
 .PHONY: test
 test: ;

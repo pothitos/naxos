@@ -5,10 +5,7 @@ STANDARD = -std=c++0x
 NAXOS = ../../core/bounds-consistency
 NAXOS_AC = ../../core/arc-consistency
 
-
-
-####  COMPILER  ####
-
+# Compiler Options
 CXX      = $(CPATH)g++
 WARNINGS = -pedantic -Wall -W -Wshadow -Werror
 CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
@@ -16,10 +13,7 @@ CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
 LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)
 
-
-
-####  FILENAMES  ####
-
+# Filenames
 PROGRAMS = nqueens magic_square tsp crew_scheduling
 PROGRAMS_AC = $(PROGRAMS:=.AC)
 
@@ -31,10 +25,6 @@ HEADERS = $(addprefix $(NAXOS)/, naxos.h internal.h stack.h)
 
 OBJECTS_AC = $(addprefix $(NAXOS_AC)/, problemmanager.o intvar.o expressions.o constraints.o)
 HEADERS_AC = $(addprefix $(NAXOS_AC)/, naxos.h queue.h stack.h)
-
-
-
-####  BUILDING  ####
 
 .PHONY: all
 all: $(PROGRAMS) AC
@@ -48,8 +38,6 @@ $(PR_OBJECTS):   %.o:   %.cpp $(HEADERS)
 $(PROGRAMS):   %:   $(OBJECTS) %.o
 	$(LD) $(LDFLAGS) $^  -o $@
 
-
-
 .PHONY: AC
 AC: $(PROGRAMS_AC)
 
@@ -62,15 +50,10 @@ $(PR_OBJECTS_AC):   %.AC.o:   %.cpp
 $(PROGRAMS_AC):   %:   $(OBJECTS_AC) %.o
 	$(LD) $(LDFLAGS) $^  -o $@
 
-
-
-####  CLEANING  ####
-
 .PHONY: clean
 clean:
 	$(RM)  $(PROGRAMS) $(PR_OBJECTS) $(PROGRAMS_AC) $(PR_OBJECTS_AC)
 
-### TESTING ###
 .PHONY: test
 test:
 	./verification.sh

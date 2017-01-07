@@ -1,5 +1,5 @@
-### COMPILING AND LINKING OPTIONS ###
-# Uncomment the following line, for gcc versions greater than 4.2.
+# Compiler and Linker Options
+# Comment out the following line, for gcc versions less than 4.3.
 STANDARD = -std=c++0x
 
 NDIR = ../../core/bounds-consistency
@@ -26,8 +26,7 @@ LDPROFFLAGS = -pg
 
 RM = \rm -f
 
-
-### SOURCE AND OUTPUT FILENAMES ###
+# Filenames
 NHDRS_AC = $(NDIR_AC)/naxos.h $(NDIR_AC)/queue.h $(NDIR_AC)/stack.h
 NHDRS = $(NDIR)/naxos.h $(NDIR)/internal.h $(NDIR)/stack.h
 NSRCS_AC = $(NDIR_AC)/problemmanager.cpp $(NDIR_AC)/intvar.cpp $(NDIR_AC)/expressions.cpp $(NDIR_AC)/constraints.cpp
@@ -45,8 +44,7 @@ OBJS_AC = $(NSRCS_AC:.cpp=.AC.o) $(ASRCS:.cpp=.AC.o) $(SRCS:.cpp=.AC.o)
 
 PROG = itc_solver
 
-
-### BUILDING ###
+# Building Bounds-Consistency
 EXEPROG = $(PROG)
 
 .PHONY: exe
@@ -62,8 +60,7 @@ $(ADIR)/%.o: $(ADIR)/%.cpp $(NHDRS) $(AHDRS)
 %.o: %.cpp $(HDRS)
 	$(CC) $(CFLAGS) -c $<
 
-
-### BUILDING AC ###
+# Building Arc-Consistency
 PROG_AC = $(PROG).AC
 
 .PHONY: AC
@@ -79,8 +76,7 @@ $(ADIR)/%.AC.o: $(ADIR)/%.cpp $(NHDRS_AC) $(AHDRS)
 %.AC.o: %.cpp $(HDRS_AC)
 	$(CC) $(CFLAGS_AC) -c $< -o $@
 
-
-### DEBUGGING ###
+# Debugging
 DEBPROG = $(PROG).debug
 DEBOBJS = $(OBJS:.o=.debug.o)
 
@@ -97,8 +93,7 @@ $(ADIR)/%.debug.o: $(ADIR)/%.cpp $(NHDRS) $(AHDRS)
 %.debug.o: %.cpp $(HDRS)
 	$(CC) $(CDEBFLAGS) -c $< -o $@
 
-
-### PROFILING ###
+# Profiling
 PROFPROG = $(PROG).prof
 PROFOBJS = $(OBJS:.o=.prof.o)
 
@@ -111,15 +106,14 @@ $(PROFPROG): $(PROFOBJS)
 %.prof.o: %.cpp $(HDRS)
 	$(CC) $(CPROFFLAGS) -c $< -o $@
 
-
-### CLEANING UP ###
+# Cleaning Up
 TODEL = $(PROG) $(PROG).exe $(OBJS) $(PROG_AC) $(PROG_AC).exe $(OBJS_AC) $(DEBPROG) $(DEBPROG).exe $(DEBOBJS) $(PROFPROG) $(PROFPROG).exe $(PROFOBJS)
 
 .PHONY: clean
 clean:
 	$(RM) $(TODEL)
 
-### TESTING ###
+# Testing
 .PHONY: test
 test:
 	verification/test.sh

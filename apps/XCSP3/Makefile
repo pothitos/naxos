@@ -4,20 +4,19 @@ STANDARD = -std=c++0x
 # Naxos Directory
 NAXOS = ../../core/bounds-consistency
 
-### COMPILER ###
+# Compiler Options
 CXX = g++
 WARNINGS = -pedantic -Wall -W -Wshadow -Werror
 CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
 LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)
 
-### FILENAMES ###
+# Filenames
 PROGRAMS = nqueens
 PR_OBJECTS = $(PROGRAMS:=.o)
 OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
 HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
 
-### BUILDING ###
 .PHONY: all
 all: $(PROGRAMS)
 $(OBJECTS): %.o: %.cpp $(HEADERS)
@@ -27,12 +26,10 @@ $(PR_OBJECTS): %.o: %.cpp $(HEADERS)
 $(PROGRAMS): %: $(OBJECTS) %.o
 	$(LD) $(LDFLAGS) $^ -o $@
 
-### CLEANING ###
 .PHONY: clean
 clean:
 	$(RM) $(PROGRAMS) $(PR_OBJECTS)
 
-### TESTING ###
 .PHONY: test
 test:
 	./verification.sh
