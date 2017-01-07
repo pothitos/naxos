@@ -14,8 +14,9 @@ LDFLAGS = -s $(COVERAGE)
 # Filenames
 PROGRAMS = nqueens
 PR_OBJECTS = $(PROGRAMS:=.o)
-OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
-HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
+HEADERS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
+SOURCES = $(addprefix $(NAXOS)/, array_constraints.cpp bitset_domain.cpp expressions.cpp intvar.cpp problemmanager.cpp var_constraints.cpp)
+OBJECTS = $(SOURCES:.cpp=.o)
 
 .PHONY: all
 all: $(PROGRAMS)
@@ -32,4 +33,14 @@ clean:
 
 .PHONY: test
 test:
-	./verification.sh
+	# Ensure that Naxos Solver can be considered as a "Mini-Solver".
+	# According to the First International XCSP3 Competition: "A
+	# mini-solver is a solver whose code must be composed of
+	# less than 8,000 lines of at most 160 characters (while
+	# discarding code for parsing XCSP3, comments and code of
+	# standard libraries)."
+	SLOC=$$(cat $(HEADERS) $(SOURCES) | grep -v "^$$" | grep -v "^ *//" | wc -l) && \
+        echo "$$SLOC pure source lines of code" && \
+        test $$SLOC -lt 8000
+	# Temporarily disable the maximum line width test
+	! grep ".\{161\}" $(HEADERS) $(SOURCES) || true
