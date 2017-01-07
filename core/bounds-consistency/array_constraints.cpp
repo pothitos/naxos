@@ -229,8 +229,6 @@ void Ns_ConstrXeqSum::LocalArcCons (Ns_QueueItem& /*Qitem*/)
         ArcCons();
 }
 
-//#ifndef Ns_AllDiff_Test
-
 Ns_ConstrAllDiff::Ns_ConstrAllDiff (NsIntVarArray *VarArr_init)
         : VarArr(VarArr_init)
 {
@@ -329,8 +327,6 @@ Ns_ConstrAllDiff::LocalArcCons (Ns_QueueItem& Qitem)
         //}
 }
 
-//#endif  // !Ns_AllDiff_Test
-
 bool
 Ns_ConstrAllDiffStrong::groupedNsIntVar::removeDomain (const NsIntVar& V, const Ns_Constraint *constraint)
 {
@@ -376,8 +372,6 @@ Ns_ConstrAllDiffStrong::groupedNsIntVar::removeDomain (const NsIntVar& V, const 
 //      }
 //
 //};
-
-//#ifdef Ns_AllDiff_Test
 
 Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong (NsIntVarArray *VarArr_init, unsigned long Cap)
         : Capacity(Cap)
