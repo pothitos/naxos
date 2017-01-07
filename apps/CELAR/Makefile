@@ -26,16 +26,16 @@ RM = \rm -f
 
 # Filenames
 NHDRS_AC =  $(NDIR_AC)/naxos.h $(NDIR_AC)/queue.h $(NDIR_AC)/stack.h
-NHDRS =  $(NDIR)/naxos.h $(NDIR)/internal.h $(NDIR)/stack.h
-NSRCS_AC =  $(NDIR_AC)/problemmanager.cpp $(NDIR_AC)/intvar.cpp $(NDIR_AC)/expressions.cpp $(NDIR_AC)/constraints.cpp
-NSRCS =  $(NDIR)/problemmanager.cpp $(NDIR)/intvar.cpp  $(NDIR)/bitset_domain.cpp $(NDIR)/expressions.cpp $(NDIR)/var_constraints.cpp $(NDIR)/array_constraints.cpp
+NHDRS =  $(NDIR)/internal.h $(NDIR)/naxos.h $(NDIR)/stack.h
+NSRCS_AC =  $(NDIR_AC)/constraints.cpp $(NDIR_AC)/expressions.cpp $(NDIR_AC)/intvar.cpp $(NDIR_AC)/problemmanager.cpp
+NSRCS =  $(NDIR)/array_constraints.cpp $(NDIR)/bitset_domain.cpp $(NDIR)/expressions.cpp $(NDIR)/intvar.cpp $(NDIR)/problemmanager.cpp $(NDIR)/var_constraints.cpp
 
-AHDRS =  $(ADIR)/pops.h $(ADIR)/domain_splitting.h $(ADIR)/amorgos.h $(ADIR)/boundedbt.h $(ADIR)/credit.h $(ADIR)/dbds.h $(ADIR)/dbs.h $(ADIR)/dfs.h $(ADIR)/fns.h $(ADIR)/gns.h $(ADIR)/heuristics.h $(ADIR)/ibroad.h $(ADIR)/isamp.h $(ADIR)/lan.h $(ADIR)/lds.h $(ADIR)/onesamp.h $(ADIR)/rdfs.h
-ASRCS =  $(ADIR)/pops.cpp $(ADIR)/domain_splitting.cpp $(ADIR)/boundedbt.cpp $(ADIR)/credit.cpp $(ADIR)/dbds.cpp $(ADIR)/dbs.cpp $(ADIR)/dfs.cpp $(ADIR)/fns.cpp $(ADIR)/gns.cpp $(ADIR)/heuristics.cpp $(ADIR)/ibroad.cpp $(ADIR)/isamp.cpp $(ADIR)/lan.cpp $(ADIR)/lds.cpp $(ADIR)/onesamp.cpp $(ADIR)/rdfs.cpp
+AHDRS =  $(ADIR)/amorgos.h $(ADIR)/boundedbt.h $(ADIR)/credit.h $(ADIR)/dbds.h $(ADIR)/dbs.h $(ADIR)/dfs.h $(ADIR)/domain_splitting.h $(ADIR)/fns.h $(ADIR)/gns.h $(ADIR)/heuristics.h $(ADIR)/ibroad.h $(ADIR)/isamp.h $(ADIR)/lan.h $(ADIR)/lds.h $(ADIR)/onesamp.h $(ADIR)/pops.h $(ADIR)/rdfs.h
+ASRCS =  $(ADIR)/boundedbt.cpp $(ADIR)/credit.cpp $(ADIR)/dbds.cpp $(ADIR)/dbs.cpp $(ADIR)/dfs.cpp $(ADIR)/domain_splitting.cpp $(ADIR)/fns.cpp $(ADIR)/gns.cpp $(ADIR)/heuristics.cpp $(ADIR)/ibroad.cpp $(ADIR)/isamp.cpp $(ADIR)/lan.cpp $(ADIR)/lds.cpp $(ADIR)/onesamp.cpp $(ADIR)/pops.cpp $(ADIR)/rdfs.cpp
 
 HDRS =  $(NHDRS) $(AHDRS) heuristics.h
 HDRS_AC =  $(NHDRS_AC) $(AHDRS) heuristics.h
-SRCS =  heuristics.cpp celar.cpp
+SRCS =  celar.cpp heuristics.cpp
 
 OBJS = $(NSRCS:.cpp=.o) $(ASRCS:.cpp=.o) $(SRCS:.cpp=.o)
 OBJS_AC = $(NSRCS_AC:.cpp=.AC.o) $(ASRCS:.cpp=.AC.o) $(SRCS:.cpp=.AC.o)

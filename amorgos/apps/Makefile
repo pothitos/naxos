@@ -16,12 +16,12 @@ LDFLAGS = -s $(COVERAGE)
 PROGRAMS = cryptmult golfer graphcolor knump magic mapcolor nqueens placement sudoku vertexcover
 PR_OBJECTS = $(PROGRAMS:=.o)
 
-OBJECTS_NAXOS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
+OBJECTS_NAXOS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o)
 OBJECTS_AMORGOS = $(addprefix $(AMORGOS)/, boundedbt.o credit.o dbds.o dbs.o dfs.o fns.o gns.o heuristics.o ibroad.o isamp.o lan.o lds.o onesamp.o rdfs.o)
 OBJECTS = $(OBJECTS_NAXOS) $(OBJECTS_AMORGOS)
 
-HEADERS_NAXOS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
-HEADERS_AMORGOS = $(addprefix $(AMORGOS)/, heuristics.h onesamp.h dfs.h)
+HEADERS_NAXOS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
+HEADERS_AMORGOS = $(addprefix $(AMORGOS)/, dfs.h heuristics.h onesamp.h)
 
 .PHONY: all
 all: $(PROGRAMS)

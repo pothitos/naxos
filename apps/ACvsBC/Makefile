@@ -17,10 +17,10 @@ PROGRAMS_AC = $(PROGRAMS:=.AC)
 PR_OBJECTS = $(PROGRAMS:=.o)
 PR_OBJECTS_AC = $(PROGRAMS_AC:=.o)
 
-OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
-HEADERS = $(addprefix $(NAXOS)/, naxos.h internal.h stack.h)
+OBJECTS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o)
+HEADERS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
 
-OBJECTS_AC = $(addprefix $(NAXOS_AC)/, problemmanager.o intvar.o expressions.o constraints.o)
+OBJECTS_AC = $(addprefix $(NAXOS_AC)/, constraints.o expressions.o intvar.o problemmanager.o)
 HEADERS_AC = $(addprefix $(NAXOS_AC)/, naxos.h queue.h stack.h)
 
 .PHONY: all

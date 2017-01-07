@@ -11,8 +11,8 @@ LDFLAGS = -s $(COVERAGE)
 # Filenames
 PROGRAMS = nqueens numpart
 PR_OBJECTS = $(PROGRAMS:=.o)
-OBJECTS = $(addprefix $(NAXOS)/, problemmanager.o expressions.o var_constraints.o array_constraints.o intvar.o bitset_domain.o)
-HEADERS = $(addprefix $(NAXOS)/, naxos.h stack.h internal.h)
+OBJECTS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o)
+HEADERS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
 
 .PHONY: all
 all: $(PROGRAMS)
