@@ -1,6 +1,3 @@
-#  Comment out the following line, for gcc versions less than 4.3.
-STANDARD = -std=c++0x
-
 # Naxos Directory
 NAXOS = ../../core/bounds-consistency
 
@@ -10,7 +7,7 @@ AMORGOS = ..
 # Compiler Options
 CXX      = $(CPATH)g++
 WARNINGS = -pedantic -Wall -W -Wshadow -Werror
-CXXFLAGS = $(WARNINGS) $(STANDARD) -O2 $(COVERAGE)
+CXXFLAGS = $(WARNINGS) -std=c++0x -O2 $(COVERAGE)
 
 LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)

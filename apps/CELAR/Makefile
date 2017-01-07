@@ -1,21 +1,18 @@
 # Compiler and Linker Options
-# Comment out the following line, for gcc versions less than 4.3.
-STANDARD = -std=c++0x
-
 NDIR = ../../core/bounds-consistency
 NDIR_AC = ../naxos-AC
 ADIR = ../../amorgos
 
 CC = $(CPATH)g++
 WFLAGS = -pedantic -Wall -W -Wshadow -Werror
-COMPFLAGS = $(WFLAGS) $(STANDARD) -I$(NDIR) -I$(ADIR)
-COMPFLAGS_AC = $(WFLAGS) $(STANDARD) -I$(NDIR_AC) -I$(ADIR)
+COMPFLAGS = $(WFLAGS) -std=c++0x -I$(NDIR) -I$(ADIR)
+COMPFLAGS_AC = $(WFLAGS) -std=c++0x -I$(NDIR_AC) -I$(ADIR)
 CFLAGS = $(COMPFLAGS) -O2 $(COVERAGE)
 CFLAGS_AC = $(COMPFLAGS_AC) -O2 $(COVERAGE)
 CDEBFLAGS = $(COMPFLAGS) -g3
-NCFLAGS = $(WFLAGS) $(STANDARD) -O2 $(COVERAGE)
-ACFLAGS = $(WFLAGS) $(STANDARD) -I$(NDIR) -O2 $(COVERAGE)
-ACFLAGS_AC = $(WFLAGS) $(STANDARD) -I$(NDIR_AC) -O2 $(COVERAGE)
+NCFLAGS = $(WFLAGS) -std=c++0x -O2 $(COVERAGE)
+ACFLAGS = $(WFLAGS) -std=c++0x -I$(NDIR) -O2 $(COVERAGE)
+ACFLAGS_AC = $(WFLAGS) -std=c++0x -I$(NDIR_AC) -O2 $(COVERAGE)
 NCDEBFLAGS = $(WFLAGS) -g3
 ACDEBFLAGS = $(WFLAGS) -I$(NDIR) -g3
 CPROFFLAGS = $(CDEBFLAGS) -pg

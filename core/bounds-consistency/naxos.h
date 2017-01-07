@@ -38,23 +38,10 @@
 #include <queue>
 #include <list>
 
-#ifdef  __GNUC__
-        #if __GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 3)
-                #define  Ns_OLD_UNORDERED_SET
-        #endif
-#endif  // __GNUC__
-
-#ifdef Ns_OLD_UNORDERED_SET
-        #include <ext/hash_set>
-        #include <ext/hash_map>
-        #define  Ns_UNORDERED_SET  __gnu_cxx::hash_set
-        #define  Ns_UNORDERED_MAP  __gnu_cxx::hash_map
-#else
-        #include <unordered_set>
-        #include <unordered_map>
-        #define  Ns_UNORDERED_SET  std::unordered_set
-        #define  Ns_UNORDERED_MAP  std::unordered_map
-#endif
+#include <unordered_set>
+#include <unordered_map>
+#define Ns_UNORDERED_SET std::unordered_set
+#define Ns_UNORDERED_MAP std::unordered_map
 
 #include <stdexcept>
 #include <string>
