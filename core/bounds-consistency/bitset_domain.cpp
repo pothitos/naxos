@@ -7,29 +7,24 @@ using namespace naxos;
 
 namespace {
 
-/// Returns the position in the bit-set of the corresponding bit to the value \a val.
+/// Returns the position in the bit-set of the corresponding bit to the value val.
 ///
 /// This method performs a simple subtraction, to find out
-/// the corresponding bit number for the value \a val.
-/// However, it takes care about overflow issues, because
-/// the limit for a bit number is \a NsUPLUS_INF and not
-/// \a NsPLUS_INF!
+/// the corresponding bit number for the value val. However,
+/// it takes care about overflow issues, because the limit
+/// for a bit number is NsUPLUS_INF and not NsPLUS_INF!
 
-inline NsUInt
-correspondingBit (const NsInt val, const NsInt minDom)
+inline NsUInt correspondingBit(const NsInt val, const NsInt minDom)
 {
-        if ( minDom < 0  &&  val > 0 ) {
+        if (minDom < 0 && val > 0) {
                 // to avoid an overflow
-                return  ( val + static_cast<NsUInt>( -minDom ) );
+                return (val + static_cast<NsUInt>(-minDom));
         }
-        return  ( val - minDom );
+        return (val - minDom);
 }
 
-///  Checks if the domain is continuous.
-
-inline bool
-isContinuous (const NsInt minVal, const NsInt maxVal,
-              const NsUInt setCount)
+/// Checks if the domain is continuous
+inline bool isContinuous(const NsInt minVal, const NsInt maxVal, const NsUInt setCount)
 {
         NsUInt  diff;
         // to avoid an overflow
