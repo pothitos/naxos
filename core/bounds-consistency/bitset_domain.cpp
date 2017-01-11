@@ -99,37 +99,34 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                         // Continue on resetting the value...
                 }
         }
-        bool  changedMinVal = false,  changedMaxVal = false;
-        for (NsInt val=rangeMin;   val <= rangeMax;  ++val) {
-                //std::cout << "val = " << val << "\n";
-                NsUInt  nbit  =  correspondingBit(val, minDom);
-                NsUInt  mw    =  nbit / MW_BITS;
-                assert_Ns( minVal <= val  &&  val <= maxVal
-                           && nbit < nBits ,
+        bool changedMinVal = false, changedMaxVal = false;
+        for (NsInt val = rangeMin; val <= rangeMax; ++val) {
+                NsUInt nbit = correspondingBit(val, minDom);
+                NsUInt mw = nbit / MW_BITS;
+                assert_Ns(minVal <= val && val <= maxVal && nbit < nBits,
                            "Ns_BitSet::removeRange: Machine word out of `*this' range");
-                if ( machw[mw]  ==  0u ) {
+                if (machw[mw] == 0u) {
                         // speedup by means of comparing the whole word
-                        if ( MW_BITS - nbit % MW_BITS  >
-                             static_cast<NsUInt>( rangeMax - val ) ) {
+                        if (MW_BITS - nbit % MW_BITS >
+                            static_cast<NsUInt>(rangeMax - val)) {
                                 break;
                         }
-                        val  +=  MW_BITS - nbit % MW_BITS - 1;
-                        // `-1' above is used to compensate
-                        //  the for's `++val' increment.
-                }  else if ( machw[mw] == ~static_cast<size_t>(0u)
-                             &&  nbit % MW_BITS == 0
-                             &&  val + static_cast<NsInt>( MW_BITS ) - 1
-                             <= rangeMax ) {
-                        // speedup by means of comparing the whole word
-                        machw[mw]  =  0u;
-                        setCount  -=  MW_BITS;
-                        if ( val  ==  minVal )
-                                changedMinVal  =  true;
-                        val  +=  MW_BITS - 1;
-                        // `-1' above is used to compensate
-                        //  the for's `++val' increment.
-                        if ( val  ==  maxVal )
-                                changedMaxVal  =  true;
+                        val += MW_BITS - nbit % MW_BITS - 1;
+                        // '-1' above is used to compensate
+                        // the for's `++val' increment.
+                } else if (machw[mw] == ~static_cast<size_t>(0u) &&
+                           nbit % MW_BITS == 0 &&
+                           val + static_cast<NsInt>(MW_BITS) - 1 <= rangeMax) {
+                        // Speedup by means of comparing the whole word
+                        machw[mw] = 0u;
+                        setCount -= MW_BITS;
+                        if (val == minVal)
+                                changedMinVal = true;
+                        val += MW_BITS - 1;
+                        // '-1' above is used to compensate
+                        // the for's `++val' increment.
+                        if (val == maxVal)
+                                changedMaxVal = true;
                 } else {
                         size_t  mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
                         if ( machw[mw] & mwbit ) {
