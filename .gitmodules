@@ -1,0 +1,4 @@
+[submodule "apps/XCSP3/XCSP3-CPP-Parser"]
+	path = apps/XCSP3/XCSP3-CPP-Parser
+	url = https://github.com/pothitos/XCSP3-CPP-Parser.git
+	branch = master
