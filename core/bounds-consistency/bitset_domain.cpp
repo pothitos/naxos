@@ -13,7 +13,6 @@ namespace {
 /// the corresponding bit number for the value val. However,
 /// it takes care about overflow issues, because the limit
 /// for a bit number is NsUPLUS_INF and not NsPLUS_INF!
-
 inline NsUInt correspondingBit(const NsInt val, const NsInt minDom)
 {
         if (minDom < 0 && val > 0) {
@@ -26,175 +25,63 @@ inline NsUInt correspondingBit(const NsInt val, const NsInt minDom)
 /// Checks if the domain is continuous
 inline bool isContinuous(const NsInt minVal, const NsInt maxVal, const NsUInt setCount)
 {
-        NsUInt  diff;
-        // to avoid an overflow
-        if ( minVal < 0  &&  maxVal > 0 )
-                diff  =  maxVal + static_cast<NsUInt>( -minVal );
+        NsUInt diff;
+        // To avoid an overflow
+        if (minVal < 0 && maxVal > 0)
+                diff = maxVal + static_cast<NsUInt>(-minVal);
         else
-                diff  =  maxVal - minVal;
-        return  ( diff + 1 == setCount );
+                diff = maxVal - minVal;
+        return (diff + 1 == setCount);
 }
 
-}                                                                // namespace
+} // namespace
 
-/////  Constructs a frame of the DomainStore_t.
-//
-//Ns_BitSet::DomainStore_t::DomainFrame_t::DomainFrame_t (
-//              const NsProblemManager& pm/*,
-//              const NsInt minVal_init,
-//              const NsInt maxVal_init,
-//              const NsUInt setCount_init*/)
-//      : historyId(pm.getCurrentHistoryId())//,
-//       //minVal(minVal_init), maxVal(maxVal_init), setCount(setCount_init)
-//{     }
-//
-//
-//
-//
-//
-/////  Refreshes the top of the stack of domains, so that it contains a valid gap.
-//
-//      void
-//Ns_BitSet::DomainStore_t::refresh (void)
-//{
-//      while ( !pm.isValidHistoryId( domainStack.top().historyId ) )
-//      {
-//              domainStack.pop();
-//      }
-//}
-//
-//
-//
-//
-/////  Returns the current valid DomainFrame_t.
-//
-//      Ns_BitSet::DomainStore_t::DomainFrame_t&
-//Ns_BitSet::DomainStore_t::currentDomain (void)
-//{
-//      refresh();
-//
-//      return  domainStack.top();
-//}
-//
-//
-//
-//
-/////  Returns a DomainFrame_t for the current search level.  It is possible to modify it.
-//
-//      Ns_BitSet::DomainStore_t::DomainFrame_t&
-//Ns_BitSet::DomainStore_t::modifyDomain (void)
-//{
-//      if ( domainStack.empty() )    {
-//
-//              domainStack.push( DomainFrame_t(pm) );
-//
-//      }  else if ( !pm.isCurrentHistoryId(domainStack.top().historyId) )
-//      {
-//              DomainFrame_t&  dOld = currentDomain();
-//
-//              if ( isContinuous(dOld.minVal,dOld.maxVal,dOld.setCount) )  {
-//                      dOld.minDom  =  dOld.minVal;
-//
-//                      dOld.nBits   =
-//                          correspondingBit(dOld.maxVal,dOld.minDom) + 1;
-//
-//                      dOld.machw.clear();
-//
-//              }  else  {
-//                      //  Trimming the empty words of the bit-set data
-//                      //   structure.
-//
-//                      NsUInt  firstNonEmptyBit =
-//                              correspondingBit(dOld.minVal,dOld.minDom);
-//                      NsUInt  firstNonEmptyWord =
-//                              firstNonEmptyBit / MW_BITS;
-//
-//
-//                      dOld.minDom  +=  firstNonEmptyWord * MW_BITS;
-//
-//                      dOld.nBits   =
-//                          correspondingBit(dOld.maxVal,dOld.minDom) + 1;
-//
-//
-//                      NsUInt   newMachwSize = (dOld.nBits-1)/MW_BITS + 1;
-//
-//                      for (NsUInt i=0;   i < newMachwSize;   ++i)   {
-//
-//                              dOld.machw[i]  =
-//                                      dOld.machw[firstNonEmptyWord + i];
-//                      }
-//
-//                      dOld.machw.resize(newMachwSize);
-//              }
-//
-//              domainStack.push( DomainFrame_t(pm) );
-//
-//              DomainFrame_t&  dNew = modifyDomain();
-//
-//              dNew.minDom    =  dOld.minDom;
-//              dNew.minVal    =  dOld.minVal;
-//              dNew.maxVal    =  dOld.maxVal;
-//              dNew.nBits     =  dOld.nBits;
-//              dNew.setCount  =  dOld.setCount;
-//              dNew.machw     =  dOld.machw;
-//      }
-//
-//      return  domainStack.top();
-//}
-
-///  Constructs the domain [\a minDom_init .. \a maxDom_init].
-
-Ns_BitSet::Ns_BitSet (NsProblemManager& pm_init,
-                      const NsInt minDom_init, const NsInt maxDom_init)
-        : pm(&pm_init),
-          minDom(minDom_init),
-          minVal(minDom_init),
-          maxVal(maxDom_init),
-          nBits(correspondingBit(maxVal,minDom) + 1),
-          setCount(nBits)
-//queueItem(0)
+/// Constructs the domain [minDom_init..maxDom_init]
+Ns_BitSet::Ns_BitSet (NsProblemManager& pm_init, const NsInt minDom_init,
+                      const NsInt maxDom_init)
+  : pm(&pm_init),
+    minDom(minDom_init),
+    minVal(minDom_init),
+    maxVal(maxDom_init),
+    nBits(correspondingBit(maxVal,minDom) + 1),
+    setCount(nBits)
 {
-        assert_Ns( NsMINUS_INF < minDom_init
-                   && minDom_init <= maxDom_init
-                   && maxDom_init < NsPLUS_INF ,
-                   "Ns_BitSet::Ns_BitSet: Domain out of range");
-        //  Making `lastSaveId' dirty as the domain has not been saved.
-        lastSaveId.id     =  NsUPLUS_INF;
-        //  Initializing `lastSaveId.level' to prevent valgrind from
-        //   reporting a warning.
-        lastSaveId.level  =  0;
-        //DomainStore_t::DomainFrame_t&  d = domainStore.modifyDomain();
+        assert_Ns(NsMINUS_INF < minDom_init &&
+                  minDom_init <= maxDom_init && maxDom_init < NsPLUS_INF,
+                  "Ns_BitSet::Ns_BitSet: Domain out of range");
+        // Make 'lastSaveId' dirty as the domain has not been saved
+        lastSaveId.id = NsUPLUS_INF;
+        // Initialize 'lastSaveId.level' to prevent
+        // valgrind from reporting a warning
+        lastSaveId.level = 0;
 }
 
-///  Removes a range/interval of values.
-
-bool
-Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
+/// Removes a range/interval of values
+bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
 {
-        //DomainStore_t::DomainFrame_t&  d = domainStore.modifyDomain();
-        //  Check whether the domain will be cleared.
-        if ( rangeMin <= minVal  &&  maxVal <= rangeMax )
-                return  false;
-        //  Check whether the domain will be kept intact.
-        if ( rangeMax < minVal  ||  maxVal < rangeMin )
-                return  true;
-        //  The domain is going to be changed.
-        //  Saving the domain for future backtracking purposes.
-        if ( !pm->isCurrentHistoryId(lastSaveHistoryId()) )
+        // Check whether the domain will be cleared
+        if (rangeMin <= minVal && maxVal <= rangeMax)
+                return false;
+        // Check whether the domain will be kept intact
+        if (rangeMax < minVal || maxVal < rangeMin)
+                return true;
+        // The domain is going to be changed...
+        // Save the domain for future backtracking purposes
+        if (!pm->isCurrentHistoryId(lastSaveHistoryId()))
                 pm->saveBitsetDomain(*this);
-        if ( rangeMin  <  minVal )
-                rangeMin  =  minVal;
-        if ( rangeMax  >  maxVal )
-                rangeMax  =  maxVal;
-        if ( machw.empty() ) {   // Bounds Consistency
-                if ( rangeMin  <=  minVal ) {
-                        setCount  -=  rangeMax + 1  -  minVal;
-                        minVal     =  rangeMax + 1;
-                        return  true;
-                } else if ( maxVal <= rangeMax ) {
-                        setCount  -=  maxVal -  (rangeMin - 1);
-                        maxVal     =  rangeMin - 1;
-                        return  true;
+        if (rangeMin < minVal)
+                rangeMin = minVal;
+        if (rangeMax > maxVal)
+                rangeMax = maxVal;
+        if (machw.empty()) {  // Bounds Consistency
+                if (rangeMin <= minVal) {
+                        setCount -= rangeMax + 1 - minVal;
+                        minVal = rangeMax + 1;
+                        return true;
+                } else if (maxVal <= rangeMax) {
+                        setCount -= maxVal - (rangeMin - 1);
+                        maxVal = rangeMin - 1;
+                        return true;
                 } else {
                         //  Creating the array `machw'.
                         minDom  =  minVal;

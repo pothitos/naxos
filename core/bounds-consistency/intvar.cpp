@@ -81,7 +81,7 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
         // Check for modifications of the intermediate values of the
         // domain, if necessary. (E.g. when they must be stored for arc
         // consistency constraints checks.)
-        if (rangeEmpty || storeRemovedValues() ) {
+        if (rangeEmpty || storeRemovedValues()) {
                 NsInt newFirst = (first != NsMINUS_INF) ? first - 1 : first;
                 NsInt newLast = (last != NsPLUS_INF) ? last + 1 : last;
                 while ((newFirst = next(newFirst)) < newLast) {
