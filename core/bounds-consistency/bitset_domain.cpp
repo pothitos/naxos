@@ -83,21 +83,20 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                         maxVal = rangeMin - 1;
                         return true;
                 } else {
-                        //  Creating the array `machw'.
-                        minDom  =  minVal;
-                        nBits   =  correspondingBit(maxVal,minDom) + 1;
+                        // Create the array 'machw'
+                        minDom = minVal;
+                        nBits = correspondingBit(maxVal,minDom) + 1;
                         machw.resize((nBits-1)/MW_BITS + 1);
-                        for (NsUInt i=0;   i < machw.size();   ++i)
-                                machw[i]  =  ~static_cast<size_t>(0u);
-                        //  Setting the bits of the last machine word.
-                        if ( nBits % MW_BITS  !=  0 ) {
-                                for (size_t bit=static_cast<size_t>(1)<<(nBits%MW_BITS);
-                                     bit != 0;
-                                     bit<<=1) {
-                                        machw[machw.size()-1]  &=  ~bit;
+                        for (NsUInt i = 0; i < machw.size(); ++i)
+                                machw[i] = ~static_cast<size_t>(0u);
+                        // Set the bits of the last machine word
+                        if (nBits % MW_BITS != 0) {
+                                for (size_t bit = static_cast<size_t>(1) << (nBits % MW_BITS);
+                                     bit != 0; bit <<= 1) {
+                                        machw[machw.size()-1] &= ~bit;
                                 }
                         }
-                        //  Continuing on reseting the value...
+                        // Continue on resetting the value...
                 }
         }
         bool  changedMinVal = false,  changedMaxVal = false;
