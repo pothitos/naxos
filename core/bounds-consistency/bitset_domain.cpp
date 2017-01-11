@@ -7,7 +7,7 @@ using namespace naxos;
 
 namespace {
 
-/// Returns the position in the bit-set of the corresponding bit to the value val.
+/// Returns the position in the bit-set of the corresponding bit to the value val
 ///
 /// This method performs a simple subtraction, to find out
 /// the corresponding bit number for the value val. However,
@@ -23,7 +23,8 @@ inline NsUInt correspondingBit(const NsInt val, const NsInt minDom)
 }
 
 /// Checks if the domain is continuous
-inline bool isContinuous(const NsInt minVal, const NsInt maxVal, const NsUInt setCount)
+inline bool isContinuous(const NsInt minVal, const NsInt maxVal,
+                         const NsUInt setCount)
 {
         NsUInt diff;
         // To avoid an overflow
@@ -104,7 +105,7 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                 NsUInt nbit = correspondingBit(val, minDom);
                 NsUInt mw = nbit / MW_BITS;
                 assert_Ns(minVal <= val && val <= maxVal && nbit < nBits,
-                           "Ns_BitSet::removeRange: Machine word out of `*this' range");
+                          "Ns_BitSet::removeRange: Machine word out of `*this' range");
                 if (machw[mw] == 0u) {
                         // speedup by means of comparing the whole word
                         if (MW_BITS - nbit % MW_BITS >
@@ -128,22 +129,22 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                         if (val == maxVal)
                                 changedMaxVal = true;
                 } else {
-                        size_t  mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
-                        if ( machw[mw] & mwbit ) {
-                                machw[mw]  &=  ~mwbit;
+                        size_t mwbit = static_cast<size_t>(1)<<(nbit%MW_BITS);
+                        if (machw[mw] & mwbit) {
+                                machw[mw] &= ~mwbit;
                                 --setCount;
-                                if ( val  ==  minVal )
-                                        changedMinVal  =  true;
-                                if ( val  ==  maxVal )
-                                        changedMaxVal  =  true;
+                                if (val == minVal)
+                                        changedMinVal = true;
+                                if (val == maxVal)
+                                        changedMaxVal = true;
                         }
                 }
         }
-        if ( changedMinVal )
-                minVal  =  next(minVal);
-        if ( changedMaxVal )
-                maxVal  =  previous(maxVal);
-        return  true;
+        if (changedMinVal)
+                minVal = next(minVal);
+        if (changedMaxVal)
+                maxVal = previous(maxVal);
+        return true;
 }
 
 NsInt

@@ -60,8 +60,8 @@ void Ns_QueueItem::boundChangedBy(const Ns_Constraint *constr)
 void Ns_QueueItem::add(const NsInt removedVal,
                        const Ns_Constraint *constrThatRemovedIt)
 {
-        removedValues.push_back(
-                RemovedValueRecord_t(removedVal, constrThatRemovedIt));
+        removedValues.push_back(RemovedValueRecord_t(removedVal,
+                                                     constrThatRemovedIt));
 }
 
 bool NsIntVar::removeRange(const NsInt first, const NsInt last,
@@ -122,7 +122,8 @@ void NsIntVar::addConstraint(Ns_Constraint *constr)
                 constraintNeedsRemovedValues = true;
 }
 
-NsIntVar::NsIntVar(NsProblemManager& pm_init, const NsInt min_init, const NsInt max_init)
+NsIntVar::NsIntVar(NsProblemManager& pm_init, const NsInt min_init,
+                   const NsInt max_init)
   : pm(&pm_init),
     domain(pm_init, min_init, max_init),
     arcsConnectedTo(0),
@@ -139,8 +140,7 @@ NsIntVar::NsIntVar(const Ns_Expression& expr)
         pm->addVar(this);
 }
 
-NsIntVar&
-NsIntVar::operator = (const Ns_Expression& expr)
+NsIntVar& NsIntVar::operator = (const Ns_Expression& expr)
 {
         assert_Ns(pm == 0
                   && constraints.empty()
@@ -154,8 +154,7 @@ NsIntVar::operator = (const Ns_Expression& expr)
 }
 
 /// Makes the variable transparent to backtracking/store; useful for temporary variables
-void
-NsIntVar::transparent(void)
+void NsIntVar::transparent(void)
 {
         domain.lastSaveHistoryId() = manager().getCurrentHistoryId();
         manager().removeLastVar();
@@ -167,8 +166,7 @@ NsIntVarArray::NsIntVarArray(const Ns_ExpressionArray& expr)
         expr.post(*this);
 }
 
-NsIntVarArray&
-NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
+NsIntVarArray& NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
 {
         assert_Ns(PointArray.empty() && !addedConstraint,
                   "NsIntVarArray::operator=: Some constraints already imposed on `*this'");
