@@ -184,7 +184,7 @@ class NsStack {
                 }
 
                 const_iterator(const StackNode_t *startNode)
-                        : currNode(startNode)
+                  : currNode(startNode)
                 {
                 }
 
@@ -240,8 +240,7 @@ class NsStack {
 };
 
 template <class TemplType>
-NsStack<TemplType>&
-NsStack<TemplType>::operator = (const NsStack& stackOther)
+NsStack<TemplType>& NsStack<TemplType>::operator = (const NsStack& stackOther)
 {
         nFrames = stackOther.nFrames;
         StackNode_t **currNode = &stackTopNode;

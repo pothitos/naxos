@@ -6,8 +6,7 @@ using namespace std;
 using namespace naxos;
 
 /// Prints the domain to standard output
-ostream&
-naxos::operator << (ostream& os, const Ns_BitSet& domain)
+ostream& naxos::operator << (ostream& os, const Ns_BitSet& domain)
 {
         os << "[";
         NsInt val, gap;
@@ -28,8 +27,7 @@ naxos::operator << (ostream& os, const Ns_BitSet& domain)
         return os;
 }
 
-std::ostream&
-naxos::operator << (std::ostream& os, const NsIntVarArray& VarArr)
+std::ostream& naxos::operator << (std::ostream& os, const NsIntVarArray& VarArr)
 {
         os << "[";
         NsIntVarArray::const_iterator V = VarArr.begin();
@@ -43,7 +41,7 @@ naxos::operator << (std::ostream& os, const NsIntVarArray& VarArr)
         return os;
 }
 
-/// To remove in purpose all the values of the domain, thus making an inconsistency
+/// Removes in purpose all the values of the domain, thus making an inconsistency
 void NsIntVar::removeAll(void)
 {
         pm->foundAnInconsistency();
@@ -142,8 +140,7 @@ NsIntVar::NsIntVar(const Ns_Expression& expr)
 
 NsIntVar& NsIntVar::operator = (const Ns_Expression& expr)
 {
-        assert_Ns(pm == 0
-                  && constraints.empty()
+        assert_Ns(pm == 0 && constraints.empty()
                   && constraintNeedsRemovedValues == false
                   && arcsConnectedTo == 0 && queueItem == 0,
                   "NsIntVar::operator=: Some constraints already imposed on `*this'");

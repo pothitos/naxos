@@ -38,13 +38,13 @@ inline bool isContinuous(const NsInt minVal, const NsInt maxVal,
 } // namespace
 
 /// Constructs the domain [minDom_init..maxDom_init]
-Ns_BitSet::Ns_BitSet (NsProblemManager& pm_init, const NsInt minDom_init,
-                      const NsInt maxDom_init)
+Ns_BitSet::Ns_BitSet(NsProblemManager& pm_init, const NsInt minDom_init,
+                     const NsInt maxDom_init)
   : pm(&pm_init),
     minDom(minDom_init),
     minVal(minDom_init),
     maxVal(maxDom_init),
-    nBits(correspondingBit(maxVal,minDom) + 1),
+    nBits(correspondingBit(maxVal, minDom) + 1),
     setCount(nBits)
 {
         assert_Ns(NsMINUS_INF < minDom_init &&
@@ -58,7 +58,7 @@ Ns_BitSet::Ns_BitSet (NsProblemManager& pm_init, const NsInt minDom_init,
 }
 
 /// Removes a range/interval of values
-bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
+bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
 {
         // Check whether the domain will be cleared
         if (rangeMin <= minVal && maxVal <= rangeMax)
@@ -86,7 +86,7 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                 } else {
                         // Create the array 'machw'
                         minDom = minVal;
-                        nBits = correspondingBit(maxVal,minDom) + 1;
+                        nBits = correspondingBit(maxVal, minDom) + 1;
                         machw.resize((nBits-1)/MW_BITS + 1);
                         for (NsUInt i = 0; i < machw.size(); ++i)
                                 machw[i] = ~static_cast<size_t>(0u);
@@ -107,7 +107,7 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                 assert_Ns(minVal <= val && val <= maxVal && nbit < nBits,
                           "Ns_BitSet::removeRange: Machine word out of `*this' range");
                 if (machw[mw] == 0u) {
-                        // speedup by means of comparing the whole word
+                        // Speedup by means of comparing the whole word
                         if (MW_BITS - nbit % MW_BITS >
                             static_cast<NsUInt>(rangeMax - val)) {
                                 break;
@@ -129,7 +129,7 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
                         if (val == maxVal)
                                 changedMaxVal = true;
                 } else {
-                        size_t mwbit = static_cast<size_t>(1)<<(nbit%MW_BITS);
+                        size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
                         if (machw[mw] & mwbit) {
                                 machw[mw] &= ~mwbit;
                                 --setCount;
@@ -147,86 +147,83 @@ bool Ns_BitSet::removeRange (NsInt rangeMin, NsInt rangeMax)
         return true;
 }
 
-NsInt
-Ns_BitSet::previous (const NsInt val)  const
+NsInt Ns_BitSet::previous(const NsInt val) const
 {
-        //const DomainStore_t::DomainFrame_t&  d = domainStore.currentDomain();
-        if ( val  <=  minVal )
-                return  NsMINUS_INF;
-        if ( val  >   maxVal )
-                return  maxVal;
-        if ( isContinuous(minVal,maxVal,setCount) )
-                return  (val - 1);               // Bounds Consistency
-        NsUInt     nbit  =  correspondingBit(val,minDom) - 1;
-        NsInt        mw  =  nbit / MW_BITS;
-        size_t    mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
-        assert_Ns( nbit < nBits ,
-                   "Ns_BitSet::previous: Machine word out of `*this' range");
-        if ( machw[mw]  ==  0u ) {
-                // speedup by means of comparing the whole word
-                nbit  =  mw * MW_BITS -1;
+        if (val <= minVal)
+                return NsMINUS_INF;
+        if (val > maxVal)
+                return maxVal;
+        if (isContinuous(minVal, maxVal, setCount))
+                return (val - 1);  // Bounds Consistency
+        NsUInt nbit = correspondingBit(val, minDom) - 1;
+        NsInt mw = nbit / MW_BITS;
+        size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
+        assert_Ns(nbit < nBits,
+                  "Ns_BitSet::previous: Machine word out of `*this' range");
+        if (machw[mw] == 0u) {
+                // Speedup by means of comparing the whole word
+                nbit = mw * MW_BITS - 1;
         } else {
-                for ( ;   mwbit != 0;   mwbit>>=1) {
-                        if ( machw[mw] & mwbit )
-                                return  (nbit + minDom);
+                for (/*VOID*/; mwbit != 0; mwbit >>= 1) {
+                        if (machw[mw] & mwbit)
+                                return (nbit + minDom);
                         --nbit;
                 }
         }
         --mw;
-        for ( ;   mw >= 0;   --mw) {
-                if ( machw[mw]  ==  0u ) {
-                        // speedup by means of comparing the whole word
-                        nbit  -=  MW_BITS;
+        for (/*VOID*/; mw >= 0; --mw) {
+                if (machw[mw] == 0u) {
+                        // Speedup by means of comparing the whole word
+                        nbit -= MW_BITS;
                 } else {
-                        for (mwbit=static_cast<size_t>(1)<<(MW_BITS-1);  mwbit!=0;  mwbit>>=1) {
-                                if ( machw[mw] & mwbit )
-                                        return  (nbit + minDom);
+                        for (mwbit = static_cast<size_t>(1) << (MW_BITS - 1);
+                             mwbit!=0; mwbit >>= 1) {
+                                if (machw[mw] & mwbit)
+                                        return (nbit + minDom);
                                 --nbit;
                         }
                 }
         }
-        throw  NsException("Ns_BitSet::previous: Should not reach here");
+        throw NsException("Ns_BitSet::previous: Should not reach here");
 }
 
-NsInt
-Ns_BitSet::next (const NsInt val)  const
+NsInt Ns_BitSet::next(const NsInt val) const
 {
-        //const DomainStore_t::DomainFrame_t&  d = domainStore.currentDomain();
-        if ( val  >=  maxVal )
-                return  NsPLUS_INF;
-        if ( val  <  minVal )
-                return  minVal;
-        if ( isContinuous(minVal,maxVal,setCount) )
-                return  (val + 1);               // Bounds Consistency
-        NsUInt     nbit  =  correspondingBit(val,minDom) + 1;
-        NsUInt       mw  =  nbit / MW_BITS;
-        size_t    mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
-        assert_Ns(nbit < nBits ,
+        if (val >= maxVal)
+                return NsPLUS_INF;
+        if (val < minVal)
+                return minVal;
+        if (isContinuous(minVal, maxVal, setCount))
+                return (val + 1);  // Bounds Consistency
+        NsUInt nbit = correspondingBit(val, minDom) + 1;
+        NsUInt mw = nbit / MW_BITS;
+        size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
+        assert_Ns(nbit < nBits,
                   "Ns_BitSet::next: Machine word out of `*this' range");
-        if ( machw[mw]  ==  0u ) {
-                // speedup by means of comparing the whole word
-                nbit  =  (mw + 1) * MW_BITS;
+        if (machw[mw] == 0u) {
+                // Speedup by means of comparing the whole word
+                nbit = (mw + 1) * MW_BITS;
         } else {
-                for ( ;   mwbit != 0;   mwbit<<=1) {
-                        if ( machw[mw] & mwbit )
-                                return  (nbit + minDom);
+                for (/*VOID*/; mwbit != 0; mwbit <<= 1) {
+                        if (machw[mw] & mwbit)
+                                return (nbit + minDom);
                         ++nbit;
                 }
         }
         ++mw;
-        for ( ;   mw < machw.size();   ++mw) {
-                if ( machw[mw]  ==  0u ) {
-                        // speedup by means of comparing the whole word
-                        nbit  +=  MW_BITS;
+        for (/*VOID*/; mw < machw.size(); ++mw) {
+                if (machw[mw] == 0u) {
+                        // Speedup by means of comparing the whole word
+                        nbit += MW_BITS;
                 } else {
-                        for (mwbit=1;   mwbit != 0;   mwbit<<=1) {
-                                if ( machw[mw] & mwbit )
-                                        return  (nbit + minDom);
+                        for (mwbit = 1; mwbit != 0; mwbit <<= 1) {
+                                if (machw[mw] & mwbit)
+                                        return (nbit + minDom);
                                 ++nbit;
                         }
                 }
         }
-        throw  NsException("Ns_BitSet::next: Should not reach here");
+        throw NsException("Ns_BitSet::next: Should not reach here");
 }
 
 NsInt
@@ -249,7 +246,7 @@ Ns_BitSet::nextGap (const NsInt val)  const
         assert_Ns( maxbit < nBits  &&  nbit < nBits ,
                    "Ns_BitSet::nextGap: Machine word out of `*this' range");
         if ( machw[mw]  ==  ~static_cast<size_t>(0u) ) {
-                // speedup by means of comparing the whole word
+                // Speedup by means of comparing the whole word
                 nbit  =  (mw + 1) * MW_BITS;
         } else {
                 for ( ;   mwbit!=0  &&  nbit <= maxbit;   mwbit<<=1) {
@@ -261,7 +258,7 @@ Ns_BitSet::nextGap (const NsInt val)  const
         ++mw;
         for ( ;   mw < machw.size();   ++mw) {
                 if ( machw[mw]  ==  ~static_cast<size_t>(0u) ) {
-                        // speedup by means of comparing the whole word
+                        // Speedup by means of comparing the whole word
                         nbit  +=  MW_BITS;
                 } else {
                         for (mwbit=1;  mwbit!=0 && nbit<=maxbit;  mwbit<<=1) {
@@ -293,7 +290,7 @@ Ns_BitSet::containsRange (const NsInt rangeMin, const NsInt rangeMax)  const
                 assert_Ns( nbit < nBits ,
                            "Ns_BitSet::containsRange: Machine word out of `*this' range");
                 if ( machw[mw]  ==  ~static_cast<size_t>(0u) ) {
-                        // speedup by means of comparing the whole word
+                        // Speedup by means of comparing the whole word
                         if ( MW_BITS - nbit % MW_BITS  >
                              static_cast<NsUInt>( rangeMax - val ) ) {
                                 break;
