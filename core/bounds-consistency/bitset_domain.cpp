@@ -226,83 +226,78 @@ NsInt Ns_BitSet::next(const NsInt val) const
         throw NsException("Ns_BitSet::next: Should not reach here");
 }
 
-NsInt
-Ns_BitSet::nextGap (const NsInt val)  const
+NsInt Ns_BitSet::nextGap(const NsInt val) const
 {
-        //const DomainStore_t::DomainFrame_t&  d = domainStore.currentDomain();
-        if ( val >= maxVal-1
-             ||  isContinuous(minVal,maxVal,setCount) ) {
-                // || Bounds Consistency
-                return  NsPLUS_INF;
+        if (val >= maxVal - 1 ||
+            isContinuous(minVal, maxVal, setCount)) {  // Bounds Consistency
+                return NsPLUS_INF;
         }
-        NsUInt  nbit;
-        if ( val  <  minVal )
-                nbit  =  correspondingBit(minVal,minDom) + 1;
+        NsUInt nbit;
+        if (val < minVal)
+                nbit = correspondingBit(minVal, minDom) + 1;
         else
-                nbit  =  correspondingBit(val,minDom) + 1;
-        NsUInt       mw  =  nbit / MW_BITS;
-        size_t    mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
-        NsUInt   maxbit  =  correspondingBit(maxVal,minDom);
-        assert_Ns( maxbit < nBits  &&  nbit < nBits ,
-                   "Ns_BitSet::nextGap: Machine word out of `*this' range");
-        if ( machw[mw]  ==  ~static_cast<size_t>(0u) ) {
+                nbit = correspondingBit(val, minDom) + 1;
+        NsUInt mw = nbit / MW_BITS;
+        size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
+        NsUInt maxbit = correspondingBit(maxVal, minDom);
+        assert_Ns(maxbit < nBits && nbit < nBits,
+                  "Ns_BitSet::nextGap: Machine word out of `*this' range");
+        if (machw[mw] == ~static_cast<size_t>(0u)) {
                 // Speedup by means of comparing the whole word
-                nbit  =  (mw + 1) * MW_BITS;
+                nbit = (mw + 1) * MW_BITS;
         } else {
-                for ( ;   mwbit!=0  &&  nbit <= maxbit;   mwbit<<=1) {
-                        if ( !( machw[mw] & mwbit ) )
-                                return  (nbit + minDom);
+                for (/*VOID*/; mwbit!=0 && nbit <= maxbit; mwbit <<= 1) {
+                        if (!(machw[mw] & mwbit))
+                                return (nbit + minDom);
                         ++nbit;
                 }
         }
         ++mw;
-        for ( ;   mw < machw.size();   ++mw) {
-                if ( machw[mw]  ==  ~static_cast<size_t>(0u) ) {
+        for (/*VOID*/; mw < machw.size(); ++mw) {
+                if (machw[mw] == ~static_cast<size_t>(0u)) {
                         // Speedup by means of comparing the whole word
-                        nbit  +=  MW_BITS;
+                        nbit += MW_BITS;
                 } else {
-                        for (mwbit=1;  mwbit!=0 && nbit<=maxbit;  mwbit<<=1) {
-                                if ( !( machw[mw] & mwbit ) )
-                                        return  (nbit + minDom);
+                        for (mwbit = 1; mwbit!=0 && nbit <= maxbit;
+                             mwbit <<= 1) {
+                                if (!(machw[mw] & mwbit))
+                                        return (nbit + minDom);
                                 ++nbit;
                         }
                 }
         }
-        return  NsPLUS_INF;
+        return NsPLUS_INF;
 }
 
-///  Returns \c true if the domain contains the range [\a rangeMin..\a rangeMax].
-
-bool
-Ns_BitSet::containsRange (const NsInt rangeMin, const NsInt rangeMax)  const
+/// Returns true if the domain contains the range [rangeMin..rangeMax].
+bool Ns_BitSet::containsRange(const NsInt rangeMin, const NsInt rangeMax) const
 {
-        //const DomainStore_t::DomainFrame_t&  d = domainStore.currentDomain();
-        assert_Ns( rangeMin <= rangeMax ,
-                   "Ns_BitSet::containsRange: Invalid range");
-        if ( rangeMin < minVal  ||  rangeMax > maxVal )
-                return  false;
-        if ( isContinuous(minVal,maxVal,setCount) )
-                return  true;                    // Bounds Consistency
-        for (NsInt val=rangeMin;   val <= rangeMax;  ++val) {
-                //std::cout << "val = " << val << "\n";
-                NsUInt  nbit  =  correspondingBit(val,minDom);
-                NsUInt  mw    =  nbit / MW_BITS;
-                assert_Ns( nbit < nBits ,
-                           "Ns_BitSet::containsRange: Machine word out of `*this' range");
-                if ( machw[mw]  ==  ~static_cast<size_t>(0u) ) {
+        assert_Ns(rangeMin <= rangeMax,
+                  "Ns_BitSet::containsRange: Invalid range");
+        if (rangeMin < minVal || rangeMax > maxVal)
+                return false;
+        if (isContinuous(minVal, maxVal, setCount))
+                return true;  // Bounds Consistency
+        for (NsInt val = rangeMin; val <= rangeMax; ++val) {
+                NsUInt nbit = correspondingBit(val, minDom);
+                NsUInt mw = nbit / MW_BITS;
+                assert_Ns(nbit < nBits,
+                          "Ns_BitSet::containsRange: Machine word out of `*this' range");
+                if (machw[mw] == ~static_cast<size_t>(0u)) {
                         // Speedup by means of comparing the whole word
-                        if ( MW_BITS - nbit % MW_BITS  >
-                             static_cast<NsUInt>( rangeMax - val ) ) {
+                        if (MW_BITS - nbit % MW_BITS >
+                             static_cast<NsUInt>(rangeMax - val)) {
                                 break;
                         }
-                        val  +=  MW_BITS - nbit % MW_BITS - 1;
-                        // `-1' above is used to compensate
-                        //  the for's `++val' increment.
+                        val += MW_BITS - nbit % MW_BITS - 1;
+                        // '-1' above is used to compensate
+                        // the for's '++val' increment.
                 } else {
-                        size_t  mwbit  =  static_cast<size_t>(1)<<(nbit%MW_BITS);
-                        if ( !( machw[mw] & mwbit ) )
-                                return  false;
+                        size_t mwbit = static_cast<size_t>(1) <<
+                                       (nbit % MW_BITS);
+                        if (!(machw[mw] & mwbit))
+                                return false;
                 }
         }
-        return  true;
+        return true;
 }
