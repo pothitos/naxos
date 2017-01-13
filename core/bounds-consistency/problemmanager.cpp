@@ -6,136 +6,135 @@
 using namespace naxos;
 using namespace std;
 
-Ns_StackSearch::goal_iterator::goal_iterator (Ns_StackSearch& stackOfStacks_init)
-        : stackOfStacks(&stackOfStacks_init),
-          curr_Stack_it(stackOfStacks->begin())
+Ns_StackSearch::goal_iterator::goal_iterator(Ns_StackSearch& stackOfStacks_init)
+  : stackOfStacks(&stackOfStacks_init),
+    curr_Stack_it(stackOfStacks->begin())
 {
-        if ( curr_Stack_it != stackOfStacks->end()
-             && (curr_node_it = curr_Stack_it->stackAND.begin()) == curr_Stack_it->stackAND.end() ) {
+        if (curr_Stack_it != stackOfStacks->end() &&
+            (curr_node_it = curr_Stack_it->stackAND.begin()) ==
+            curr_Stack_it->stackAND.end()) {
                 *this = curr_Stack_it->delayedGoal;
         }
 }
 
-Ns_StackSearch::goal_iterator&
-Ns_StackSearch::goal_iterator::operator ++ (void)
+Ns_StackSearch::goal_iterator& Ns_StackSearch::goal_iterator::operator ++ (void)
 {
-        assert_Ns( stackOfStacks != 0 ,
-                   "Ns_StackSearch::goal_iterator::++: Unitialized `*this'");
-        assert_Ns( curr_Stack_it != stackOfStacks->end()
-                   && curr_node_it != curr_Stack_it->stackAND.end() ,
-                   "Ns_StackSearch::goal_iterator::end: Bad request `++(something.end())'");
-        if ( ++curr_node_it == curr_Stack_it->stackAND.end() )
+        assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_iterator::++: "
+                  "Unitialized '*this'");
+        assert_Ns(curr_Stack_it != stackOfStacks->end() &&
+                  curr_node_it != curr_Stack_it->stackAND.end(),
+                  "Ns_StackSearch::goal_iterator::end: Bad request "
+                  "'++(something.end())'");
+        if (++curr_node_it == curr_Stack_it->stackAND.end())
                 *this = curr_Stack_it->delayedGoal;
-        return  *this;
+        return *this;
 }
 
-/// Writes to a file the (splits) input of a mapper.
+/// Writes to a file the (splits) input of a mapper
 
-/// It can be called in main with the following arguments: mapperInputToFile( (string("/tmp/partitions") + "." + getenv("mapreduce_task_partition") + ".txt").c_str(), atoi(getenv("mapreduce_task_partition")) )
-void
-Ns_StackSearch::mapperInputToFile (const char *fileName, int mapperId)
+/// It can be called in main with the following arguments:
+/// mapperInputToFile((string("/tmp/partitions") + "." +
+/// getenv("mapreduce_task_partition") + ".txt").c_str(),
+/// atoi(getenv("mapreduce_task_partition")))
+void Ns_StackSearch::mapperInputToFile(const char *fileName, int mapperId)
 {
         fileMapperInput.open(fileName);
-        assert_Ns( fileMapperInput ,
-                   "Ns_StackSearch::mapperInputToFile: Could not open file");
+        assert_Ns(fileMapperInput, "Ns_StackSearch::mapperInputToFile: Could "
+                  "not open file");
         mapper = mapperId;
 }
 
-///  Writes to a file a view of the search tree in a Graphviz supported format.
-void
-Ns_StackSearch::searchToGraphFile (const char *fileName)
+/// Writes to a file a view of the search tree in a Graphviz supported format
+void Ns_StackSearch::searchToGraphFile(const char *fileName)
 {
         fileSearchGraph.open(fileName);
-        assert_Ns( fileSearchGraph ,
-                   "Ns_StackSearch::searchToGraphFile: Could not open file");
-        fileSearchGraph << "digraph  \"Search Tree\"  {\n\n"
+        assert_Ns(fileSearchGraph, "Ns_StackSearch::searchToGraphFile: Could "
+                  "not open file");
+        fileSearchGraph << "digraph \"Search Tree\" {\n\n"
                         << "\tnode [shape=point];\n\n"
                         << "\tedge [arrowhead=none];\n";
 }
 
-///  If it does not exist, creates a validHistoryId entry for the current search node. Returns false if failed, due to a specific search tree part exploration.
-bool
-Ns_StackSearch::push (const value_type& newNode)
+/// If it does not exist, creates a validHistoryId entry for the current search node; returns false if failed, due to a specific search tree part exploration
+bool Ns_StackSearch::push(const value_type& newNode)
 {
         ++nSearchTreeNodes;
-        if ( !empty() )
+        if (!empty())
                 ++top().children;
-        if ( !startNode.empty() ) {
-                if ( startNode.front()-- > 1 ) {
-                        return  false;
+        if (!startNode.empty()) {
+                if (startNode.front()-- > 1) {
+                        return false;
                 } else {
                         startNode.pop_front();
-                        if ( startNode.empty() ) {
+                        if (startNode.empty()) {
                                 cout << "SolveStart\t" << time(0) << "\t";
                                 currentPath();
                                 cout << "\n";
                         }
                 }
         }
-        bool  matchesEndNodePrevious =
-                ( ( empty() && !endNode.empty() )  ||
-                  ( !empty() && top().matchesEndNode &&
-                    ( size() > endNode.size() ||
-                      top().children >= endNode[size()-1] ) ) );
+        bool matchesEndNodePrevious = ((empty() && !endNode.empty()) ||
+                                       (!empty() && top().matchesEndNode &&
+                                        (size() > endNode.size() ||
+                                         top().children >= endNode[size()-1])));
         NsStack<Ns_SearchNode>::push(newNode);
         top().matchesEndNode = matchesEndNodePrevious;
-        if ( history_time.size() < size() )
-                history_time.push_back( history_time_t() );
+        if (history_time.size() < size())
+                history_time.push_back(history_time_t());
         history_time[size()-1].searchTreeNodeNum = nSearchTreeNodes;
-        return  true;
+        return true;
 }
 
-///  Returns true when a specific search tree part exploration ends.
-bool
-Ns_StackSearch::splitEnded (void)
+/// Returns true when a specific search tree part exploration ends
+bool Ns_StackSearch::splitEnded(void)
 {
-        if ( top().matchesEndNode  &&
-             ( ( size()-1 < endNode.size() &&
-                 (*(++begin())).children > endNode[size()-2] ) ||
-               ( size() < endNode.size() &&
-                 top().children > endNode[size()-1] ) ||
-               ( size() == endNode.size() &&
-                 top().children >= endNode[size()-1] ) ||
-               size() > endNode.size() ) ) {
-                return  true;
+        if (top().matchesEndNode &&
+            ((size()-1 < endNode.size() &&
+                 (*(++begin())).children > endNode[size()-2]) ||
+             (size() < endNode.size() &&
+              top().children > endNode[size()-1]) ||
+             (size() == endNode.size() &&
+              top().children >= endNode[size()-1]) ||
+             size() > endNode.size())) {
+                return true;
         } else {
-                assert_Ns_3( !TEST_splitEnded() ,
-                             "The split has already ended!");
-                return  false;
+                assert_Ns_3(!TEST_splitEnded(), "The split has already ended!");
+                return false;
         }
 }
 
-/// Tests whether splitEnded() tells the truth.
-bool
-Ns_StackSearch::TEST_splitEnded (void)  const
+/// Tests whether splitEnded() tells the truth
+bool Ns_StackSearch::TEST_splitEnded(void) const
 {
-        NsUInt  depth;
-        bool  equal, greater;
+        NsUInt depth;
+        bool equal, greater;
         TEST_CurrentVsEndNode(begin(), depth, equal, greater);
-        return ( ( equal && depth == endNode.size() )  ||  greater );
+        return ((equal && depth == endNode.size()) || greater);
 }
 
-/// Recursive function that checks if the current node ID is greater or equal than the endNode ID and sets the boolean arguments `greater' and `equal' accordingly.
-void
-Ns_StackSearch::TEST_CurrentVsEndNode (const_iterator it, NsUInt& depth,
-                                       bool& equal, bool& greater)  const
+/// Checks if the current node ID is greater or equal than the endNode ID; sets the boolean arguments 'greater' and 'equal' accordingly
+void Ns_StackSearch::TEST_CurrentVsEndNode(const_iterator it, NsUInt& depth,
+                                           bool& equal, bool& greater) const
 {
-        if ( it == end() ) {
+        if (it == end()) {
                 depth = 0;
                 equal = true;
                 greater = false;
         } else {
-                NsUInt  children = it->children;
+                NsUInt children = it->children;
                 TEST_CurrentVsEndNode(++it, depth, equal, greater);
                 ++depth;
-                equal  =  ( equal && depth <= endNode.size() && children == endNode[depth-1] );
-                greater  =  ( greater || ( equal && ( ( depth <= endNode.size() && children > endNode[depth-1] ) || depth > endNode.size() ) ) );
+                equal = (equal && depth <= endNode.size() &&
+                         children == endNode[depth-1]);
+                greater = (greater ||
+                           (equal && ((depth <= endNode.size() &&
+                                       children > endNode[depth-1]) ||
+                                      depth > endNode.size())));
         }
 }
 
-///  Records the solution node to the goals graph file (if created).
-void
-Ns_StackSearch::solutionNode (const NsIntVar *vObjective)
+/// Records the solution node to the goals graph file (if created)
+void Ns_StackSearch::solutionNode(const NsIntVar *vObjective)
 {
         if ( fileSearchGraph.is_open() ) {
                 fileSearchGraph << "\n\t\"("
