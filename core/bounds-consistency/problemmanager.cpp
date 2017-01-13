@@ -207,41 +207,34 @@ void Ns_StackSearch::pop(void)
         }
 }
 
-///  Writes to a file a view of the constraint network in a Graphviz supported format.
-void
-NsProblemManager::constraintsToGraphFile (const char *fileName)
+/// Writes to a file a view of the constraint network in a Graphviz supported format
+void NsProblemManager::constraintsToGraphFile(const char *fileName)
 {
         fileConstraintsGraph.open(fileName);
-        assert_Ns( fileConstraintsGraph ,
-                   "NsProblemManager::constraintsToGraphFile: Could not open file");
-        fileConstraintsGraph
-                        << "digraph  \"Constraint Network\"  {\n\n"
-                        << "\tnode [shape=plaintext, fontsize=13, height=0.05];\n\n"
-                        << "\tedge [arrowsize=0.5, fontsize=10];\n";
-        fileConstraintsGraph << "\n\n\n\t/*  Variables  */\n";
-        for (NsDeque<const NsIntVar *>::const_iterator
-             v = vars.begin();
-             v != vars.end();
-             ++v) {
+        assert_Ns(fileConstraintsGraph,
+                  "NsProblemManager::constraintsToGraphFile: Could not open "
+                  "file");
+        fileConstraintsGraph << "digraph \"Constraint Network\" {\n\n"
+                << "\tnode [shape=plaintext, fontsize=13, height=0.05];\n\n"
+                << "\tedge [arrowsize=0.5, fontsize=10];\n";
+        fileConstraintsGraph << "\n\n\n\t/* Variables */\n";
+        for (NsDeque<const NsIntVar *>::const_iterator v = vars.begin();
+             v != vars.end(); ++v) {
                 fileConstraintsGraph << "\n\tVar" << *v
-                                     << "  [label=\"["
-                                     << (*v)->min();
-                if ( !(*v)->isBound() )
+                                     << " [label=\"[" << (*v)->min();
+                if (!(*v)->isBound())
                         fileConstraintsGraph << ".." << (*v)->max();
                 fileConstraintsGraph << "]\"];\n";
         }
-        fileConstraintsGraph << "\n\n\n\t/*  Intermediate Variables (drawn with a smaller font)  */\n";
-        for (NsDeque<NsIntVar *>::const_iterator
-             v = intermediateVars.begin();
-             v != intermediateVars.end();
-             ++v) {
-                fileConstraintsGraph << "\n\tVar" << *v
-                                     << "  [fontsize=9];\n";
+        fileConstraintsGraph << "\n\n\n\t/* Intermediate Variables (drawn with "
+                                "a smaller font) */\n";
+        for (NsDeque<NsIntVar *>::const_iterator v = intermediateVars.begin();
+             v != intermediateVars.end(); ++v) {
+                fileConstraintsGraph << "\n\tVar" << *v << " [fontsize=9];\n";
         }
-        fileConstraintsGraph << "\n\n\n\t/*  Constraints  */\n";
-        for (Ns_constraints_array_t::iterator  c = constraints.begin();
-             c != constraints.end();
-             ++c) {
+        fileConstraintsGraph << "\n\n\n\t/* Constraints */\n";
+        for (Ns_constraints_array_t::iterator c = constraints.begin();
+             c != constraints.end(); ++c) {
                 (*c)->toGraphFile(fileConstraintsGraph);
         }
         fileConstraintsGraph << "}\n";
