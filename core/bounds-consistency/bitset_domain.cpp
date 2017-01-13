@@ -92,8 +92,8 @@ bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
                                 machw[i] = ~static_cast<size_t>(0u);
                         // Set the bits of the last machine word
                         if (nBits % MW_BITS != 0) {
-                                for (size_t bit = static_cast<size_t>(1) << (nBits % MW_BITS);
-                                     bit != 0; bit <<= 1) {
+                                for (size_t bit = static_cast<size_t>(1) <<
+                                     (nBits % MW_BITS); bit != 0; bit <<= 1) {
                                         machw[machw.size()-1] &= ~bit;
                                 }
                         }
@@ -105,7 +105,8 @@ bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
                 NsUInt nbit = correspondingBit(val, minDom);
                 NsUInt mw = nbit / MW_BITS;
                 assert_Ns(minVal <= val && val <= maxVal && nbit < nBits,
-                          "Ns_BitSet::removeRange: Machine word out of '*this' range");
+                          "Ns_BitSet::removeRange: Machine word out of '*this' "
+                          "range");
                 if (machw[mw] == 0u) {
                         // Speedup by means of comparing the whole word
                         if (MW_BITS - nbit % MW_BITS >
@@ -129,7 +130,8 @@ bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
                         if (val == maxVal)
                                 changedMaxVal = true;
                 } else {
-                        size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
+                        size_t mwbit = static_cast<size_t>(1) <<
+                                       (nbit % MW_BITS);
                         if (machw[mw] & mwbit) {
                                 machw[mw] &= ~mwbit;
                                 --setCount;
@@ -281,8 +283,8 @@ bool Ns_BitSet::containsRange(const NsInt rangeMin, const NsInt rangeMax) const
         for (NsInt val = rangeMin; val <= rangeMax; ++val) {
                 NsUInt nbit = correspondingBit(val, minDom);
                 NsUInt mw = nbit / MW_BITS;
-                assert_Ns(nbit < nBits,
-                          "Ns_BitSet::containsRange: Machine word out of '*this' range");
+                assert_Ns(nbit < nBits, "Ns_BitSet::containsRange: Machine "
+                          "word out of '*this' range");
                 if (machw[mw] == ~static_cast<size_t>(0u)) {
                         // Speedup by means of comparing the whole word
                         if (MW_BITS - nbit % MW_BITS >
