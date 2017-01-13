@@ -136,79 +136,72 @@ void Ns_StackSearch::TEST_CurrentVsEndNode(const_iterator it, NsUInt& depth,
 /// Records the solution node to the goals graph file (if created)
 void Ns_StackSearch::solutionNode(const NsIntVar *vObjective)
 {
-        if ( fileSearchGraph.is_open() ) {
+        if (fileSearchGraph.is_open()) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
                                 << ")"
-                                << ( ( top().children > 0 ) ? "LastChild" : "" )
-                                << "\" [shape=doublecircle, height=0.1, label=\"\"];\n";
-                //  If the node has children, and it is a solution, then it
-                //   it is the last child of itself. (Besides, after the
-                //   success it will be popped by the backtracking
-                //   algorithm.)
-                if ( vObjective  !=  0 ) {
-                        recordObjective  =  true;
-                        objectiveValue   =  vObjective->max();
+                                << ((top().children > 0) ? "LastChild" : "")
+                                << "\" [shape=doublecircle, height=0.1, "
+                                   "label=\"\"];\n";
+                // If the node has children, and it is a solution, then it is
+                // the last child of itself. Besides, after the success it will
+                // be popped by the backtracking algorithm.
+                if (vObjective != 0) {
+                        recordObjective = true;
+                        objectiveValue = vObjective->max();
                 }
         }
 }
 
-///  Invalidates the validHistoryId for the current search node.
-void
-Ns_StackSearch::pop (void)
+/// Invalidates the validHistoryId for the current search node
+void Ns_StackSearch::pop(void)
 {
-        if ( !startNode.empty() ) {
+        if (!startNode.empty()) {
                 cout << "SolveStart\t" << time(0) << "\t";
                 currentPath();
                 cout << "\n";
         }
         startNode.clear();
-        if ( fileSearchGraph.is_open() && size() - 1 > 0 && top().children > 0 ) {
+        if (fileSearchGraph.is_open() && size() - 1 > 0 && top().children > 0) {
                 fileSearchGraph << "\n\t\"("
                                 << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
-                                << ")\"   ->   \"("
+                                << ")\" -> \"("
                                 << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
                                 << ")LastChild\"";
-                if ( recordObjective ) {
+                if (recordObjective) {
                         recordObjective = false;
-                        fileSearchGraph << "   [fontsize=9"
-                                        << ", headlabel=\""
-                                        << objectiveValue << "\""
-                                        << "\"]";
+                        fileSearchGraph << " [fontsize=9, headlabel=\""
+                                        << objectiveValue << "\"\"]";
                 }
                 fileSearchGraph << ";\n";
-                //  If the node has children, then it it is the last child
-                //   of itself. Besides, the `goalNextChoice'--the second
-                //   subgoal of an OR-goal--is executed one level before the
-                //   execution of the first subgoal, in the search tree.
+                // If the node has children, then it it is the last child of
+                // itself. Besides, the 'goalNextChoice'--the second subgoal of
+                // an OR-goal--is executed one level before the execution of the
+                // first subgoal, in the search tree.
         }
-        if ( fileSearchGraph.is_open() && size() - 1 > 1 ) {
-                fileSearchGraph << "\n\t\"("
-                                << size()-2 << ","
+        if (fileSearchGraph.is_open() && size() - 1 > 1) {
+                fileSearchGraph << "\n\t\"(" << size()-2 << ","
                                 << history_time[size()-2].validHistoryId
-                                << ")\"   ->   \"("
-                                << size()-1 << ","
+                                << ")\" -> \"(" << size()-1 << ","
                                 << history_time[size()-1].validHistoryId
                                 << ")\"";
-                if ( recordObjective ) {
+                if (recordObjective) {
                         recordObjective = false;
-                        fileSearchGraph << "   [fontsize=9"
-                                        << ", headlabel=\""
-                                        << objectiveValue << "\""
-                                        << "\"]";
+                        fileSearchGraph << " [fontsize=9, headlabel=\""
+                                        << objectiveValue << "\"\"]";
                 }
                 fileSearchGraph << ";\n";
         }
-        double  timeSimChild = top().timeSimChild;
-        double  descSimChild = top().descSimChild;
+        double timeSimChild = top().timeSimChild;
+        double descSimChild = top().descSimChild;
         history_time[ size() - 1 ].invalidate(top().timeBorn, timeSimChild,
                                               numSearchTreeNodes(),
                                               top().descBorn, descSimChild);
         NsStack<Ns_SearchNode>::pop();
-        if ( !empty() ) {
+        if (!empty()) {
                 top().timeSimChild += timeSimChild;
                 top().descSimChild += descSimChild;
         }
