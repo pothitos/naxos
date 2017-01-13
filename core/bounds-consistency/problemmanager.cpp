@@ -267,7 +267,7 @@ bool Ns_StackSearch::readSplit(string& splitEnd)
         startNode.clear();
         while (line >> node)
                 startNode.push_back(node);
-        line.clear();  // Clears read failure.
+        line.clear();  // Clears read failure
         getline(line, splitEnd);
         istringstream lineRest(splitEnd);
         endNode.clear();
@@ -387,12 +387,12 @@ Ns_StackGoals::~Ns_StackGoals(void)
 
 NsProblemManager::~NsProblemManager(void)
 {
-        // Constraints destruction.
+        // Constraints destruction
         for (Ns_constraints_array_t::iterator c = constraints.begin();
              c != constraints.end(); ++c) {
                 delete *c;
         }
-        // Intermediate variables destruction.
+        // Intermediate variables destruction
         for (NsDeque<NsIntVar *>::iterator v = intermediateVars.begin();
              v != intermediateVars.end(); ++v) {
                 delete *v;
