@@ -271,7 +271,7 @@ NsInt Ns_BitSet::nextGap(const NsInt val) const
         return NsPLUS_INF;
 }
 
-/// Returns true if the domain contains the range [rangeMin..rangeMax].
+/// Returns true if the domain contains the range [rangeMin..rangeMax]
 bool Ns_BitSet::containsRange(const NsInt rangeMin, const NsInt rangeMax) const
 {
         assert_Ns(rangeMin <= rangeMax,

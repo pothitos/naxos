@@ -245,16 +245,15 @@ void NsProblemManager::constraintsToGraphFile(const char *fileName)
 
 const char *NsProblemManager::SPLIT_HEADER = "Split:";
 
-/// Explores specific search tree splits described in standard input.
-bool Ns_StackSearch::readSplit (string& splitEnd)
+/// Explores specific search tree splits described in standard input
+bool Ns_StackSearch::readSplit(string& splitEnd)
 {
-        if (!getline(cin,mapperLine) || mapperLine.empty())
+        if (!getline(cin, mapperLine) || mapperLine.empty())
                 return false;
         if (fileMapperInput.is_open() && !mapperLine.empty()) {
                 fileMapperInput << fixed
-                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
-                                << "\t" << mapper
-                                << "\t" << mapperLine << "\n";
+                        << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                        << "\t" << mapper << "\t" << mapperLine << "\n";
         }
         if (fileMapperInput.is_open())
                 mapperLineStartTime = clock();
@@ -268,7 +267,7 @@ bool Ns_StackSearch::readSplit (string& splitEnd)
         startNode.clear();
         while (line >> node)
                 startNode.push_back(node);
-        line.clear();    // Clears read failure.
+        line.clear();  // Clears read failure.
         getline(line, splitEnd);
         istringstream lineRest(splitEnd);
         endNode.clear();
@@ -278,7 +277,7 @@ bool Ns_StackSearch::readSplit (string& splitEnd)
         return true;
 }
 
-/// When the time for normal search is exhausted, this function is called to output the remaining search tree splits.
+/// When the time for normal search is exhausted, this function is called to output the remaining search tree splits
 void
 NsProblemManager::simulate (const double splitTime, const double simulationRatio)
 {
@@ -406,7 +405,7 @@ NsProblemManager::~NsProblemManager (void)
         }
 }
 
-///  Fetches the next constraint to currentConstr, that concerns the variable varFired.
+///  Fetches the next constraint to currentConstr, that concerns the variable varFired
 
 ///  \remarks
 ///  \li
@@ -497,7 +496,7 @@ Ns_QueueItem::getNextConstraint (void)
         return  0;
 }
 
-///  Adds a constraint to the problem.
+///  Adds a constraint to the problem
 void
 NsProblemManager::add (const Ns_ExprConstr& expr)
 {
@@ -510,7 +509,7 @@ NsProblemManager::add (const Ns_ExprConstr& expr)
         recordConstraint( newConstr );
 }
 
-///  Adds a soft constraint to the problem, with the corresponding weight.
+///  Adds a soft constraint to the problem, with the corresponding weight
 void
 NsProblemManager::add (const Ns_ExprConstr& expr, const NsInt weight)
 {
@@ -521,7 +520,7 @@ NsProblemManager::add (const Ns_ExprConstr& expr, const NsInt weight)
         vSoftConstraintsTerms.push_back( weight * expr.post() );
 }
 
-///  Imposes arc consistency.
+///  Imposes arc consistency
 bool
 NsProblemManager::arcConsistent (void)
 {
@@ -555,7 +554,7 @@ NsProblemManager::arcConsistent (void)
         return  true;
 }
 
-///  Backtracks the search process to the previous choice point.
+///  Backtracks the search process to the previous choice point
 bool NsProblemManager::backtrack (void)
 {
         NsGoal *goalNextChoice;
@@ -584,7 +583,7 @@ bool NsProblemManager::backtrack (void)
         }
 }
 
-///  Reverts the domains of the constrained variables (except for the `objective' variable) in the state that they were after the first arcConsistent() has been called.
+///  Reverts the domains of the constrained variables (except for the `objective' variable) in the state that they were after the first arcConsistent() has been called
 void
 NsProblemManager::restart (void)
 {
@@ -615,7 +614,7 @@ NsProblemManager::restart (void)
                 vObjective->remove(bestObjective, NsPLUS_INF);
 }
 
-///  Finds next solution of the problem. Returns false when no solution found.
+///  Finds next solution of the problem. Returns false when no solution found
 bool
 NsProblemManager::nextSolution (void)
 {
