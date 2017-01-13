@@ -278,8 +278,8 @@ bool Ns_StackSearch::readSplit(string& splitEnd)
 }
 
 /// When the time for normal search is exhausted, this function is called to output the remaining search tree splits
-void
-NsProblemManager::simulate (const double splitTime, const double simulationRatio)
+void NsProblemManager::simulate(const double splitTime,
+                                const double simulationRatio)
 {
         cout << "SolveEnd\t" << time(0) << "\t";
         searchNodes.currentPath();
@@ -291,7 +291,7 @@ NsProblemManager::simulate (const double splitTime, const double simulationRatio
                 timeLimit(0);
                 splitTimeLimit(splitTime, simulationRatio);
                 while (nextSolution() != false)
-                        /*VOID*/ ;
+                        /*VOID*/;
                 cout << " -" << splitEnd << "\n";
                 splitTimeLimit(0, simulationRatio);
                 cout << "SimulateEnd\t" << time(0) << "\t";
@@ -301,107 +301,101 @@ NsProblemManager::simulate (const double splitTime, const double simulationRatio
         restart();
 }
 
-void
-Ns_StackSearch::currentPathRec (const_iterator it)  const
+void Ns_StackSearch::currentPathRec(const_iterator it) const
 {
-        if ( it  !=  end() ) {
-                NsUInt  children = it->children;
+        if (it != end()) {
+                NsUInt children = it->children;
                 currentPathRec(++it);
-                if ( it  !=  end() )
+                if (it != end())
                         cout << " ";
                 cout << children;
         }
 }
 
-bool
-Ns_StackSearch::updateMatchesEndNodeRec (iterator it, NsUInt& depth)
+bool Ns_StackSearch::updateMatchesEndNodeRec(iterator it, NsUInt& depth)
 {
-        if ( it  ==  end() ) {
-                depth  =  0;
-                return  ( !endNode.empty() );
+        if (it == end()) {
+                depth = 0;
+                return !endNode.empty();
         }
-        NsUInt  children = it->children;
-        bool&  matchesEndNode = it->matchesEndNode;
-        matchesEndNode = updateMatchesEndNodeRec(++it,depth);
+        NsUInt children = it->children;
+        bool& matchesEndNode = it->matchesEndNode;
+        matchesEndNode = updateMatchesEndNodeRec(++it, depth);
         ++depth;
-        return  ( matchesEndNode && ( depth > endNode.size() ||
-                                      children >= endNode[depth-1] ) );
+        return (matchesEndNode && (depth > endNode.size() ||
+                                   children >= endNode[depth-1]));
 }
 
 namespace {
 
-void
-destroy_goal (NsGoal *g)
+void destroy_goal(NsGoal *g)
 {
-        if ( g  !=  0 ) {
-                if ( g->isGoalAND() || g->isGoalOR() ) {
-                        destroy_goal( g->getFirstSubGoal() );
-                        destroy_goal( g->getSecondSubGoal() );
+        if (g != 0) {
+                if (g->isGoalAND() || g->isGoalOR()) {
+                        destroy_goal(g->getFirstSubGoal());
+                        destroy_goal(g->getSecondSubGoal());
                 }
-                delete  g;
+                delete g;
         }
 }
 
-//  We reimplement difftime() because of MinGW issues.
-inline double
-DiffTime (time_t time2, time_t time1)
+// Reimplements difftime() to address MinGW issues
+inline double DiffTime(time_t time2, time_t time1)
 {
         return (time2 - time1);
 }
 
-}  // end namespace
+} // end namespace
 
-Ns_StackSearch::Ns_StackSearch (void)
-        : nSearchTreeNodes(0),
-          timeSimulated(0.0),
-          recordObjective(false)
-{    }
-
-void
-Ns_StackSearch::clear (void)
+Ns_StackSearch::Ns_StackSearch(void)
+ : nSearchTreeNodes(0),
+   timeSimulated(0.0),
+   recordObjective(false)
 {
-        while ( !empty() ) {
-                destroy_goal( top().goalNextChoice );
+}
+
+void Ns_StackSearch::clear(void)
+{
+        while (!empty()) {
+                destroy_goal(top().goalNextChoice);
                 pop();
         }
 }
 
-Ns_StackSearch::~Ns_StackSearch (void)
+Ns_StackSearch::~Ns_StackSearch(void)
 {
         clear();
-        if ( fileSearchGraph.is_open() ) {
+        if (fileSearchGraph.is_open()) {
                 fileSearchGraph << "}\n";
                 fileSearchGraph.close();
         }
-        if ( fileMapperInput.is_open() && !mapperLine.empty() ) {
+        if (fileMapperInput.is_open() && !mapperLine.empty()) {
                 fileMapperInput << fixed
-                                << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
-                                << "\t" << mapper
-                                << "\t" << mapperLine << "\n";
+                        << ((clock() - mapperLineStartTime) / CLOCKS_PER_SEC)
+                        << "\t" << mapper
+                        << "\t" << mapperLine << "\n";
         }
 }
 
-Ns_StackGoals::~Ns_StackGoals (void)
+Ns_StackGoals::~Ns_StackGoals(void)
 {
-        while ( !empty() ) {
-                destroy_goal( top() );
+        while (!empty()) {
+                destroy_goal(top());
                 pop();
         }
 }
 
-NsProblemManager::~NsProblemManager (void)
+NsProblemManager::~NsProblemManager(void)
 {
-        //  Constraints destruction.
-        for (Ns_constraints_array_t::iterator  c = constraints.begin();
-             c != constraints.end();
-             ++c) {
-                delete  *c;
+        // Constraints destruction.
+        for (Ns_constraints_array_t::iterator c = constraints.begin();
+             c != constraints.end(); ++c) {
+                delete *c;
         }
-        //  Intermediate variables destruction.
-        for (NsDeque<NsIntVar *>::iterator  v = intermediateVars.begin();
-             v != intermediateVars.end();
-             ++v) {
-                delete  *v;
+        // Intermediate variables destruction.
+        for (NsDeque<NsIntVar *>::iterator v = intermediateVars.begin();
+             v != intermediateVars.end(); ++v) {
+                delete *v;
         }
 }
 
