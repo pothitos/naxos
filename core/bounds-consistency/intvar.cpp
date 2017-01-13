@@ -113,8 +113,8 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
 void NsIntVar::addConstraint(Ns_Constraint *constr)
 {
         constraints.push_back(ConstraintAndFailure(constr));
-        assert_Ns(constr->varsInvolvedIn() >= 1,
-                  "NsIntVar::addConstraint: Wrong `varsInvolvedIn' constraint `constr'");
+        assert_Ns(constr->varsInvolvedIn() >= 1, "NsIntVar::addConstraint: "
+                  "Wrong 'varsInvolvedIn' constraint 'constr'");
         arcsConnectedTo += constr->varsInvolvedIn() - 1;
         if (constr->revisionType == Ns_Constraint::VALUE_CONSISTENCY)
                 constraintNeedsRemovedValues = true;
@@ -140,10 +140,11 @@ NsIntVar::NsIntVar(const Ns_Expression& expr)
 
 NsIntVar& NsIntVar::operator = (const Ns_Expression& expr)
 {
-        assert_Ns(pm == 0 && constraints.empty()
-                  && constraintNeedsRemovedValues == false
-                  && arcsConnectedTo == 0 && queueItem == 0,
-                  "NsIntVar::operator=: Some constraints already imposed on `*this'");
+        assert_Ns(pm == 0 && constraints.empty() &&
+                  constraintNeedsRemovedValues == false &&
+                  arcsConnectedTo == 0 && queueItem == 0,
+                  "NsIntVar::operator=: Some constraints already imposed on "
+                  "'*this'");
         expr.post(*this);
         pm->removeLastVar();
         pm->addVar(this);
@@ -166,14 +167,17 @@ NsIntVarArray::NsIntVarArray(const Ns_ExpressionArray& expr)
 NsIntVarArray& NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
 {
         assert_Ns(PointArray.empty() && !addedConstraint,
-                  "NsIntVarArray::operator=: Some constraints already imposed on `*this'");
+                  "NsIntVarArray::operator=: Some constraints already imposed "
+                  "on '*this'");
         expr.post(*this);
         return *this;
 }
 
 void NsIntVarArray::push_front(const NsIntVar& Var)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add "
+                  "another variable, because a constraint has been already "
+                  "imposed on the array");
         NsIntVar *NewVar = new NsIntVar(Var);
         PointArray.push_front(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
@@ -183,13 +187,17 @@ void NsIntVarArray::push_front(const NsIntVar& Var)
 
 void NsIntVarArray::push_front(const Ns_Expression& expr)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add "
+                  "another variable, because a constraint has been already "
+                  "imposed on the array");
         PointArray.push_front(&expr.post());
 }
 
 void NsIntVarArray::push_back(const NsIntVar& Var)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add "
+                  "another variable, because a constraint has been already "
+                  "imposed on the array");
         NsIntVar *NewVar = new NsIntVar(Var);
         PointArray.push_back(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
@@ -199,6 +207,8 @@ void NsIntVarArray::push_back(const NsIntVar& Var)
 
 void NsIntVarArray::push_back(const Ns_Expression& expr)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add "
+                  "another variable, because a constraint has been already "
+                  "imposed on the array");
         PointArray.push_back(&expr.post());
 }
