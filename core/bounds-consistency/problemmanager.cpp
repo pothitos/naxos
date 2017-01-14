@@ -408,8 +408,8 @@ NsProblemManager::~NsProblemManager(void)
         }
 }
 
-///  Fetches the next constraint to currentConstr, that concerns the variable varFired
-
+/// Fetches the next constraint to currentConstr that affects variable varFired
+///
 ///  \remarks
 ///  \li
 ///  In implementing the queue, to reduce the number of queue operations,
@@ -459,9 +459,7 @@ NsProblemManager::~NsProblemManager(void)
 ///     }
 ///}
 ///\endcode
-
-Ns_Constraint *
-Ns_QueueItem::getNextConstraint (void)
+Ns_Constraint* Ns_QueueItem::getNextConstraint(void)
 {
         for ( ;  currentConstr < varFired->constraints.size();  ++currentConstr) {
                 switch ( varFired->constraints[currentConstr].constr->revisionType ) {
@@ -499,90 +497,87 @@ Ns_QueueItem::getNextConstraint (void)
         return  0;
 }
 
-///  Adds a constraint to the problem
-void
-NsProblemManager::add (const Ns_ExprConstr& expr)
+/// Adds a constraint to the problem
+void NsProblemManager::add(const Ns_ExprConstr& expr)
 {
-        assert_Ns( firstNextSolution ,
-                   "NsProblemManager::add: Cannot add a constraint because search has already started" );
-        Ns_Constraint  *newConstr = expr.postConstraint();
-        if ( newConstr == 0 )
-                return;    // unary constraint
+        assert_Ns(firstNextSolution, "NsProblemManager::add: Cannot add a "
+                  "constraint because search has already started");
+        Ns_Constraint *newConstr = expr.postConstraint();
+        if (newConstr == 0)
+                return;  // unary constraint
         newConstr->ArcCons();
-        recordConstraint( newConstr );
+        recordConstraint(newConstr);
 }
 
-///  Adds a soft constraint to the problem, with the corresponding weight
-void
-NsProblemManager::add (const Ns_ExprConstr& expr, const NsInt weight)
+/// Adds a soft constraint to the problem, with the corresponding weight
+void NsProblemManager::add(const Ns_ExprConstr& expr, const NsInt weight)
 {
-        assert_Ns( firstNextSolution ,
-                   "NsProblemManager::add: Cannot add a constraint because search has already started" );
-        assert_Ns( vObjective == 0 ,
-                   "NsProblemManager::add: `NsProblemManager::minimize()' should not be used together with soft constraints" );
-        vSoftConstraintsTerms.push_back( weight * expr.post() );
+        assert_Ns(firstNextSolution, "NsProblemManager::add: Cannot add a "
+                  "constraint because search has already started");
+        assert_Ns(vObjective == 0, "NsProblemManager::add: "
+                  "'NsProblemManager::minimize()' should not be used together "
+                  "with soft constraints");
+        vSoftConstraintsTerms.push_back(weight * expr.post());
 }
 
-///  Imposes arc consistency
-bool
-NsProblemManager::arcConsistent (void)
+/// Imposes arc consistency
+bool NsProblemManager::arcConsistent(void)
 {
-        if ( foundInconsistency ) {
+        if (foundInconsistency) {
                 foundInconsistency = false;
                 getQueue().clear();
                 ++nFailures;
-                return  false;
+                return false;
         }
-        Ns_Constraint  *c;
-        NsIntVar  *vFired;
-        while  ( !getQueue().empty() ) {
+        Ns_Constraint *c;
+        NsIntVar *vFired;
+        while (!getQueue().empty()) {
                 vFired = getQueue().front().getVarFired();
-                //  To avoid changing the queue item Q.front()
-                //   during this iteration...
+                // To avoid changing the queue item
+                // Q.front() during this iteration...
                 vFired->queueItem = 0;
-                while ( (c = getQueue().front().getNextConstraint())  !=  0 ) {
-                        //  Change the following for AC-3.
+                while ((c = getQueue().front().getNextConstraint()) != 0) {
+                        // Change the following for AC-3.
                         //c->ArcCons();
-                        c->LocalArcCons( getQueue().front() );
+                        c->LocalArcCons(getQueue().front());
                         c->lastConstraintCheckTime = ++nConstraintChecks;
-                        if ( foundInconsistency ) {
+                        if (foundInconsistency) {
                                 foundInconsistency = false;
                                 getQueue().clear();
                                 ++nFailures;
-                                return  false;
+                                return false;
                         }
                 }
                 getQueue().pop();
         }
-        return  true;
+        return true;
 }
 
-///  Backtracks the search process to the previous choice point
-bool NsProblemManager::backtrack (void)
+/// Backtracks the search process to the previous choice point
+bool NsProblemManager::backtrack(void)
 {
         NsGoal *goalNextChoice;
         for (;;) {
-                if ( backtrackLim != 0  &&  nBacktracks >= backtrackLim )
-                        return  false;
+                if (backtrackLim != 0 && nBacktracks >= backtrackLim)
+                        return false;
                 ++nBacktracks;
-                assert_Ns( !searchNodes.empty() ,
-                           "NsProblemManager::backtrack: "
-                           "`searchNodes' is empty");
+                assert_Ns(!searchNodes.empty(), "NsProblemManager::backtrack: "
+                          "'searchNodes' is empty");
                 goalNextChoice = searchNodes.top().goalNextChoice;
-                if ( goalNextChoice == 0 )
-                        return  false;
+                if (goalNextChoice == 0)
+                        return false;
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
-                searchNodes.top().stackAND.push( goalNextChoice );
+                searchNodes.top().stackAND.push(goalNextChoice);
                 if (vObjective != 0) {
                         vObjective->remove(bestObjective, NsPLUS_INF);
-                        if ( foundInconsistency ) {
-                                foundInconsistency  =  false;
+                        if (foundInconsistency) {
+                                foundInconsistency = false;
                                 getQueue().clear();
                                 continue;
                         }
                 }
-                return  true;
+                return true;
         }
 }
 
