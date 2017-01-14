@@ -1,4 +1,4 @@
-/// @file Data structures and algorithms for a constraint satisfaction problem management and solving
+/// @file Data structures and algorithms for a CSP management and solving
 /// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
@@ -31,7 +31,7 @@ Ns_StackSearch::goal_iterator& Ns_StackSearch::goal_iterator::operator ++ (void)
 }
 
 /// Writes to a file the (splits) input of a mapper
-
+///
 /// It can be called in main with the following arguments:
 /// mapperInputToFile((string("/tmp/partitions") + "." +
 /// getenv("mapreduce_task_partition") + ".txt").c_str(),
@@ -55,7 +55,12 @@ void Ns_StackSearch::searchToGraphFile(const char *fileName)
                         << "\tedge [arrowhead=none];\n";
 }
 
-/// If it does not exist, creates a validHistoryId entry for the current search node; returns false if failed, due to a specific search tree part exploration
+/// Creates a new search tree node
+///
+/// Also creates a validHistoryId entry for the current search
+/// node, if it does not exist. Returns false if the node
+/// shouldn't be explored, due to a specific search tree part
+/// exploration.
 bool Ns_StackSearch::push(const value_type& newNode)
 {
         ++nSearchTreeNodes;
@@ -112,7 +117,9 @@ bool Ns_StackSearch::TEST_splitEnded(void) const
         return ((equal && depth == endNode.size()) || greater);
 }
 
-/// Checks if the current node ID is greater or equal than the endNode ID; sets the boolean arguments 'greater' and 'equal' accordingly
+/// Checks if the current node ID is greater or equal than the endNode ID
+///
+/// Sets the boolean arguments 'greater' and 'equal' accordingly.
 void Ns_StackSearch::TEST_CurrentVsEndNode(const_iterator it, NsUInt& depth,
                                            bool& equal, bool& greater) const
 {
@@ -207,7 +214,7 @@ void Ns_StackSearch::pop(void)
         }
 }
 
-/// Writes to a file a view of the constraint network in a Graphviz supported format
+/// Writes to a file a view of the constraint network in a Graphviz format
 void NsProblemManager::constraintsToGraphFile(const char *fileName)
 {
         fileConstraintsGraph.open(fileName);
@@ -277,7 +284,9 @@ bool Ns_StackSearch::readSplit(string& splitEnd)
         return true;
 }
 
-/// When the time for normal search is exhausted, this function is called to output the remaining search tree splits
+/// Output the remaining search tree splits
+///
+/// Called when the time for normal search is exhausted.
 void NsProblemManager::simulate(const double splitTime,
                                 const double simulationRatio)
 {

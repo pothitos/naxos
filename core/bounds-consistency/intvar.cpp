@@ -41,7 +41,7 @@ std::ostream& naxos::operator << (std::ostream& os, const NsIntVarArray& VarArr)
         return os;
 }
 
-/// Removes in purpose all the values of the domain, thus making an inconsistency
+/// Removes in purpose all the values of the domain, thus making inconsistency
 void NsIntVar::removeAll(void)
 {
         pm->foundAnInconsistency();
@@ -50,11 +50,11 @@ void NsIntVar::removeAll(void)
 /// A bound (min or max) of the domain has been changed by the constraint constr
 void Ns_QueueItem::boundChangedBy(const Ns_Constraint *constr)
 {
-        removedBoundRec.boundChangedBy(constr,
-                                       varFired->manager().numConstraintChecks());
+        removedBoundRec.boundChangedBy(constr, varFired->manager().
+                                               numConstraintChecks());
 }
 
-/// Adds the tuple (removedValue, constraintThatRemovedIt) of the removedValues collection
+/// Adds the tuple (removedValue, constraintThatRemovedIt) of the removedValues
 void Ns_QueueItem::add(const NsInt removedVal,
                        const Ns_Constraint *constrThatRemovedIt)
 {
@@ -151,7 +151,7 @@ NsIntVar& NsIntVar::operator = (const Ns_Expression& expr)
         return *this;
 }
 
-/// Makes the variable transparent to backtracking/store; useful for temporary variables
+/// Makes variable transparent to backtracking/store; useful for temporary ones
 void NsIntVar::transparent(void)
 {
         domain.lastSaveHistoryId() = manager().getCurrentHistoryId();

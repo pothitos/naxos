@@ -1,4 +1,4 @@
-/// @file Constraint finite domain integer variables implementation, based on bit-set
+/// @file Constraint finite domain integer variables implementation via bit-sets
 /// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
@@ -7,7 +7,7 @@ using namespace naxos;
 
 namespace {
 
-/// Returns the position in the bit-set of the corresponding bit to the value val
+/// Returns the position in the bit-set of the corresponding bit to the value
 ///
 /// This method performs a simple subtraction, to find out
 /// the corresponding bit number for the value val. However,
