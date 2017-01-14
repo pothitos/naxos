@@ -16,13 +16,20 @@ SOURCES = $(addprefix $(NAXOS)/, array_constraints.cpp bitset_domain.cpp express
 OBJECTS = $(SOURCES:.cpp=.o)
 
 .PHONY: all
-all: $(PROGRAMS)
+all: $(PROGRAMS) parser
 $(OBJECTS): %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 $(PR_OBJECTS): %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -I$(NAXOS) -c $<
 $(PROGRAMS): %: $(OBJECTS) %.o
 	$(LD) $(LDFLAGS) $^ -o $@
+
+PARSER_SAMPLE = XCSP3-CPP-Parser/samples
+PARSER_INSTANCES = XCSP3-CPP-Parser/instances
+.PHONY: parser
+parser:
+	# Execute the internal XCSP3 Parser's Makefile
+	$(MAKE) -C $(PARSER_SAMPLE)
 
 .PHONY: clean
 clean:
@@ -41,3 +48,10 @@ test:
         test $$SLOC -lt 8000
 	# Temporarily disable the maximum line width test
 	! grep ".\{161\}" $(HEADERS) $(SOURCES) || true
+	# Test the parser for TSP instance
+	$(PARSER_SAMPLE)/test $(PARSER_INSTANCES)/tsp-25-843.xml > /dev/null
+	# Test the parser for a Constraint Optimisation instance
+	$(PARSER_SAMPLE)/test $(PARSER_INSTANCES)/obj.xml > /dev/null
+	# Test the parser for an instance with all the kinds of constraints:
+	# The test fails as the parser's sample solver doesn't support every constraint
+	! $(PARSER_SAMPLE)/test $(PARSER_INSTANCES)/example.xml > /dev/null

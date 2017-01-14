@@ -22,6 +22,8 @@ matrix:
           packages:
             - gcc-6
             - g++-6
+      script:
+        - sed -i 's/g++/g++-6/' $DIRECTORY/samples/makefile
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
