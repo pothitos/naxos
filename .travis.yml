@@ -4,8 +4,6 @@
 language: cpp
 
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq time gnuplot
   - pip install --user cpp-coveralls
 
 env:
@@ -19,6 +17,11 @@ matrix:
     - env: DIRECTORY="apps/XCSP3/"
 
     - env: DIRECTORY="apps/ACvsBC/"
+      addons:
+        apt:
+          packages:
+            - time
+            - gnuplot
 
     - env: DIRECTORY="apps/CELAR/"
            DATASET="SCEN06"
