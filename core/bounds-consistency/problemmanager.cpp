@@ -410,55 +410,41 @@ NsProblemManager::~NsProblemManager(void)
 
 /// Fetches the next constraint to currentConstr that affects variable varFired
 ///
-///  \remarks
-///  \li
-///  In implementing the queue, to reduce the number of queue operations,
-///   one way is simply enqueue the variable whose domain has shrunk,
-///   instead of enqueue all relevant arcs. When we dequeue a variable from
-///   the queue, we just revise all constraints pointing to this variable.
-///   The method is also called variable oriented propagation. (This idea
-///   appeared in [McG79] and in [CJ98].)
-///  Source: <em>An Optimal Coarse-grained Arc Consistency Algorithm,</em>
-///   by C. Bessiere et al.
+/// In implementing the queue, to reduce the number of queue
+/// operations, one way is simply enqueue the variable whose
+/// domain has shrunk, instead of enqueue all relevant arcs.
+/// When we dequeue a variable from the queue, we just revise
+/// all constraints pointing to this variable. The method is
+/// also called variable oriented propagation. This idea
+/// appeared in [McG79] and in [CJ98]. Source: "An Optimal
+/// Coarse-grained Arc Consistency Algorithm," by C. Bessiere et
+/// al.
 ///
-///  \li
-///  Strictly speaking, in AC-3, arc (i,j) is not enqueued when arc (j,i) is
-///   made consistent. This optimization could be added in AC-5 by adding j
-///   as an argument to Enqueue and adding the constraint k != j to its
-///   definition.
-///  Source: <em>A Generic Arc-Consistency Algorithm and its
-///   Specializations,</em> by P. van Hentenryck et al.
+/// Strictly speaking, in AC-3, arc (i,j) is not enqueued when
+/// arc (j,i) is made consistent. This optimization could be
+/// added in AC-5 by adding j as an argument to Enqueue and
+/// adding the constraint k != j to its definition. Source: "A
+/// Generic Arc-Consistency Algorithm and its Specializations,"
+/// by P. van Hentenryck et al.
 ///
+///    NsIntVar V1(pm, 0, 0), V2(pm, 0, 1);
+///    for (int i = 0; i < 640; ++i)
+///            pm.add(V1 < V2);
+///    pm.nextSolution();
 ///
-///\note
+/// The following, commented-out code did not work with the
+/// above code that a Solver's programmer could develop. We
+/// think that the culprit is an STL bug...
 ///
-///\code
-///NsIntVar  V1(pm,0,0), V2(pm,0,1);
-///
-///for (int i=0;  i < 640;  ++i)
-///     pm.add( V1  <  V2 );
-///
-///pm.nextSolution();
-///\endcode
-///
-///  The following, commented-out code did not work with the above code
-///   (that a Solver's programmer could develop). We think that the culprit
-///   is an STL bug...
-///
-///\code
-///Ns_Constraint  *temp;
-///
-///for ( ;  currentConstr != varFired->constraints_begin();  ++currentConstr)
-///{
-///     temp  =  *currentConstr;
-///
-///     if ( temp  !=  constrFired )    {
-///
-///             ++currentConstr;
-///             return  temp;
-///     }
-///}
-///\endcode
+///    Ns_Constraint *temp;
+///    for (/*VOID*/; currentConstr != varFired->constraints_begin();
+///         ++currentConstr) {
+///            temp = *currentConstr;
+///            if (temp != constrFired) {
+///                    ++currentConstr;
+///                    return temp;
+///            }
+///    }
 Ns_Constraint* Ns_QueueItem::getNextConstraint(void)
 {
         for ( ;  currentConstr < varFired->constraints.size();  ++currentConstr) {
