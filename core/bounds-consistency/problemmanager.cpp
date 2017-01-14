@@ -606,29 +606,29 @@ void NsProblemManager::restart(void)
                 vObjective->remove(bestObjective, NsPLUS_INF);
 }
 
-///  Finds next solution of the problem. Returns false when no solution found
-bool
-NsProblemManager::nextSolution (void)
+/// Finds next solution of the problem; returns false when no solution found
+bool NsProblemManager::nextSolution(void)
 {
         timeIsUp = false;
-        bool  isArcCons = true;
-        if ( firstNextSolution ) {
-                firstNextSolution  =  false;
-                //  Soft constraints objective.
-                if ( vObjective == 0   &&  !vSoftConstraintsTerms.empty() )
-                        minimize( - NsSum( vSoftConstraintsTerms ) );
-                isArcCons  =  arcConsistent();
-                //  Throwing away unnesessary `bitsetsStore' in the first frame.
+        bool isArcCons = true;
+        if (firstNextSolution) {
+                firstNextSolution = false;
+                // Soft constraints objective
+                if (vObjective == 0 && !vSoftConstraintsTerms.empty())
+                        minimize(- NsSum(vSoftConstraintsTerms));
+                isArcCons = arcConsistent();
+                // Throwing away unnesessary 'bitsetsStore' in the first frame
                 searchNodes.top().bitsetsStore.clear();
-                //  (A) Cutting from the stackAND of the base frame...
-                Ns_StackGoals  tempStackAND;
-                while ( !searchNodes.top().stackAND.empty() ) {
-                        tempStackAND.push( searchNodes.top().stackAND.top() );
+                // (A) Cutting from the stackAND of the base frame...
+                Ns_StackGoals tempStackAND;
+                while (!searchNodes.top().stackAND.empty()) {
+                        tempStackAND.push(searchNodes.top().stackAND.top());
                         searchNodes.top().stackAND.pop();
                 }
-                // A push of frame, for the purposes of NsProblemManager::restart().
-                //  We took care placing it *after* the arcConsistent() call (because
-                //  in future, we will not be able to revert to the current `Q').
+                // A push of frame, for the purposes of
+                // NsProblemManager::restart(). We took care placing it _after_
+                // the arcConsistent() call because in future, we will not be
+                // able to revert to the current 'Q'.
                 assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
                                              numSearchTreeNodes() ) ) ,
                            "NsProblemManager::nextSolution: First push should succeed");
