@@ -11,74 +11,99 @@ before_install:
 env:
   global:
     - COVERAGE="--coverage"
-  matrix:
-    - DIRECTORY="apps/"
 
-    - DIRECTORY="apps/XCSP3/"
+matrix:
+  include:
+    env: DIRECTORY="apps/"
 
-    - DIRECTORY="apps/ACvsBC/"
+  include:
+    env: DIRECTORY="apps/XCSP3/"
 
-    - DIRECTORY="apps/CELAR/"
-      DATASET="SCEN06"
-    - DIRECTORY="apps/CELAR/"
-      DATASET="SCEN07"
-    - DIRECTORY="apps/CELAR/"
-      DATASET="SCEN08"
-    - DIRECTORY="apps/CELAR/"
-      DATASET="SCEN09"
-    - DIRECTORY="apps/CELAR/"
-      DATASET="SCEN10"
+  include:
+    env: DIRECTORY="apps/ACvsBC/"
 
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp01.ctt"
-      METHOD="DFS"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp02.ctt"
-      METHOD="LDS"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp03.ctt"
-      METHOD="IBROAD"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp04.ctt"
-      METHOD="PoPS"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp05.ctt"
-      METHOD="DBS"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp06.ctt"
-      METHOD="CREDIT 100"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp07.ctt"
-      METHOD="LAN 20"
-      METHOD_LOCAL_SEARCH="DBDS"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp08.ctt"
-      METHOD="BBS 100"
-      METHOD_LOCAL_SEARCH="DFS RANDOM_VAR_HEUR"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp09.ctt"
-      METHOD="RDFS 100 1000"
-      METHOD_LOCAL_SEARCH="DFS RANDOM_VAL_HEUR"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp10.ctt"
-      METHOD="GNS"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp11.ctt"
-      METHOD="FNS fSample"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp12.ctt"
-      METHOD="FNS fSampleMiddle"
-      METHOD_LOCAL_SEARCH="FNS fSampleExp"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp13.ctt"
-      METHOD="ISAMP 1000"
-    - DIRECTORY="apps/ITC/"
-      DATASET="comp14.ctt"
-      METHOD="ONESAMP"
+  include:
+    env: DIRECTORY="apps/CELAR/"
+         DATASET="SCEN06"
+  include:
+    env: DIRECTORY="apps/CELAR/"
+         DATASET="SCEN07"
+  include:
+    env: DIRECTORY="apps/CELAR/"
+         DATASET="SCEN08"
+  include:
+    env: DIRECTORY="apps/CELAR/"
+         DATASET="SCEN09"
+  include:
+    env: DIRECTORY="apps/CELAR/"
+         DATASET="SCEN10"
 
-    - DIRECTORY="apps/hadoop/"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp01.ctt"
+         METHOD="DFS"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp02.ctt"
+         METHOD="LDS"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp03.ctt"
+         METHOD="IBROAD"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp04.ctt"
+         METHOD="PoPS"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp05.ctt"
+         METHOD="DBS"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp06.ctt"
+         METHOD="CREDIT 100"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp07.ctt"
+         METHOD="LAN 20"
+         METHOD_LOCAL_SEARCH="DBDS"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp08.ctt"
+         METHOD="BBS 100"
+         METHOD_LOCAL_SEARCH="DFS RANDOM_VAR_HEUR"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp09.ctt"
+         METHOD="RDFS 100 1000"
+         METHOD_LOCAL_SEARCH="DFS RANDOM_VAL_HEUR"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp10.ctt"
+         METHOD="GNS"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp11.ctt"
+         METHOD="FNS fSample"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp12.ctt"
+         METHOD="FNS fSampleMiddle"
+         METHOD_LOCAL_SEARCH="FNS fSampleExp"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp13.ctt"
+         METHOD="ISAMP 1000"
+  include:
+    env: DIRECTORY="apps/ITC/"
+         DATASET="comp14.ctt"
+         METHOD="ONESAMP"
 
-    - DIRECTORY="amorgos/apps/"
+  include:
+    env: DIRECTORY="apps/hadoop/"
+
+  include:
+    env: DIRECTORY="amorgos/apps/"
 
 script:
     - cd $DIRECTORY
