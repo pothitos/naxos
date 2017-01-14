@@ -4,8 +4,7 @@
 language: cpp
 
 before_install:
-  global:
-    - pip install --user cpp-coveralls
+  - pip install --user cpp-coveralls
 
 env:
   global:
@@ -23,7 +22,7 @@ matrix:
           packages:
             - gcc-6
             - g++-6
-      before_install:
+      before_script:
         - sed -i 's/g++/g++-6/' $DIRECTORY/XCSP3-CPP-Parser/samples/makefile
 
     - env: DIRECTORY="apps/ACvsBC/"
