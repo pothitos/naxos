@@ -186,8 +186,8 @@ void Ns_StackSearch::pop(void)
                 fileSearchGraph << ";\n";
                 // If the node has children, then it it is the last child of
                 // itself. Besides, the 'goalNextChoice'--the second subgoal of
-                // an OR-goal--is executed one level before the execution of the
-                // first subgoal, in the search tree.
+                // an OR-goal--is executed one level before the execution of
+                // the first subgoal, in the search tree.
         }
         if (fileSearchGraph.is_open() && size() - 1 > 1) {
                 fileSearchGraph << "\n\t\"(" << size()-2 << ","
@@ -570,33 +570,38 @@ bool NsProblemManager::backtrack(void)
         }
 }
 
-///  Reverts the domains of the constrained variables (except for the `objective' variable) in the state that they were after the first arcConsistent() has been called
-void
-NsProblemManager::restart (void)
+/// Reverts the domains of the constrained variables
+///
+/// Except for the 'objective' variable, it restores every
+/// variable in the state it was after the first arcConsistent()
+/// call.
+void NsProblemManager::restart(void)
 {
-        firstNextSolution  =  true;
+        firstNextSolution = true;
         // For any case, we clear the propagation engine's members.
-        foundInconsistency  =  false;
+        foundInconsistency = false;
         getQueue().clear();
-        bool  foundSecondFrame  =  false;
-        NsGoal  *goalNextChoice;
-        assert_Ns( !searchNodes.empty() ,  "NsProblemManager::restart: `searchNodes' is empty");
+        bool foundSecondFrame = false;
+        NsGoal *goalNextChoice;
+        assert_Ns(!searchNodes.empty(),
+                  "NsProblemManager::restart: 'searchNodes' is empty");
         do {
-                goalNextChoice  =  searchNodes.top().goalNextChoice;
-                if ( goalNextChoice  ==  0 )
-                        foundSecondFrame  =  true;
+                goalNextChoice = searchNodes.top().goalNextChoice;
+                if (goalNextChoice == 0)
+                        foundSecondFrame = true;
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
-                searchNodes.top().stackAND.push( goalNextChoice );
+                searchNodes.top().stackAND.push(goalNextChoice);
                 // We keeped the above line because of Memory Management
-                //  reasons (in order to delete the `goalNextChoice').
-                assert_Ns( !searchNodes.empty() ,  "`restart()' call, before `nextSolution()'");
-        } while ( !foundSecondFrame );
+                // reasons (in order to delete the 'goalNextChoice').
+                assert_Ns(!searchNodes.empty(),
+                          "'restart()' call, before 'nextSolution()'");
+        } while (!foundSecondFrame);
         searchNodes.pop();
         searchNodes.reset();
-        assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
-                                     numSearchTreeNodes() ) ) ,
-                   "NsProblemManager::restart: First push should succeed");
+        assert_Ns(searchNodes.push(Ns_SearchNode(0, searchNodes.gbegin(),
+                                                 numSearchTreeNodes())),
+                  "NsProblemManager::restart: First push should succeed");
         if (vObjective != 0)
                 vObjective->remove(bestObjective, NsPLUS_INF);
 }
