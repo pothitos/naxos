@@ -447,40 +447,43 @@ NsProblemManager::~NsProblemManager(void)
 ///    }
 Ns_Constraint* Ns_QueueItem::getNextConstraint(void)
 {
-        for ( ;  currentConstr < varFired->constraints.size();  ++currentConstr) {
-                switch ( varFired->constraints[currentConstr].constr->revisionType ) {
-                case  Ns_Constraint::VALUE_CONSISTENCY :
+        for (/*VOID*/; currentConstr < varFired->constraints.size();
+             ++currentConstr) {
+                switch (varFired->constraints[currentConstr].constr->revisionType) {
+                case Ns_Constraint::VALUE_CONSISTENCY:
                         do {
                                 ++currentRemovedValue;
-                        } while ( currentRemovedValue - 1 < removedValues.size()
-                                  &&  removedValues[currentRemovedValue-1].constrFired
-                                  == varFired->constraints[currentConstr].constr );
-                        if ( currentRemovedValue - 1  ==  removedValues.size() )
-                                currentRemovedValue  =  0;
+                        } while (currentRemovedValue - 1 < removedValues.size() &&
+                                 removedValues[currentRemovedValue-1].constrFired ==
+                                 varFired->constraints[currentConstr].constr);
+                        if (currentRemovedValue - 1 == removedValues.size())
+                                currentRemovedValue = 0;
                         else
-                                return  varFired->constraints[currentConstr].constr;
+                                return varFired->constraints[currentConstr].constr;
                         break;
-                case  Ns_Constraint::BOUNDS_CONSISTENCY :
-                        if ( removedBoundRec.removedBound
-                             && varFired->constraints[currentConstr].constr  !=
-                             removedBoundRec.constrFired  ) {
-                                //  No need to check the constraint that initiated the propagation.
-                                return  varFired->constraints[currentConstr++].constr;
+                case Ns_Constraint::BOUNDS_CONSISTENCY:
+                        if (removedBoundRec.removedBound &&
+                            varFired->constraints[currentConstr].constr !=
+                            removedBoundRec.constrFired) {
+                                // No need to check the constraint that
+                                // initiated the propagation.
+                                return varFired->constraints[currentConstr++].constr;
                         }
                         break;
-                case  Ns_Constraint::BIDIRECTIONAL_CONSISTENCY :
-                        if ( removedBoundRec.removedBound
-                             && removedBoundRec.removalTime  >=
-                             varFired->constraints[currentConstr].constr->lastConstraintCheckTime ) {
-                                return  varFired->constraints[currentConstr++].constr;
+                case Ns_Constraint::BIDIRECTIONAL_CONSISTENCY:
+                        if (removedBoundRec.removedBound &&
+                            removedBoundRec.removalTime >=
+                            varFired->constraints[currentConstr].constr->lastConstraintCheckTime) {
+                                return varFired->constraints[currentConstr++].constr;
                         }
                         break;
                 default:
-                        throw NsException("Ns_QueueItem::getNextConstraint: Invalid `constr->revisionType'");
+                        throw NsException("Ns_QueueItem::getNextConstraint: "
+                                          "Invalid 'constr->revisionType'");
                         break;
                 };
         }
-        return  0;
+        return 0;
 }
 
 /// Adds a constraint to the problem
