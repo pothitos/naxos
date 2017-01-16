@@ -9,7 +9,7 @@ LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)
 
 # Filenames
-PROGRAMS = nqueens
+PROGRAMS = naxos-xcsp3
 PR_OBJECTS = $(PROGRAMS:=.o)
 HEADERS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
 SOURCES = $(addprefix $(NAXOS)/, array_constraints.cpp bitset_domain.cpp expressions.cpp intvar.cpp problemmanager.cpp var_constraints.cpp)
