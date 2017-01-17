@@ -592,7 +592,7 @@ void NsProblemManager::restart(void)
                 searchNodes.top().bitsetsStore.restore();
                 searchNodes.pop();
                 searchNodes.top().stackAND.push(goalNextChoice);
-                // We keeped the above line because of Memory Management
+                // We kept the above line because of Memory Management
                 // reasons (in order to delete the 'goalNextChoice').
                 assert_Ns(!searchNodes.empty(),
                           "'restart()' call, before 'nextSolution()'");
@@ -615,7 +615,7 @@ bool NsProblemManager::nextSolution(void)
                 firstNextSolution = false;
                 // Soft constraints objective
                 if (vObjective == 0 && !vSoftConstraintsTerms.empty())
-                        minimize(- NsSum(vSoftConstraintsTerms));
+                        minimize(-NsSum(vSoftConstraintsTerms));
                 isArcCons = arcConsistent();
                 // Throwing away unnesessary 'bitsetsStore' in the first frame
                 searchNodes.top().bitsetsStore.clear();
@@ -629,127 +629,134 @@ bool NsProblemManager::nextSolution(void)
                 // NsProblemManager::restart(). We took care placing it _after_
                 // the arcConsistent() call because in future, we will not be
                 // able to revert to the current 'Q'.
-                assert_Ns( searchNodes.push( Ns_SearchNode( 0, searchNodes.gbegin(),
-                                             numSearchTreeNodes() ) ) ,
-                           "NsProblemManager::nextSolution: First push should succeed");
-                //  (B) ...and pasting to the stackAND of the new frame.
-                while ( !tempStackAND.empty() ) {
-                        searchNodes.top().stackAND.push( tempStackAND.top() );
+                assert_Ns(searchNodes.push(Ns_SearchNode(0,
+                          searchNodes.gbegin(), numSearchTreeNodes())),
+                          "NsProblemManager::nextSolution: First push should "
+                          "succeed");
+                // (B) ...and pasting to the stackAND of the new frame.
+                while (!tempStackAND.empty()) {
+                        searchNodes.top().stackAND.push(tempStackAND.top());
                         tempStackAND.pop();
                 }
-                if ( searchNodes.top().stackAND.empty()  &&  searchNodes.top().delayedGoal == searchNodes.gend() )
-                        return  isArcCons;
+                if (searchNodes.top().stackAND.empty() &&
+                    searchNodes.top().delayedGoal == searchNodes.gend())
+                        return isArcCons;
         }
-        if ( calledTimeLimit && timeLim != 0 ) {
+        if (calledTimeLimit && timeLim != 0) {
                 calledTimeLimit = false;
-                if ( isRealTime ) {
+                if (isRealTime) {
                         startRealTime = time(0);
-                        assert_Ns(startRealTime != -1, "Could not find time for `realTimeLimit'");
+                        assert_Ns(startRealTime != -1,
+                                  "Could not find time for 'realTimeLimit'");
                 } else {
                         startTime = clock();
-                        assert_Ns(startTime != -1, "Could not find time for `timeLimit'");
+                        assert_Ns(startTime != -1,
+                                  "Could not find time for 'timeLimit'");
                 }
         }
-        if ( ( !isArcCons || !arcConsistent() )
-             || (searchNodes.top().stackAND.empty()
-                 && searchNodes.top().delayedGoal == searchNodes.gend()) ) {
-                if ( !backtrack() )
-                        return  false;
+        if ((!isArcCons || !arcConsistent()) ||
+            (searchNodes.top().stackAND.empty() &&
+             searchNodes.top().delayedGoal == searchNodes.gend())) {
+                if (!backtrack())
+                        return false;
         }
-        NsGoal  *CurrGoal, *NewGoal;
-        bool  popped_a_goal;
-        while ( timeLim == 0  ||  (   isRealTime  &&  DiffTime(time(0),startRealTime)  <= timeLim)
-                ||  ( !isRealTime  &&  static_cast<unsigned long>(clock()-startTime) <= timeLim*static_cast<unsigned long>(CLOCKS_PER_SEC) ) ) {
-                if ( timeSplitLim != 0  &&
-                     getCurrentNodeNum() > startNodeId  &&
+        NsGoal *CurrGoal, *NewGoal;
+        bool popped_a_goal;
+        while (timeLim == 0 || (isRealTime &&
+                                DiffTime(time(0), startRealTime) <= timeLim) ||
+               (!isRealTime &&
+                static_cast<unsigned long>(clock() - startTime) <=
+                timeLim * static_cast<unsigned long>(CLOCKS_PER_SEC))) {
+                if (timeSplitLim != 0 && getCurrentNodeNum() > startNodeId &&
                      clock() - startSplitTime + searchNodes.timeSimulated >=
-                     timeSplitLim ) {
-                        startNodeId  =  getCurrentNodeNum();
-                        startSplitTime  =  clock();
-                        searchNodes.timeSimulated  =  0;
+                     timeSplitLim) {
+                        startNodeId = getCurrentNodeNum();
+                        startSplitTime = clock();
+                        searchNodes.timeSimulated = 0;
                         cout << " - ";
                         searchNodes.currentPath();
                         cout << "\n";
                         splitHeader();
                         searchNodes.currentPath();
                 }
-                popped_a_goal  =  false;
-                if ( !searchNodes.top().stackAND.empty() ) {
-                        CurrGoal  =  searchNodes.top().stackAND.top();
+                popped_a_goal = false;
+                if (!searchNodes.top().stackAND.empty()) {
+                        CurrGoal = searchNodes.top().stackAND.top();
                         searchNodes.top().stackAND.pop();
-                        popped_a_goal  =  true;
+                        popped_a_goal = true;
                 } else {
-                        assert_Ns( searchNodes.top().delayedGoal !=
-                                   searchNodes.gend() ,
+                        assert_Ns(searchNodes.top().delayedGoal !=
+                                   searchNodes.gend(),
                                    "NsProblemManager::nextSolution: "
                                    "No goal to execute");
-                        CurrGoal  =  *searchNodes.top().delayedGoal;
+                        CurrGoal = *searchNodes.top().delayedGoal;
                         ++searchNodes.top().delayedGoal;
                 }
-                assert_Ns( CurrGoal != 0 ,
-                           "NsProblemManager::nextSolution: "
-                           "Zero goal to execute");
-                if ( CurrGoal->isGoalAND() ) {
-                        searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
-                        searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
-                        if ( popped_a_goal )
-                                delete  CurrGoal;
-                        //cout << "--- AND ---\n";
-                } else if ( CurrGoal->isGoalOR() ) {
-                        if ( timeSplitLim != 0  &&
-                             searchNodes.overrideNextLevel() ) {
+                assert_Ns(CurrGoal != 0, "NsProblemManager::nextSolution: Zero "
+                          "goal to execute");
+                if (CurrGoal->isGoalAND()) {
+                        searchNodes.top().stackAND.push(
+                                CurrGoal->getSecondSubGoal());
+                        searchNodes.top().stackAND.push(
+                                CurrGoal->getFirstSubGoal());
+                        if (popped_a_goal)
+                                delete CurrGoal;
+                } else if (CurrGoal->isGoalOR()) {
+                        if (timeSplitLim != 0 &&
+                             searchNodes.overrideNextLevel()) {
                                 double timeSim = searchNodes.nextMeanTime();
                                 double descSim = searchNodes.nextMeanDesc();
                                 searchNodes.timeSimulated += timeSim;
                                 searchNodes.top().timeSimChild += timeSim;
                                 searchNodes.top().descSimChild += descSim;
-                                destroy_goal( CurrGoal->getFirstSubGoal() );
-                                searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
-                        } else if ( searchNodes.push( Ns_SearchNode( CurrGoal->getSecondSubGoal(),
-                                                      searchNodes.gbegin(),
-                                                      numSearchTreeNodes() ) ) ) {
-                                searchNodes.top().stackAND.push( CurrGoal->getFirstSubGoal() );
+                                destroy_goal(CurrGoal->getFirstSubGoal());
+                                searchNodes.top().stackAND.push(
+                                        CurrGoal->getSecondSubGoal());
+                        } else if (searchNodes.push(Ns_SearchNode(
+                                           CurrGoal->getSecondSubGoal(),
+                                           searchNodes.gbegin(),
+                                           numSearchTreeNodes()))) {
+                                searchNodes.top().stackAND.push(
+                                        CurrGoal->getFirstSubGoal());
                         } else {
-                                destroy_goal( CurrGoal->getFirstSubGoal() );
-                                searchNodes.top().stackAND.push( CurrGoal->getSecondSubGoal() );
+                                destroy_goal(CurrGoal->getFirstSubGoal());
+                                searchNodes.top().stackAND.push(
+                                        CurrGoal->getSecondSubGoal());
                         }
-                        if ( popped_a_goal )
-                                delete  CurrGoal;
-                        //cout << "--- OR  ---\n";
-                        if ( searchNodes.splitEnded() )
-                                return  false;
+                        if (popped_a_goal)
+                                delete CurrGoal;
+                        if (searchNodes.splitEnded())
+                                return false;
                 } else {
                         ++nGoals;
-                        NewGoal  =  CurrGoal->GOAL();
-                        if ( popped_a_goal )
-                                delete  CurrGoal;
-                        if ( !arcConsistent() ) {
-                                //cout << "<BACKTRACK>\n";
-                                destroy_goal( NewGoal );
-                                if ( !backtrack() )
-                                        return  false;
-                        } else if ( NewGoal != 0 ) {
-                                searchNodes.top().stackAND.push( NewGoal );
-                        } else if ( searchNodes.top().stackAND.empty()
-                                    &&  searchNodes.top().delayedGoal ==
-                                    searchNodes.gend() ) {
-                                if ( vObjective != 0 ) {
-                                        assert_Ns( bestObjective >
+                        NewGoal = CurrGoal->GOAL();
+                        if (popped_a_goal)
+                                delete CurrGoal;
+                        if (!arcConsistent()) {
+                                destroy_goal(NewGoal);
+                                if (!backtrack())
+                                        return false;
+                        } else if (NewGoal != 0) {
+                                searchNodes.top().stackAND.push(NewGoal);
+                        } else if (searchNodes.top().stackAND.empty() &&
+                                   searchNodes.top().delayedGoal ==
+                                   searchNodes.gend()) {
+                                if (vObjective != 0) {
+                                        assert_Ns(bestObjective >
                                                    vObjective->max(),
                                                    "NsProblemManager::"
                                                    "nextSolution: Wrong "
                                                    "objective value");
                                         bestObjective = vObjective->max();
-                                        //  We have taken care about the
-                                        //   rare (and odd) case where the
-                                        //   domain of vObjective has been
-                                        //   augmented.
+                                        // We have taken care about the rare
+                                        // and odd case where the domain of
+                                        // vObjective has been augmented.
                                 }
                                 searchNodes.solutionNode(vObjective);
-                                return  true;
+                                return true;
                         }
                 }
         }
         timeIsUp = true;
-        return  false;
+        return false;
 }
