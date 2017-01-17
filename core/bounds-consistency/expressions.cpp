@@ -261,62 +261,59 @@ void Ns_ExprYplusCZspecial::post(NsIntVar& VarX) const
         exprYplusCZspecial_post_constr(VarX, VarY, C, VarZ);
 }
 
-NsIntVar&
-Ns_ExprYplusCZspecial::post (void)  const
+NsIntVar& Ns_ExprYplusCZspecial::post(void) const
 {
-        NsIntVar  *VarX = new NsIntVar(VarY.manager(),  VarY.min() + C * VarZ.min(),  VarY.max() + C * VarZ.max());
+        NsIntVar *VarX = new NsIntVar(VarY.manager(),
+                                      VarY.min() + C * VarZ.min(),
+                                      VarY.max() + C * VarZ.max());
         exprYplusCZspecial_post_constr(*VarX, VarY, C, VarZ);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
 namespace {
-//enum op_type {opplus=1, opminus, optimes, opdiv, opmod, opand, opNand, opor, opNor};
 
-void
-exprYopZ_post_constr (NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ, const op_type opType)
+void exprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
+                          const op_type opType)
 {
-        Ns_Constraint  *newConstr;
+        Ns_Constraint *newConstr;
         switch (opType) {
-        case  opPlus:
+        case opPlus:
                 newConstr = new Ns_ConstrXeqYplusZ(&VarX, &VarY, &VarZ);
                 break;
-        case  opMinus:
+        case opMinus:
                 newConstr = new Ns_ConstrXeqYplusZ(&VarY, &VarX, &VarZ);
                 break;
-        case  opTimes:
+        case opTimes:
                 newConstr = new Ns_ConstrXeqYtimesZ(&VarX, &VarY, &VarZ);
                 break;
-        case  opDiv:
-                //VarZ.remove( 0 /*0*/ );
+        case opDiv:
                 newConstr = new Ns_ConstrXeqYtimesZ(&VarY, &VarX, &VarZ);
                 break;
-        //case  opMod:
-        //      newConstr = new Ns_ConstrXeqYmodZ(&VarX, &VarY, &VarZ);
-        //      break;
-        case  opAnd:
+        case opAnd:
                 newConstr = new Ns_ConstrXeqYandZ(&VarX, &VarY, &VarZ, true);
                 break;
-        case  opNand:
+        case opNand:
                 newConstr = new Ns_ConstrXeqYandZ(&VarX, &VarY, &VarZ, false);
                 break;
-        case  opOr:
+        case opOr:
                 newConstr = new Ns_ConstrXeqYorZ(&VarX, &VarY, &VarZ, true);
                 break;
-        case  opNor:
+        case opNor:
                 newConstr = new Ns_ConstrXeqYorZ(&VarX, &VarY, &VarZ, false);
                 break;
         default:
-                throw  NsException("exprYopZ_post_constr: Wrong `opType'");
+                throw NsException("exprYopZ_post_constr: Wrong 'opType'");
                 break;
         }
         VarX.addConstraint(newConstr);
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
-}                                                                // namespace
+
+} // namespace
 
 void
 Ns_ExprYplusZ::post (NsIntVar& VarX)  const
