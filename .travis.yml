@@ -22,7 +22,7 @@ matrix:
           packages:
             - g++-6
       before_script:
-        - sed -i 's/g++/g++-6/' $DIRECTORY/{Makefile,XCSP3-CPP-Parser/samples/makefile}
+        - sed -i 's/g++/g++-6/' $DIRECTORY/XCSP3-CPP-Parser/samples/makefile
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
