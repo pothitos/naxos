@@ -7,6 +7,7 @@ celar_solver
 crew_scheduling
 itc_solver
 magic_square
+naxos-xcsp3
 nqueens
 numpart
 send_more_money
