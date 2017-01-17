@@ -134,135 +134,130 @@ NsIntVar& Ns_ExprYdivC::post(void) const
         return *VarX;
 }
 
-void
-Ns_ExprCdivZ::post (NsIntVar& VarX)  const
+void Ns_ExprCdivZ::post(NsIntVar& VarX) const
 {
-        if ( C  >=  0 ) {
-                VarX = NsIntVar(VarZ.manager(),
-                                xDIVy(C,VarZ.max()),  xDIVy(C,VarZ.min()));
+        if (C >= 0) {
+                VarX = NsIntVar(VarZ.manager(), xDIVy(C, VarZ.max()),
+                                xDIVy(C, VarZ.min()));
         } else {
-                VarX = NsIntVar(VarZ.manager(),
-                                xDIVy(C,VarZ.min()),  xDIVy(C,VarZ.max()));
+                VarX = NsIntVar(VarZ.manager(), xDIVy(C, VarZ.min()),
+                                xDIVy(C, VarZ.max()));
         }
         exprYopC_post_constr(VarX, VarZ, C, opCDivY);
 }
 
-NsIntVar&
-Ns_ExprCdivZ::post (void)  const
+NsIntVar& Ns_ExprCdivZ::post(void) const
 {
-        NsIntVar  *VarX;
-        if ( C  >=  0 ) {
-                VarX = new NsIntVar(VarZ.manager(),
-                                    xDIVy(C,VarZ.max()),  xDIVy(C,VarZ.min()));
+        NsIntVar *VarX;
+        if (C >= 0) {
+                VarX = new NsIntVar(VarZ.manager(), xDIVy(C, VarZ.max()),
+                                    xDIVy(C, VarZ.min()));
         } else {
-                VarX = new NsIntVar(VarZ.manager(),
-                                    xDIVy(C,VarZ.min()),  xDIVy(C,VarZ.max()));
+                VarX = new NsIntVar(VarZ.manager(), xDIVy(C, VarZ.min()),
+                                    xDIVy(C, VarZ.max()));
         }
         exprYopC_post_constr(*VarX, VarZ, C, opCDivY);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprYmodC::post (NsIntVar& VarX)  const
+void Ns_ExprYmodC::post(NsIntVar& VarX) const
 {
-        NsInt  min, max;
+        NsInt min, max;
         YmodC_min_max(&VarY, C, min, max);
         VarX = NsIntVar(VarY.manager(), min, max);
         exprYopC_post_constr(VarX, VarY, C, opMod);
 }
 
-NsIntVar&
-Ns_ExprYmodC::post (void)  const
+NsIntVar& Ns_ExprYmodC::post(void) const
 {
-        if (0 <= VarY.min()  &&  VarY.max() < C)
-                return  VarY;
-        NsInt  min, max;
+        if (0 <= VarY.min() && VarY.max() < C)
+                return VarY;
+        NsInt min, max;
         YmodC_min_max(&VarY, C, min, max);
-        NsIntVar  *VarX = new NsIntVar(VarY.manager(), min, max);
+        NsIntVar *VarX = new NsIntVar(VarY.manager(), min, max);
         exprYopC_post_constr(*VarX, VarY, C, opMod);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprAbsY::post (NsIntVar& VarX)  const
+void Ns_ExprAbsY::post(NsIntVar& VarX) const
 {
-        VarX = NsIntVar(VarY.manager(), max(labs( max(VarY.min(),static_cast<NsInt>(0)) ), labs( min(static_cast<NsInt>(0),VarY.max()))), max(labs(VarY.min()),labs(VarY.max())));
+        VarX = NsIntVar(VarY.manager(),
+                        max(labs(max(VarY.min(), static_cast<NsInt>(0))),
+                            labs(min(static_cast<NsInt>(0), VarY.max()))),
+                        max(labs(VarY.min()), labs(VarY.max())));
         exprYopC_post_constr(VarX, VarY, 0, opAbs);
 }
 
-NsIntVar&
-Ns_ExprAbsY::post (void)  const
+NsIntVar& Ns_ExprAbsY::post(void) const
 {
-        NsIntVar *VarX = new NsIntVar(VarY.manager(), max(labs( max(VarY.min(),static_cast<NsInt>(0)) ), labs( min(static_cast<NsInt>(0),VarY.max()))), max(labs(VarY.min()),labs(VarY.max())));
+        NsIntVar *VarX = new NsIntVar(VarY.manager(),
+                                      max(labs(max(VarY.min(), static_cast<NsInt>(0))),
+                                          labs(min(static_cast<NsInt>(0), VarY.max()))),
+                                      max(labs(VarY.min()), labs(VarY.max())));
         exprYopC_post_constr(*VarX, VarY, 0, opAbs);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
 namespace {
 
-void
-array_sort (NsDeque<NsInt>& domain)
+void array_sort(NsDeque<NsInt>& domain)
 {
-        assert_Ns( !domain.empty() ,
-                   "NsInDomain: empty domain array");
+        assert_Ns(!domain.empty(), "NsInDomain: empty domain array");
         sort(domain.begin(), domain.end());
 }
 
-void
-exprInDomain_post_constr (NsIntVar& VarX,
-                          const NsDeque<NsInt>& domain,
-                          NsDeque<NsInt> *domainPrevious,
+void exprInDomain_post_constr(NsIntVar& VarX, const NsDeque<NsInt>& domain,
+                              NsDeque<NsInt> *domainPrevious,
                           NsDeque<NsInt> *domainNext)
 {
-        Ns_Constraint  *newConstr =
-                new Ns_ConstrXinDomain(&VarX, domain,
-                                       domainPrevious, domainNext);
+        Ns_Constraint *newConstr = new Ns_ConstrXinDomain(&VarX, domain,
+                                               domainPrevious, domainNext);
         VarX.addConstraint(newConstr);
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
 
-}                                                                // namespace
+} // namespace
 
-void
-Ns_ExprInDomain::post (NsIntVar& VarX)  const
+void Ns_ExprInDomain::post(NsIntVar& VarX) const
 {
         array_sort(domain);
         VarX = NsIntVar(pm, domain[0], domain[domain.size()-1]);
         exprInDomain_post_constr(VarX, domain, domainPrevious, domainNext);
 }
 
-NsIntVar&
-Ns_ExprInDomain::post (void)  const
+NsIntVar& Ns_ExprInDomain::post(void) const
 {
         array_sort(domain);
-        NsIntVar  *VarX = new NsIntVar(pm, domain[0],
-                                       domain[domain.size()-1]);
+        NsIntVar *VarX = new NsIntVar(pm, domain[0], domain[domain.size()-1]);
         exprInDomain_post_constr(*VarX, domain, domainPrevious, domainNext);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
 namespace {
-void
-exprYplusCZspecial_post_constr (NsIntVar& VarX, NsIntVar& VarY, const NsInt C, NsIntVar& VarZ)
+
+void exprYplusCZspecial_post_constr(NsIntVar& VarX, NsIntVar& VarY,
+                                    const NsInt C, NsIntVar& VarZ)
 {
-        Ns_Constraint  *newConstr = new Ns_ConstrXeqYplusCZspecial(&VarX, &VarY, C, &VarZ);
+        Ns_Constraint *newConstr = new Ns_ConstrXeqYplusCZspecial(&VarX, &VarY,
+                                                                  C, &VarZ);
         VarX.addConstraint(newConstr);
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
-}                                                                // namespace
 
-void
-Ns_ExprYplusCZspecial::post (NsIntVar& VarX)  const
+} // namespace
+
+void Ns_ExprYplusCZspecial::post(NsIntVar& VarX) const
 {
-        VarX = NsIntVar(VarY.manager(),  VarY.min() + C * VarZ.min(),  VarY.max() + C * VarZ.max());
+        VarX = NsIntVar(VarY.manager(), VarY.min() + C * VarZ.min(),
+                        VarY.max() + C * VarZ.max());
         exprYplusCZspecial_post_constr(VarX, VarY, C, VarZ);
 }
 
