@@ -440,8 +440,8 @@ NsIntVar& Ns_ExprConstrYorZ::postC(bool positively) const
                 positively = !positively;
         if (positively) {
                 VarX = new NsIntVar(VarY.manager(),
-                                   (VarY.min() + VarZ.min() != 0),
-                                   (VarY.max() + VarZ.max() != 0));
+                                    (VarY.min() + VarZ.min() != 0),
+                                    (VarY.max() + VarZ.max() != 0));
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opOr);
         } else {
                 VarX = new NsIntVar(VarY.manager(),
@@ -474,235 +474,220 @@ enum constr_type {
         cmin, cmax
 };
 
-void exprGlob_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const constr_type ctype)
+void exprGlob_post_constr(NsIntVar& VarX, NsIntVarArray& VarArr,
+                          const constr_type ctype)
 {
-        Ns_Constraint  *newConstr;
+        Ns_Constraint *newConstr;
         switch (ctype) {
-        case  cmin:
+        case cmin:
                 newConstr = new Ns_ConstrXeqMin(&VarX, &VarArr);
                 break;
-        case  cmax:
+        case cmax:
                 newConstr = new Ns_ConstrXeqMax(&VarX, &VarArr);
                 break;
-        //case  csum:
-        //      newConstr = new Ns_ConstrXeqSum(&VarX, &VarArr);
-        //      break;
         default:
-                throw  NsException("exprGlob_post_constr: Wrong `ctype'");
+                throw NsException("exprGlob_post_constr: Wrong 'ctype'");
                 break;
         }
         VarX.addConstraint(newConstr);
-        for (NsIntVarArray::iterator V = VarArr.begin();   V != VarArr.end();   ++V)
+        for (NsIntVarArray::iterator V = VarArr.begin(); V != VarArr.end();
+             ++V)
                 V->addConstraint(newConstr);
         VarArr.addConstraint();
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
 
-void
-exprGlobSum_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const NsIndex start, const NsIndex length)
+void exprGlobSum_post_constr(NsIntVar& VarX, NsIntVarArray& VarArr,
+                             const NsIndex start, const NsIndex length)
 {
-        Ns_Constraint  *newConstr = new Ns_ConstrXeqSum(&VarX, &VarArr, start, length);
+        Ns_Constraint *newConstr = new Ns_ConstrXeqSum(&VarX, &VarArr, start,
+                                                       length);
         VarX.addConstraint(newConstr);
-        for (NsIndex  i=start;   i < start+length;   ++i)
+        for (NsIndex i = start; i < start + length; ++i)
                 VarArr[i].addConstraint(newConstr);
         VarArr.addConstraint();
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
 
-}                                                                // namespace
+} // namespace
 
-void
-Ns_ExprMin::post (NsIntVar& VarX)  const
+void Ns_ExprMin::post(NsIntVar& VarX) const
 {
-        assert_Ns( !VarArr.empty() ,
-                   "Cannot get the min of an empty array" );
-        NsInt  min, minmax;
+        assert_Ns(!VarArr.empty(), "Cannot get the min of an empty array");
+        NsInt min, minmax;
         array_min_minmax(&VarArr, min, minmax);
         VarX = NsIntVar(VarArr[0].manager(), min, minmax);
         exprGlob_post_constr(VarX, VarArr, cmin);
 }
 
-NsIntVar&
-Ns_ExprMin::post (void)  const
+NsIntVar& Ns_ExprMin::post(void) const
 {
-        assert_Ns( !VarArr.empty() ,
-                   "Cannot get the min of an empty array" );
+        assert_Ns(!VarArr.empty(), "Cannot get the min of an empty array");
         if (VarArr.size() == 1)
-                return  VarArr[0];
-        NsInt  min, minmax;
+                return VarArr[0];
+        NsInt min, minmax;
         array_min_minmax(&VarArr, min, minmax);
-        NsIntVar  *VarX = new NsIntVar(VarArr[0].manager(), min, minmax);
+        NsIntVar *VarX = new NsIntVar(VarArr[0].manager(), min, minmax);
         exprGlob_post_constr(*VarX, VarArr, cmin);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprMax::post (NsIntVar& VarX)  const
+void Ns_ExprMax::post(NsIntVar& VarX) const
 {
-        assert_Ns( !VarArr.empty() ,
-                   "Cannot get the max of an empty array" );
-        NsInt  maxmin, max;
+        assert_Ns(!VarArr.empty(), "Cannot get the max of an empty array");
+        NsInt maxmin, max;
         array_maxmin_max(&VarArr, maxmin, max);
         VarX = NsIntVar(VarArr[0].manager(), maxmin, max);
         exprGlob_post_constr(VarX, VarArr, cmax);
 }
 
-NsIntVar&
-Ns_ExprMax::post (void)  const
+NsIntVar& Ns_ExprMax::post(void) const
 {
-        assert_Ns( !VarArr.empty() ,
-                   "Cannot get the max of an empty array" );
+        assert_Ns(!VarArr.empty(), "Cannot get the max of an empty array");
         if (VarArr.size() == 1)
-                return  VarArr[0];
-        NsInt  maxmin, max;
+                return VarArr[0];
+        NsInt maxmin, max;
         array_maxmin_max(&VarArr, maxmin, max);
-        NsIntVar  *VarX = new NsIntVar(VarArr[0].manager(), maxmin, max);
+        NsIntVar *VarX = new NsIntVar(VarArr[0].manager(), maxmin, max);
         exprGlob_post_constr(*VarX, VarArr, cmax);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprSum::post (NsIntVar& VarX)  const
+void Ns_ExprSum::post(NsIntVar& VarX) const
 {
-        assert_Ns( !VarArr.empty() ,
-                   "Cannot get the sum of an empty array" );
-        NsInt  summin, summax;
+        assert_Ns(!VarArr.empty(), "Cannot get the sum of an empty array");
+        NsInt summin, summax;
         array_sum_min_max(&VarArr, start, length, summin, summax);
         VarX = NsIntVar(VarArr[0].manager(), summin, summax);
-        //if (VarArr.size() != 0)       // if equal to zero, there is no constraint
         exprGlobSum_post_constr(VarX, VarArr, start, length);
 }
 
-NsIntVar&
-Ns_ExprSum::post (void)  const
+NsIntVar& Ns_ExprSum::post(void) const
 {
-        assert_Ns( !VarArr.empty() ,
-                   "Cannot get the sum of an empty array" );
+        assert_Ns(!VarArr.empty(), "Cannot get the sum of an empty array");
         if (VarArr.size() == 1)
-                return  VarArr[0];
-        NsInt  summin, summax;
+                return VarArr[0];
+        NsInt summin, summax;
         array_sum_min_max(&VarArr, start, length, summin, summax);
-        NsIntVar  *VarX = new NsIntVar(VarArr[0].manager(), summin, summax);
-        //if (VarArr.size() != 0)       // if equal to zero, there is no constraint
+        NsIntVar *VarX = new NsIntVar(VarArr[0].manager(), summin, summax);
         exprGlobSum_post_constr(*VarX, VarArr, start, length);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
 namespace {
 
-void
-array_elements_min_max (const NsDeque<NsInt>& intArray,
-                        NsIntVar& VarIndex,
-                        NsInt& minElement, NsInt& maxElement)
+void array_elements_min_max(const NsDeque<NsInt>& intArray, NsIntVar& VarIndex,
+                            NsInt& minElement, NsInt& maxElement)
 {
-        minElement  =  NsPLUS_INF;
-        maxElement  =  NsMINUS_INF;
-        for (NsIntVar::const_iterator  index = VarIndex.begin();
+        minElement = NsPLUS_INF;
+        maxElement = NsMINUS_INF;
+        for (NsIntVar::const_iterator index = VarIndex.begin();
              index != VarIndex.end();
              ++index) {
-                if ( 0 <= *index
-                     && static_cast<NsIndex>(*index) < intArray.size() ) {
-                        if ( intArray[*index]  <  minElement )
-                                minElement  =  intArray[*index];
-                        if ( intArray[*index]  >  maxElement )
-                                maxElement  =  intArray[*index];
+                if (0 <= *index &&
+                    static_cast<NsIndex>(*index) < intArray.size()) {
+                        if (intArray[*index] < minElement)
+                                minElement = intArray[*index];
+                        if (intArray[*index] > maxElement)
+                                maxElement = intArray[*index];
                 }
         }
-        assert_Ns( minElement != NsPLUS_INF ,
-                   "Failed to index the integer array" );
+        assert_Ns(minElement != NsPLUS_INF,
+                  "Failed to index the integer array");
 }
 
-void
-exprElement_post_constr (NsIntVar& VarIndex,
-                         const NsDeque<NsInt>& intArray, NsIntVar& VarX)
+void exprElement_post_constr(NsIntVar& VarIndex, const NsDeque<NsInt>& intArray,
+                             NsIntVar& VarX)
 {
-        Ns_Constraint  *newConstr =
-                new Ns_ConstrElement(&VarIndex, intArray, &VarX);
+        Ns_Constraint *newConstr = new Ns_ConstrElement(&VarIndex, intArray,
+                                                        &VarX);
         VarX.addConstraint(newConstr);
         VarIndex.addConstraint(newConstr);
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
 
-}                                                                // namespace
+} // namespace
 
-void
-Ns_ExprElement::post (NsIntVar& VarX)  const
+void Ns_ExprElement::post(NsIntVar& VarX) const
 {
-        NsInt  minElement, maxElement;
+        NsInt minElement, maxElement;
         array_elements_min_max(intArray, VarIndex, minElement, maxElement);
         VarX = NsIntVar(VarIndex.manager(), minElement, maxElement);
         exprElement_post_constr(VarIndex, intArray, VarX);
 }
 
-NsIntVar&
-Ns_ExprElement::post (void)  const
+NsIntVar& Ns_ExprElement::post(void) const
 {
-        NsInt  minElement, maxElement;
+        NsInt minElement, maxElement;
         array_elements_min_max(intArray, VarIndex, minElement, maxElement);
-        NsIntVar  *VarX = new NsIntVar(VarIndex.manager(),
-                                       minElement, maxElement);
+        NsIntVar *VarX = new NsIntVar(VarIndex.manager(), minElement,
+                                      maxElement);
         exprElement_post_constr(VarIndex, intArray, *VarX);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprInverse::post (NsIntVarArray& VarArrInv)  const
+void Ns_ExprInverse::post(NsIntVarArray& VarArrInv) const
 {
-        assert_Ns( !VarArr.empty() , "Cannot inverse an empty array" );
-        assert_Ns( VarArrInv.empty() ,  "Ns_ExprInverse::post: `VarArrInv' non-empty");
-        NsIntVarArray::iterator  V;
+        assert_Ns(!VarArr.empty(), "Cannot inverse an empty array");
+        assert_Ns(VarArrInv.empty(),
+                  "Ns_ExprInverse::post: 'VarArrInv' non-empty");
+        NsIntVarArray::iterator V;
         V = VarArr.begin();
-        NsInt  min = V->min();
-        NsInt  max = V->max();
+        NsInt min = V->min();
+        NsInt max = V->max();
         ++V;
-        for ( ;   V != VarArr.end();   ++V) {
+        for (/*VOID*/; V != VarArr.end(); ++V) {
                 if (V->min() < min)
                         min = V->min();
                 if (V->max() > max)
                         max = V->max();
         }
-        assert_Ns(min >= 0,  "Ns_ExprInverse::post: `VarArr' min must be >= 0");
+        assert_Ns(min >= 0, "Ns_ExprInverse::post: 'VarArr' min must be >= 0");
         if (MaxDom != -1) {
-                assert_Ns(MaxDom >= max,  "Ns_ExprInverse::post: `MaxDom' is less than `VarArr' max");
+                assert_Ns(MaxDom >= max, "Ns_ExprInverse::post: 'MaxDom' is "
+                          "less than 'VarArr' max");
                 max = MaxDom;
         }
-        for (NsIndex  i=0;  i <= static_cast<NsIndex>(max);  ++i)
-                VarArrInv.push_back( NsIntVar(VarArr[0].manager(), -1, VarArr.size()-1) );
-        Ns_Constraint  *newConstr = new Ns_ConstrInverse(&VarArrInv, &VarArr);
-        for (V = VarArr.begin();   V != VarArr.end();   ++V)
+        for (NsIndex i = 0; i <= static_cast<NsIndex>(max); ++i)
+                VarArrInv.push_back(NsIntVar(VarArr[0].manager(), -1,
+                                    VarArr.size()-1));
+        Ns_Constraint *newConstr = new Ns_ConstrInverse(&VarArrInv, &VarArr);
+        for (V = VarArr.begin(); V != VarArr.end(); ++V)
                 V->addConstraint(newConstr);
         VarArr.addConstraint();
-        for (V = VarArrInv.begin();   V != VarArrInv.end();   ++V)
+        for (V = VarArrInv.begin(); V != VarArrInv.end(); ++V)
                 V->addConstraint(newConstr);
         VarArrInv.addConstraint();
         newConstr->ArcCons();
-        VarArr[0].manager().recordConstraint( newConstr );
+        VarArr[0].manager().recordConstraint(newConstr);
 }
 
 namespace {
-void
-exprConstrYopZ_post_constr (Ns_Constraint *newConstr, NsIntVar& VarX, NsIntVar& VarY)
+
+void exprConstrYopZ_post_constr(Ns_Constraint *newConstr, NsIntVar& VarX,
+                                NsIntVar& VarY)
 {
         VarX.addConstraint(newConstr);
         VarY.addConstraint(newConstr);
         newConstr->ArcCons();
-        VarX.manager().recordConstraint( newConstr );
+        VarX.manager().recordConstraint(newConstr);
 }
 
-void
-exprConstrYopZ_post_constr (Ns_Constraint *newConstr, NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ)
+void exprConstrYopZ_post_constr(Ns_Constraint *newConstr, NsIntVar& VarX,
+                                NsIntVar& VarY, NsIntVar& VarZ)
 {
         VarZ.addConstraint(newConstr);
         exprConstrYopZ_post_constr(newConstr, VarX, VarY);
 }
-}                                                                // namespace
+
+} // namespace
 
 Ns_Constraint *
 Ns_ExprConstrYlessthanC::postConstraint (bool positively)  const
