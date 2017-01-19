@@ -193,8 +193,10 @@ void Ns_ExprAbsY::post(NsIntVar& VarX) const
 NsIntVar& Ns_ExprAbsY::post(void) const
 {
         NsIntVar *VarX = new NsIntVar(VarY.manager(),
-                                      max(labs(max(VarY.min(), static_cast<NsInt>(0))),
-                                          labs(min(static_cast<NsInt>(0), VarY.max()))),
+                                      max(labs(max(VarY.min(),
+                                               static_cast<NsInt>(0))),
+                                          labs(min(static_cast<NsInt>(0),
+                                                   VarY.max()))),
                                       max(labs(VarY.min()), labs(VarY.max())));
         exprYopC_post_constr(*VarX, VarY, 0, opAbs);
         VarX->manager().recordIntermediateVar(VarX);
@@ -315,174 +317,164 @@ void exprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
 
 } // namespace
 
-void
-Ns_ExprYplusZ::post (NsIntVar& VarX)  const
+void Ns_ExprYplusZ::post(NsIntVar& VarX) const
 {
-        VarX = NsIntVar(VarY.manager(),  VarY.min() + VarZ.min(),  VarY.max() + VarZ.max());
+        VarX = NsIntVar(VarY.manager(), VarY.min() + VarZ.min(),
+                        VarY.max() + VarZ.max());
         exprYopZ_post_constr(VarX, VarY, VarZ, opPlus);
 }
 
-NsIntVar&
-Ns_ExprYplusZ::post (void)  const
+NsIntVar& Ns_ExprYplusZ::post(void) const
 {
-        NsIntVar  *VarX = new NsIntVar(VarY.manager(),  VarY.min() + VarZ.min(),  VarY.max() + VarZ.max());
+        NsIntVar *VarX = new NsIntVar(VarY.manager(), VarY.min() + VarZ.min(),
+                                       VarY.max() + VarZ.max());
         exprYopZ_post_constr(*VarX, VarY, VarZ, opPlus);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprYminusZ::post (NsIntVar& VarX)  const
+void Ns_ExprYminusZ::post(NsIntVar& VarX) const
 {
-        VarX = NsIntVar(VarY.manager(),  VarY.min() - VarZ.max(),  VarY.max() - VarZ.min());
+        VarX = NsIntVar(VarY.manager(), VarY.min() - VarZ.max(),
+                        VarY.max() - VarZ.min());
         exprYopZ_post_constr(VarX, VarY, VarZ, opMinus);
 }
 
-NsIntVar&
-Ns_ExprYminusZ::post (void)  const
+NsIntVar& Ns_ExprYminusZ::post(void) const
 {
-        NsIntVar  *VarX = new NsIntVar(VarY.manager(),  VarY.min() - VarZ.max(),  VarY.max() - VarZ.min());
+        NsIntVar *VarX = new NsIntVar(VarY.manager(), VarY.min() - VarZ.max(),
+                                      VarY.max() - VarZ.min());
         exprYopZ_post_constr(*VarX, VarY, VarZ, opMinus);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprYtimesZ::post (NsIntVar& VarX)  const
+void Ns_ExprYtimesZ::post(NsIntVar& VarX) const
 {
-        NsInt  min, max;
+        NsInt min, max;
         product_min_max(&VarY, &VarZ, min, max);
         VarX = NsIntVar(VarY.manager(), min, max);
         exprYopZ_post_constr(VarX, VarY, VarZ, opTimes);
 }
 
-NsIntVar&
-Ns_ExprYtimesZ::post (void)  const
+NsIntVar& Ns_ExprYtimesZ::post(void) const
 {
-        NsInt  min, max;
+        NsInt min, max;
         product_min_max(&VarY, &VarZ, min, max);
-        NsIntVar  *VarX = new NsIntVar(VarY.manager(), min, max);
+        NsIntVar *VarX = new NsIntVar(VarY.manager(), min, max);
         exprYopZ_post_constr(*VarX, VarY, VarZ, opTimes);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-//      void
-//Ns_ExprYdivZ::post (NsIntVar &VarX)  const
+//void Ns_ExprYdivZ::post(NsIntVar &VarX) const
 //{
-//      NsInt  min, max;
+//      NsInt min, max;
 //      quotient_min_max(&VarY, &VarZ, min, max);
-//
 //      VarX = NsIntVar(VarY.manager(), min, max);
-//
 //      exprYopZ_post_constr(VarX, VarY, VarZ, opDiv);
 //}
 //
-//
-//      NsIntVar&
-//Ns_ExprYdivZ::post (void)  const
+//NsIntVar& Ns_ExprYdivZ::post(void) const
 //{
-//      NsInt  min, max;
+//      NsInt min, max;
 //      quotient_min_max(&VarY, &VarZ, min, max);
-//
-//      NsIntVar  *VarX = new NsIntVar(VarY.manager(), min, max);
-//
+//      NsIntVar *VarX = new NsIntVar(VarY.manager(), min, max);
 //      exprYopZ_post_constr(*VarX, VarY, VarZ, opDiv);
-//
-//      VarX->manager().recordIntermediateVar( VarX );
-//      return  *VarX;
+//      VarX->manager().recordIntermediateVar(VarX);
+//      return *VarX;
 //}
 
-void
-Ns_ExprConstrYandZ::postC (NsIntVar& VarX, bool positively)  const
+void Ns_ExprConstrYandZ::postC(NsIntVar& VarX, bool positively) const
 {
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = NsIntVar(VarY.manager(),  VarY.min() * VarZ.min(),  VarY.max() * VarZ.max());
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = NsIntVar(VarY.manager(), VarY.min() * VarZ.min(),
+                                VarY.max() * VarZ.max());
                 exprYopZ_post_constr(VarX, VarY, VarZ, opAnd);
         } else {
-                VarX = NsIntVar(VarY.manager(),  !(VarY.max() * VarZ.max()), !(VarY.min() * VarZ.min()));
+                VarX = NsIntVar(VarY.manager(), !(VarY.max() * VarZ.max()),
+                                !(VarY.min() * VarZ.min()));
                 exprYopZ_post_constr(VarX, VarY, VarZ, opNand);
         }
 }
 
-NsIntVar&
-Ns_ExprConstrYandZ::postC (bool positively)  const
+NsIntVar& Ns_ExprConstrYandZ::postC(bool positively) const
 {
-        NsIntVar  *VarX;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = new NsIntVar(VarY.manager(),  VarY.min() * VarZ.min(),  VarY.max() * VarZ.max());
+        NsIntVar *VarX;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = new NsIntVar(VarY.manager(), VarY.min() * VarZ.min(),
+                                    VarY.max() * VarZ.max());
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opAnd);
         } else {
-                VarX = new NsIntVar(VarY.manager(),  !(VarY.max() * VarZ.max()), !(VarY.min() * VarZ.min()));
+                VarX = new NsIntVar(VarY.manager(), !(VarY.max() * VarZ.max()),
+                                    !(VarY.min() * VarZ.min()));
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opNand);
         }
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-void
-Ns_ExprConstrYorZ::postC (NsIntVar& VarX, bool positively)  const
+void Ns_ExprConstrYorZ::postC(NsIntVar& VarX, bool positively) const
 {
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = NsIntVar(VarY.manager(),
-                                (VarY.min() + VarZ.min() != 0),  (VarY.max() + VarZ.max() != 0));
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = NsIntVar(VarY.manager(), (VarY.min() + VarZ.min() != 0),
+                                (VarY.max() + VarZ.max() != 0));
                 exprYopZ_post_constr(VarX, VarY, VarZ, opOr);
         } else {
-                VarX = NsIntVar(VarY.manager(),
-                                !(VarY.max() + VarZ.max() != 0), !(VarY.min() + VarZ.min() != 0));
+                VarX = NsIntVar(VarY.manager(), !(VarY.max() + VarZ.max() != 0),
+                                !(VarY.min() + VarZ.min() != 0));
                 exprYopZ_post_constr(VarX, VarY, VarZ, opNor);
         }
 }
 
-NsIntVar&
-Ns_ExprConstrYorZ::postC (bool positively)  const
+NsIntVar& Ns_ExprConstrYorZ::postC(bool positively) const
 {
-        NsIntVar  *VarX;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
+        NsIntVar *VarX;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
                 VarX = new NsIntVar(VarY.manager(),
-                                    (VarY.min() + VarZ.min() != 0),  (VarY.max() + VarZ.max() != 0));
+                                   (VarY.min() + VarZ.min() != 0),
+                                   (VarY.max() + VarZ.max() != 0));
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opOr);
         } else {
                 VarX = new NsIntVar(VarY.manager(),
-                                    !(VarY.max() + VarZ.max() != 0), !(VarY.min() + VarZ.min() != 0));
+                                    !(VarY.max() + VarZ.max() != 0),
+                                    !(VarY.min() + VarZ.min() != 0));
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opNor);
         }
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-Ns_Constraint *
-Ns_ExprConstrYorZ::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrYorZ::postConstraint(bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
                 newConstr = new Ns_ConstrXorY(&VarY, &VarZ, true);
         } else {
                 newConstr = new Ns_ConstrXorY(&VarY, &VarZ, false);
         }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
-        return  newConstr;
+        return newConstr;
 }
 
 namespace {
 
-enum constr_type {               //, csum};
-        cmin=1, cmax
+enum constr_type {
+        cmin = 1, cmax
 };
 
-void
-exprGlob_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const constr_type ctype)
+void exprGlob_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const constr_type ctype)
 {
         Ns_Constraint  *newConstr;
         switch (ctype) {
