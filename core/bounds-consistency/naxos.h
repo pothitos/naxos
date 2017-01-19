@@ -1328,7 +1328,7 @@ class  Ns_Constraint {
         enum  ConsistencyType {
 
                 ///  The revision function needs to know the value that has been removed from the domain (e.g.\ see Ns_ConstrInverse).
-                VALUE_CONSISTENCY=1,
+                VALUE_CONSISTENCY,
 
                 ///  The revision function does not need to know the removed values (like VALUE_CONSISTENCY).  It imposes bounds-consistency.
                 BOUNDS_CONSISTENCY,

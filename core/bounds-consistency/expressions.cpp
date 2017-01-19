@@ -11,7 +11,7 @@ using namespace naxos;
 namespace {
 
 enum op_type {
-        opPlus=1, opMinus, opTimes, opDiv, opCDivY, opMod, opAnd, opNand, opOr,
+        opPlus, opMinus, opTimes, opDiv, opCDivY, opMod, opAnd, opNand, opOr,
         opNor, opAbs
 };
 
@@ -471,7 +471,7 @@ Ns_Constraint* Ns_ExprConstrYorZ::postConstraint(bool positively) const
 namespace {
 
 enum constr_type {
-        cmin = 1, cmax
+        cmin, cmax
 };
 
 void exprGlob_post_constr (NsIntVar& VarX, NsIntVarArray& VarArr, const constr_type ctype)
