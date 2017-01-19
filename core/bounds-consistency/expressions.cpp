@@ -78,7 +78,7 @@ void Ns_ExprCminusZ::post(NsIntVar& VarX) const
 NsIntVar& Ns_ExprCminusZ::post(void) const
 {
         NsIntVar *VarX = new NsIntVar(VarY.manager(), C - VarY.max(),
-                                       C - VarY.min());
+                                      C - VarY.min());
         exprYopC_post_constr(*VarX, VarY, C, opMinus);
         VarX->manager().recordIntermediateVar(VarX);
         return *VarX;
@@ -213,7 +213,7 @@ void array_sort(NsDeque<NsInt>& domain)
 
 void exprInDomain_post_constr(NsIntVar& VarX, const NsDeque<NsInt>& domain,
                               NsDeque<NsInt> *domainPrevious,
-                          NsDeque<NsInt> *domainNext)
+                              NsDeque<NsInt> *domainNext)
 {
         Ns_Constraint *newConstr = new Ns_ConstrXinDomain(&VarX, domain,
                                                domainPrevious, domainNext);
@@ -327,7 +327,7 @@ void Ns_ExprYplusZ::post(NsIntVar& VarX) const
 NsIntVar& Ns_ExprYplusZ::post(void) const
 {
         NsIntVar *VarX = new NsIntVar(VarY.manager(), VarY.min() + VarZ.min(),
-                                       VarY.max() + VarZ.max());
+                                      VarY.max() + VarZ.max());
         exprYopZ_post_constr(*VarX, VarY, VarZ, opPlus);
         VarX->manager().recordIntermediateVar(VarX);
         return *VarX;
@@ -657,7 +657,7 @@ void Ns_ExprInverse::post(NsIntVarArray& VarArrInv) const
         }
         for (NsIndex i = 0; i <= static_cast<NsIndex>(max); ++i)
                 VarArrInv.push_back(NsIntVar(VarArr[0].manager(), -1,
-                                    VarArr.size()-1));
+                                             VarArr.size() - 1));
         Ns_Constraint *newConstr = new Ns_ConstrInverse(&VarArrInv, &VarArr);
         for (V = VarArr.begin(); V != VarArr.end(); ++V)
                 V->addConstraint(newConstr);
@@ -784,239 +784,247 @@ NsIntVar& Ns_ExprConstrYlesseqthanC::postC(bool positively) const
         return *VarX;
 }
 
-Ns_Constraint *
-Ns_ExprConstrYeqC::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrYeqC::postConstraint(bool positively) const
 {
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarY.remove(NsMINUS_INF, C-1/*,        0*/);
-                VarY.remove(C+1,         NsPLUS_INF/*, 0*/);
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarY.remove(NsMINUS_INF, C - 1);
+                VarY.remove(C + 1, NsPLUS_INF);
         } else {
-                if (VarY.contains( C ))
-                        VarY.remove( C );
+                if (VarY.contains(C))
+                        VarY.remove(C);
         }
-        return  0;                                       // unary constraint
+        return 0;  // unary constraint
 }
 
-void
-Ns_ExprConstrYeqC::postC (NsIntVar& VarX, bool positively)  const
+void Ns_ExprConstrYeqC::postC(NsIntVar& VarX, bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = NsIntVar(VarY.manager(), (VarY.min()==C && VarY.max()==C), VarY.contains(C));
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = NsIntVar(VarY.manager(),
+                                (VarY.min() == C && VarY.max() == C),
+                                VarY.contains(C));
                 newConstr = new Ns_ConstrMetaXeqYeqC(&VarX, &VarY, C);
         } else {
-                VarX = NsIntVar(VarY.manager(), !VarY.contains(C), (VarY.min()!=C || VarY.max()!=C));
+                VarX = NsIntVar(VarY.manager(), !VarY.contains(C),
+                                (VarY.min() != C || VarY.max() != C));
                 newConstr = new Ns_ConstrMetaXeqYneqC(&VarX, &VarY, C);
         }
         exprConstrYopZ_post_constr(newConstr, VarX, VarY);
 }
 
-NsIntVar&
-Ns_ExprConstrYeqC::postC (bool positively)  const
+NsIntVar& Ns_ExprConstrYeqC::postC(bool positively) const
 {
-        NsIntVar  *VarX;
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = new NsIntVar(VarY.manager(), (VarY.min()==C && VarY.max()==C), VarY.contains(C));
+        NsIntVar *VarX;
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = new NsIntVar(VarY.manager(),
+                                    (VarY.min() == C && VarY.max() == C),
+                                    VarY.contains(C));
                 newConstr = new Ns_ConstrMetaXeqYeqC(VarX, &VarY, C);
         } else {
-                VarX = new NsIntVar(VarY.manager(), !VarY.contains(C), (VarY.min()!=C || VarY.max()!=C));
+                VarX = new NsIntVar(VarY.manager(), !VarY.contains(C),
+                                    (VarY.min() != C || VarY.max() != C));
                 newConstr = new Ns_ConstrMetaXeqYneqC(VarX, &VarY, C);
         }
         exprConstrYopZ_post_constr(newConstr, *VarX, VarY);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-Ns_Constraint *
-Ns_ExprConstrYlessthanZ::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrYlessthanZ::postConstraint(bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
                 newConstr = new Ns_ConstrXlessthanY(&VarY, &VarZ);
         } else {
                 newConstr = new Ns_ConstrXlesseqthanY(&VarZ, &VarY);
         }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
-        return  newConstr;
+        return newConstr;
 }
 
-void
-Ns_ExprConstrYlessthanZ::postC (NsIntVar& VarX, bool positively)  const
+void Ns_ExprConstrYlessthanZ::postC(NsIntVar& VarX, bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = NsIntVar(VarY.manager(), VarY.max() < VarZ.min(), VarY.min() < VarZ.max());
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = NsIntVar(VarY.manager(), VarY.max() < VarZ.min(),
+                                VarY.min() < VarZ.max());
                 newConstr = new Ns_ConstrMetaXeqYlessthanZ(&VarX, &VarY, &VarZ);
         } else {
-                VarX = NsIntVar(VarY.manager(), VarZ.max() <= VarY.min(), VarZ.min() <= VarY.max());
-                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(&VarX, &VarZ, &VarY);
+                VarX = NsIntVar(VarY.manager(), VarZ.max() <= VarY.min(),
+                                VarZ.min() <= VarY.max());
+                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(&VarX, &VarZ,
+                                                             &VarY);
         }
         exprConstrYopZ_post_constr(newConstr, VarX, VarY, VarZ);
 }
 
-NsIntVar&
-Ns_ExprConstrYlessthanZ::postC (bool positively)  const
+NsIntVar& Ns_ExprConstrYlessthanZ::postC(bool positively) const
 {
-        NsIntVar  *VarX;
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = new NsIntVar(VarY.manager(), VarY.max() < VarZ.min(), VarY.min() < VarZ.max());
+        NsIntVar *VarX;
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = new NsIntVar(VarY.manager(), VarY.max() < VarZ.min(),
+                                    VarY.min() < VarZ.max());
                 newConstr = new Ns_ConstrMetaXeqYlessthanZ(VarX, &VarY, &VarZ);
         } else {
-                VarX = new NsIntVar(VarY.manager(), VarZ.max() <= VarY.min(), VarZ.min() <= VarY.max());
-                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(VarX, &VarZ, &VarY);
+                VarX = new NsIntVar(VarY.manager(), VarZ.max() <= VarY.min(),
+                                    VarZ.min() <= VarY.max());
+                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(VarX, &VarZ,
+                                                             &VarY);
         }
         exprConstrYopZ_post_constr(newConstr, *VarX, VarY, VarZ);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-Ns_Constraint *
-Ns_ExprConstrYlesseqthanZ::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrYlesseqthanZ::postConstraint(bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively)
                 newConstr = new Ns_ConstrXlesseqthanY(&VarY, &VarZ);
-        } else {
+        else
                 newConstr = new Ns_ConstrXlessthanY(&VarZ, &VarY);
-        }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
-        return  newConstr;
+        return newConstr;
 }
 
-void
-Ns_ExprConstrYlesseqthanZ::postC (NsIntVar& VarX, bool positively)  const
+void Ns_ExprConstrYlesseqthanZ::postC(NsIntVar& VarX, bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = NsIntVar(VarY.manager(), VarY.max() <= VarZ.min(), VarY.min() <= VarZ.max());
-                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(&VarX, &VarY, &VarZ);
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = NsIntVar(VarY.manager(), VarY.max() <= VarZ.min(),
+                                VarY.min() <= VarZ.max());
+                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(&VarX, &VarY,
+                                                             &VarZ);
         } else {
-                VarX = NsIntVar(VarY.manager(), VarZ.max() < VarY.min(), VarZ.min() < VarY.max());
+                VarX = NsIntVar(VarY.manager(), VarZ.max() < VarY.min(),
+                                VarZ.min() < VarY.max());
                 newConstr = new Ns_ConstrMetaXeqYlessthanZ(&VarX, &VarZ, &VarY);
         }
         exprConstrYopZ_post_constr(newConstr, VarX, VarY, VarZ);
 }
 
-NsIntVar&
-Ns_ExprConstrYlesseqthanZ::postC (bool positively)  const
+NsIntVar& Ns_ExprConstrYlesseqthanZ::postC(bool positively) const
 {
-        NsIntVar  *VarX;
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = new NsIntVar(VarY.manager(), VarY.max() <= VarZ.min(), VarY.min() <= VarZ.max());
-                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(VarX, &VarY, &VarZ);
+        NsIntVar *VarX;
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = new NsIntVar(VarY.manager(), VarY.max() <= VarZ.min(),
+                                    VarY.min() <= VarZ.max());
+                newConstr = new Ns_ConstrMetaXeqYlesseqthanZ(VarX, &VarY,
+                                                             &VarZ);
         } else {
-                VarX = new NsIntVar(VarY.manager(), VarZ.max() < VarY.min(), VarZ.min() < VarY.max());
+                VarX = new NsIntVar(VarY.manager(), VarZ.max() < VarY.min(),
+                                    VarZ.min() < VarY.max());
                 newConstr = new Ns_ConstrMetaXeqYlessthanZ(VarX, &VarZ, &VarY);
         }
         exprConstrYopZ_post_constr(newConstr, *VarX, VarY, VarZ);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-Ns_Constraint *
-Ns_ExprConstrYeqZ::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrYeqZ::postConstraint(bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
                 newConstr = new Ns_ConstrXeqY(&VarY, &VarZ);
         } else {
                 newConstr = new Ns_ConstrXneqY(&VarY, &VarZ);
         }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
-        return  newConstr;
+        return newConstr;
 }
 
-void
-Ns_ExprConstrYeqZ::postC (NsIntVar& VarX, bool positively)  const
+void Ns_ExprConstrYeqZ::postC(NsIntVar& VarX, bool positively) const
 {
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = NsIntVar(VarY.manager(), VarY.max()==VarZ.min() && VarY.min()==VarZ.max(),
-                                !intersectionEmpty(&VarY, &VarZ));
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = NsIntVar(VarY.manager(),
+                        (VarY.max() == VarZ.min() && VarY.min() == VarZ.max()),
+                        !intersectionEmpty(&VarY, &VarZ));
                 newConstr = new Ns_ConstrMetaXeqYeqZ(&VarX, &VarY, &VarZ, true);
         } else {
                 VarX = NsIntVar(VarY.manager(), intersectionEmpty(&VarY, &VarZ),
-                                !(VarY.max()==VarZ.min() && VarY.min()==VarZ.max()));
-                newConstr = new Ns_ConstrMetaXeqYeqZ(&VarX, &VarY, &VarZ, false);
+                       !(VarY.max() == VarZ.min() && VarY.min() == VarZ.max()));
+                newConstr = new Ns_ConstrMetaXeqYeqZ(&VarX, &VarY, &VarZ,
+                                                     false);
         }
         exprConstrYopZ_post_constr(newConstr, VarX, VarY, VarZ);
 }
 
-NsIntVar&
-Ns_ExprConstrYeqZ::postC (bool positively)  const
+NsIntVar& Ns_ExprConstrYeqZ::postC(bool positively) const
 {
-        NsIntVar  *VarX;
-        Ns_Constraint  *newConstr;
-        if ( !isPositive )
-                positively  =  !positively;
-        if ( positively ) {
-                VarX = new NsIntVar(VarY.manager(), VarY.max()==VarZ.min() && VarY.min()==VarZ.max(),
-                                    !intersectionEmpty(&VarY, &VarZ));
+        NsIntVar *VarX;
+        Ns_Constraint *newConstr;
+        if (!isPositive)
+                positively = !positively;
+        if (positively) {
+                VarX = new NsIntVar(VarY.manager(),
+                        VarY.max() == VarZ.min() && VarY.min() == VarZ.max(),
+                        !intersectionEmpty(&VarY, &VarZ));
                 newConstr = new Ns_ConstrMetaXeqYeqZ(VarX, &VarY, &VarZ, true);
         } else {
-                VarX = new NsIntVar(VarY.manager(), intersectionEmpty(&VarY, &VarZ),
-                                    !(VarY.max()==VarZ.min() && VarY.min()==VarZ.max()));
+                VarX = new NsIntVar(VarY.manager(),
+                       intersectionEmpty(&VarY, &VarZ),
+                       !(VarY.max() == VarZ.min() && VarY.min() == VarZ.max()));
                 newConstr = new Ns_ConstrMetaXeqYeqZ(VarX, &VarY, &VarZ, false);
         }
         exprConstrYopZ_post_constr(newConstr, *VarX, VarY, VarZ);
-        VarX->manager().recordIntermediateVar( VarX );
-        return  *VarX;
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
 }
 
-Ns_Constraint *
-Ns_ExprConstrAllDiff::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrAllDiff::postConstraint(bool positively) const
 {
-        assert_Ns(positively,  "Ns_ExprConstrAllDiff::postConstraint: `positively'==false");
-        if (VarArr.size() <= Capacity  ||  ( Capacity==0 && VarArr.size() <= 1 ) )
-                return  0;                               // no constraint
-        Ns_Constraint  *newConstr;
-        if ( Capacity  ==  0 )
-                // default case
-                newConstr = new Ns_ConstrAllDiff(&VarArr);
+        assert_Ns(positively,
+                  "Ns_ExprConstrAllDiff::postConstraint: 'positively'==false");
+        if (VarArr.size() <= Capacity || (Capacity == 0 && VarArr.size() <= 1))
+                return 0;  // no constraint
+        Ns_Constraint *newConstr;
+        if (Capacity == 0)
+                newConstr = new Ns_ConstrAllDiff(&VarArr);  // default case
         else
                 newConstr = new Ns_ConstrAllDiffStrong(&VarArr, Capacity);
-        for (NsIntVarArray::iterator X = VarArr.begin();   X != VarArr.end();   ++X)
+        for (NsIntVarArray::iterator X = VarArr.begin(); X != VarArr.end(); ++X)
                 X->addConstraint(newConstr);
         VarArr.addConstraint();
-        return  newConstr;
+        return newConstr;
 }
 
-Ns_Constraint *
-Ns_ExprConstrCount::postConstraint (bool positively)  const
+Ns_Constraint* Ns_ExprConstrCount::postConstraint(bool positively) const
 {
-        assert_Ns(positively,  "Ns_ExprConstrCount::postConstraint: `positively'==false");
-        Ns_Constraint  *newConstr = new Ns_ConstrCount(&VarArr, Values,
+        assert_Ns(positively,
+                  "Ns_ExprConstrCount::postConstraint: 'positively'==false");
+        Ns_Constraint *newConstr = new Ns_ConstrCount(&VarArr, Values,
                         Occurrences, SplitPositions, Split, Dwin);
-        for (NsIntVarArray::iterator X = VarArr.begin();   X != VarArr.end();   ++X)
+        for (NsIntVarArray::iterator X = VarArr.begin(); X != VarArr.end(); ++X)
                 X->addConstraint(newConstr);
         VarArr.addConstraint();
-        return  newConstr;
+        return newConstr;
 }
