@@ -668,8 +668,8 @@ bool NsProblemManager::nextSolution(void)
                 static_cast<unsigned long>(clock() - startTime) <=
                 timeLim * static_cast<unsigned long>(CLOCKS_PER_SEC))) {
                 if (timeSplitLim != 0 && getCurrentNodeNum() > startNodeId &&
-                     clock() - startSplitTime + searchNodes.timeSimulated >=
-                     timeSplitLim) {
+                    clock() - startSplitTime + searchNodes.timeSimulated >=
+                    timeSplitLim) {
                         startNodeId = getCurrentNodeNum();
                         startSplitTime = clock();
                         searchNodes.timeSimulated = 0;
@@ -686,9 +686,9 @@ bool NsProblemManager::nextSolution(void)
                         popped_a_goal = true;
                 } else {
                         assert_Ns(searchNodes.top().delayedGoal !=
-                                   searchNodes.gend(),
-                                   "NsProblemManager::nextSolution: "
-                                   "No goal to execute");
+                                  searchNodes.gend(),
+                                  "NsProblemManager::nextSolution: "
+                                  "No goal to execute");
                         CurrGoal = *searchNodes.top().delayedGoal;
                         ++searchNodes.top().delayedGoal;
                 }
@@ -703,7 +703,7 @@ bool NsProblemManager::nextSolution(void)
                                 delete CurrGoal;
                 } else if (CurrGoal->isGoalOR()) {
                         if (timeSplitLim != 0 &&
-                             searchNodes.overrideNextLevel()) {
+                            searchNodes.overrideNextLevel()) {
                                 double timeSim = searchNodes.nextMeanTime();
                                 double descSim = searchNodes.nextMeanDesc();
                                 searchNodes.timeSimulated += timeSim;
@@ -743,10 +743,10 @@ bool NsProblemManager::nextSolution(void)
                                    searchNodes.gend()) {
                                 if (vObjective != 0) {
                                         assert_Ns(bestObjective >
-                                                   vObjective->max(),
-                                                   "NsProblemManager::"
-                                                   "nextSolution: Wrong "
-                                                   "objective value");
+                                                  vObjective->max(),
+                                                  "NsProblemManager::"
+                                                  "nextSolution: Wrong "
+                                                  "objective value");
                                         bestObjective = vObjective->max();
                                         // We have taken care about the rare
                                         // and odd case where the domain of
