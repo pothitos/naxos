@@ -63,7 +63,7 @@ void Ns_QueueItem::add(const NsInt removedVal,
 }
 
 bool NsIntVar::removeRange(const NsInt first, const NsInt last,
-                            const Ns_Constraint *constr, bool& modified)
+                           const Ns_Constraint *constr, bool& modified)
 {
         bool rangeEmpty = true;
         // Check for bounds modifications.

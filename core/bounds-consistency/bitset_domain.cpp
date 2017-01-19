@@ -288,7 +288,7 @@ bool Ns_BitSet::containsRange(const NsInt rangeMin, const NsInt rangeMax) const
                 if (machw[mw] == ~static_cast<size_t>(0u)) {
                         // Speedup by means of comparing the whole word
                         if (MW_BITS - nbit % MW_BITS >
-                             static_cast<NsUInt>(rangeMax - val)) {
+                            static_cast<NsUInt>(rangeMax - val)) {
                                 break;
                         }
                         val += MW_BITS - nbit % MW_BITS - 1;
