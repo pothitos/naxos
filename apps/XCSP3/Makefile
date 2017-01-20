@@ -1,3 +1,6 @@
+# Parser's Directory
+PARSER = XCSP3-CPP-Parser
+
 # Naxos Directory
 NAXOS = ../../core/bounds-consistency
 
@@ -24,8 +27,8 @@ $(PR_OBJECTS): %.o: %.cpp $(HEADERS)
 $(PROGRAMS): %: $(OBJECTS) %.o
 	$(LD) $(LDFLAGS) $^ -o $@
 
-PARSER_SAMPLE = XCSP3-CPP-Parser/samples
-PARSER_INSTANCES = XCSP3-CPP-Parser/instances
+PARSER_SAMPLE = $(PARSER)/samples
+PARSER_INSTANCES = $(PARSER)/instances
 .PHONY: parser
 parser:
 	# Execute the internal XCSP3 Parser's Makefile
