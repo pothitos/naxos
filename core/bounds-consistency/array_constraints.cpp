@@ -1,4 +1,4 @@
-/// @file Algorithms that impose (global) constraints over arrays of constrained variables
+/// @file Algorithms that impose global constraints over arrays of variables
 /// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
@@ -9,13 +9,13 @@
 using namespace naxos;
 using namespace std;
 
-void array_min_minmax (const NsIntVarArray *VarArr, NsInt& min, NsInt& minmax)
+void array_min_minmax(const NsIntVarArray *VarArr, NsInt& min, NsInt& minmax)
 {
-        NsIntVarArray::const_iterator  V = VarArr->begin();
+        NsIntVarArray::const_iterator V = VarArr->begin();
         min = V->min();
         minmax = V->max();
         ++V;
-        for ( ;   V != VarArr->end();   ++V) {
+        for (/*VOID*/; V != VarArr->end(); ++V) {
                 if (V->min() < min)
                         min = V->min();
                 if (V->max() < minmax)
@@ -23,14 +23,13 @@ void array_min_minmax (const NsIntVarArray *VarArr, NsInt& min, NsInt& minmax)
         }
 }
 
-void
-array_maxmin_max (const NsIntVarArray *VarArr, NsInt& maxmin, NsInt& max)
+void array_maxmin_max(const NsIntVarArray *VarArr, NsInt& maxmin, NsInt& max)
 {
-        NsIntVarArray::const_iterator  V = VarArr->begin();
+        NsIntVarArray::const_iterator V = VarArr->begin();
         maxmin = V->min();
         max = V->max();
         ++V;
-        for ( ;   V != VarArr->end();   ++V) {
+        for (/*VOID*/; V != VarArr->end(); ++V) {
                 if (V->min() > maxmin)
                         maxmin = V->min();
                 if (V->max() > max)
@@ -38,43 +37,46 @@ array_maxmin_max (const NsIntVarArray *VarArr, NsInt& maxmin, NsInt& max)
         }
 }
 
-void
-array_sum_min_max (const NsIntVarArray *VarArr, const NsIndex start, const NsIndex length,
-                   NsInt& sumMin, NsInt& sumMax)
+void array_sum_min_max(const NsIntVarArray *VarArr, const NsIndex start,
+                       const NsIndex length, NsInt& sumMin, NsInt& sumMax)
 {
         sumMin = sumMax = 0;
-        for (NsIndex  i=start;   i < start+length;   ++i) {
-                const NsIntVar&  V = (*VarArr)[i];
+        for (NsIndex i = start; i < start + length; ++i) {
+                const NsIntVar& V = (*VarArr)[i];
                 sumMin += V.min();
                 sumMax += V.max();
         }
-        //for (NsIntVarArray::iterator V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //      sumMin += V->min();
-        //      sumMax += V->max();
-        //}
 }
 
-Ns_ConstrXeqMin::Ns_ConstrXeqMin (NsIntVar *X, NsIntVarArray *VarArr_init)
-        : VarX(X), VarArr(VarArr_init)
+Ns_ConstrXeqMin::Ns_ConstrXeqMin(NsIntVar *X, NsIntVarArray *VarArr_init)
+  : VarX(X), VarArr(VarArr_init)
 {
-        revisionType  =  BIDIRECTIONAL_CONSISTENCY;
-        assert_Ns( !VarArr->empty() ,
-                   "Ns_ConstrXeqMin::Ns_ConstrXeqMin: Empty `VarArr'");
-        NsProblemManager&  pm = VarX->manager();
-        for (NsIntVarArray::iterator  V = VarArr->begin();   V != VarArr->end();   ++V) {
-                assert_Ns( &pm == &V->manager(),  "Ns_ConstrXeqMin::Ns_ConstrXeqMin: All the variables of a constraint must belong to the same NsProblemManager");
+        revisionType = BIDIRECTIONAL_CONSISTENCY;
+        assert_Ns(!VarArr->empty(),
+                  "Ns_ConstrXeqMin::Ns_ConstrXeqMin: Empty 'VarArr'");
+        NsProblemManager& pm = VarX->manager();
+        for (NsIntVarArray::iterator V = VarArr->begin(); V != VarArr->end();
+             ++V) {
+                assert_Ns(&pm == &V->manager(),
+                          "Ns_ConstrXeqMin::Ns_ConstrXeqMin: All the variables "
+                          "of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 }
 
-Ns_ConstrXeqMax::Ns_ConstrXeqMax (NsIntVar *X, NsIntVarArray *VarArr_init)
-        : VarX(X), VarArr(VarArr_init)
+Ns_ConstrXeqMax::Ns_ConstrXeqMax(NsIntVar *X, NsIntVarArray *VarArr_init)
+  : VarX(X), VarArr(VarArr_init)
 {
-        revisionType  =  BIDIRECTIONAL_CONSISTENCY;
-        assert_Ns( !VarArr->empty() ,
-                   "Ns_ConstrXeqMax::Ns_ConstrXeqMax: Empty `VarArr'");
-        NsProblemManager&  pm = VarX->manager();
-        for (NsIntVarArray::iterator  V = VarArr->begin();   V != VarArr->end();   ++V) {
-                assert_Ns( &pm == &V->manager(),  "Ns_ConstrXeqMax::Ns_ConstrXeqMax: All the variables of a constraint must belong to the same NsProblemManager");
+        revisionType = BIDIRECTIONAL_CONSISTENCY;
+        assert_Ns(!VarArr->empty(),
+                  "Ns_ConstrXeqMax::Ns_ConstrXeqMax: Empty 'VarArr'");
+        NsProblemManager& pm = VarX->manager();
+        for (NsIntVarArray::iterator V = VarArr->begin(); V != VarArr->end();
+             ++V) {
+                assert_Ns(&pm == &V->manager(),
+                          "Ns_ConstrXeqMax::Ns_ConstrXeqMax: All the variables "
+                          "of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 }
 
