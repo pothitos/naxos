@@ -8,8 +8,10 @@ NAXOS = ../../core/bounds-consistency
 CXX = g++
 WARNINGS = -pedantic -Wall -W -Wshadow -Werror
 CXXFLAGS = $(WARNINGS) -std=c++0x -O2 $(COVERAGE)
+PARSER_CXXFLAGS = -std=c++11 $(shell xml2-config --cflags) -I$(PARSER)/include
 LD = $(CXX)
 LDFLAGS = -s $(COVERAGE)
+PARSER_LDFLAGS = $(shell xml2-config --libs)
 
 # Filenames
 PROGRAMS = naxos-xcsp3
@@ -18,14 +20,20 @@ HEADERS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
 SOURCES = $(addprefix $(NAXOS)/, array_constraints.cpp bitset_domain.cpp expressions.cpp intvar.cpp problemmanager.cpp var_constraints.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
+# Parser's Filenames
+PARSER_SOURCES = $(wildcard $(PARSER)/src/*.cc)
+PARSER_OBJECTS = $(PARSER_SOURCES:.cc=.o)
+
 .PHONY: all
 all: $(PROGRAMS) parser
 $(OBJECTS): %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(PARSER_OBJECTS): %.o: %.cc
+	$(CXX) $(PARSER_CXXFLAGS) -c $< -o $@
 $(PR_OBJECTS): %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -I$(NAXOS) -c $<
-$(PROGRAMS): %: $(OBJECTS) %.o
-	$(LD) $(LDFLAGS) $^ -o $@
+$(PROGRAMS): %: $(OBJECTS) %.o $(PARSER_OBJECTS)
+	$(LD) $(LDFLAGS) $^ -o $@ $(PARSER_LDFLAGS)
 
 PARSER_SAMPLE = $(PARSER)/samples
 PARSER_INSTANCES = $(PARSER)/instances
@@ -36,7 +44,7 @@ parser:
 
 .PHONY: clean
 clean:
-	$(RM) $(PROGRAMS) $(PR_OBJECTS)
+	$(RM) $(PARSER_OBJECTS) $(PROGRAMS) $(PR_OBJECTS)
 
 .PHONY: test
 test:
