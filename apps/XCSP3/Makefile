@@ -25,7 +25,7 @@ PARSER_SOURCES = $(wildcard $(PARSER)/src/*.cc)
 PARSER_OBJECTS = $(PARSER_SOURCES:.cc=.o)
 
 .PHONY: all
-all: $(PROGRAMS)
+all: $(PROGRAMS) parser
 $(OBJECTS): %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 $(PARSER_OBJECTS): %.o: %.cc
