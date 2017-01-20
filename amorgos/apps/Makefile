@@ -40,7 +40,7 @@ $(PROGRAMS):   %:   $(OBJECTS) %.o
 
 .PHONY: clean
 clean:
-	$(RM)  $(PROGRAMS) $(PR_OBJECTS)
+	$(RM)  $(PROGRAMS) $(PR_OBJECTS) $(OBJECTS)
 
 .PHONY: test
 test: ;

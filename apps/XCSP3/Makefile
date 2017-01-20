@@ -44,7 +44,7 @@ parser:
 
 .PHONY: clean
 clean:
-	$(RM) $(PARSER_OBJECTS) $(PROGRAMS) $(PR_OBJECTS)
+	$(RM) $(PROGRAMS) $(PR_OBJECTS) $(OBJECTS) $(PARSER_OBJECTS)
 
 .PHONY: test
 test:
