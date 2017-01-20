@@ -93,9 +93,6 @@ matrix:
 
     - env: DIRECTORY="amorgos/apps/"
 
-  allow_failures:
-    - env: DIRECTORY="apps/XCSP3/"
-
 script:
     - cd $DIRECTORY
     - make -j
