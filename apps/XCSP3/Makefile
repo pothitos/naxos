@@ -40,7 +40,7 @@ PARSER_INSTANCES = $(PARSER)/instances
 .PHONY: parser
 parser:
 	# Execute the internal XCSP3 Parser's Makefile
-	$(MAKE) -C $(PARSER_SAMPLE)
+	$(MAKE) -C $(PARSER_SAMPLE) 2> /dev/null
 
 .PHONY: clean
 clean:
