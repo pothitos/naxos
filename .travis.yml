@@ -13,6 +13,8 @@ env:
 matrix:
   include:
     - env: DIRECTORY="apps/"
+      before_script:
+        - cmake .
 
     - env: DIRECTORY="apps/XCSP3/"
       addons:

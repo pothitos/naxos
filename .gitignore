@@ -1,7 +1,21 @@
-# Compiled Object files
+# Compiled object files
 *.o
 
-# Naxos Executables
+# Compiled Static libraries
+*.a
+
+# CMake intermediate Files
+CMakeCache.txt
+CMakeFiles
+#CMakeScripts
+Makefile
+cmake_install.cmake
+#install_manifest.txt
+CTestTestfile.cmake
+DartConfiguration.tcl
+Testing
+
+# Naxos executables
 *.AC
 celar_solver
 crew_scheduling
@@ -14,7 +28,7 @@ send_more_money
 tsp
 validator
 
-# Amorgos Executables
+# Amorgos executables
 cryptmult
 golfer
 graphcolor
