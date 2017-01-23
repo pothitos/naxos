@@ -94,6 +94,10 @@ matrix:
            METHOD="ONESAMP"
 
     - env: DIRECTORY="apps/hadoop/"
+      before_script:
+        - cd $DIRECTORY
+        - cmake .
+        - cd -
 
     - env: DIRECTORY="amorgos/apps/"
 
