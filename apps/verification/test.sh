@@ -1,6 +1,6 @@
 #! /bin/sh
 set -ev
-MEM_CHECK="valgrind --leak-check=full --error-exitcode=1"
+MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
 # Validate 3 Queens empty set of solutions
 $MEM_CHECK ./nqueens 3 > solutions.txt
 sort solutions.txt | cmp /dev/null

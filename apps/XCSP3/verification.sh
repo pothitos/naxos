@@ -13,5 +13,5 @@ test $SLOC -lt 8000
 # Temporarily disable the maximum line width test
 ! grep ".\{161\}" $SOLVER_FILES || true
 # Check for memory leaks
-MEM_CHECK="valgrind --leak-check=full --error-exitcode=1"
+MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
 $MEM_CHECK ./naxos-xcsp3 > /dev/null
