@@ -112,7 +112,7 @@ matrix:
 script:
     - cd $DIRECTORY
     - make -j
-    - test -e CMakeLists.txt && cmake -V || make test
+    - test -e CMakeLists.txt && ctest -V || make test
     - cd -
 
 after_success:
