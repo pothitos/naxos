@@ -27,6 +27,9 @@ matrix:
             - g++-4.9
       before_script:
         - sed -i 's/g++/g++-4.9/' $DIRECTORY/{Makefile,XCSP3-CPP-Parser/samples/makefile}
+        - cd $DIRECTORY
+        - cmake .
+        - cd -
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
