@@ -26,7 +26,7 @@ matrix:
           packages:
             - g++-4.9
       before_script:
-        - sed -i 's/g++/g++-4.9/' $DIRECTORY/{Makefile,XCSP3-CPP-Parser/samples/makefile}
+        - sed -i 's/g++/g++-4.9/' $DIRECTORY/Makefile
         - cd $DIRECTORY
         - cmake .
         - cd -
