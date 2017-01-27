@@ -17,10 +17,6 @@ matrix:
         apt:
           packages:
             - valgrind
-      before_script:
-        - cd $DIRECTORY
-        - cmake .
-        - cd -
 
     - env: DIRECTORY="apps/XCSP3/"
       addons:
@@ -31,10 +27,7 @@ matrix:
             - g++-4.9
             - valgrind
       before_script:
-        - cd $DIRECTORY
         - export CXX=g++-4.9
-        - cmake .
-        - cd -
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
@@ -102,15 +95,12 @@ matrix:
            METHOD="ONESAMP"
 
     - env: DIRECTORY="apps/hadoop/"
-      before_script:
-        - cd $DIRECTORY
-        - cmake .
-        - cd -
 
     - env: DIRECTORY="amorgos/apps/"
 
 script:
     - cd $DIRECTORY
+    - test -e CMakeLists.txt && cmake . || true
     - make -j
     - test -e CMakeLists.txt && ctest -V || make test
     - cd -
