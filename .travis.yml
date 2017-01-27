@@ -13,6 +13,10 @@ env:
 matrix:
   include:
     - env: DIRECTORY="apps/"
+      addons:
+        apt:
+          packages:
+            - valgrind
       before_script:
         - cd $DIRECTORY
         - cmake .
@@ -108,7 +112,7 @@ matrix:
 script:
     - cd $DIRECTORY
     - make -j
-    - make test
+    - [ -e CMakeLists.txt ] && cmake -V || make test
     - cd -
 
 after_success:
