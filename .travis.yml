@@ -13,10 +13,6 @@ env:
 matrix:
   include:
     - env: DIRECTORY="apps/"
-      addons:
-        apt:
-          packages:
-            - valgrind
 
     - env: DIRECTORY="apps/XCSP3/"
       addons:
