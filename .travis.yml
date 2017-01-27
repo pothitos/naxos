@@ -26,9 +26,8 @@ matrix:
           packages:
             - g++-4.9
       before_script:
-        - sed -i 's/g++/g++-4.9/' $DIRECTORY/Makefile
         - cd $DIRECTORY
-        - cmake .
+        - cmake -DCXX=g++-4.9 .
         - cd -
 
     - env: DIRECTORY="apps/ACvsBC/"
