@@ -38,6 +38,10 @@ matrix:
 
     - env: DIRECTORY="apps/CELAR/"
            DATASET="SCEN06"
+      addons:
+        apt:
+          packages:
+            - valgrind
     - env: DIRECTORY="apps/CELAR/"
            DATASET="SCEN07"
     - env: DIRECTORY="apps/CELAR/"
