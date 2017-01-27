@@ -11,7 +11,7 @@ sort solutions.txt | cmp verification/nqueens_4_sorted_solutions.txt
 $MEM_CHECK ./nqueens 8 > solutions.txt
 sort solutions.txt | cmp verification/nqueens_8_sorted_solutions.txt
 # Validate 12 Queens solutions
-$MEM_CHECK ./nqueens 12 > solutions.txt
+./nqueens 12 > solutions.txt
 sort solutions.txt | cmp verification/nqueens_12_sorted_solutions.txt
 # Validate SEND + MORE = MONEY solution
 $MEM_CHECK ./send_more_money > solutions.txt
