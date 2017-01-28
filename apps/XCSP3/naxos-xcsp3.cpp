@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
 {
         try {
                 int *n = new int;
-                *n = 0;
                 int N = (argc > 1) ? atoi(argv[1]) : 8;
                 NsProblemManager pm;
                 NsIntVarArray Var, VarPlus, VarMinus;
