@@ -10,7 +10,6 @@ using namespace std;
 int main(int argc, char *argv[])
 {
         try {
-                int *n = new int;
                 int N = (argc > 1) ? atoi(argv[1]) : 8;
                 NsProblemManager pm;
                 NsIntVarArray Var, VarPlus, VarMinus;
