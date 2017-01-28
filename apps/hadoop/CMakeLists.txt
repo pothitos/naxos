@@ -10,5 +10,3 @@ target_link_libraries(nqueens naxos)
 
 add_executable(numpart numpart.cpp)
 target_link_libraries(numpart naxos)
-
-enable_testing()
