@@ -54,9 +54,17 @@ matrix:
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp01.ctt"
            METHOD="DFS"
+      addons:
+        apt:
+          packages:
+            - valgrind
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp02.ctt"
            METHOD="LDS"
+      addons:
+        apt:
+          packages:
+            - valgrind
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp03.ctt"
            METHOD="IBROAD"
@@ -66,6 +74,10 @@ matrix:
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp05.ctt"
            METHOD="DBS"
+      addons:
+        apt:
+          packages:
+            - valgrind
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp06.ctt"
            METHOD="CREDIT 100"

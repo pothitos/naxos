@@ -3,6 +3,11 @@ set -ev
 # Set default values, if variables are unset
 METHOD=${METHOD-"DBS"}
 DATASET=${DATASET-"comp01.ctt"}
+# If Valgrind is installed, do memory check too
+if command -v valgrind
+then
+    MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
+fi
 # Calculate the available time for searching a solution
 cd datasets
 AVAILABLE_SECONDS=$(yes | ./benchmark_my_linux_machine | \
@@ -21,7 +26,7 @@ else
     sed -i "s/^\(metaSearchMethod\) .*/\1 $METHOD_LOCAL_SEARCH/" optionsFile
 fi
 # Execute the curriculum based course timetabling solver
-./itc_solver datasets/$DATASET solution.txt -options optionsFile > progress.txt
+$MEM_CHECK ./itc_solver datasets/$DATASET solution.txt -options optionsFile > progress.txt
 cat progress.txt
 # Restore the original file
 mv optionsFile.bak optionsFile
