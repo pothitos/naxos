@@ -6,7 +6,7 @@ using namespace std;
 using namespace naxos;
 
 /// Prints the domain to standard output
-ostream& naxos::operator << (ostream& os, const Ns_BitSet& domain)
+ostream& naxos::operator<<(ostream& os, const Ns_BitSet& domain)
 {
         os << "[";
         NsInt val, gap;
@@ -27,7 +27,7 @@ ostream& naxos::operator << (ostream& os, const Ns_BitSet& domain)
         return os;
 }
 
-std::ostream& naxos::operator << (std::ostream& os, const NsIntVarArray& VarArr)
+std::ostream& naxos::operator<<(std::ostream& os, const NsIntVarArray& VarArr)
 {
         os << "[";
         NsIntVarArray::const_iterator V = VarArr.begin();
@@ -48,22 +48,22 @@ void NsIntVar::removeAll(void)
 }
 
 /// A bound (min or max) of the domain has been changed by the constraint constr
-void Ns_QueueItem::boundChangedBy(const Ns_Constraint *constr)
+void Ns_QueueItem::boundChangedBy(const Ns_Constraint* constr)
 {
-        removedBoundRec.boundChangedBy(constr, varFired->manager().
-                                               numConstraintChecks());
+        removedBoundRec.boundChangedBy(
+            constr, varFired->manager().numConstraintChecks());
 }
 
 /// Adds the tuple (removedValue, constraintThatRemovedIt) of the removedValues
 void Ns_QueueItem::add(const NsInt removedVal,
-                       const Ns_Constraint *constrThatRemovedIt)
+                       const Ns_Constraint* constrThatRemovedIt)
 {
-        removedValues.push_back(RemovedValueRecord_t(removedVal,
-                                                     constrThatRemovedIt));
+        removedValues.push_back(
+            RemovedValueRecord_t(removedVal, constrThatRemovedIt));
 }
 
 bool NsIntVar::removeRange(const NsInt first, const NsInt last,
-                           const Ns_Constraint *constr, bool& modified)
+                           const Ns_Constraint* constr, bool& modified)
 {
         bool rangeEmpty = true;
         // Check for bounds modifications.
@@ -72,7 +72,7 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
                 rangeEmpty = false;
                 if (queueItem == 0) {
                         pm->getQueue().push(Ns_QueueItem(this));
-                        queueItem = & pm->getQueue().back();
+                        queueItem = &pm->getQueue().back();
                 }
                 queueItem->boundChangedBy(constr);
         }
@@ -85,16 +85,16 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
                 while ((newFirst = next(newFirst)) < newLast) {
                         rangeEmpty = false;
                         // Uncomment the following for AC-3:
-                        //if (queueItem == 0) {
+                        // if (queueItem == 0) {
                         //        pm->getQueue().push(Ns_QueueItem(this));
                         //        queueItem = &pm->getQueue().back();
                         //}
-                        //queueItem->boundChangedBy(constr);
+                        // queueItem->boundChangedBy(constr);
                         if (!storeRemovedValues())
                                 break;
                         if (queueItem == 0) {
                                 pm->getQueue().push(Ns_QueueItem(this));
-                                queueItem = & pm->getQueue().back();
+                                queueItem = &pm->getQueue().back();
                         }
                         queueItem->add(newFirst, constr);
                 }
@@ -110,7 +110,7 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
         return true;
 }
 
-void NsIntVar::addConstraint(Ns_Constraint *constr)
+void NsIntVar::addConstraint(Ns_Constraint* constr)
 {
         constraints.push_back(ConstraintAndFailure(constr));
         assert_Ns(constr->varsInvolvedIn() >= 1,
@@ -139,11 +139,11 @@ NsIntVar::NsIntVar(const Ns_Expression& expr)
         pm->addVar(this);
 }
 
-NsIntVar& NsIntVar::operator = (const Ns_Expression& expr)
+NsIntVar& NsIntVar::operator=(const Ns_Expression& expr)
 {
         assert_Ns(pm == 0 && constraints.empty() &&
-                  constraintNeedsRemovedValues == false &&
-                  arcsConnectedTo == 0 && queueItem == 0,
+                      constraintNeedsRemovedValues == false &&
+                      arcsConnectedTo == 0 && queueItem == 0,
                   "NsIntVar::operator=: Some constraints already imposed on "
                   "'*this'");
         expr.post(*this);
@@ -165,7 +165,7 @@ NsIntVarArray::NsIntVarArray(const Ns_ExpressionArray& expr)
         expr.post(*this);
 }
 
-NsIntVarArray& NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
+NsIntVarArray& NsIntVarArray::operator=(const Ns_ExpressionArray& expr)
 {
         assert_Ns(PointArray.empty() && !addedConstraint,
                   "NsIntVarArray::operator=: Some constraints already imposed "
@@ -179,7 +179,7 @@ void NsIntVarArray::push_front(const NsIntVar& Var)
         assert_Ns(!addedConstraint,
                   "NsIntVarArray::push_front: Cannot add another variable, "
                   "because a constraint has been already imposed on the array");
-        NsIntVar *NewVar = new NsIntVar(Var);
+        NsIntVar* NewVar = new NsIntVar(Var);
         PointArray.push_front(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
         NewVar->manager().removeLastVar();
@@ -199,7 +199,7 @@ void NsIntVarArray::push_back(const NsIntVar& Var)
         assert_Ns(!addedConstraint,
                   "NsIntVarArray::push_back: Cannot add another variable, "
                   "because a constraint has been already imposed on the array");
-        NsIntVar *NewVar = new NsIntVar(Var);
+        NsIntVar* NewVar = new NsIntVar(Var);
         PointArray.push_back(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
         NewVar->manager().removeLastVar();
