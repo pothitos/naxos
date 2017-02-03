@@ -47,8 +47,8 @@ Ns_BitSet::Ns_BitSet(NsProblemManager& pm_init, const NsInt minDom_init,
     nBits(correspondingBit(maxVal, minDom) + 1),
     setCount(nBits)
 {
-        assert_Ns(NsMINUS_INF < minDom_init &&
-                  minDom_init <= maxDom_init && maxDom_init < NsPLUS_INF,
+        assert_Ns(NsMINUS_INF < minDom_init && minDom_init <= maxDom_init &&
+                      maxDom_init < NsPLUS_INF,
                   "Ns_BitSet::Ns_BitSet: Domain out of range");
         // Make 'lastSaveId' dirty as the domain has not been saved
         lastSaveId.id = NsUPLUS_INF;
@@ -74,7 +74,7 @@ bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
                 rangeMin = minVal;
         if (rangeMax > maxVal)
                 rangeMax = maxVal;
-        if (machw.empty()) {  // Bounds Consistency
+        if (machw.empty()) { // Bounds Consistency
                 if (rangeMin <= minVal) {
                         setCount -= rangeMax + 1 - minVal;
                         minVal = rangeMax + 1;
@@ -87,14 +87,15 @@ bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
                         // Create the array 'machw'
                         minDom = minVal;
                         nBits = correspondingBit(maxVal, minDom) + 1;
-                        machw.resize((nBits-1)/MW_BITS + 1);
+                        machw.resize((nBits - 1) / MW_BITS + 1);
                         for (NsUInt i = 0; i < machw.size(); ++i)
                                 machw[i] = ~static_cast<size_t>(0u);
                         // Set the bits of the last machine word
                         if (nBits % MW_BITS != 0) {
-                                for (size_t bit = static_cast<size_t>(1) <<
-                                     (nBits % MW_BITS); bit != 0; bit <<= 1) {
-                                        machw[machw.size()-1] &= ~bit;
+                                for (size_t bit = static_cast<size_t>(1)
+                                                  << (nBits % MW_BITS);
+                                     bit != 0; bit <<= 1) {
+                                        machw[machw.size() - 1] &= ~bit;
                                 }
                         }
                         // Continue on resetting the value...
@@ -130,8 +131,8 @@ bool Ns_BitSet::removeRange(NsInt rangeMin, NsInt rangeMax)
                         if (val == maxVal)
                                 changedMaxVal = true;
                 } else {
-                        size_t mwbit = static_cast<size_t>(1) <<
-                                       (nbit % MW_BITS);
+                        size_t mwbit = static_cast<size_t>(1)
+                                       << (nbit % MW_BITS);
                         if (machw[mw] & mwbit) {
                                 machw[mw] &= ~mwbit;
                                 --setCount;
@@ -156,7 +157,7 @@ NsInt Ns_BitSet::previous(const NsInt val) const
         if (val > maxVal)
                 return maxVal;
         if (isContinuous(minVal, maxVal, setCount))
-                return (val - 1);  // Bounds Consistency
+                return (val - 1); // Bounds Consistency
         NsUInt nbit = correspondingBit(val, minDom) - 1;
         NsInt mw = nbit / MW_BITS;
         size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
@@ -179,7 +180,7 @@ NsInt Ns_BitSet::previous(const NsInt val) const
                         nbit -= MW_BITS;
                 } else {
                         for (mwbit = static_cast<size_t>(1) << (MW_BITS - 1);
-                             mwbit!=0; mwbit >>= 1) {
+                             mwbit != 0; mwbit >>= 1) {
                                 if (machw[mw] & mwbit)
                                         return (nbit + minDom);
                                 --nbit;
@@ -196,7 +197,7 @@ NsInt Ns_BitSet::next(const NsInt val) const
         if (val < minVal)
                 return minVal;
         if (isContinuous(minVal, maxVal, setCount))
-                return (val + 1);  // Bounds Consistency
+                return (val + 1); // Bounds Consistency
         NsUInt nbit = correspondingBit(val, minDom) + 1;
         NsUInt mw = nbit / MW_BITS;
         size_t mwbit = static_cast<size_t>(1) << (nbit % MW_BITS);
@@ -231,7 +232,7 @@ NsInt Ns_BitSet::next(const NsInt val) const
 NsInt Ns_BitSet::nextGap(const NsInt val) const
 {
         if (val >= maxVal - 1 ||
-            isContinuous(minVal, maxVal, setCount)) {  // Bounds Consistency
+            isContinuous(minVal, maxVal, setCount)) { // Bounds Consistency
                 return NsPLUS_INF;
         }
         NsUInt nbit;
@@ -248,7 +249,7 @@ NsInt Ns_BitSet::nextGap(const NsInt val) const
                 // Speedup by means of comparing the whole word
                 nbit = (mw + 1) * MW_BITS;
         } else {
-                for (/*VOID*/; mwbit!=0 && nbit <= maxbit; mwbit <<= 1) {
+                for (/*VOID*/; mwbit != 0 && nbit <= maxbit; mwbit <<= 1) {
                         if (!(machw[mw] & mwbit))
                                 return (nbit + minDom);
                         ++nbit;
@@ -260,7 +261,7 @@ NsInt Ns_BitSet::nextGap(const NsInt val) const
                         // Speedup by means of comparing the whole word
                         nbit += MW_BITS;
                 } else {
-                        for (mwbit = 1; mwbit!=0 && nbit <= maxbit;
+                        for (mwbit = 1; mwbit != 0 && nbit <= maxbit;
                              mwbit <<= 1) {
                                 if (!(machw[mw] & mwbit))
                                         return (nbit + minDom);
@@ -279,12 +280,12 @@ bool Ns_BitSet::containsRange(const NsInt rangeMin, const NsInt rangeMax) const
         if (rangeMin < minVal || rangeMax > maxVal)
                 return false;
         if (isContinuous(minVal, maxVal, setCount))
-                return true;  // Bounds Consistency
+                return true; // Bounds Consistency
         for (NsInt val = rangeMin; val <= rangeMax; ++val) {
                 NsUInt nbit = correspondingBit(val, minDom);
                 NsUInt mw = nbit / MW_BITS;
                 assert_Ns(nbit < nBits, "Ns_BitSet::containsRange: Machine "
-                          "word out of '*this' range");
+                                        "word out of '*this' range");
                 if (machw[mw] == ~static_cast<size_t>(0u)) {
                         // Speedup by means of comparing the whole word
                         if (MW_BITS - nbit % MW_BITS >
@@ -295,8 +296,8 @@ bool Ns_BitSet::containsRange(const NsInt rangeMin, const NsInt rangeMax) const
                         // '-1' above is used to compensate
                         // the for's '++val' increment.
                 } else {
-                        size_t mwbit = static_cast<size_t>(1) <<
-                                       (nbit % MW_BITS);
+                        size_t mwbit = static_cast<size_t>(1)
+                                       << (nbit % MW_BITS);
                         if (!(machw[mw] & mwbit))
                                 return false;
                 }
