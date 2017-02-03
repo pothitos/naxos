@@ -113,8 +113,9 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
 void NsIntVar::addConstraint(Ns_Constraint *constr)
 {
         constraints.push_back(ConstraintAndFailure(constr));
-        assert_Ns(constr->varsInvolvedIn() >= 1, "NsIntVar::addConstraint: "
-                  "Wrong 'varsInvolvedIn' constraint 'constr'");
+        assert_Ns(constr->varsInvolvedIn() >= 1,
+                  "NsIntVar::addConstraint: Wrong 'varsInvolvedIn' constraint "
+                  "'constr'");
         arcsConnectedTo += constr->varsInvolvedIn() - 1;
         if (constr->revisionType == Ns_Constraint::VALUE_CONSISTENCY)
                 constraintNeedsRemovedValues = true;
@@ -175,9 +176,9 @@ NsIntVarArray& NsIntVarArray::operator = (const Ns_ExpressionArray& expr)
 
 void NsIntVarArray::push_front(const NsIntVar& Var)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add "
-                  "another variable, because a constraint has been already "
-                  "imposed on the array");
+        assert_Ns(!addedConstraint,
+                  "NsIntVarArray::push_front: Cannot add another variable, "
+                  "because a constraint has been already imposed on the array");
         NsIntVar *NewVar = new NsIntVar(Var);
         PointArray.push_front(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
@@ -187,17 +188,17 @@ void NsIntVarArray::push_front(const NsIntVar& Var)
 
 void NsIntVarArray::push_front(const Ns_Expression& expr)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add "
-                  "another variable, because a constraint has been already "
-                  "imposed on the array");
+        assert_Ns(!addedConstraint,
+                  "NsIntVarArray::push_front: Cannot add another variable, "
+                  "because a constraint has been already imposed on the array");
         PointArray.push_front(&expr.post());
 }
 
 void NsIntVarArray::push_back(const NsIntVar& Var)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add "
-                  "another variable, because a constraint has been already "
-                  "imposed on the array");
+        assert_Ns(!addedConstraint,
+                  "NsIntVarArray::push_back: Cannot add another variable, "
+                  "because a constraint has been already imposed on the array");
         NsIntVar *NewVar = new NsIntVar(Var);
         PointArray.push_back(NewVar);
         NewVar->manager().recordIntermediateVar(NewVar);
@@ -207,8 +208,8 @@ void NsIntVarArray::push_back(const NsIntVar& Var)
 
 void NsIntVarArray::push_back(const Ns_Expression& expr)
 {
-        assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add "
-                  "another variable, because a constraint has been already "
-                  "imposed on the array");
+        assert_Ns(!addedConstraint,
+                  "NsIntVarArray::push_back: Cannot add another variable, "
+                  "because a constraint has been already imposed on the array");
         PointArray.push_back(&expr.post());
 }
