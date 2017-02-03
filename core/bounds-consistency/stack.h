@@ -123,16 +123,14 @@ class NsStack {
                 TemplType& operator*(void)const
                 {
                         assert_Ns(currNode != 0,
-                                  "NsStack::iterator::*: Bad "
-                                  "request '*(something.end())'");
+                                  "NsStack::iterator::*: Bad request '*(something.end())'");
                         return currNode->theData;
                 }
 
                 TemplType* operator->(void)const
                 {
                         assert_Ns(currNode != 0,
-                                  "NsStack::iterator::->: Bad "
-                                  "request '*(something.end())'");
+                                  "NsStack::iterator::->: Bad request '*(something.end())'");
                         return &currNode->theData;
                 }
 
@@ -145,8 +143,7 @@ class NsStack {
                 iterator& operator++(void)
                 {
                         assert_Ns(currNode != 0,
-                                  "NsStack::iterator::++: Bad "
-                                  "request '++(something.end())'");
+                                  "NsStack::iterator::++: Bad request '++(something.end())'");
                         currNode = currNode->next;
                         return *this;
                 }
@@ -191,16 +188,14 @@ class NsStack {
                 const TemplType& operator*(void)const
                 {
                         assert_Ns(currNode != 0,
-                                  "NsStack::const_iterator::*: "
-                                  "Bad request '*(something.end())'");
+                                  "NsStack::const_iterator::*: Bad request '*(something.end())'");
                         return currNode->theData;
                 }
 
                 const TemplType* operator->(void)const
                 {
                         assert_Ns(currNode != 0,
-                                  "NsStack::const_iterator::->: "
-                                  "Bad request '*(something.end())'");
+                                  "NsStack::const_iterator::->: Bad request '*(something.end())'");
                         return &currNode->theData;
                 }
 
@@ -213,8 +208,7 @@ class NsStack {
                 const_iterator& operator++(void)
                 {
                         assert_Ns(currNode != 0,
-                                  "NsStack::const_iterator::++: "
-                                  "Bad request '++(something.end())'");
+                                  "NsStack::const_iterator::++: Bad request '++(something.end())'");
                         currNode = currNode->next;
                         return *this;
                 }
