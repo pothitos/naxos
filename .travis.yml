@@ -27,7 +27,7 @@ matrix:
             - g++-4.9
             - valgrind
       before_script:
-        - export CXX=g++-4.9
+        - CXX=g++-4.9
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
