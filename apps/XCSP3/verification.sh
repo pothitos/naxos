@@ -1,5 +1,10 @@
 #! /bin/sh
 set -ev
+
+# Check for memory leaks
+MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
+$MEM_CHECK ./naxos-xcsp3 > /dev/null
+
 SOLVER_FILES="../../core/bounds-consistency/*.h ../../core/bounds-consistency/*.cpp"
 # Ensure that Naxos Solver can be considered as a "Mini-Solver".
 # According to the First International XCSP3 Competition: "A
@@ -12,6 +17,8 @@ echo "$SLOC pure source lines of code"
 test $SLOC -lt 8000
 # Temporarily disable the maximum line width test
 ! grep -l ".\{161\}" $SOLVER_FILES || true
-# Check for memory leaks
-MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
-$MEM_CHECK ./naxos-xcsp3 > /dev/null
+
+# Fix coding style of all source files
+find . -iname '*.h' -o -iname '*.cpp' | xargs clang-format-5.0 -i
+# List the file that need reformatting
+git ls-files -m
