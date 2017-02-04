@@ -19,12 +19,11 @@ Ns_StackSearch::goal_iterator::goal_iterator(Ns_StackSearch& stackOfStacks_init)
 
 Ns_StackSearch::goal_iterator& Ns_StackSearch::goal_iterator::operator ++ (void)
 {
-        assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_iterator::++: "
-                  "Unitialized '*this'");
+        assert_Ns(stackOfStacks != 0,
+                  "Ns_StackSearch::goal_iterator::++: Unitialized '*this'");
         assert_Ns(curr_Stack_it != stackOfStacks->end() &&
                   curr_node_it != curr_Stack_it->stackAND.end(),
-                  "Ns_StackSearch::goal_iterator::end: Bad request "
-                  "'++(something.end())'");
+                  "Ns_StackSearch::goal_iterator::end: Bad request '++(something.end())'");
         if (++curr_node_it == curr_Stack_it->stackAND.end())
                 *this = curr_Stack_it->delayedGoal;
         return *this;
@@ -39,8 +38,8 @@ Ns_StackSearch::goal_iterator& Ns_StackSearch::goal_iterator::operator ++ (void)
 void Ns_StackSearch::mapperInputToFile(const char *fileName, int mapperId)
 {
         fileMapperInput.open(fileName);
-        assert_Ns(fileMapperInput, "Ns_StackSearch::mapperInputToFile: Could "
-                  "not open file");
+        assert_Ns(fileMapperInput,
+                  "Ns_StackSearch::mapperInputToFile: Could not open file");
         mapper = mapperId;
 }
 
@@ -48,8 +47,8 @@ void Ns_StackSearch::mapperInputToFile(const char *fileName, int mapperId)
 void Ns_StackSearch::searchToGraphFile(const char *fileName)
 {
         fileSearchGraph.open(fileName);
-        assert_Ns(fileSearchGraph, "Ns_StackSearch::searchToGraphFile: Could "
-                  "not open file");
+        assert_Ns(fileSearchGraph,
+                  "Ns_StackSearch::searchToGraphFile: Could not open file");
         fileSearchGraph << "digraph \"Search Tree\" {\n\n"
                         << "\tnode [shape=point];\n\n"
                         << "\tedge [arrowhead=none];\n";
@@ -149,8 +148,7 @@ void Ns_StackSearch::solutionNode(const NsIntVar *vObjective)
                                 << history_time[size()-1].validHistoryId
                                 << ")"
                                 << ((top().children > 0) ? "LastChild" : "")
-                                << "\" [shape=doublecircle, height=0.1, "
-                                   "label=\"\"];\n";
+                                << "\" [shape=doublecircle, height=0.1, label=\"\"];\n";
                 // If the node has children, and it is a solution, then it is
                 // the last child of itself. Besides, after the success it will
                 // be popped by the backtracking algorithm.
@@ -219,8 +217,7 @@ void NsProblemManager::constraintsToGraphFile(const char *fileName)
 {
         fileConstraintsGraph.open(fileName);
         assert_Ns(fileConstraintsGraph,
-                  "NsProblemManager::constraintsToGraphFile: Could not open "
-                  "file");
+                  "NsProblemManager::constraintsToGraphFile: Could not open file");
         fileConstraintsGraph << "digraph \"Constraint Network\" {\n\n"
                 << "\tnode [shape=plaintext, fontsize=13, height=0.05];\n\n"
                 << "\tedge [arrowsize=0.5, fontsize=10];\n";
@@ -233,8 +230,7 @@ void NsProblemManager::constraintsToGraphFile(const char *fileName)
                         fileConstraintsGraph << ".." << (*v)->max();
                 fileConstraintsGraph << "]\"];\n";
         }
-        fileConstraintsGraph << "\n\n\n\t/* Intermediate Variables (drawn with "
-                                "a smaller font) */\n";
+        fileConstraintsGraph << "\n\n\n\t/* Intermediate Variables (drawn with a smaller font) */\n";
         for (NsDeque<NsIntVar *>::const_iterator v = intermediateVars.begin();
              v != intermediateVars.end(); ++v) {
                 fileConstraintsGraph << "\n\tVar" << *v << " [fontsize=9];\n";
@@ -478,8 +474,7 @@ Ns_Constraint* Ns_QueueItem::getNextConstraint(void)
                         }
                         break;
                 default:
-                        throw NsException("Ns_QueueItem::getNextConstraint: "
-                                          "Invalid 'constr->revisionType'");
+                        throw NsException("Ns_QueueItem::getNextConstraint: Invalid 'constr->revisionType'");
                         break;
                 };
         }
@@ -489,8 +484,8 @@ Ns_Constraint* Ns_QueueItem::getNextConstraint(void)
 /// Adds a constraint to the problem
 void NsProblemManager::add(const Ns_ExprConstr& expr)
 {
-        assert_Ns(firstNextSolution, "NsProblemManager::add: Cannot add a "
-                  "constraint because search has already started");
+        assert_Ns(firstNextSolution,
+                  "NsProblemManager::add: Cannot add a constraint because search has already started");
         Ns_Constraint *newConstr = expr.postConstraint();
         if (newConstr == 0)
                 return;  // unary constraint
@@ -501,11 +496,10 @@ void NsProblemManager::add(const Ns_ExprConstr& expr)
 /// Adds a soft constraint to the problem, with the corresponding weight
 void NsProblemManager::add(const Ns_ExprConstr& expr, const NsInt weight)
 {
-        assert_Ns(firstNextSolution, "NsProblemManager::add: Cannot add a "
-                  "constraint because search has already started");
-        assert_Ns(vObjective == 0, "NsProblemManager::add: "
-                  "'NsProblemManager::minimize()' should not be used together "
-                  "with soft constraints");
+        assert_Ns(firstNextSolution,
+                  "NsProblemManager::add: Cannot add a constraint because search has already started");
+        assert_Ns(vObjective == 0,
+                  "NsProblemManager::add: 'NsProblemManager::minimize()' should not be used together with soft constraints");
         vSoftConstraintsTerms.push_back(weight * expr.post());
 }
 
@@ -550,8 +544,8 @@ bool NsProblemManager::backtrack(void)
                 if (backtrackLim != 0 && nBacktracks >= backtrackLim)
                         return false;
                 ++nBacktracks;
-                assert_Ns(!searchNodes.empty(), "NsProblemManager::backtrack: "
-                          "'searchNodes' is empty");
+                assert_Ns(!searchNodes.empty(),
+                          "NsProblemManager::backtrack: 'searchNodes' is empty");
                 goalNextChoice = searchNodes.top().goalNextChoice;
                 if (goalNextChoice == 0)
                         return false;
@@ -631,8 +625,7 @@ bool NsProblemManager::nextSolution(void)
                 // able to revert to the current 'Q'.
                 assert_Ns(searchNodes.push(Ns_SearchNode(0,
                           searchNodes.gbegin(), numSearchTreeNodes())),
-                          "NsProblemManager::nextSolution: First push should "
-                          "succeed");
+                          "NsProblemManager::nextSolution: First push should succeed");
                 // (B) ...and pasting to the stackAND of the new frame.
                 while (!tempStackAND.empty()) {
                         searchNodes.top().stackAND.push(tempStackAND.top());
@@ -687,13 +680,12 @@ bool NsProblemManager::nextSolution(void)
                 } else {
                         assert_Ns(searchNodes.top().delayedGoal !=
                                   searchNodes.gend(),
-                                  "NsProblemManager::nextSolution: "
-                                  "No goal to execute");
+                                  "NsProblemManager::nextSolution: No goal to execute");
                         CurrGoal = *searchNodes.top().delayedGoal;
                         ++searchNodes.top().delayedGoal;
                 }
-                assert_Ns(CurrGoal != 0, "NsProblemManager::nextSolution: Zero "
-                          "goal to execute");
+                assert_Ns(CurrGoal != 0,
+                          "NsProblemManager::nextSolution: Zero goal to execute");
                 if (CurrGoal->isGoalAND()) {
                         searchNodes.top().stackAND.push(
                                 CurrGoal->getSecondSubGoal());
@@ -744,9 +736,7 @@ bool NsProblemManager::nextSolution(void)
                                 if (vObjective != 0) {
                                         assert_Ns(bestObjective >
                                                   vObjective->max(),
-                                                  "NsProblemManager::"
-                                                  "nextSolution: Wrong "
-                                                  "objective value");
+                                                  "NsProblemManager::nextSolution: Wrong objective value");
                                         bestObjective = vObjective->max();
                                         // We have taken care about the rare
                                         // and odd case where the domain of
