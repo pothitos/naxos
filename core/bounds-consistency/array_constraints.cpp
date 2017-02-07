@@ -129,10 +129,7 @@ void Ns_ConstrXeqMax::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 }
 
 Ns_ConstrXeqSum::Ns_ConstrXeqSum(NsIntVar* X, NsIntVarArray* VarArr_init)
-  : VarX(X),
-    VarArr(VarArr_init),
-    start(0),
-    length(VarArr_init->size())
+  : VarX(X), VarArr(VarArr_init), start(0), length(VarArr_init->size())
 {
         assert_Ns(!VarArr->empty(),
                   "Ns_ConstrXeqSum::Ns_ConstrXeqSum: Empty 'VarArr'");
@@ -149,10 +146,7 @@ Ns_ConstrXeqSum::Ns_ConstrXeqSum(NsIntVar* X, NsIntVarArray* VarArr_init)
 Ns_ConstrXeqSum::Ns_ConstrXeqSum(NsIntVar* X, NsIntVarArray* VarArr_init,
                                  const NsIndex start_init,
                                  const NsIndex length_init)
-  : VarX(X),
-    VarArr(VarArr_init),
-    start(start_init),
-    length(length_init)
+  : VarX(X), VarArr(VarArr_init), start(start_init), length(length_init)
 {
         revisionType = BIDIRECTIONAL_CONSISTENCY;
         assert_Ns(!VarArr->empty(),
@@ -228,14 +222,17 @@ void Ns_ConstrXeqSum::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 Ns_ConstrAllDiff::Ns_ConstrAllDiff(NsIntVarArray* VarArr_init)
   : VarArr(VarArr_init)
 {
-        assert_Ns(VarArr->size() >= 2,
-                  "Ns_ConstrAllDiff::Ns_ConstrAllDiff: Condition required: VarArr.size() >= 2");
+        assert_Ns(VarArr->size() >= 2, "Ns_ConstrAllDiff::Ns_ConstrAllDiff: "
+                                       "Condition required: VarArr.size() >= "
+                                       "2");
         NsIntVarArray::iterator X = VarArr->begin();
         NsProblemManager& pm = X->manager();
         ++X;
         for (; X != VarArr->end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrAllDiff::Ns_ConstrAllDiff: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrAllDiff::Ns_ConstrAllDiff: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 }
 
@@ -329,14 +326,18 @@ Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong(NsIntVarArray* VarArr_init,
   : Capacity(Cap)
 {
         assert_Ns(VarArr_init->size() > Capacity,
-                  "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: Condition required: VarArr.size() >= 2");
-        assert_Ns(Capacity > 0,
-                  "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: Condition required: Capacity > 0");
+                  "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: Condition "
+                  "required: VarArr.size() >= 2");
+        assert_Ns(Capacity > 0, "Ns_ConstrAllDiffStrong::Ns_"
+                                "ConstrAllDiffStrong: Condition required: "
+                                "Capacity > 0");
         NsIntVarArray::iterator V = VarArr_init->begin();
         NsProblemManager& pm = V->manager();
         for (; V != VarArr_init->end(); ++V) {
                 assert_Ns(&pm == &V->manager(),
-                          "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: All "
+                          "the variables of a constraint must belong to the "
+                          "same NsProblemManager");
                 VarArr.push_back(groupedNsIntVar(*V));
                 VarPointerGroup.insert(
                     make_pair((Ns_pointer_t) & *V, &VarArr.back()));
@@ -647,9 +648,7 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                                const NsDeque<NsDeque<NsIndex>>& SplitPositions,
                                const NsIndex Split_init,
                                const NsIndex Dwin_init)
-  : VarArr(VarArr_init),
-    Split(Split_init),
-    Dwin(Dwin_init)
+  : VarArr(VarArr_init), Split(Split_init), Dwin(Dwin_init)
 {
         NsProblemManager* pm = 0;
         NsIntVarArray::iterator X = VarArr->begin();
@@ -658,8 +657,10 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                 ++X;
         }
         for (; X != VarArr->end(); ++X) {
-                assert_Ns(pm == &X->manager(),
-                          "Ns_ConstrCount::Ns_ConstrCount: All the variables of a constraint must belong to the same NsProblemManager");
+                assert_Ns(pm == &X->manager(), "Ns_ConstrCount::Ns_ConstrCount:"
+                                               " All the variables of a "
+                                               "constraint must belong to the "
+                                               "same NsProblemManager");
         }
         NsIndex i;
         for (i = 0; i < VarArr->size(); ++i) {
@@ -668,10 +669,12 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                 VarIndex.insert(make_pair((Ns_pointer_t) & (*VarArr)[i], i));
         }
         assert_Ns(Values.size() == Occurrences.size(),
-                  "Ns_ConstrCount::Ns_ConstrCount: 'Values' and 'Occurrences' sizes should match");
+                  "Ns_ConstrCount::Ns_ConstrCount: 'Values' and 'Occurrences' "
+                  "sizes should match");
         if (Split) {
                 assert_Ns(Values.size() == SplitPositions.size(),
-                          "Ns_ConstrCount::Ns_ConstrCount: 'Values' and 'SplitPositions' sizes should match");
+                          "Ns_ConstrCount::Ns_ConstrCount: 'Values' and "
+                          "'SplitPositions' sizes should match");
         }
         // Sort tuple <Value, Occurrence> by value.
         NsIndex occurrencesSum = 0;
@@ -685,17 +688,21 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                                               SplitPositions[i], Split));
                         assert_Ns(Occurrences[i] / Split ==
                                       SplitPositions[i].size(),
-                                  "Ns_ConstrCount::Ns_ConstrCount: 'SplitPositions[i]' size should match 'Occurrences[i] / Split'");
+                                  "Ns_ConstrCount::Ns_ConstrCount: "
+                                  "'SplitPositions[i]' size should match "
+                                  "'Occurrences[i] / Split'");
                         for (NsIndex j = 0; j < SplitPositions[i].size(); ++j) {
                                 assert_Ns(SplitPositions[i][j] < VarArr->size(),
-                                          "Ns_ConstrCount::Ns_ConstrCount: Wrong 'SplitPositions[i][j]'");
+                                          "Ns_ConstrCount::Ns_ConstrCount: "
+                                          "Wrong 'SplitPositions[i][j]'");
                         }
                 }
                 occurrencesSum += Occurrences[i];
         }
         sort(ValuesOccurrences.begin(), ValuesOccurrences.end());
         assert_Ns(occurrencesSum == VarArr->size(),
-                  "Ns_ConstrCount::Ns_ConstrCount: 'Occurrences' sum does not match 'VarArr' size");
+                  "Ns_ConstrCount::Ns_ConstrCount: 'Occurrences' sum does not "
+                  "match 'VarArr' size");
         for (i = 0; i < Values.size(); ++i) {
                 assert_Ns(ValueIndex.count(ValuesOccurrences[i].value) == 0,
                           "Ns_ConstrCount::Ns_ConstrCount: Duplicate value");
@@ -808,17 +815,22 @@ Ns_ConstrInverse::Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
 {
         revisionType = VALUE_CONSISTENCY;
         assert_Ns(!VarArrInv->empty() && !VarArr->empty(),
-                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required: Both arrays must have some elements");
+                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required: "
+                  "Both arrays must have some elements");
         NsIntVarArray::iterator X = VarArr->begin();
         NsProblemManager& pm = X->manager();
         ++X;
         for (; X != VarArr->end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrInverse::Ns_ConstrInverse: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrInverse::Ns_ConstrInverse: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
         for (X = VarArrInv->begin(); X != VarArrInv->end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrInverse::Ns_ConstrInverse: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrInverse::Ns_ConstrInverse: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
         NsIndex i;
         for (X = VarArr->begin(), i = 0; X != VarArr->end(); ++X, ++i) {
@@ -881,7 +893,8 @@ void Ns_ConstrInverse::LocalArcCons(Ns_QueueItem& Qitem)
                         NsInt val = Qitem.getVarFired()->value();
                         assert_Ns(0 <= val && static_cast<unsigned>(val) <
                                                   VArrInv.size(),
-                                  "Ns_ConstrInverse::LocalArcCons: 'val' out of range");
+                                  "Ns_ConstrInverse::LocalArcCons: 'val' out "
+                                  "of range");
                         VArrInv[val].removeSingle(-1, this);
                 }
                 if (static_cast<unsigned>(VarFiredW) >= VArrInv.size())
@@ -949,11 +962,9 @@ void naxos::Ns_ternaryConstraintToGraphFile(
 {
         fileConstraintsGraph
             << "\n\tConstr" << constr << " [shape=point];\n"
-            << "\tVar" << VarY << " -> Constr" << constr
-            << " [arrowhead=none"
+            << "\tVar" << VarY << " -> Constr" << constr << " [arrowhead=none"
             << ((sourceLabels) ? ", headlabel=\"y\"" : "") << "];\n"
-            << "\tVar" << VarZ << " -> Constr" << constr
-            << " [arrowhead=none"
+            << "\tVar" << VarZ << " -> Constr" << constr << " [arrowhead=none"
             << ((sourceLabels) ? ", headlabel=\"z\"" : "") << "];\n"
             << "\tConstr" << constr << " -> Var" << VarX << " [taillabel=\""
             << constrName << "\"];\n";
@@ -969,13 +980,12 @@ void naxos::Ns_globalConstraintToGraphFile(ofstream& fileConstraintsGraph,
         fileConstraintsGraph << "\n\tConstr" << constr << " [shape=point];\n";
         for (NsIntVarArray::const_iterator V = VarArr->begin();
              V != VarArr->end(); ++V) {
-                fileConstraintsGraph << "\tVar" << &*V << " -> Constr"
-                                     << constr
+                fileConstraintsGraph << "\tVar" << &*V << " -> Constr" << constr
                                      << " [arrowhead=none, style=dotted];\n";
         }
-        fileConstraintsGraph
-            << "\tConstr" << constr << " -> Var" << VarX << " [taillabel=\""
-            << constrName << "\", style=dotted];\n";
+        fileConstraintsGraph << "\tConstr" << constr << " -> Var" << VarX
+                             << " [taillabel=\"" << constrName
+                             << "\", style=dotted];\n";
 }
 
 /// Auxiliary function to depict an array-constraint into a graph file.
