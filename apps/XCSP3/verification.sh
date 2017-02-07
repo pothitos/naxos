@@ -15,8 +15,8 @@ SOLVER_FILES="../../core/bounds-consistency/*.h ../../core/bounds-consistency/*.
 SLOC=$(cat $SOLVER_FILES | grep -v "^$" | grep -v "^ *//" | wc -l)
 echo "$SLOC pure source lines of code"
 test $SLOC -lt 8000
-# Temporarily disable the maximum line width test
-! grep -l ".\{161\}" $SOLVER_FILES || true
+# Ensure that the maximum line width limit isn't exceeded
+! grep ".\{161\}" $SOLVER_FILES
 
 # Fix coding style of all source files
 find ../.. -iname '*.h' -o -iname '*.cpp' | xargs clang-format-5.0 -i
