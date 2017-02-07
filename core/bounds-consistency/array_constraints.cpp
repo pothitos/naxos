@@ -392,14 +392,14 @@ void allDiffBoundsConsistency(
                                                              .size()];
         for (i = 0; i < VarArrSortedList.size(); ++i)
                 VarArrSorted[i] = VarArrSortedList[i];
-        // ... Then we sort the variables in 'VarArrSorted', by ascending
+        // ...Then we sort the variables in 'VarArrSorted', by ascending
         // maximum, descending minimum, and ascending size. I.e., if the domain
         // of VarX is more possible to be a subset of domain of VarY, then VarX
         // precedes VarY in the array 'VarArrSorted'.
         qsort(VarArrSorted, VarArrSortedList.size(),
               sizeof(Ns_ConstrAllDiffStrong::groupedNsIntVar*),
               less_function_MaxMMinSize);
-        // We gather all the different maxima into the array `Max' by ascending
+        // We gather all the different maxima into the array 'Max' by ascending
         // order.
         NsDeque<NsInt> Max;
         for (i = 0; i < VarArrSortedList.size(); ++i) {
@@ -411,17 +411,17 @@ void allDiffBoundsConsistency(
         NsDeque<NsInt> VarLtMaxMins;
         i = 0;
         for (NsIndex max_i = 0; max_i < Max.size(); ++max_i) {
-                //  `VarEqMax' consists of all the variables of the
-                //   array `VarArr' with `VarArr[i].max() == Max[max_i]'.
+                // 'VarEqMax' consists of all the variables of the array
+                // 'VarArr' with 'VarArr[i].max() == Max[max_i]'.
                 NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar*> VarEqMax;
                 for (; i < VarArrSortedList.size() &&
                        VarArrSorted[i]->Var.max() == Max[max_i];
                      ++i)
                         VarEqMax.push_back(VarArrSorted[i]);
-                //  `VarLeMax' is constructed by merging its previous contents,
-                //   represented by `VarLtMax' (initially empty), and
-                //   `VarEqMax'. `VarLeMax' contains the constrained variables
-                //   of `VarArr' with `VarArr[i].max() <= Max[max_i]'.
+                // 'VarLeMax' is constructed by merging its previous contents,
+                // represented by 'VarLtMax' (initially empty), and 'VarEqMax'.
+                // 'VarLeMax' contains the constrained variables of 'VarArr'
+                // with 'VarArr[i].max() <= Max[max_i]'.
                 NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar*> VarLeMax;
                 NsIndex i1, i2;
                 for (i1 = i2 = 0;
@@ -435,24 +435,23 @@ void allDiffBoundsConsistency(
                                 ++i2;
                         }
                 }
-                //  One of the two arrays (`VarLtMax' and `VarEqMax') is
-                //   exhausted, so we append the contents of the other
-                //   array to `VarLeMax', and the merging is completed.
+                // One of the two arrays ('VarLtMax' and 'VarEqMax') is
+                // exhausted, so we append the contents of the other
+                // array to 'VarLeMax', and the merging is completed.
                 for (; i1 < VarLtMax.size(); ++i1)
                         VarLeMax.push_back(VarLtMax[i1]);
                 for (; i2 < VarEqMax.size(); ++i2)
                         VarLeMax.push_back(VarEqMax[i2]);
                 VarLtMax =
-                    VarLeMax; // `VarLtMax' will be used at the next iteration.
-                //  `VarLeMaxMins' contains the minima of the constrained
-                //  variables
-                //   included in `VarLeMax', in descending order (without
-                //   duplicates). It is constructed by merging the array
-                //   `VarLtMaxMins' (i.e., the previous contents of
-                //   `VarLeMaxMins', that have no duplicates, by definition) and
-                //   `VarEqMax'.mins (i.e., the minima of the constrained
-                //   variables in `VarEqMax' that may contain duplicates, so we
-                //   should avoid them).
+                    VarLeMax; // 'VarLtMax' will be used at the next iteration.
+                // 'VarLeMaxMins' contains the minima of the constrained
+                // variables included in 'VarLeMax', in descending order
+                // (without duplicates). It is constructed by merging the array
+                // 'VarLtMaxMins' (i.e., the previous contents of
+                // 'VarLeMaxMins', that have no duplicates, by definition) and
+                // 'VarEqMax'.mins (i.e., the minima of the constrained
+                // variables in 'VarEqMax' that may contain duplicates, so we
+                // should avoid them).
                 NsDeque<NsInt> VarLeMaxMins;
                 for (i1 = i2 = 0;
                      i1 < VarLtMaxMins.size() && i2 < VarEqMax.size();) {
@@ -477,10 +476,9 @@ void allDiffBoundsConsistency(
                                              VarEqMax[i2 - 1]->Var.min());
                         }
                 }
-                //  We complete the merging by appending the contents of the
-                //  non-
-                //   exhausted array (`VarLtMaxMins' or `VarEqMax') to
-                //   `VarLeMaxMins'.
+                // We complete the merging by appending the contents of the
+                // non-exhausted array ('VarLtMaxMins' or 'VarEqMax') to
+                // 'VarLeMaxMins'.
                 for (; i1 < VarLtMaxMins.size();) {
                         VarLeMaxMins.push_back(VarLtMaxMins[i1]);
                         ++i1;
@@ -493,11 +491,11 @@ void allDiffBoundsConsistency(
                                  VarEqMax[i2]->Var.min() ==
                                      VarEqMax[i2 - 1]->Var.min());
                 }
-                // `VarLtMaxMins' will be used at the next iteration.
+                // 'VarLtMaxMins' will be used at the next iteration.
                 VarLtMaxMins = VarLeMaxMins;
-                //  `vUnion' is a domain representing the union of the
-                //   domains that we have examined so far.  Inintially,
-                //   it equals to the domain of `VarLeMax[0]'.
+                // 'vUnion' is a domain representing the union of the domains
+                // that we have examined so far. Inintially, it equals to the
+                // domain of 'VarLeMax[0]'.
                 NsIntVar* vUnion = new NsIntVar(VarLeMax[0]->Var.manager(),
                                                 VarLeMax[0]->Var.min(),
                                                 VarLeMax[0]->Var.max());
@@ -508,26 +506,21 @@ void allDiffBoundsConsistency(
                 for (gapVal = VarLeMax[0]->Var.gap_begin();
                      gapVal != VarLeMax[0]->Var.gap_end(); ++gapVal) {
                         vUnion->remove(*gapVal);
-                        // assert_Ns( vUnion->removeSingle(*gapVal, constraint),
-                        //              "Ns_ConstrAllDiffStrong::ArcCons:
-                        //              `vUnion->removeSingle(*gapVal)' failed"
-                        //              );
                 }
-                //  Iterating through the `VarLeMaxMins', which
-                //   has been renamed for readability as `Min'.
+                // Iterating through the 'VarLeMaxMins', which
+                // has been renamed for readability as 'Min'.
                 NsDeque<NsInt>& Min = VarLeMaxMins;
                 NsIndex nVars = 0;
                 NsIndex j = 0;
                 for (NsIndex min_i = 0; min_i < Min.size(); ++min_i) {
-                        // Iterating through `VarLeMax'...
+                        // Iterating through 'VarLeMax'...
                         for (; j < VarLeMax.size(); ++j) {
                                 if (VarLeMax[j]->Var.min() < Min[min_i])
-                                        break; // End of `Min', no propagation.
+                                        break; // End of 'Min', no propagation.
                                 ++nVars;
-                                //  We produce the union of the domains `vUnion'
-                                //  and `VarLeMax[j]'.  I.e.,
-                                //      vUnion  <---  vUnion  UNION
-                                //      VarLeMax[j].domain.
+                                // We produce the union of the domains 'vUnion'
+                                // and 'VarLeMax[j]'. I.e.,
+                                // vUnion <- vUnion UNION VarLeMax[j].domain.
                                 NsIntVar vUnionPrevious = *vUnion;
                                 delete vUnion;
                                 vUnion =
@@ -539,19 +532,14 @@ void allDiffBoundsConsistency(
                                 // Does not need to be stored for backtracking,
                                 // because it is temporary.
                                 vUnion->transparent();
-                                //  Removing the values that neither domain
-                                //  contains.
+                                // Removing the values that
+                                // neither domain contains.
                                 for (gapVal = vUnionPrevious.gap_begin();
                                      gapVal != vUnionPrevious.gap_end();
                                      ++gapVal) {
                                         if (!VarLeMax[j]->Var.contains(
                                                 *gapVal)) {
                                                 vUnion->remove(*gapVal);
-                                                // assert_Ns(
-                                                // vUnion->removeSingle(*gapVal,constraint),
-                                                // "Ns_ConstrAllDiffStrong::ArcCons:
-                                                // `vUnion->removeSingle(*gapVal)'
-                                                // failed" );
                                         }
                                 }
                                 for (gapVal = VarLeMax[j]->Var.gap_begin();
@@ -559,19 +547,13 @@ void allDiffBoundsConsistency(
                                      ++gapVal) {
                                         if (!vUnionPrevious.contains(*gapVal)) {
                                                 vUnion->remove(*gapVal);
-                                                // assert_Ns(
-                                                // vUnion->Single(*gapVal,constraint),
-                                                // "Ns_ConstrAllDiffStrong::ArcCons:
-                                                // `vUnion->removeSingle(*gapVal)'
-                                                // failed" );
                                         }
                                 }
                                 NsIndex sizeXcap = vUnion->size() * Capacity;
                                 if (sizeXcap < nVars) {
-                                        //  The number of the variables is too
-                                        //  big to take
-                                        //   `sizeXcap' different values.   ==>
-                                        //   Failure
+                                        // The number of the variables is too
+                                        // big to take 'sizeXcap' different
+                                        // values => Failure
                                         VarLeMax[0]->Var.removeAll();
                                         delete vUnion;
                                         delete[] VarArrSorted;
@@ -580,25 +562,21 @@ void allDiffBoundsConsistency(
                                 if (sizeXcap == nVars &&
                                     (j < VarLeMax.size() - 1 ||
                                      i < VarArrSortedList.size())) {
-                                        //  The number of the variables is the
-                                        //  minimum needed to take
-                                        //   `sizeXcap' different values
-                                        //   (contained in `vUnion'). Each
-                                        //   variable has to be assigned a value
-                                        //   from `vUnion', and all the values
-                                        //   will be used.  So no other variable
-                                        //   should be assigned a value from
-                                        //   `vUnion'.  Thus, it is possible to
-                                        //   subtract this domain from all the
-                                        //   other variables, and to separate
-                                        //   them from the current group, by
-                                        //   changing their group. (This domain
-                                        //   is in other words a `Hall
-                                        //   Interval'.)
+                                        // The number of the variables is the
+                                        // minimum needed to take 'sizeXcap'
+                                        // different values (contained in
+                                        // 'vUnion'). Each variable has to be
+                                        // assigned a value from 'vUnion', and
+                                        // all the values will be used. So no
+                                        // other variable should be assigned a
+                                        // value from 'vUnion'. Thus, it is
+                                        // possible to subtract this domain from
+                                        // all the other variables, and to
+                                        // separate them from the current group,
+                                        // by changing their group. (This domain
+                                        // is in other words a 'Hall Interval'.)
                                         ++nGroups;
-                                        //                                              bool changed=false;
                                         for (++j; j < VarLeMax.size(); ++j) {
-                                                //                                                      changed = true;
                                                 if (!VarLeMax[j]->removeDomain(
                                                         *vUnion, constraint)) {
                                                         delete vUnion;
@@ -609,7 +587,6 @@ void allDiffBoundsConsistency(
                                         }
                                         for (; i < VarArrSortedList.size();
                                              ++i) {
-                                                //                                                      changed = true;
                                                 if (!VarArrSorted[i]
                                                          ->removeDomain(
                                                              *vUnion,
@@ -625,27 +602,17 @@ void allDiffBoundsConsistency(
                                             VarArr, Capacity, nGroups,
                                             constraint);
                                         max_i = Max.size();
-                                        //                                              if ( changed )   {
-                                        //      cout << "           ";
-                                        //      for (NsIndex k=0;   k <
-                                        //      VarArr.size();   ++k)
-                                        //              cout << "  " <<
-                                        //              (VarArr[k].group() -
-                                        //              groupedNsIntVar::FIRST_GROUP)
-                                        //              << ">" << VarArr[k].Var;
-                                        //      cout << endl;
-                                        //                                              }
                                 }
                                 if (sizeXcap > VarLeMax.size()) {
-                                        //  The number of the values `sizeXcap'
-                                        //  to be assigned to be assigned
-                                        //   to different variables of the array
-                                        //   `VarLeMax' is already greater than
-                                        //   the minimum needed, so there is no
-                                        //   need to examine the rest of the
-                                        //   variables of `VarLeMax'.  Thus, we
-                                        //   override them (`early cut-off')
-                                        //   using the following statements.
+                                        // The number of the values 'sizeXcap'
+                                        // to be assigned to be assigned to
+                                        // different variables of the array
+                                        // 'VarLeMax' is already greater than
+                                        // the minimum needed, so there is no
+                                        // need to examine the rest of the
+                                        // variables of 'VarLeMax'. Thus, we
+                                        // override them ('early cut-off')
+                                        // using the following statements.
                                         min_i = Min.size();
                                         break;
                                 }
@@ -654,7 +621,6 @@ void allDiffBoundsConsistency(
                 delete vUnion;
         }
         delete[] VarArrSorted;
-        //} // groups iteration
 }
 
 } // namespace
@@ -669,13 +635,9 @@ void Ns_ConstrAllDiffStrong::ArcCons(void)
 // bounds-consistency only
 void Ns_ConstrAllDiffStrong::LocalArcCons(Ns_QueueItem& Qitem)
 {
-        // if (Qitem.getVarFired()->min() < Qitem.getW()  &&  Qitem.getW() <
-        // Qitem.getVarFired()->max())
-        //      return; // bounds-consistency does not care
         VarPointerGroup_t::const_iterator cit =
             VarPointerGroup.find((Ns_pointer_t)Qitem.getVarFired());
         groupedNsIntVar::group_t groupFired = cit->second->group();
-        // ArcCons();
         allDiffBoundsConsistency(VarArr, Capacity, groupFired, this);
 }
 
@@ -686,26 +648,18 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                                const NsIndex Split_init,
                                const NsIndex Dwin_init)
   : VarArr(VarArr_init),
-    // Values(Values_init), Occurrences(Occurrences_init),
     Split(Split_init),
     Dwin(Dwin_init)
 {
-        // assert_Ns( !VarArr.empty() ,  "Ns_ConstrCount::Ns_ConstrCount: Empty
-        // `VarArr'");
         NsProblemManager* pm = 0;
         NsIntVarArray::iterator X = VarArr->begin();
         if (X != VarArr->end()) {
                 pm = &X->manager();
                 ++X;
-                // vMinValueIndex = NsIntVar(*pm,0,Values.size());
-                // vMaxValueIndex = NsIntVar(*pm,-1,Values.size()-1);
-                ////  vMinValueIndex and vMaxValueIndex domains are
-                ////   respectively shifted left and right by 1, in
-                ////   order to avoid provoking an inconsistency
-                ////   when all the values have been assigned.
         }
         for (; X != VarArr->end(); ++X) {
-                assert_Ns(pm == &X->manager(), "Ns_ConstrCount::Ns_ConstrCount: All the variables of a constraint must belong to the same NsProblemManager");
+                assert_Ns(pm == &X->manager(),
+                          "Ns_ConstrCount::Ns_ConstrCount: All the variables of a constraint must belong to the same NsProblemManager");
         }
         NsIndex i;
         for (i = 0; i < VarArr->size(); ++i) {
@@ -714,15 +668,12 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                 VarIndex.insert(make_pair((Ns_pointer_t) & (*VarArr)[i], i));
         }
         assert_Ns(Values.size() == Occurrences.size(),
-                  "Ns_ConstrCount::Ns_ConstrCount: `Values' and `Occurrences' sizes should match");
-        // assert_Ns( Split >= 0 ,
-        //      "Ns_ConstrCount::Ns_ConstrCount: Negative `Split' value");
+                  "Ns_ConstrCount::Ns_ConstrCount: 'Values' and 'Occurrences' sizes should match");
         if (Split) {
                 assert_Ns(Values.size() == SplitPositions.size(),
-                          "Ns_ConstrCount::Ns_ConstrCount: `Values' and `SplitPositions' sizes should match");
+                          "Ns_ConstrCount::Ns_ConstrCount: 'Values' and 'SplitPositions' sizes should match");
         }
-        //  Sort tuple <Value,Occurrence> by value.
-        // NsDeque<ValueOccurrence_t>  ValuesOccurrences;
+        // Sort tuple <Value, Occurrence> by value.
         NsIndex occurrencesSum = 0;
         for (i = 0; i < Values.size(); ++i) {
                 if (!Split) {
@@ -734,26 +685,22 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                                               SplitPositions[i], Split));
                         assert_Ns(Occurrences[i] / Split ==
                                       SplitPositions[i].size(),
-                                  "Ns_ConstrCount::Ns_ConstrCount: `SplitPositions[i]' size should match `Occurrences[i] / Split'");
+                                  "Ns_ConstrCount::Ns_ConstrCount: 'SplitPositions[i]' size should match 'Occurrences[i] / Split'");
                         for (NsIndex j = 0; j < SplitPositions[i].size(); ++j) {
-                                assert_Ns(/*0 <= SplitPositions[i][j] &&*/
-                                          SplitPositions[i][j] < VarArr->size(),
-                                          "Ns_ConstrCount::Ns_ConstrCount: Wrong `SplitPositions[i][j]'");
+                                assert_Ns(SplitPositions[i][j] < VarArr->size(),
+                                          "Ns_ConstrCount::Ns_ConstrCount: Wrong 'SplitPositions[i][j]'");
                         }
                 }
                 occurrencesSum += Occurrences[i];
         }
         sort(ValuesOccurrences.begin(), ValuesOccurrences.end());
         assert_Ns(occurrencesSum == VarArr->size(),
-                  "Ns_ConstrCount::Ns_ConstrCount: `Occurrences' sum does not match `VarArr' size");
+                  "Ns_ConstrCount::Ns_ConstrCount: 'Occurrences' sum does not match 'VarArr' size");
         for (i = 0; i < Values.size(); ++i) {
                 assert_Ns(ValueIndex.count(ValuesOccurrences[i].value) == 0,
                           "Ns_ConstrCount::Ns_ConstrCount: Duplicate value");
                 ValueIndex.insert(make_pair(ValuesOccurrences[i].value, i));
-                // vCount.push_back( NsIntVar(*pm, 0,
-                // ValuesOccurrences[i].occurrence) );
         }
-        // countUpdateMinMax(vMinValueIndex, vMaxValueIndex, vCount);
 }
 
 namespace {
@@ -861,7 +808,7 @@ Ns_ConstrInverse::Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
 {
         revisionType = VALUE_CONSISTENCY;
         assert_Ns(!VarArrInv->empty() && !VarArr->empty(),
-                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required:  Both arrays must have some elements");
+                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required: Both arrays must have some elements");
         NsIntVarArray::iterator X = VarArr->begin();
         NsProblemManager& pm = X->manager();
         ++X;
@@ -934,7 +881,7 @@ void Ns_ConstrInverse::LocalArcCons(Ns_QueueItem& Qitem)
                         NsInt val = Qitem.getVarFired()->value();
                         assert_Ns(0 <= val && static_cast<unsigned>(val) <
                                                   VArrInv.size(),
-                                  "Ns_ConstrInverse::LocalArcCons: `val' out of range");
+                                  "Ns_ConstrInverse::LocalArcCons: 'val' out of range");
                         VArrInv[val].removeSingle(-1, this);
                 }
                 if (static_cast<unsigned>(VarFiredW) >= VArrInv.size())
