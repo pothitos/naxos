@@ -417,7 +417,7 @@ class Ns_BitSet {
         }
 
         /////  Points to the item in the AC queue that refers to the variable.
-        ///If there is no such item, the pointer is null.
+        /// If there is no such item, the pointer is null.
         // Ns_QueueItem  *queueItem;
 
         Ns_BitSet(void)
@@ -915,12 +915,12 @@ class NsIntVar {
         NsDeque<ConstraintAndFailure> constraints;
 
         /////  An array of the constraints that the variable is involved in.
-        ///The constraints impose Bounds Consistency.
+        /// The constraints impose Bounds Consistency.
         // Ns_constraints_array_t  constraintsBoundsCons;
 
         /////  An array of the constraints that the variable is involved in.
-        ///The constraints impose Arc Consistency, instead of Bounds
-        ///Consistency.  (Arc Consistency is stronger than Bounds Consistency.)
+        /// The constraints impose Arc Consistency, instead of Bounds
+        /// Consistency.  (Arc Consistency is stronger than Bounds Consistency.)
         // Ns_constraints_array_t  constraintsArcCons;
 
     private:
@@ -2486,16 +2486,16 @@ class Ns_ConstrCount : public Ns_Constraint {
         // const NsDeque<NsInt>&  Occurrences;
 
         /////  vCount[i].max() is the number of the occurrences of Values[i] in
-        ///VarArr.
+        /// VarArr.
         // NsIntVarArray  vCount;
 
         /////  vMinValueIndex.min() is the minimum index i in a sorted array
-        ///Values[i], with the property that the occurrences of the
-        ///corresponding value is greater than zero.
+        /// Values[i], with the property that the occurrences of the
+        /// corresponding value is greater than zero.
         // NsIntVar  vMinValueIndex;
 
         /////  vMaxValueIndex.max() is the vMinValueIndex.min() maximum
-        ///equivalent.
+        /// equivalent.
         // NsIntVar  vMaxValueIndex;
 
         typedef Ns_UNORDERED_MAP<Ns_pointer_t, NsIndex> VarIndex_t;
@@ -2751,7 +2751,7 @@ inline Ns_ExprYdivC operator/(NsIntVar& Y, const NsInt C)
 {
         // if (C < 0)
         //// In order to conform to the requirements of the constraint
-        ///implementation
+        /// implementation
         //      return  ( - (Y / -C) );
         return Ns_ExprYdivC(Y, C);
 }
@@ -2760,7 +2760,7 @@ inline Ns_ExprYdivC operator/(const Ns_Expression& Yexpr, const NsInt C)
 {
         // if (C < 0)
         //// In order to conform to the requirements of the constraint
-        ///implementation
+        /// implementation
         //      return  ( - (Yexpr / -C) );
         return (Yexpr.post() / C);
 }
@@ -3016,7 +3016,7 @@ inline Ns_ExprCdivZ operator/(const NsInt C, NsIntVar& Z)
 {
         // if (C < 0)
         //// In order to conform to the requirements of the constraint
-        ///implementation
+        /// implementation
         //      return  ( - (-C / Z) );
         return Ns_ExprCdivZ(C, Z);
 }
@@ -3025,7 +3025,7 @@ inline Ns_ExprCdivZ operator/(const NsInt C, const Ns_Expression& Zexpr)
 {
         // if (C < 0)
         //// In order to conform to the requirements of the constraint
-        ///implementation
+        /// implementation
         //      return  ( - (-C / Zexpr) );
         return (C / Zexpr.post());
 }
@@ -3084,7 +3084,7 @@ inline Ns_ExprYmodC operator%(NsIntVar& Y, const NsInt C)
 {
         // if (C < 0)
         //// In order to conform to the requirements of the constraint
-        ///implementation
+        /// implementation
         //      return  ( - (Y % -C) );
         return Ns_ExprYmodC(Y, C);
 }
@@ -3093,7 +3093,7 @@ inline Ns_ExprYmodC operator%(const Ns_Expression& Yexpr, const NsInt C)
 {
         // if (C < 0)
         //// In order to conform to the requirements of the constraint
-        ///implementation
+        /// implementation
         //      return  ( - (Yexpr % -C) );
         return (Yexpr.post() % C);
 }
@@ -4776,7 +4776,8 @@ struct Ns_SearchNode {
                 {
                 }
 
-                /// Restores the copy back to the original domain place (i.e. pointer).
+                /// Restores the copy back to the original domain place (i.e.
+                /// pointer).
                 void restore(void)
                 {
                         *bitsetDomainPointer = bitsetDomainCopy;
