@@ -1301,7 +1301,7 @@ class Ns_Constraint {
         enum ConsistencyType {
 
                 ///  The revision function needs to know the value that has been
-                ///  removed from the domain (e.g.\ see Ns_ConstrInverse).
+                ///  removed from the domain (e.g. see Ns_ConstrInverse).
                 VALUE_CONSISTENCY,
 
                 ///  The revision function does not need to know the removed
@@ -1310,7 +1310,7 @@ class Ns_Constraint {
                 BOUNDS_CONSISTENCY,
 
                 ///  Like BOUNDS_CONSISTENCY, but revision is imposed in both
-                ///  directions.  E.g.\ Revision(i,j) is equivalent to
+                ///  directions.  E.g. Revision(i,j) is equivalent to
                 ///  Revision(j,i), where i, j are variables.
                 BIDIRECTIONAL_CONSISTENCY
         };
@@ -3301,8 +3301,8 @@ inline Ns_ExprInverse NsInverse(NsIntVarArray& Arr, const NsInt MaxDom)
 ///  Ns_Expression subcategory describing constraints.
 
 ///  The following abstract class represents the expressions category that
-///   can be viewed both as a constraint (e.g.\ \a X < \a Y) and as an
-///   expression/meta-constraint (e.g.\ \a Z == \a X < \a Y).
+///   can be viewed both as a constraint (e.g. \a X < \a Y) and as an
+///   expression/meta-constraint (e.g. \a Z == \a X < \a Y).
 ///   \internal
 
 class Ns_ExprConstr : public Ns_Expression {
@@ -3312,7 +3312,7 @@ class Ns_ExprConstr : public Ns_Expression {
 
         ///  If \a isPositive \c == \c false then the semantics of
         ///   the constraint-expression is inverted.
-        ///   E.g.\ `\a X < \a Y' becomes `\a X >= \a Y'.
+        ///   E.g. `\a X < \a Y' becomes `\a X >= \a Y'.
         bool isPositive;
 
     public:
@@ -4026,7 +4026,7 @@ class NsGoal {
         }
 };
 
-///  The first kind of `meta-goal' (i.e.\ goal used to combine two other goals).
+///  The first kind of `meta-goal' (i.e. goal used to combine two other goals).
 class NsgAND : public NsGoal {
 
     private:
@@ -4063,7 +4063,7 @@ class NsgAND : public NsGoal {
         }
 };
 
-///  The second--and last--kind of `meta-goal' (i.e.\ goal used to combine two
+///  The second--and last--kind of `meta-goal' (i.e. goal used to combine two
 ///  other goals).
 class NsgOR : public NsGoal {
 
@@ -4146,7 +4146,7 @@ class NsgRemoveValue : public NsGoal {
 
 ///  A goal that tries to instantiate a constrained variable.
 
-///  I.e.\ it assigns a value from the domain of the variable;
+///  I.e. it assigns a value from the domain of the variable;
 ///   if this assignment results to an inconsistency, it removes the value
 ///   from the domain, and continues trying the rest of the values.
 class NsgInDomain : public NsGoal {
@@ -4360,7 +4360,7 @@ class Ns_SearchNode;
 ///  Contains all the Ns_SearchNode 's.
 
 ///  A Ns_SearchNode contains the current status of the problem; it is
-///   pushed into the stack when we make a choice (e.g.\ when we select a
+///   pushed into the stack when we make a choice (e.g. when we select a
 ///   specific value to assign it to a variable) and it is popped when we
 ///   want to cancel this choice, and we want to revert back to the
 ///   previous problem status.
@@ -4977,7 +4977,7 @@ class NsProblemManager {
         ///  \name  Time management members
 
     private:
-        ///  True if the available time is real (i.e.\ not system time).
+        ///  True if the available time is real (i.e. not system time).
         bool isRealTime;
 
         ///  The first (system) time that nextSolution() has been called.
