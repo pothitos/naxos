@@ -97,17 +97,6 @@ void Ns_ConstrXeqMin::ArcCons(void)
                                 min = V->min();
                 }
         } while (min > VarX->min());
-        // NsIntVarArray::iterator  V;
-        // NsIntVar::const_iterator v = VarX->begin();
-        //++v;  // the first value is OK
-        // for ( ;  v != VarX->end();  ++v)   {
-        //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //              if ( V->contains( *v ) )
-        //                      break;
-        //      }
-        //      if ( V  ==  VarArr->end() )
-        //              VarX->removeSingle( *v , this);
-        //}
 }
 
 void Ns_ConstrXeqMax::ArcCons(void)
@@ -127,17 +116,6 @@ void Ns_ConstrXeqMax::ArcCons(void)
                                 max = V->max();
                 }
         } while (max < VarX->max());
-        // NsIntVarArray::iterator  V;
-        // NsIntVar::const_iterator v = VarX->begin();
-        //++v;  // the first value is OK
-        // for ( ;  v != VarX->end();  ++v)   {
-        //      for (V = VarArr->begin();   V != VarArr->end();   ++V)   {
-        //              if ( V->contains( *v ) )
-        //                      break;
-        //      }
-        //      if ( V  ==  VarArr->end() )
-        //              VarX->removeSingle( *v , this);
-        //}
 }
 
 void Ns_ConstrXeqMin::LocalArcCons(Ns_QueueItem& /*Qitem*/)
@@ -151,13 +129,13 @@ void Ns_ConstrXeqMax::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 }
 
 Ns_ConstrXeqSum::Ns_ConstrXeqSum(NsIntVar* X, NsIntVarArray* VarArr_init)
-  : /*Ns_Constraint(2),*/ VarX(X),
+  : VarX(X),
     VarArr(VarArr_init),
     start(0),
     length(VarArr_init->size())
 {
         assert_Ns(!VarArr->empty(),
-                  "Ns_ConstrXeqSum::Ns_ConstrXeqSum: Empty `VarArr'");
+                  "Ns_ConstrXeqSum::Ns_ConstrXeqSum: Empty 'VarArr'");
         NsProblemManager& pm = VarX->manager();
         for (NsIntVarArray::iterator V = VarArr->begin(); V != VarArr->end();
              ++V) {
@@ -171,14 +149,14 @@ Ns_ConstrXeqSum::Ns_ConstrXeqSum(NsIntVar* X, NsIntVarArray* VarArr_init)
 Ns_ConstrXeqSum::Ns_ConstrXeqSum(NsIntVar* X, NsIntVarArray* VarArr_init,
                                  const NsIndex start_init,
                                  const NsIndex length_init)
-  : /*Ns_Constraint(2),*/ VarX(X),
+  : VarX(X),
     VarArr(VarArr_init),
     start(start_init),
     length(length_init)
 {
         revisionType = BIDIRECTIONAL_CONSISTENCY;
         assert_Ns(!VarArr->empty(),
-                  "Ns_ConstrXeqSum::Ns_ConstrXeqSum: Empty `VarArr'");
+                  "Ns_ConstrXeqSum::Ns_ConstrXeqSum: Empty 'VarArr'");
         NsProblemManager& pm = VarX->manager();
         for (NsIndex i = start; i < start + length; ++i) {
                 NsIntVar& V = (*VarArr)[i];
@@ -214,10 +192,9 @@ void Ns_ConstrXeqSum::ArcCons(void)
                                 }
                         }
                 } while (VarX->min() < sumMin);
-                //  Initially `changed_summinmax' was intentionally set true, in
-                //  order the
-                //   following `if' statement to be ignored, the first time it
-                //   is executed.
+                // Initially 'changed_summinmax' was intentionally set true, in
+                // order the following 'if' statement to be ignored, the first
+                // time it is executed.
                 if (!changed_summinmax)
                         break;
                 changed_summinmax = false;
@@ -251,17 +228,14 @@ void Ns_ConstrXeqSum::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 Ns_ConstrAllDiff::Ns_ConstrAllDiff(NsIntVarArray* VarArr_init)
   : VarArr(VarArr_init)
 {
-        assert_Ns(VarArr->size() >= 2, "Ns_ConstrAllDiff::Ns_ConstrAllDiff: "
-                                       "Condition required:  VarArr.size() >= "
-                                       "2");
+        assert_Ns(VarArr->size() >= 2,
+                  "Ns_ConstrAllDiff::Ns_ConstrAllDiff: Condition required: VarArr.size() >= 2");
         NsIntVarArray::iterator X = VarArr->begin();
         NsProblemManager& pm = X->manager();
         ++X;
         for (; X != VarArr->end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrAllDiff::Ns_ConstrAllDiff: All the "
-                          "variables of a constraint must belong to the same "
-                          "NsProblemManager");
+                          "Ns_ConstrAllDiff::Ns_ConstrAllDiff: All the variables of a constraint must belong to the same NsProblemManager");
         }
 }
 
@@ -315,17 +289,6 @@ void Ns_ConstrAllDiff::ArcCons(void)
                         newBoundVars.push(&*X);
         }
         allDiffArcCons(VarArr, newBoundVars, this);
-        // for (X = VarArr->begin();   X != VarArr->end();   ++X)  {
-        //      for (Y = VarArr->begin();   Y != VarArr->end();   ++Y)  {
-        //              if ( Y != X   &&   Y->isBound() )
-        //                      X->removeSingle( Y->value(), 0 );
-        //              //  `0' is used in order not to record this constraint
-        //              //   that provoked the removal, because
-        //              //   Ns_ConstrAllDiff::LocalArcCons() should be called
-        //              //   to check again the constraint AllDiff (against
-        //              //   this removal).
-        //      }
-        //}
 }
 
 void Ns_ConstrAllDiff::LocalArcCons(Ns_QueueItem& Qitem)
@@ -335,97 +298,49 @@ void Ns_ConstrAllDiff::LocalArcCons(Ns_QueueItem& Qitem)
                 newBoundVars.push(Qitem.getVarFired());
                 allDiffArcCons(VarArr, newBoundVars, this);
         }
-        // if ( Qitem.getVarFired()->isBound() )    {
-        //      NsInt  Value = Qitem.getVarFired()->value();
-        //      for (NsIntVarArray::iterator X = VarArr->begin();   X !=
-        //      VarArr->end();   ++X)  {
-        //              if ( &*X  !=  Qitem.getVarFired() )
-        //                      X->removeSingle( Value, 0 );
-        //              //  `0' is used in order not to record this
-        //              constraint...
-        //              //   (see the previous comment).
-        //      }
-        //}
 }
 
 bool Ns_ConstrAllDiffStrong::groupedNsIntVar::removeDomain(
     const NsIntVar& V, const Ns_Constraint* constraint)
 {
         if (Var.max() <= V.max()) {
-                //  In this case, and when we have bounds-consistency mode (i.e.
-                //  a
-                //   constrained variable is represented by its minimum and
-                //   maximum), we `eat' the values from `right' to `left', in
-                //   order not to avoid (if possible) removing a value from the
-                //   middle of the domain.
+                // In this case, and when we have bounds-consistency mode (i.e.
+                // a constrained variable is represented by its minimum and
+                // maximum), we 'eat' the values from 'right' to 'left', in
+                // order not to avoid (if possible) removing a value from the
+                // middle of the domain.
                 for (NsIntVar::const_reverse_iterator val = V.rbegin();
                      val != V.rend(); ++val) {
-                        // if ( Var.contains(*val) )   {
                         if (!Var.removeSingle(*val, constraint))
                                 return false;
-                        //}
                 }
         } else {
                 for (NsIntVar::const_iterator val = V.begin(); val != V.end();
                      ++val) {
-                        // if ( Var.contains(*val) )   {
                         if (!Var.removeSingle(*val, constraint))
                                 return false;
-                        //}
                 }
         }
         return true;
 }
-
-// struct less_max_mmin_size : public binary_function<NsIntVar, NsIntVar, bool>
-// {
-//
-//      bool  operator ()  (const MaxLopez& X, const MaxLopez& Y)
-//      {
-//              return  ( X.max() < Y.max()
-//                              || ( X.max() == Y.max()  &&  X.min() >  Y.min()
-//                              )
-//                              || ( X.max() == Y.max()  &&  X.min() == Y.min()
-//                              &&  X.size() < Y.size() ) );
-//      }
-//
-//};
-//
-//
-// struct less_min           : public binary_function<NsIntVar, NsIntVar, bool>
-// {
-//
-//      bool  operator ()  (const MaxLopez& X, const MaxLopez& Y)
-//      {
-//              return  ( X.min() >  Y.min() );
-//      }
-//
-//};
 
 Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong(NsIntVarArray* VarArr_init,
                                                unsigned long Cap)
   : Capacity(Cap)
 {
         assert_Ns(VarArr_init->size() > Capacity,
-                  "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: Condition "
-                  "required:  VarArr.size() >= 2");
-        assert_Ns(Capacity > 0, "Ns_ConstrAllDiffStrong::Ns_"
-                                "ConstrAllDiffStrong: Condition required:  "
-                                "Capacity > 0");
+                  "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: Condition required: VarArr.size() >= 2");
+        assert_Ns(Capacity > 0,
+                  "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: Condition required: Capacity > 0");
         NsIntVarArray::iterator V = VarArr_init->begin();
         NsProblemManager& pm = V->manager();
         for (; V != VarArr_init->end(); ++V) {
                 assert_Ns(&pm == &V->manager(),
-                          "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: All "
-                          "the variables of a constraint must belong to the "
-                          "same NsProblemManager");
+                          "Ns_ConstrAllDiffStrong::Ns_ConstrAllDiffStrong: All the variables of a constraint must belong to the same NsProblemManager");
                 VarArr.push_back(groupedNsIntVar(*V));
                 VarPointerGroup.insert(
                     make_pair((Ns_pointer_t) & *V, &VarArr.back()));
         }
-        // for (X = VarArr->begin();   X != VarArr->end();   ++X)
-        //      VarArrGroup.push_back( NsIntVar(pm, NsMINUS_INF+1, NsPLUS_INF-1)
-        //      );
 }
 
 namespace {
@@ -456,15 +371,8 @@ void allDiffBoundsConsistency(
     const Ns_ConstrAllDiffStrong::groupedNsIntVar::group_t group,
     const Ns_Constraint* constraint)
 {
-        //      cout << &VarArr << ": ";
-        //      for (NsIndex k=0;   k < VarArr.size();   ++k)
-        //              cout << "  " << (VarArr[k].group() -
-        //              groupedNsIntVar::FIRST_GROUP) << ">" << VarArr[k].Var;
-        //      cout << endl;
-        // for (groupedNsIntVar::group_t group = groupedNsIntVar::FIRST_GROUP;
-        // /* VOID */ ;   ++group)   {
-        //  At first, we gather all the variables with group-id
-        //   equal to `group' into the array `VarArrSortedList'.
+        // At first, we gather all the variables with group-id
+        // equal to 'group' into the array 'VarArrSortedList'.
         NsDeque<Ns_ConstrAllDiffStrong::groupedNsIntVar*> VarArrSortedList;
         NsIndex i;
         Ns_ConstrAllDiffStrong::groupedNsIntVar::group_t nGroups =
@@ -476,26 +384,23 @@ void allDiffBoundsConsistency(
                         nGroups = VarArr[i].group();
         }
         assert_Ns(!VarArrSortedList.empty(),
-                  "allDiffBoundsConsistency: Empty `group' of variables");
-        // break;        // We have processed all the separate groups of
-        // variables.
-        //  Copying `VarArrSortedList' to `VarArrSorted' which is friendlier
-        //   to the `qsort()' function that it is used bellow.
+                  "allDiffBoundsConsistency: Empty 'group' of variables");
+        // Copying 'VarArrSortedList' to 'VarArrSorted' which is friendlier
+        // to the 'qsort()' function that it is used bellow.
         Ns_ConstrAllDiffStrong::groupedNsIntVar** VarArrSorted =
             new Ns_ConstrAllDiffStrong::groupedNsIntVar*[VarArrSortedList
                                                              .size()];
         for (i = 0; i < VarArrSortedList.size(); ++i)
                 VarArrSorted[i] = VarArrSortedList[i];
-        //  ... Then we sort the variables in `VarArrSorted', by ascending
-        //  maximum,
-        //   descending minimum, and ascending size.  I.e., if the domain of
-        //   VarX is more possible to be a subset of domain of VarY, then VarX
-        //   precedes VarY in the array `VarArrSorted'.
+        // ... Then we sort the variables in 'VarArrSorted', by ascending
+        // maximum, descending minimum, and ascending size. I.e., if the domain
+        // of VarX is more possible to be a subset of domain of VarY, then VarX
+        // precedes VarY in the array 'VarArrSorted'.
         qsort(VarArrSorted, VarArrSortedList.size(),
               sizeof(Ns_ConstrAllDiffStrong::groupedNsIntVar*),
               less_function_MaxMMinSize);
-        //  We gather all the different maxima into the array `Max' by ascending
-        //  order.
+        // We gather all the different maxima into the array `Max' by ascending
+        // order.
         NsDeque<NsInt> Max;
         for (i = 0; i < VarArrSortedList.size(); ++i) {
                 if (i == 0 || (i > 0 && VarArrSorted[i]->Var.max() !=
@@ -774,37 +679,6 @@ void Ns_ConstrAllDiffStrong::LocalArcCons(Ns_QueueItem& Qitem)
         allDiffBoundsConsistency(VarArr, Capacity, groupFired, this);
 }
 
-// namespace  {
-//
-//              void
-//      countUpdateMinMax (NsIntVar& vMinValueIndex,
-//                      NsIntVar& vMaxValueIndex,
-//                      NsIntVarArray& vCount)
-//      {
-//              NsInt  i;
-//
-//
-//              for (i=vMinValueIndex.min();  i <
-//              static_cast<NsInt>(vCount.size());  ++i)    {
-//
-//                      if ( vCount[i].max() != 0 )
-//                              break;
-//              }
-//
-//              vMinValueIndex.remove(NsMINUS_INF, i-1);
-//
-//
-//              for (i=vMaxValueIndex.max();  i >= 0;  --i)    {
-//
-//                      if ( vCount[i].max() != 0 )
-//                              break;
-//              }
-//
-//              vMaxValueIndex.remove(i+1, NsPLUS_INF);
-//      }
-//
-//} // namespace
-
 Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                                const NsDeque<NsInt>& Values,
                                const NsDeque<NsInt>& Occurrences,
@@ -831,10 +705,7 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                 ////   when all the values have been assigned.
         }
         for (; X != VarArr->end(); ++X) {
-                assert_Ns(pm == &X->manager(), "Ns_ConstrCount::Ns_ConstrCount:"
-                                               " All the variables of a "
-                                               "constraint must belong to the "
-                                               "same NsProblemManager");
+                assert_Ns(pm == &X->manager(), "Ns_ConstrCount::Ns_ConstrCount: All the variables of a constraint must belong to the same NsProblemManager");
         }
         NsIndex i;
         for (i = 0; i < VarArr->size(); ++i) {
@@ -843,14 +714,12 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                 VarIndex.insert(make_pair((Ns_pointer_t) & (*VarArr)[i], i));
         }
         assert_Ns(Values.size() == Occurrences.size(),
-                  "Ns_ConstrCount::Ns_ConstrCount: `Values' and `Occurrences' "
-                  "sizes should match");
+                  "Ns_ConstrCount::Ns_ConstrCount: `Values' and `Occurrences' sizes should match");
         // assert_Ns( Split >= 0 ,
         //      "Ns_ConstrCount::Ns_ConstrCount: Negative `Split' value");
         if (Split) {
                 assert_Ns(Values.size() == SplitPositions.size(),
-                          "Ns_ConstrCount::Ns_ConstrCount: `Values' and "
-                          "`SplitPositions' sizes should match");
+                          "Ns_ConstrCount::Ns_ConstrCount: `Values' and `SplitPositions' sizes should match");
         }
         //  Sort tuple <Value,Occurrence> by value.
         // NsDeque<ValueOccurrence_t>  ValuesOccurrences;
@@ -865,22 +734,18 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
                                               SplitPositions[i], Split));
                         assert_Ns(Occurrences[i] / Split ==
                                       SplitPositions[i].size(),
-                                  "Ns_ConstrCount::Ns_ConstrCount: "
-                                  "`SplitPositions[i]' size should match "
-                                  "`Occurrences[i] / Split'");
+                                  "Ns_ConstrCount::Ns_ConstrCount: `SplitPositions[i]' size should match `Occurrences[i] / Split'");
                         for (NsIndex j = 0; j < SplitPositions[i].size(); ++j) {
                                 assert_Ns(/*0 <= SplitPositions[i][j] &&*/
                                           SplitPositions[i][j] < VarArr->size(),
-                                          "Ns_ConstrCount::Ns_ConstrCount: "
-                                          "Wrong `SplitPositions[i][j]'");
+                                          "Ns_ConstrCount::Ns_ConstrCount: Wrong `SplitPositions[i][j]'");
                         }
                 }
                 occurrencesSum += Occurrences[i];
         }
         sort(ValuesOccurrences.begin(), ValuesOccurrences.end());
         assert_Ns(occurrencesSum == VarArr->size(),
-                  "Ns_ConstrCount::Ns_ConstrCount: `Occurrences' sum does not "
-                  "match `VarArr' size");
+                  "Ns_ConstrCount::Ns_ConstrCount: `Occurrences' sum does not match `VarArr' size");
         for (i = 0; i < Values.size(); ++i) {
                 assert_Ns(ValueIndex.count(ValuesOccurrences[i].value) == 0,
                           "Ns_ConstrCount::Ns_ConstrCount: Duplicate value");
@@ -893,25 +758,8 @@ Ns_ConstrCount::Ns_ConstrCount(NsIntVarArray* VarArr_init,
 
 namespace {
 
-//      void
-// countReviseValue (NsIntVar& Var, const NsInt value,
-//              NsIntVarArray& vCount,
-//              const Ns_ConstrCount::ValueIndex_t& ValueIndex,
-//              const Ns_Constraint *constraint)
-//{
-//      Ns_ConstrCount::ValueIndex_t::const_iterator  cit =
-//              ValueIndex.find( value );
-
-//      if ( cit == ValueIndex.end() ||
-//                      vCount[cit->second].max() == 0 )
-//      {
-//              Var.removeSingle(value, constraint);
-//      }
-//}
-
 void countBoundsCons(
     bool lowerBound, NsIntVarArray& VarArr, const NsIndex i,
-    // NsIntVarArray& vCount,
     const Ns_ConstrCount::ValueIndex_t& ValueIndex,
     NsDeque<Ns_ConstrCount::ValueOccurrence_t>& ValuesOccurrences,
     const NsIndex Dwin, const Ns_Constraint* constraint)
@@ -935,7 +783,7 @@ void countBoundsCons(
                         cit_val =
                             upper_bound(ValuesOccurrences.begin(),
                                         ValuesOccurrences.end(), val_occur);
-                        //  In order to put `cit_val' inside the range.
+                        // In order to put 'cit_val' inside the range.
                         if (cit_val == ValuesOccurrences.end())
                                 --cit_val;
                 }
@@ -946,8 +794,6 @@ void countBoundsCons(
                static_cast<NsIndex>(index) < ValuesOccurrences.size()) {
                 splitIndex =
                     ValuesOccurrences[index].splitIndexForPosition(i / Dwin);
-                // cout << splitIndex << "," <<
-                // ValuesOccurrences[index].vCount.size() << "\n";
                 if (ValuesOccurrences[index].vCount[splitIndex].max() != 0 &&
                     VarArr[i].contains(ValuesOccurrences[index].value))
                         break;
@@ -976,59 +822,16 @@ void countBoundsCons(
 }
 
 void countArcCons(NsIntVarArray& VarArr, const NsIndex i,
-                  // NsIntVarArray& vCount,
-                  // NsIntVar& vMinValueIndex,
-                  // NsIntVar& vMaxValueIndex,
                   const Ns_ConstrCount::ValueIndex_t& ValueIndex,
                   NsDeque<Ns_ConstrCount::ValueOccurrence_t>& ValuesOccurrences,
                   const NsIndex Dwin, const Ns_Constraint* constraint)
 {
-        // for (NsIntVar::const_iterator val=Var.begin();
-        //              val != Var.end();
-        //              ++val)
-        //{
-        //      countReviseValue(Var, *val, vCount, ValueIndex, constraint);
-        //}
-        // NsInt  value;
-        // do  {
-        //      value  =  Var.min();
-        //      countReviseValue(Var, value, vCount, ValueIndex, constraint);
-        //} while ( Var.min()  !=  value );
-        // do  {
-        //      value  =  Var.max();
-        //      countReviseValue(Var, value, vCount, ValueIndex, constraint);
-        //} while ( Var.max()  !=  value );
         countBoundsCons(true, VarArr, i, ValueIndex, ValuesOccurrences, Dwin,
                         constraint);
         if (!VarArr[i].isBound()) {
                 countBoundsCons(false, VarArr, i, ValueIndex, ValuesOccurrences,
                                 Dwin, constraint);
         }
-        // if ( vMinValueIndex.min()-1  >=  0 )   {
-        //      Var.removeRange(NsMINUS_INF,
-        //      ValuesOccurrences[vMinValueIndex.min()-1].value,
-        //      constraint);
-        //}
-        // if ( static_cast<NsIndex>(vMaxValueIndex.max()+1) <
-        //              ValuesOccurrences.size() )
-        //{
-        //      Var.removeRange(ValuesOccurrences[vMaxValueIndex.max()+1].value,
-        //      NsPLUS_INF, constraint);
-        //}
-        // if ( Var.isBound() )    {
-        //      Ns_ConstrCount::ValueIndex_t::const_iterator  cit =
-        //              ValueIndex.find( Var.value() );
-        //      if ( cit  ==  ValueIndex.end() )    {
-        //              vCount[0].removeAll();
-        //              return;
-        //      }
-        //      NsIndex  index = cit->second;
-        //      vCount[index].remove( vCount[index].max() );
-        //      //if ( vCount[index].max()  ==  0 )   {
-        //      //      countUpdateMinMax(vMinValueIndex,
-        //      //                      vMaxValueIndex, vCount);
-        //      //}
-        //}
 }
 
 } // namespace
@@ -1049,30 +852,6 @@ void Ns_ConstrCount::LocalArcCons(Ns_QueueItem& Qitem)
         countArcCons(*VarArr, i, ValueIndex, ValuesOccurrences, Dwin, this);
 }
 
-// namespace  {
-//              void
-//      MakeIDs (NsIntVarArray *VarArr)
-//      {
-//              NsIntVarArray::iterator  X;
-//
-//              if ( X->IsSetID() )   {
-//                      X = VarArr->begin();
-//                      NsIndex  previous = X->getID();
-//                      ++X;
-//
-//                      for ( ;   X != VarArr->end();   ++X)   {
-//                              assert_Ns( X->getID() == previous + 1 ,
-//                              "MakeIDs: Non-continuous ids in `VarArr'");
-//                              previous = X->getID();
-//                      }
-//
-//              }  else  {
-//                      for (X=VarArr->begin();   X != VarArr->end();   ++X)
-//                              X->setID();
-//              }
-//      }
-//}  // namespace
-
 Ns_ConstrInverse::Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
                                    NsIntVarArray* VarArr_init)
   : VarArrInv(VarArrInv_init),
@@ -1082,22 +861,17 @@ Ns_ConstrInverse::Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
 {
         revisionType = VALUE_CONSISTENCY;
         assert_Ns(!VarArrInv->empty() && !VarArr->empty(),
-                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required:  "
-                  "Both arrays must have some elements");
+                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required:  Both arrays must have some elements");
         NsIntVarArray::iterator X = VarArr->begin();
         NsProblemManager& pm = X->manager();
         ++X;
         for (; X != VarArr->end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrInverse::Ns_ConstrInverse: All the "
-                          "variables of a constraint must belong to the same "
-                          "NsProblemManager");
+                          "Ns_ConstrInverse::Ns_ConstrInverse: All the variables of a constraint must belong to the same NsProblemManager");
         }
         for (X = VarArrInv->begin(); X != VarArrInv->end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrInverse::Ns_ConstrInverse: All the "
-                          "variables of a constraint must belong to the same "
-                          "NsProblemManager");
+                          "Ns_ConstrInverse::Ns_ConstrInverse: All the variables of a constraint must belong to the same NsProblemManager");
         }
         NsIndex i;
         for (X = VarArr->begin(), i = 0; X != VarArr->end(); ++X, ++i) {
@@ -1114,8 +888,6 @@ Ns_ConstrInverse::Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
                 VarArrayIndex.insert(
                     make_pair((Ns_pointer_t) & *X, ArrayIndex_t(true, i)));
         }
-        // MakeIDs(VarArr);
-        // MakeIDs(VarArrInv);
 }
 
 void Ns_ConstrInverse::ArcCons(void)
@@ -1156,21 +928,17 @@ void Ns_ConstrInverse::LocalArcCons(Ns_QueueItem& Qitem)
         if (cit->second.InInverse) {
                 if (static_cast<unsigned>(VarFiredW) >= VArr.size())
                         return;
-                // if ( VArr[VarFiredW].contains(VarFiredId) )
                 VArr[VarFiredW].removeSingle(VarFiredId, this);
         } else {
                 if (Qitem.getVarFired()->isBound()) {
                         NsInt val = Qitem.getVarFired()->value();
                         assert_Ns(0 <= val && static_cast<unsigned>(val) <
                                                   VArrInv.size(),
-                                  "Ns_ConstrInverse::LocalArcCons: `val' out "
-                                  "of range");
-                        // if ( VArrInv[val].contains(-1) )
+                                  "Ns_ConstrInverse::LocalArcCons: `val' out of range");
                         VArrInv[val].removeSingle(-1, this);
                 }
                 if (static_cast<unsigned>(VarFiredW) >= VArrInv.size())
                         return;
-                // if ( VArrInv[VarFiredW].contains(VarFiredId) )
                 VArrInv[VarFiredW].removeSingle(VarFiredId, this);
         }
 }
@@ -1223,93 +991,89 @@ void Ns_ConstrElement::LocalArcCons(Ns_QueueItem& Qitem)
         }
 }
 
-///  @{
-///  \name  Representation of higher order constraints in a graph
+/// @{
+/// @name Representation of higher order constraints in a graph
 
-///  Auxiliary function to depict a ternary constraint into a graph file.
-
+/// Auxiliary function to depict a ternary constraint into a graph file.
 void naxos::Ns_ternaryConstraintToGraphFile(
     ofstream& fileConstraintsGraph, const NsIntVar* VarX, const NsIntVar* VarY,
     const NsIntVar* VarZ, const Ns_Constraint* constr, const char* constrName,
     const bool sourceLabels)
 {
         fileConstraintsGraph
-            << "\n\tConstr" << constr << "  [shape=point];\n"
-            << "\tVar" << VarY << "    -> Constr" << constr
-            << "   [arrowhead=none"
+            << "\n\tConstr" << constr << " [shape=point];\n"
+            << "\tVar" << VarY << " -> Constr" << constr
+            << " [arrowhead=none"
             << ((sourceLabels) ? ", headlabel=\"y\"" : "") << "];\n"
-            << "\tVar" << VarZ << "    -> Constr" << constr
-            << "   [arrowhead=none"
+            << "\tVar" << VarZ << " -> Constr" << constr
+            << " [arrowhead=none"
             << ((sourceLabels) ? ", headlabel=\"z\"" : "") << "];\n"
-            << "\tConstr" << constr << " -> Var" << VarX << "   "
-            << "   [taillabel=\"" << constrName << "\"];\n";
+            << "\tConstr" << constr << " -> Var" << VarX << " [taillabel=\""
+            << constrName << "\"];\n";
 }
 
-///  Auxiliary function to depict a global constraint into a graph file.
-
+/// Auxiliary function to depict a global constraint into a graph file.
 void naxos::Ns_globalConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                            const NsIntVar* VarX,
                                            const NsIntVarArray* VarArr,
                                            const Ns_Constraint* constr,
                                            const char* constrName)
 {
-        fileConstraintsGraph << "\n\tConstr" << constr << "  [shape=point];\n";
+        fileConstraintsGraph << "\n\tConstr" << constr << " [shape=point];\n";
         for (NsIntVarArray::const_iterator V = VarArr->begin();
              V != VarArr->end(); ++V) {
-                fileConstraintsGraph << "\tVar" << &*V << "    -> Constr"
+                fileConstraintsGraph << "\tVar" << &*V << " -> Constr"
                                      << constr
-                                     << "   [arrowhead=none, style=dotted];\n";
+                                     << " [arrowhead=none, style=dotted];\n";
         }
         fileConstraintsGraph
-            << "\tConstr" << constr << " -> Var" << VarX << "   "
-            << "   [taillabel=\"" << constrName << "\", style=dotted];\n";
+            << "\tConstr" << constr << " -> Var" << VarX << " [taillabel=\""
+            << constrName << "\", style=dotted];\n";
 }
 
-///  Auxiliary function to depict an array-constraint into a graph file.
-
+/// Auxiliary function to depict an array-constraint into a graph file.
 void naxos::Ns_arrayConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                           const NsIntVarArray* VarArr,
                                           const Ns_Constraint* constr,
                                           const char* constrName)
 {
-        fileConstraintsGraph << "\n\tConstr" << constr << "  [shape=point];\n";
+        fileConstraintsGraph << "\n\tConstr" << constr << " [shape=point];\n";
         NsIntVarArray::const_iterator V = VarArr->begin();
         fileConstraintsGraph << "\tVar" << &*V << " -> Constr" << constr
-                             << "   [arrowhead=none, style=dotted, headlabel=\""
+                             << " [arrowhead=none, style=dotted, headlabel=\""
                              << constrName << "\"];\n";
         ++V;
         for (; V != VarArr->end(); ++V) {
                 fileConstraintsGraph << "\tVar" << &*V << " -> Constr" << constr
-                                     << "   [arrowhead=none, style=dotted];\n";
+                                     << " [arrowhead=none, style=dotted];\n";
         }
 }
 
-///  Auxiliary function to depict an Inverse constraint into a graph file.
-
+/// Auxiliary function to depict an Inverse constraint into a graph file.
 void naxos::Ns_inverseConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                             const NsIntVarArray* VarArr,
                                             const NsIntVarArray* VarArrInv,
                                             const Ns_Constraint* constr)
 {
-        fileConstraintsGraph << "\n\tConstr" << constr << "  [shape=point];\n";
+        fileConstraintsGraph << "\n\tConstr" << constr << " [shape=point];\n";
         NsIndex i = 0;
         fileConstraintsGraph
             << "\tConstr" << constr << " -> Var" << &(*VarArr)[i]
-            << "   [arrowhead=odot, style=dotted, headlabel=\"" << i
+            << " [arrowhead=odot, style=dotted, headlabel=\"" << i
             << "\", taillabel=\"Inverse\"];\n";
         ++i;
         for (; i < VarArr->size(); ++i) {
                 fileConstraintsGraph
                     << "\tConstr" << constr << " -> Var" << &(*VarArr)[i]
-                    << "   [arrowhead=odot, style=dotted, headlabel=\"" << i
+                    << " [arrowhead=odot, style=dotted, headlabel=\"" << i
                     << "\"];\n";
         }
         for (i = 0; i < VarArrInv->size(); ++i) {
                 fileConstraintsGraph
                     << "\tConstr" << constr << " -> Var" << &(*VarArrInv)[i]
-                    << "   [arrowhead=dot, style=dotted, headlabel=\"" << i
+                    << " [arrowhead=dot, style=dotted, headlabel=\"" << i
                     << "\"];\n";
         }
 }
 
-///  @}
+/// @}
