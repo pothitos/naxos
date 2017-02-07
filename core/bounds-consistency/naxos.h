@@ -4776,8 +4776,7 @@ struct Ns_SearchNode {
                 {
                 }
 
-                ///  Restores the copy back to the original domain place (i.e.\
-                ///  pointer).
+                /// Restores the copy back to the original domain place (i.e. pointer).
                 void restore(void)
                 {
                         *bitsetDomainPointer = bitsetDomainCopy;
