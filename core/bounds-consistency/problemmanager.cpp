@@ -432,7 +432,7 @@ NsProblemManager::~NsProblemManager(void)
 /// above code that a Solver's programmer could develop. We
 /// think that the culprit is an STL bug...
 ///
-///    Ns_Constraint *temp;
+///    Ns_Constraint* temp;
 ///    for (/*VOID*/; currentConstr != varFired->constraints_begin();
 ///         ++currentConstr) {
 ///            temp = *currentConstr;
