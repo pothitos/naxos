@@ -1282,7 +1282,7 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                (VarY->min() * VarZ->min() > VarX->max() &&
                 VarY->min() * VarZ->max() > VarX->max())) {
                 if (!VarY->removeSingle(VarY->min(), constraint))
-                        return; // ... to avoid an infinite loop
+                        return; // to avoid an infinite loop
                 changed_minmax = true;
         }
         while ((VarY->max() * VarZ->min() < VarX->min() &&
@@ -1290,7 +1290,7 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                (VarY->max() * VarZ->min() > VarX->max() &&
                 VarY->max() * VarZ->max() > VarX->max())) {
                 if (!VarY->removeSingle(VarY->max(), constraint))
-                        return; // ... to avoid an infinite loop
+                        return; // to avoid an infinite loop
                 changed_minmax = true;
         }
 }
