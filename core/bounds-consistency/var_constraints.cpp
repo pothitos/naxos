@@ -16,8 +16,9 @@ Ns_ConstrXinDomain::Ns_ConstrXinDomain(NsIntVar* X,
   : VarX(X), domainPrevious(domainPrevious_init), domainNext(domainNext_init)
 {
         if (domainPrevious == 0) {
-                assert_Ns(domainNext == 0,
-                          "Ns_ConstrXinDomain::Ns_ConstrXinDomain: non-empty 'domainNext'");
+                assert_Ns(domainNext == 0, "Ns_ConstrXinDomain::Ns_"
+                                           "ConstrXinDomain: non-empty "
+                                           "'domainNext'");
                 domainPrevious = new NsDeque<NsInt>();
                 domainNext = new NsDeque<NsInt>();
                 arraysAllocated = true;
@@ -25,7 +26,8 @@ Ns_ConstrXinDomain::Ns_ConstrXinDomain(NsIntVar* X,
                 arraysAllocated = false;
         }
         assert_Ns(domainPrevious->size() == domainNext->size(),
-                  "Ns_ConstrXinDomain::Ns_ConstrXinDomain: unequal sizes of auxiliary arrays");
+                  "Ns_ConstrXinDomain::Ns_ConstrXinDomain: unequal sizes of "
+                  "auxiliary arrays");
         min = domain[0];
         if (domainPrevious->empty()) {
                 NsInt max = domain[domain.size() - 1];
@@ -114,7 +116,8 @@ void Ns_ConstrMetaXeqYlessthanC::ArcCons(void)
                         VarY->removeRange(NsMINUS_INF, C - 1, this);
                 } else {
                         assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYlessthanC::ArcCons: Wrong 'VarX->value()'");
+                                  "Ns_ConstrMetaXeqYlessthanC::ArcCons: Wrong "
+                                  "'VarX->value()'");
                         VarY->removeRange(C, NsPLUS_INF, this);
                 }
         }
@@ -128,13 +131,16 @@ void Ns_ConstrMetaXeqYlessthanC::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarY->removeRange(NsMINUS_INF, C - 1, this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYlessthanC::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYlessthanC::"
+                                          "LocalArcCons: Wrong "
+                                          "'VarX->value()'");
                                 VarY->removeRange(C, NsPLUS_INF, this);
                         }
                 }
         } else {
                 assert_Ns(VarY == Qitem.getVarFired(),
-                          "Ns_ConstrMetaXeqYlessthanC::LocalArcCons: Wrong getVarFired");
+                          "Ns_ConstrMetaXeqYlessthanC::LocalArcCons: Wrong "
+                          "getVarFired");
                 if (VarY->max() < C)
                         VarX->removeSingle(0, this);
                 if (VarY->min() >= C)
@@ -171,7 +177,9 @@ void Ns_ConstrMetaXeqYlessthanZ::LocalArcCons(Ns_QueueItem& Qitem)
                                                   this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYlessthanZ::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYlessthanZ::"
+                                          "LocalArcCons: Wrong "
+                                          "'VarX->value()'");
                                 VarY->removeRange(VarZ->max(), NsPLUS_INF,
                                                   this);
                                 VarZ->removeRange(NsMINUS_INF, VarY->min(),
@@ -186,21 +194,26 @@ void Ns_ConstrMetaXeqYlessthanZ::LocalArcCons(Ns_QueueItem& Qitem)
                                                           NsPLUS_INF, this);
                                 } else {
                                         assert_Ns(VarX->value() == 1,
-                                                  "Ns_ConstrMetaXeqYlessthanZ::LocalArcCons: Wrong 'VarX->value()'");
+                                                  "Ns_ConstrMetaXeqYlessthanZ::"
+                                                  "LocalArcCons: Wrong "
+                                                  "'VarX->value()'");
                                         VarZ->removeRange(NsMINUS_INF,
                                                           VarY->min(), this);
                                 }
                         }
                 } else {
                         assert_Ns(VarZ == Qitem.getVarFired(),
-                                  "Ns_ConstrMetaXeqYlessthanZ::LocalArcCons: Wrong getVarFired");
+                                  "Ns_ConstrMetaXeqYlessthanZ::LocalArcCons: "
+                                  "Wrong getVarFired");
                         if (VarX->isBound()) {
                                 if (VarX->value() == 0) {
                                         VarY->removeRange(
                                             NsMINUS_INF, VarZ->min() - 1, this);
                                 } else {
                                         assert_Ns(VarX->value() == 1,
-                                                  "Ns_ConstrMetaXeqYlessthanZ::LocalArcCons: Wrong 'VarX->value()'");
+                                                  "Ns_ConstrMetaXeqYlessthanZ::"
+                                                  "LocalArcCons: Wrong "
+                                                  "'VarX->value()'");
                                         VarY->removeRange(VarZ->max(),
                                                           NsPLUS_INF, this);
                                 }
@@ -225,7 +238,8 @@ void Ns_ConstrMetaXeqYlesseqthanC::ArcCons(void)
                         VarY->removeRange(NsMINUS_INF, C, this);
                 } else {
                         assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYlesseqthanC::ArcCons: Wrong 'VarX->value()'");
+                                  "Ns_ConstrMetaXeqYlesseqthanC::ArcCons: "
+                                  "Wrong 'VarX->value()'");
                         VarY->removeRange(C + 1, NsPLUS_INF, this);
                 }
         }
@@ -239,13 +253,16 @@ void Ns_ConstrMetaXeqYlesseqthanC::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarY->removeRange(NsMINUS_INF, C, this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYlesseqthanC::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYlesseqthanC::"
+                                          "LocalArcCons: Wrong "
+                                          "'VarX->value()'");
                                 VarY->removeRange(C + 1, NsPLUS_INF, this);
                         }
                 }
         } else {
                 assert_Ns(VarY == Qitem.getVarFired(),
-                          "Ns_ConstrMetaXeqYlesseqthanC::LocalArcCons: Wrong getVarFired");
+                          "Ns_ConstrMetaXeqYlesseqthanC::LocalArcCons: Wrong "
+                          "getVarFired");
                 if (VarY->max() <= C)
                         VarX->removeSingle(0, this);
                 if (VarY->min() > C)
@@ -266,7 +283,8 @@ void Ns_ConstrMetaXeqYlesseqthanZ::ArcCons(void)
                         VarY->removeRange(NsMINUS_INF, VarZ->min(), this);
                 } else {
                         assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYlesseqthanZ::ArcCons: Wrong 'VarX->value()'");
+                                  "Ns_ConstrMetaXeqYlesseqthanZ::ArcCons: "
+                                  "Wrong 'VarX->value()'");
                         VarY->removeRange(VarZ->max() + 1, NsPLUS_INF, this);
                         VarZ->removeRange(NsMINUS_INF, VarY->min() - 1, this);
                 }
@@ -284,7 +302,9 @@ void Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons(Ns_QueueItem& Qitem)
                                                   this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYlesseqthanZ::"
+                                          "LocalArcCons: Wrong "
+                                          "'VarX->value()'");
                                 VarY->removeRange(VarZ->max() + 1, NsPLUS_INF,
                                                   this);
                                 VarZ->removeRange(NsMINUS_INF, VarY->min() - 1,
@@ -299,21 +319,28 @@ void Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons(Ns_QueueItem& Qitem)
                                                           NsPLUS_INF, this);
                                 } else {
                                         assert_Ns(VarX->value() == 1,
-                                                  "Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons: Wrong 'VarX->value()'");
+                                                  "Ns_"
+                                                  "ConstrMetaXeqYlesseqthanZ::"
+                                                  "LocalArcCons: Wrong "
+                                                  "'VarX->value()'");
                                         VarZ->removeRange(
                                             NsMINUS_INF, VarY->min() - 1, this);
                                 }
                         }
                 } else {
                         assert_Ns(VarZ == Qitem.getVarFired(),
-                                  "Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons: Wrong getVarFired");
+                                  "Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons: "
+                                  "Wrong getVarFired");
                         if (VarX->isBound()) {
                                 if (VarX->value() == 0) {
                                         VarY->removeRange(NsMINUS_INF,
                                                           VarZ->min(), this);
                                 } else {
                                         assert_Ns(VarX->value() == 1,
-                                                  "Ns_ConstrMetaXeqYlesseqthanZ::LocalArcCons: Wrong 'VarX->value()'");
+                                                  "Ns_"
+                                                  "ConstrMetaXeqYlesseqthanZ::"
+                                                  "LocalArcCons: Wrong "
+                                                  "'VarX->value()'");
                                         VarY->removeRange(VarZ->max() + 1,
                                                           NsPLUS_INF, this);
                                 }
@@ -338,7 +365,8 @@ void Ns_ConstrMetaXeqYgreaterthanC::ArcCons(void)
                         VarY->removeRange(C + 1, NsPLUS_INF, this);
                 } else {
                         assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYgreaterthanC::ArcCons: Wrong 'VarX->value()'");
+                                  "Ns_ConstrMetaXeqYgreaterthanC::ArcCons: "
+                                  "Wrong 'VarX->value()'");
                         VarY->removeRange(NsMINUS_INF, C, this);
                 }
         }
@@ -352,13 +380,16 @@ void Ns_ConstrMetaXeqYgreaterthanC::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarY->removeRange(C + 1, NsPLUS_INF, this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYgreaterthanC::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYgreaterthanC::"
+                                          "LocalArcCons: Wrong "
+                                          "'VarX->value()'");
                                 VarY->removeRange(NsMINUS_INF, C, this);
                         }
                 }
         } else {
                 assert_Ns(VarY == Qitem.getVarFired(),
-                          "Ns_ConstrMetaXeqYgreaterthanC::LocalArcCons: Wrong getVarFired");
+                          "Ns_ConstrMetaXeqYgreaterthanC::LocalArcCons: Wrong "
+                          "getVarFired");
                 if (VarY->min() > C)
                         VarX->removeSingle(0, this);
                 if (VarY->max() <= C)
@@ -378,7 +409,8 @@ void Ns_ConstrMetaXeqYgreatereqthanC::ArcCons(void)
                         VarY->removeRange(C, NsPLUS_INF, this);
                 } else {
                         assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYgreatereqthanC::ArcCons: Wrong 'VarX->value()'");
+                                  "Ns_ConstrMetaXeqYgreatereqthanC::ArcCons: "
+                                  "Wrong 'VarX->value()'");
                         VarY->removeRange(NsMINUS_INF, C - 1, this);
                 }
         }
@@ -392,13 +424,16 @@ void Ns_ConstrMetaXeqYgreatereqthanC::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarY->removeRange(C, NsPLUS_INF, this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYgreatereqthanC::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYgreatereqthanC::"
+                                          "LocalArcCons: Wrong "
+                                          "'VarX->value()'");
                                 VarY->removeRange(NsMINUS_INF, C - 1, this);
                         }
                 }
         } else {
                 assert_Ns(VarY == Qitem.getVarFired(),
-                          "Ns_ConstrMetaXeqYgreatereqthanC::LocalArcCons: Wrong getVarFired");
+                          "Ns_ConstrMetaXeqYgreatereqthanC::LocalArcCons: "
+                          "Wrong getVarFired");
                 if (VarY->min() >= C)
                         VarX->removeSingle(0, this);
                 if (VarY->max() < C)
@@ -417,8 +452,9 @@ void Ns_ConstrMetaXeqYeqC::ArcCons(void)
                 if (VarX->value() == 0) {
                         VarY->removeSingle(C, this);
                 } else {
-                        assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYeqC::ArcCons: Wrong 'VarX->value()'");
+                        assert_Ns(VarX->value() == 1, "Ns_ConstrMetaXeqYeqC::"
+                                                      "ArcCons: Wrong "
+                                                      "'VarX->value()'");
                         VarY->removeRange(NsMINUS_INF, C - 1, this);
                         VarY->removeRange(C + 1, NsPLUS_INF, this);
                 }
@@ -433,7 +469,8 @@ void Ns_ConstrMetaXeqYeqC::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarY->removeSingle(C, this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYeqC::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYeqC::LocalArcCons: "
+                                          "Wrong 'VarX->value()'");
                                 VarY->removeRange(NsMINUS_INF, C - 1, this);
                                 VarY->removeRange(C + 1, NsPLUS_INF, this);
                         }
@@ -461,8 +498,9 @@ void Ns_ConstrMetaXeqYneqC::ArcCons(void)
                         VarY->removeRange(NsMINUS_INF, C - 1, this);
                         VarY->removeRange(C + 1, NsPLUS_INF, this);
                 } else {
-                        assert_Ns(VarX->value() == 1,
-                                  "Ns_ConstrMetaXeqYneqC::ArcCons: Wrong 'VarX->value()'");
+                        assert_Ns(VarX->value() == 1, "Ns_ConstrMetaXeqYneqC::"
+                                                      "ArcCons: Wrong "
+                                                      "'VarX->value()'");
                         VarY->removeSingle(C, this);
                 }
         }
@@ -477,7 +515,8 @@ void Ns_ConstrMetaXeqYneqC::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarY->removeRange(C + 1, NsPLUS_INF, this);
                         } else {
                                 assert_Ns(VarX->value() == 1,
-                                          "Ns_ConstrMetaXeqYneqC::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYneqC::LocalArcCons:"
+                                          " Wrong 'VarX->value()'");
                                 VarY->removeSingle(C, this);
                         }
                 }
@@ -648,7 +687,8 @@ void Ns_ConstrXeqYplusCZspecial::LocalArcCons(Ns_QueueItem& Qitem)
                 }
         } else {
                 assert_Ns(VarZ == Qitem.getVarFired(),
-                          "Ns_ConstrXeqYplusCZspecial::LocalArcCons: Wrong getVarFired");
+                          "Ns_ConstrXeqYplusCZspecial::LocalArcCons: Wrong "
+                          "getVarFired");
                 VarX->removeRange(Qitem.getW() * C, (Qitem.getW() + 1) * C - 1,
                                   this);
                 for (v = VarY->begin(); v != VarY->end(); ++v) {
@@ -926,7 +966,8 @@ void Ns_ConstrMetaXeqYeqZ::LocalArcCons(Ns_QueueItem& Qitem)
                                         VarZ->removeSingle(VarY->value(), this);
                         } else {
                                 assert_Ns(VarX->value() == !neg,
-                                          "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrMetaXeqYeqZ::LocalArcCons: "
+                                          "Wrong 'VarX->value()'");
                                 VarY->removeRange(NsMINUS_INF, VarZ->min() - 1,
                                                   this);
                                 VarY->removeRange(VarZ->max() + 1, NsPLUS_INF,
@@ -946,7 +987,9 @@ void Ns_ConstrMetaXeqYeqZ::LocalArcCons(Ns_QueueItem& Qitem)
                                                     VarY->value(), this);
                                 } else {
                                         assert_Ns(VarX->value() == !neg,
-                                                  "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong 'VarX->value()'");
+                                                  "Ns_ConstrMetaXeqYeqZ::"
+                                                  "LocalArcCons: Wrong "
+                                                  "'VarX->value()'");
                                         VarY->removeRange(
                                             NsMINUS_INF, VarZ->min() - 1, this);
                                         VarY->removeRange(VarZ->max() + 1,
@@ -959,7 +1002,8 @@ void Ns_ConstrMetaXeqYeqZ::LocalArcCons(Ns_QueueItem& Qitem)
                         }
                 } else {
                         assert_Ns(VarZ == Qitem.getVarFired(),
-                                  "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong getVarFired");
+                                  "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong "
+                                  "getVarFired");
                         if (VarX->isBound()) {
                                 if (VarX->value() == neg) {
                                         if (VarZ->isBound())
@@ -967,7 +1011,9 @@ void Ns_ConstrMetaXeqYeqZ::LocalArcCons(Ns_QueueItem& Qitem)
                                                     VarZ->value(), this);
                                 } else {
                                         assert_Ns(VarX->value() == !neg,
-                                                  "Ns_ConstrMetaXeqYeqZ::LocalArcCons: Wrong 'VarX->value()'");
+                                                  "Ns_ConstrMetaXeqYeqZ::"
+                                                  "LocalArcCons: Wrong "
+                                                  "'VarX->value()'");
                                         VarY->removeRange(
                                             NsMINUS_INF, VarZ->min() - 1, this);
                                         VarY->removeRange(VarZ->max() + 1,
@@ -997,8 +1043,9 @@ void Ns_ConstrXeqYandZ::ArcCons(void)
                 if (VarX->value() == neg) {
                         // VOID
                 } else {
-                        assert_Ns(VarX->value() == !neg,
-                                  "Ns_ConstrXeqYandZ::LocalArcCons: Wrong 'VarX->value()'");
+                        assert_Ns(VarX->value() == !neg, "Ns_ConstrXeqYandZ::"
+                                                         "LocalArcCons: Wrong "
+                                                         "'VarX->value()'");
                         VarY->removeSingle(0, this);
                         VarZ->removeSingle(0, this);
                 }
@@ -1013,7 +1060,8 @@ void Ns_ConstrXeqYandZ::LocalArcCons(Ns_QueueItem& Qitem)
                                 // VOID
                         } else {
                                 assert_Ns(VarX->value() == !neg,
-                                          "Ns_ConstrXeqYandZ::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrXeqYandZ::LocalArcCons: "
+                                          "Wrong 'VarX->value()'");
                                 VarY->removeSingle(0, this);
                                 VarZ->removeSingle(0, this);
                         }
@@ -1038,8 +1086,9 @@ void Ns_ConstrXeqYorZ::ArcCons(void)
                         VarY->removeSingle(1, this);
                         VarZ->removeSingle(1, this);
                 } else {
-                        assert_Ns(VarX->value() == !neg,
-                                  "Ns_ConstrXeqYorZ::LocalArcCons: Wrong 'VarX->value()'");
+                        assert_Ns(VarX->value() == !neg, "Ns_ConstrXeqYorZ::"
+                                                         "LocalArcCons: Wrong "
+                                                         "'VarX->value()'");
                         // VOID
                 }
         }
@@ -1054,7 +1103,8 @@ void Ns_ConstrXeqYorZ::LocalArcCons(Ns_QueueItem& Qitem)
                                 VarZ->removeSingle(1, this);
                         } else {
                                 assert_Ns(VarX->value() == !neg,
-                                          "Ns_ConstrXeqYorZ::LocalArcCons: Wrong 'VarX->value()'");
+                                          "Ns_ConstrXeqYorZ::LocalArcCons: "
+                                          "Wrong 'VarX->value()'");
                                 // VOID
                         }
                 }
