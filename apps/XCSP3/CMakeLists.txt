@@ -21,6 +21,7 @@ set_target_properties(parserxcsp3core PROPERTIES IMPORTED_LOCATION
 
 add_executable(naxos-xcsp3 naxos-xcsp3.cpp)
 target_link_libraries(naxos-xcsp3 naxos parserxcsp3core)
+add_dependencies(naxos-xcsp3 parserxcsp3core)
 
 enable_testing()
 add_test(verification verification.sh)
