@@ -1,9 +1,9 @@
 /// @file Definitions of internal and public classes of Naxos
 /// Part of https://github.com/pothitos/naxos
 
-//   In the comments, words beginning with a backslash `\' should be
-//    ignored by the reader, because they are used by the `doxygen' program
-//    that generates a source code reference manual.
+// In the comments, words beginning with the symbol '@' should
+// be ignored by the reader, because they are used by Doxygen,
+// a program which generates a source code reference manual.
 
 ///  \mainpage
 ///
