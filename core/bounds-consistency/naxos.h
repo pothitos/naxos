@@ -5,28 +5,18 @@
 // be ignored by the reader, because they are used by Doxygen,
 // a program which generates a source code reference manual.
 
-///  \mainpage
+/// @mainpage
 ///
-///  Naxos is a Constraint Satisfaction Problem (CSP) solver.  For a
-///   general idea and information on how to use it, read naxos.pdf first
-///   (normally included in the source code package).  These comments can
-///   be only used for internal developing purposes.
+/// Naxos is a Constraint Satisfaction Problem (CSP) solver.  For a
+///  general idea and information on how to use it, read naxos.pdf first
+///  (normally included in the source code package).  These comments can
+///  be only used for internal developing purposes.
 ///
-///  \note
-///   The names of Naxos classes and other declarations begin with `Ns'.
-///    So it is a good practice not to put this prefix to our classes or
-///    data-types.  Moreover, prefix `Nsg' is used for Naxos goal classes,
-///    and prefix `Ns_' is used for internal classes that should not be
-///    used by the users of Naxos.
-///
-///  \todo  Make more types/classes internal to other classes.
-///
-///  \todo  Overload the operator `NsIntVar = NsIntVar' in order to create
-///          a constraint.
-///
-///  \todo  Reduce assertions.
-///
-///  \todo  O(1) removeRange().
+///  The names of Naxos classes and other declarations begin with `Ns'.
+///   So it is a good practice not to put this prefix to our classes or
+///   data-types.  Moreover, prefix `Nsg' is used for Naxos goal classes,
+///   and prefix `Ns_' is used for internal classes that should not be
+///   used by the users of Naxos.
 
 #ifndef Ns_NAXOS_H
 #define Ns_NAXOS_H
