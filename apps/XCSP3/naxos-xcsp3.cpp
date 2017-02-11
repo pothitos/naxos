@@ -1,4 +1,7 @@
-// Part of https://github.com/pothitos/naxos
+/// @file
+/// Links the XCSP3 parser to Naxos solver
+///
+/// Part of https://github.com/pothitos/naxos
 
 #include <cstdlib>
 #include <iostream>

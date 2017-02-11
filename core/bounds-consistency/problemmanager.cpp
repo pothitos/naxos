@@ -1,4 +1,6 @@
-/// @file Data structures and algorithms for a CSP management and solving
+/// @file
+/// Data structures and algorithms for a CSP management and solving
+///
 /// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"

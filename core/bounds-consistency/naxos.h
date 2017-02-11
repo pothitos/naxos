@@ -1,15 +1,15 @@
-/// @file Definitions of internal and public classes of Naxos
-/// Part of https://github.com/pothitos/naxos
+/// @file
+/// Definitions of internal and public classes of Naxos
 
 // In the comments, words beginning with the symbol '@' should
 // be ignored by the reader, because they are used by Doxygen,
 // a program which generates a source code reference manual.
 
-/// @mainpage Naxos is a Constraint Satisfaction Problem (CSP)
-/// solver. For a general idea and information on how to use it,
-/// please visit the above webpage. These comments you're
-/// reading now can be only used for internal developing
-/// purposes.
+/// @mainpage Naxos: A C++ Constraint Programming Library.
+/// For a general idea and information on how to use it,
+/// please visit the https://github.com/pothitos/naxos page.
+/// The comments you're reading right now can be only used for
+/// internal developing purposes.
 ///
 /// The names of Naxos classes and other declarations begin with
 /// `Ns'. So it is a good practice not to put this prefix to our
@@ -4813,10 +4813,11 @@ struct Ns_SearchNode {
         double descSimChild;
 };
 
-///  Constraint satisfaction problem manager and solver class.
-
-///  A problem manager keeps information for the constrained variables, the
-///   constraints network, and the goal that will be executed.
+/// Constraint satisfaction problem manager and solver class
+///
+/// A problem manager keeps information for the constrained
+/// variables, the constraints network, and the goal that will
+/// be executed.
 class NsProblemManager {
 
     private:

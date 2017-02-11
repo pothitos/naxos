@@ -1,4 +1,6 @@
-/// @file Stack implementation
+/// @file
+/// Stack implementation
+///
 /// Part of https://github.com/pothitos/naxos
 
 #ifndef Ns_STACK_H

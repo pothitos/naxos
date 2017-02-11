@@ -1,4 +1,6 @@
-/// @file Algorithms that impose global constraints over arrays of variables
+/// @file
+/// Algorithms that impose global constraints over arrays of variables
+///
 /// Part of https://github.com/pothitos/naxos
 
 #include "internal.h"

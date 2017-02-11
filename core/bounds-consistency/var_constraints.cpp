@@ -1,4 +1,6 @@
-/// @file Algorithms that impose the constraints over variables
+/// @file
+/// Algorithms that impose the constraints over variables
+///
 /// Part of https://github.com/pothitos/naxos
 
 #include "internal.h"

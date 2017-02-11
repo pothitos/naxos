@@ -1,4 +1,6 @@
-/// @file Internal functions declarations
+/// @file
+/// Internal functions declarations
+///
 /// These functions are used in more than one file.
 /// Part of https://github.com/pothitos/naxos
 

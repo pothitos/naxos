@@ -1,4 +1,6 @@
-/// @file Processing the expressions between integer constrained variables
+/// @file
+/// Processing the expressions between integer constrained variables
+///
 /// Part of https://github.com/pothitos/naxos
 
 #include "internal.h"

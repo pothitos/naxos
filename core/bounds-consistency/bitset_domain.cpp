@@ -1,4 +1,6 @@
-/// @file Constraint finite domain integer variables implementation via bit-sets
+/// @file
+/// Constraint finite domain integer variables implementation via bit-sets
+///
 /// Part of https://github.com/pothitos/naxos
 
 #include "naxos.h"
