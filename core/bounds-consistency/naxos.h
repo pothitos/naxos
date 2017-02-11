@@ -20,31 +20,27 @@
 #ifndef Ns_NAXOS_H
 #define Ns_NAXOS_H
 
+#include <algorithm>
 #include <climits>
+#include <cmath>
 #include <ctime>
 #include <deque>
+#include <fstream>
 #include <iostream>
 #include <list>
 #include <queue>
+#include <stdexcept>
+#include <string>
 
 #include <unordered_map>
 #include <unordered_set>
 #define Ns_UNORDERED_SET std::unordered_set
 #define Ns_UNORDERED_MAP std::unordered_map
 
-#include <algorithm>
-#include <fstream>
-#include <stdexcept>
-#include <string>
-
-#include <cmath>
-
-///  The namespace for Naxos Solver.
+/// Naxos solver's namespace
 namespace naxos {
 
-///  Naxos methods throw this type of exception.
-
-///  \internal
+/// Naxos methods throw this type of exception
 class NsException : public std::logic_error {
 
     public:
@@ -78,7 +74,7 @@ inline void assert_Ns(const bool condition, const char* message)
 
 #ifdef DEBUG_LEVEL_2
 #define assert_Ns_2(condition, message) (assert_Ns((condition), (message)))
-#define assert_Ns_2_run(condition, message) \
+#define assert_Ns_2_run(condition, message)                                    \
         (assert_Ns_2((condition), (message)))
 #else
 // Level 2 assertions are disabled.
