@@ -7,9 +7,9 @@
 
 /// @mainpage Naxos is a Constraint Satisfaction Problem (CSP)
 /// solver. For a general idea and information on how to use it,
-/// read naxos.pdf first (normally included in the source code
-/// package). These comments can be only used for internal
-/// developing purposes.
+/// please visit the above webpage. These comments you're
+/// reading now can be only used for internal developing
+/// purposes.
 ///
 /// The names of Naxos classes and other declarations begin with
 /// `Ns'. So it is a good practice not to put this prefix to our
@@ -78,7 +78,7 @@ inline void assert_Ns(const bool condition, const char* message)
 
 #ifdef DEBUG_LEVEL_2
 #define assert_Ns_2(condition, message) (assert_Ns((condition), (message)))
-#define assert_Ns_2_run(condition, message)                                    \
+#define assert_Ns_2_run(condition, message) \
         (assert_Ns_2((condition), (message)))
 #else
 // Level 2 assertions are disabled.
@@ -87,8 +87,8 @@ inline void assert_Ns(const bool condition, const char* message)
 #define assert_Ns_2_run(condition, message) (condition)
 #endif
 
-///  @{
-///  \name  Definitions of Naxos Solver types and their limits
+/// @{
+/// @name Naxos Solver types and their limits
 
 typedef long NsInt;
 typedef unsigned long NsUInt;
@@ -97,17 +97,15 @@ const NsInt NsMINUS_INF = LONG_MIN;
 const NsInt NsPLUS_INF = LONG_MAX;
 const NsUInt NsUPLUS_INF = ULONG_MAX;
 
-///  @}
+/// @}
 
 class NsIntVar;
 
 template <class TemplType>
 class NsDeque;
 
-///  Abstract class that represents an (algebraic etc.) expression between
-///  constrained variables.
-
-///  \internal
+/// Abstract class that represents an (algebraic etc.) expression between
+/// constrained variables @internal
 class Ns_Expression {
 
     public:
