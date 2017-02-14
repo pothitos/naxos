@@ -20,8 +20,8 @@ set_target_properties(parserxcsp3core PROPERTIES IMPORTED_LOCATION
                       parser/src/XCSP3-CPP-Parser/lib/libparserxcsp3core.a)
 
 add_executable(naxos-xcsp3 naxos-xcsp3.cpp)
-add_dependencies(naxos-xcsp3 parserxcsp3core)
 target_link_libraries(naxos-xcsp3 naxos parserxcsp3core)
+add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser)
 
 enable_testing()
 add_test(verification verification.sh)
