@@ -12,9 +12,9 @@
 /// internal developing purposes.
 ///
 /// The names of Naxos classes and other declarations begin with
-/// `Ns'. So it is a good practice not to put this prefix to our
-/// classes or data-types. Moreover, prefix `Nsg' is used for
-/// Naxos goal classes, and prefix `Ns_' is used for internal
+/// 'Ns'. So it is a good practice not to put this prefix to our
+/// classes or data-types. Moreover, prefix 'Nsg' is used for
+/// Naxos goal classes, and prefix 'Ns_' is used for internal
 /// classes that should not be used by the users of Naxos.
 
 #ifndef Ns_NAXOS_H
@@ -389,11 +389,11 @@ class Ns_BitSet {
         ///  The number of bits that a machine word can hold.
         static const NsUInt MW_BITS = CHAR_BIT * sizeof(size_t);
 
-        ///  The `timestamp' that can be used in chronological backtracking.
+        ///  The 'timestamp' that can be used in chronological backtracking.
         Ns_HistoryId_t lastSaveId;
 
     public:
-        ///  Returns the `lastSaveId'.
+        ///  Returns the 'lastSaveId'.
         Ns_HistoryId_t& lastSaveHistoryId(void)
         {
                 return lastSaveId;
@@ -481,31 +481,31 @@ class Ns_BitSet {
                 bool operator==(const const_iterator& b) const
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_iterator::==: "
-                                               "Uninitialized `*this'");
+                                               "Uninitialized '*this'");
                         return (currVal == b.currVal);
                 }
 
                 bool operator!=(const const_iterator& b) const
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_iterator::!=: "
-                                               "Uninitialized `*this'");
+                                               "Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_iterator::*: "
-                                               "Uninitialized `*this'");
+                                               "Uninitialized '*this'");
                         assert_Ns(currVal != NsPLUS_INF,
                                   "Ns_BitSet::const_iterator::*: Bad request "
-                                  "`*(something.end())'");
+                                  "'*(something.end())'");
                         return currVal;
                 }
 
                 const_iterator& end(void)
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_iterator::end:"
-                                               " Uninitialized `*this'");
+                                               " Uninitialized '*this'");
                         currVal = NsPLUS_INF;
                         return *this;
                 }
@@ -513,7 +513,7 @@ class Ns_BitSet {
                 const_iterator& operator++(void)
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_iterator::++: "
-                                               "Uninitialized `*this'");
+                                               "Uninitialized '*this'");
                         currVal = domain->next(currVal);
                         return *this;
                 }
@@ -521,7 +521,7 @@ class Ns_BitSet {
                 const_iterator& operator--(void)
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_iterator::--: "
-                                               "Uninitialized `*this'");
+                                               "Uninitialized '*this'");
                         currVal = domain->previous(currVal);
                         return *this;
                 }
@@ -552,7 +552,7 @@ class Ns_BitSet {
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
                                                "iterator::==: Uninitialized "
-                                               "`*this'");
+                                               "'*this'");
                         return (currVal == b.currVal);
                 }
 
@@ -560,7 +560,7 @@ class Ns_BitSet {
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
                                                "iterator::!=: Uninitialized "
-                                               "`*this'");
+                                               "'*this'");
                         return !(*this == b);
                 }
 
@@ -568,10 +568,10 @@ class Ns_BitSet {
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
                                                "iterator::*: Uninitialized "
-                                               "`*this'");
+                                               "'*this'");
                         assert_Ns(currVal != NsPLUS_INF,
                                   "Ns_BitSet::const_reverse_iterator::*: Bad "
-                                  "request `*(something.end())'");
+                                  "request '*(something.end())'");
                         return currVal;
                 }
 
@@ -579,7 +579,7 @@ class Ns_BitSet {
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
                                                "iterator::end: Uninitialized "
-                                               "`*this'");
+                                               "'*this'");
                         currVal = NsMINUS_INF;
                         return *this;
                 }
@@ -588,7 +588,7 @@ class Ns_BitSet {
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
                                                "iterator::++: Uninitialized "
-                                               "`*this'");
+                                               "'*this'");
                         currVal = domain->previous(currVal);
                         return *this;
                 }
@@ -597,7 +597,7 @@ class Ns_BitSet {
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
                                                "iterator::--: Uninitialized "
-                                               "`*this'");
+                                               "'*this'");
                         currVal = domain->next(currVal);
                         return *this;
                 }
@@ -625,31 +625,31 @@ class Ns_BitSet {
                 bool operator==(const const_gap_iterator& b) const
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
-                                               "==: Uninitialized `*this'");
+                                               "==: Uninitialized '*this'");
                         return (currGap == b.currGap);
                 }
 
                 bool operator!=(const const_gap_iterator& b) const
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
-                                               "!=: Uninitialized `*this'");
+                                               "!=: Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
-                                               "*: Uninitialized `*this'");
+                                               "*: Uninitialized '*this'");
                         assert_Ns(currGap != NsPLUS_INF,
                                   "Ns_BitSet::const_gap_iterator::*: Bad "
-                                  "request `*(something.end())'");
+                                  "request '*(something.end())'");
                         return currGap;
                 }
 
                 const_gap_iterator& end(void)
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
-                                               "end: Uninitialized `*this'");
+                                               "end: Uninitialized '*this'");
                         currGap = NsPLUS_INF;
                         return *this;
                 }
@@ -657,7 +657,7 @@ class Ns_BitSet {
                 const_gap_iterator& operator++(void)
                 {
                         assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
-                                               "++: Uninitialized `*this'");
+                                               "++: Uninitialized '*this'");
                         currGap = domain->nextGap(currGap);
                         return *this;
                 }
@@ -846,7 +846,7 @@ class NsIntVar {
         NsInt value(void) const
         {
                 assert_Ns(isBound(),
-                          "NsIntVar::value: `*this': Not a bound NsIntVar");
+                          "NsIntVar::value: '*this': Not a bound NsIntVar");
                 return domain.min();
         }
 
@@ -911,13 +911,13 @@ class NsIntVar {
         ///  constraints.
         int arcsConnectedTo;
 
-        ///  True, if the variable is involved in an `Inverse' constraint, or
+        ///  True, if the variable is involved in an 'Inverse' constraint, or
         ///  another constraint that needs to know the values that have been
         ///  removed from the variable (the w 's in the AC-5 Algorithm).
         bool constraintNeedsRemovedValues;
 
     public:
-        ///  Returns true if the variable is involved in an `Inverse'
+        ///  Returns true if the variable is involved in an 'Inverse'
         ///  constraint, or another constraint that needs to know the values
         ///  that have been removed from the variable.
         bool storeRemovedValues(void) const
@@ -1036,7 +1036,7 @@ class NsIntVarArray {
                 bool operator==(const iterator& b) const
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::iterator::==: "
-                                                 "Uninitialized `*this'");
+                                                 "Uninitialized '*this'");
                         return (it == b.it);
                 }
 
@@ -1048,27 +1048,27 @@ class NsIntVarArray {
                 NsIntVar& operator*(void)const
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::iterator::*: "
-                                                 "Uninitialized `*this'");
+                                                 "Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::iterator::*: Bad request "
-                                  "`*(something.end())'");
+                                  "'*(something.end())'");
                         return **it;
                 }
 
                 NsIntVar* operator->(void)const
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::iterator::*: "
-                                                 "Uninitialized `*this'");
+                                                 "Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::iterator::*: Bad request "
-                                  "`*(something.end())'");
+                                  "'*(something.end())'");
                         return *it;
                 }
 
                 iterator& end(void)
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::iterator::end:"
-                                                 " Uninitialized `*this'");
+                                                 " Uninitialized '*this'");
                         it = PointArr->end();
                         return *this;
                 }
@@ -1076,10 +1076,10 @@ class NsIntVarArray {
                 iterator& operator++(void)
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::iterator::++: "
-                                                 "Uninitialized `*this'");
+                                                 "Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::iterator::end: Bad request "
-                                  "`++(something.end())'");
+                                  "'++(something.end())'");
                         ++it;
                         return *this;
                 }
@@ -1131,7 +1131,7 @@ class NsIntVarArray {
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::const_"
                                                  "iterator::==: Uninitialized "
-                                                 "`*this'");
+                                                 "'*this'");
                         return (it == b.it);
                 }
 
@@ -1144,10 +1144,10 @@ class NsIntVarArray {
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::const_"
                                                  "iterator::*: Uninitialized "
-                                                 "`*this'");
+                                                 "'*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::const_iterator::*: Bad "
-                                  "request `*(something.end())'");
+                                  "request '*(something.end())'");
                         return **it;
                 }
 
@@ -1155,10 +1155,10 @@ class NsIntVarArray {
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::const_"
                                                  "iterator::*: Uninitialized "
-                                                 "`*this'");
+                                                 "'*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::const_iterator::*: Bad "
-                                  "request `*(something.end())'");
+                                  "request '*(something.end())'");
                         return *it;
                 }
 
@@ -1166,7 +1166,7 @@ class NsIntVarArray {
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::const_"
                                                  "iterator::end: Uninitialized "
-                                                 "`*this'");
+                                                 "'*this'");
                         it = PointArr->end();
                         return *this;
                 }
@@ -1175,10 +1175,10 @@ class NsIntVarArray {
                 {
                         assert_Ns(PointArr != 0, "NsIntVarArray::const_"
                                                  "iterator::++: Uninitialized "
-                                                 "`*this'");
+                                                 "'*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::const_iterator::end: Bad "
-                                  "request `++(something.end())'");
+                                  "request '++(something.end())'");
                         ++it;
                         return *this;
                 }
@@ -1257,7 +1257,7 @@ void Ns_inverseConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
 class Ns_Constraint {
 
     public:
-        ///  The `timestamp' (current removal ID) when the last check of this
+        ///  The 'timestamp' (current removal ID) when the last check of this
         ///  constraint took place.
         unsigned long lastConstraintCheckTime;
 
@@ -1279,7 +1279,7 @@ class Ns_Constraint {
         ///  The number of the variables involved in the constraint.
         virtual int varsInvolvedIn(void) const = 0;
 
-        ///  Description of the consistency type that a `revision' function for
+        ///  Description of the consistency type that a 'revision' function for
         ///  a constraint can impose.
         enum ConsistencyType {
 
@@ -1521,7 +1521,7 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
 
-//  The following constraint is somehow `stronger' than the simple `X == Y +
+//  The following constraint is somehow 'stronger' than the simple 'X == Y +
 //  C*Z'.
 //   It requires some special conditions, that allow the efficient application
 //   of the pure arc-consistency--i.e. not only bounds consistency.
@@ -1990,7 +1990,7 @@ class Ns_ConstrMetaXeqYeqZ : public Ns_Constraint {
     private:
         NsIntVar *VarX, *VarY, *VarZ;
         const bool neg;
-        // If `neg==true' the constraint becomes 'Ns_ConstrMetaXeqY neq Z'.
+        // If 'neg==true' the constraint becomes 'Ns_ConstrMetaXeqY neq Z'.
 
     public:
         Ns_ConstrMetaXeqYeqZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z,
@@ -2077,7 +2077,7 @@ class Ns_ConstrXeqYandZ : public Ns_Constraint {
     private:
         NsIntVar *VarX, *VarY, *VarZ;
         const bool neg;
-        // If `neg==true' the constraint becomes 'Ns_ConstrXeqY nand Z'.
+        // If 'neg==true' the constraint becomes 'Ns_ConstrXeqY nand Z'.
 
     public:
         Ns_ConstrXeqYandZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z, const bool pos)
@@ -2116,7 +2116,7 @@ class Ns_ConstrXeqYorZ : public Ns_Constraint {
     private:
         NsIntVar *VarX, *VarY, *VarZ;
         const bool neg;
-        // If `neg==true' the constraint becomes 'Ns_ConstrXeqY nor Z'.
+        // If 'neg==true' the constraint becomes 'Ns_ConstrXeqY nor Z'.
 
     public:
         Ns_ConstrXeqYorZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z, const bool pos)
@@ -2155,7 +2155,7 @@ class Ns_ConstrXorY : public Ns_Constraint {
     private:
         NsIntVar *VarX, *VarY;
         const bool neg;
-        // If `neg==true' the constraint becomes 'Constr not X and not Y'.
+        // If 'neg==true' the constraint becomes 'Constr not X and not Y'.
 
     public:
         Ns_ConstrXorY(NsIntVar* X, NsIntVar* Y, const bool pos)
@@ -2382,8 +2382,8 @@ class Ns_ConstrAllDiff : public Ns_Constraint {
 class Ns_ConstrAllDiffStrong : public Ns_Constraint {
 
     public:
-        //  `groupedNsIntVar', as the name suggests, is a class that
-        //   extends `NsIntVar', by adding the information concerning
+        //  'groupedNsIntVar', as the name suggests, is a class that
+        //   extends 'NsIntVar', by adding the information concerning
         //   the id of the group taht the constrained variable belongs to.
 
         class groupedNsIntVar {
@@ -2413,15 +2413,15 @@ class Ns_ConstrAllDiffStrong : public Ns_Constraint {
                 void setGroup(const group_t groupVal)
                 {
                         assert_Ns(vGroup.contains(groupVal - 1),
-                                  "groupedNsIntVar::setGroup: `groupVal-1' is "
-                                  "not contained in`vGroup'");
+                                  "groupedNsIntVar::setGroup: 'groupVal-1' is "
+                                  "not contained in 'vGroup'");
                         assert_Ns(
                             vGroup.removeRange(NsMINUS_INF, groupVal - 1, 0),
                             "groupedNsIntVar::setGroup: Could not change group "
-                            "to `groupVal'");
+                            "to 'groupVal'");
                         assert_Ns(group() == groupVal,
                                   "groupedNsIntVar::setGroup: Not succesful "
-                                  "change of group to `groupVal'");
+                                  "change of group to 'groupVal'");
                 }
 
                 bool removeDomain(const NsIntVar& V, const Ns_Constraint* c);
@@ -2516,7 +2516,7 @@ class Ns_ConstrCount : public Ns_Constraint {
                         assert_Ns(occurrence >= 0,
                                   "Ns_ConstrCount::ValueOccurrence_t::"
                                   "ValueOccurrence_t: negative value in "
-                                  "`occurrence'");
+                                  "'occurrence'");
                         vCount.push_back(NsIntVar(pm, 0, occurrence));
                 }
 
@@ -2532,7 +2532,7 @@ class Ns_ConstrCount : public Ns_Constraint {
                         assert_Ns(occurrence >= 0,
                                   "Ns_ConstrCount::ValueOccurrence_t::"
                                   "ValueOccurrence_t: negative value in "
-                                  "`occurrence'");
+                                  "'occurrence'");
                         for (NsIndex i = 0; i < split_positions->size(); ++i)
                                 vCount.push_back(NsIntVar(pm, 0, Split));
                         vCount.push_back(NsIntVar(pm, 0, occurrence % Split));
@@ -3221,7 +3221,7 @@ class Ns_ExprSum : public Ns_Expression {
         {
                 //&&  length >= 0,
                 assert_Ns(start + length <= VarArr.size(),
-                          "Ns_ExprSum::Ns_ExprSum: Wrong `start' or `length'");
+                          "Ns_ExprSum::Ns_ExprSum: Wrong 'start' or 'length'");
         }
 
         virtual void post(NsIntVar& VarX) const;
@@ -3295,7 +3295,7 @@ class Ns_ExprConstr : public Ns_Expression {
 
         ///  If \a isPositive \c == \c false then the semantics of
         ///   the constraint-expression is inverted.
-        ///   E.g. `\a X < \a Y' becomes `\a X >= \a Y'.
+        ///   E.g. '\a X < \a Y' becomes '\a X >= \a Y'.
         bool isPositive;
 
     public:
@@ -3494,8 +3494,8 @@ class Ns_ExprConstrYandZ : public Ns_ExprConstr {
         {
                 assert_Ns(0 <= VarY.min() && VarY.max() <= 1 &&
                               0 <= VarZ.min() && VarZ.max() <= 1,
-                          "Ns_ExprConstrYandZ::Ns_ExprConstrYandZ: `VarY' and "
-                          "`VarZ' should be boolean");
+                          "Ns_ExprConstrYandZ::Ns_ExprConstrYandZ: 'VarY' and "
+                          "'VarZ' should be boolean");
         }
 
         virtual Ns_Constraint* postConstraint(bool positively) const
@@ -3521,8 +3521,8 @@ class Ns_ExprConstrYorZ : public Ns_ExprConstr {
         {
                 assert_Ns(0 <= VarY.min() && VarY.max() <= 1 &&
                               0 <= VarZ.min() && VarZ.max() <= 1,
-                          "Ns_ExprConstrYorZ::Ns_ExprConstrYorZ: `VarY' and "
-                          "`VarZ' should be boolean");
+                          "Ns_ExprConstrYorZ::Ns_ExprConstrYorZ: 'VarY' and "
+                          "'VarZ' should be boolean");
         }
 
         virtual Ns_Constraint* postConstraint(bool positively) const;
@@ -4009,7 +4009,7 @@ class NsGoal {
         }
 };
 
-///  The first kind of `meta-goal' (i.e. goal used to combine two other goals).
+///  The first kind of 'meta-goal' (i.e. goal used to combine two other goals).
 class NsgAND : public NsGoal {
 
     private:
@@ -4046,7 +4046,7 @@ class NsgAND : public NsGoal {
         }
 };
 
-///  The second--and last--kind of `meta-goal' (i.e. goal used to combine two
+///  The second--and last--kind of 'meta-goal' (i.e. goal used to combine two
 ///  other goals).
 class NsgOR : public NsGoal {
 
@@ -4158,7 +4158,7 @@ class NsgInDomain : public NsGoal {
 
 ///  It uses NsgInDomain to iteratively instantiate each variable of the
 ///   array.  The next variable that is chosen is the one having the
-///   minimum domain size (according to the `first-fail' heuristic).
+///   minimum domain size (according to the 'first-fail' heuristic).
 class NsgLabeling : public NsGoal {
 
     private:
@@ -4249,7 +4249,7 @@ class Ns_QueueItem {
         struct RemovedValueRecord_t {
 
                 ///  The value that was taken from the domain of varFired.  (The
-                ///  `w' of the AC-5 algorithm.)
+                ///  'w' of the AC-5 algorithm.)
                 const NsInt value;
 
                 ///  The constraint that fired the removal of the value
@@ -4282,7 +4282,7 @@ class Ns_QueueItem {
                         varFired->queueItem = 0;
                 //  Is there any possibility of varFired->queueItem !=
                 //   this ?  Yes, when there are two items in AC queue for
-                //   `varFired', the first being examined now by the AC
+                //   'varFired', the first being examined now by the AC
                 //   algorithm.
         }
 
@@ -4306,12 +4306,12 @@ class Ns_QueueItem {
         }
 
         ///  When a constraint provokes an inconsistency, then its rank (index
-        ///  in the `varFired->constraints' array) should be updated according
+        ///  in the 'varFired->constraints' array) should be updated according
         ///  to the current number of inconsistencies it provoked (according to
         ///  a heuristic).
         void resortConstraints(const Ns_Constraint* constr) const
         {
-                //  The following statement `corrects' currentConstr
+                //  The following statement 'corrects' currentConstr
                 //   by assigning the proper value to constrFailed.
                 long constrFailed =
                     (constr->revisionType == Ns_Constraint::VALUE_CONSISTENCY)
@@ -4329,7 +4329,7 @@ class Ns_QueueItem {
 };
 
 ///  Normally used for describing the stack holding AND-goals that have to be
-///  satisfied.  This stack is also called `stackAND'.
+///  satisfied.  This stack is also called 'stackAND'.
 
 ///  \internal
 class Ns_StackGoals : public NsStack<NsGoal*> {
@@ -4663,7 +4663,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 {
                         assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_"
                                                       "iterator::==: "
-                                                      "Uninitialized `*this'");
+                                                      "Uninitialized '*this'");
                         return (curr_Stack_it == b.curr_Stack_it &&
                                 (curr_Stack_it == stackOfStacks->end() ||
                                  curr_node_it == b.curr_node_it));
@@ -4678,7 +4678,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 {
                         assert_Ns(stackOfStacks != 0,
                                   "Ns_StackSearch::goal_iterator::*: "
-                                  "Uninitialized `*this'");
+                                  "Uninitialized '*this'");
                         assert_Ns(curr_Stack_it != stackOfStacks->end(),
                                   "Ns_StackSearch::goal_iterator::*: "
                                   "Bad request");
@@ -4689,7 +4689,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 {
                         assert_Ns(stackOfStacks != 0,
                                   "Ns_StackSearch::goal_iterator::end: "
-                                  "Uninitialized `*this'");
+                                  "Uninitialized '*this'");
                         curr_Stack_it = stackOfStacks->end();
                         return *this;
                 }
@@ -4858,7 +4858,7 @@ class NsProblemManager {
                 assert_Ns(sizeof(NsIntVar*) <= sizeof(Ns_pointer_t),
                           "NsProblemManager::NsProblemManager: Cannot "
                           "run on this machine, because a pointer does "
-                          "not fit in an `size_t' (the `unordered_set' "
+                          "not fit in an 'size_t' (the 'unordered_set' "
                           "type)");
                 assert_Ns(searchNodes.push(Ns_SearchNode(
                               0, searchNodes.gbegin(), numSearchTreeNodes())),
@@ -4929,7 +4929,7 @@ class NsProblemManager {
         ///  Our objective is to minimize this constrained variable.
         NsIntVar* vObjective;
 
-        ///  The minimum upper limit of `vObjective' found so far (initially
+        ///  The minimum upper limit of 'vObjective' found so far (initially
         ///  +oo).
         NsInt bestObjective;
 
@@ -5042,7 +5042,7 @@ class NsProblemManager {
                 clock_t ticks = secs * CLOCKS_PER_SEC;
                 assert_Ns(0.0 <= simulationRatio && simulationRatio <= 1.0,
                           "NsProblemManager::splitTimeLimit: "
-                          "`simulationRatio' must be between 0 and 1");
+                          "'simulationRatio' must be between 0 and 1");
                 timeSplitLim = ticks;
                 searchNodes.simulationRatio = simulationRatio;
                 if (timeSplitLim == 0)
@@ -5050,7 +5050,7 @@ class NsProblemManager {
                 startNodeId = getCurrentNodeNum();
                 startSplitTime = clock();
                 assert_Ns(startSplitTime != -1,
-                          "Could not find time for `splitTimeLimit'");
+                          "Could not find time for 'splitTimeLimit'");
                 splitHeader();
                 searchNodes.currentPath();
         }
