@@ -54,7 +54,6 @@ class NsException : public std::logic_error {
 
 ///  Here we used the type char* for message, instead of string, plainly
 ///   for time-performance reasons.
-///   \internal
 inline void assert_Ns(const bool condition, const char* message)
 {
         if (!condition)
@@ -105,12 +104,12 @@ class NsDeque;
 class Ns_Expression {
 
     public:
-        ///  Posts the constraint \a VarX \c == \c *this
-        ///   (\c *this represents an Ns_Expression).
+        /// Posts the constraint VarX == *this.
+        /// *this represents an Ns_Expression.
         virtual void post(NsIntVar& VarX) const = 0;
 
-        ///  Produces/returns a variable to represent the
-        ///   Ns_Expression (\c *this).
+        /// Produces/returns a variable to represent the
+        ///   Ns_Expression (*this).
         virtual NsIntVar& post(void) const = 0;
 
         // The destructor of an abstract class should be virtual.
@@ -137,11 +136,11 @@ class Ns_ExprElement : public Ns_Expression {
         virtual NsIntVar& post(void) const;
 };
 
-///  A flexible array data structure (like \c std::deque).
+///  A flexible array data structure (like std::deque).
 
-///  A safer version of \c std::deque that throws an exception when an \c
+///  A safer version of std::deque that throws an exception when an
 ///   out_of_range request is being made.  It takes advantage of the
-///   internal \c at() method that does this work.
+///   internal at() method that does this work.
 template <class TemplType>
 class NsDeque : public std::deque<TemplType> {
 
@@ -206,7 +205,7 @@ class NsDeque : public std::deque<TemplType> {
         }
 };
 
-///  \c std::queue with exceptions enabled.
+/// std::queue with exceptions enabled.
 
 template <class TemplType>
 class NsQueue : public std::queue<TemplType> {
@@ -319,7 +318,7 @@ class NsList : public std::list<TemplType> {
         }
 };
 
-///  An \c unordered_set.
+/// An unordered_set
 template <class TemplType>
 class NsSet : public Ns_UNORDERED_SET<TemplType> {
 };
@@ -339,9 +338,8 @@ const NsIndex NsINDEX_INF = Ns_PointArray_t().max_size();
 ///  The Ns_HistoryId_t of an object can be used to see whether it is valid.
 
 ///  Each frame of the Ns_StackSearch NsProblemManager::searchNodes is
-///   represented by its \a level.  Each \a level has its own valid \a id
+///   represented by its level.  Each level has its own valid id
 ///   that stops being valid when the frame is popped.
-///   \internal
 struct Ns_HistoryId_t {
 
         ///  The depth of the node in the search tree.
@@ -359,8 +357,7 @@ class Ns_QueueItem;
 ///  Class describing the domain of a constrained variable as a bit-set.
 
 ///  A bit-set is used to hold its values.  If the <em>i</em>-th bit is
-///   active, then the domain contains the value \a minDom + \a i.
-///   \internal
+///   active, then the domain contains the value minDom + i.
 class Ns_BitSet {
 
     private:
@@ -460,7 +457,7 @@ class Ns_BitSet {
         // friend class const_iterator;
 
         ///  Iterates through all the values of the domain, without changing
-        ///  them (\a const_iterator).
+        ///  them (const_iterator).
 
         class const_iterator {
 
@@ -521,7 +518,7 @@ class Ns_BitSet {
         };
 
         ///  Iterates through all the values of the domain, without changing
-        ///  them, in reverse order (\a const_iterator).
+        ///  them, in reverse order (const_iterator).
 
         // friend class const_reverse_iterator;
 
@@ -583,8 +580,7 @@ class Ns_BitSet {
                 }
         };
 
-        ///  Iterates through all the missing values (gaps) of the domain [\a
-        ///  min..\a max], without changing them (\a const_iterator).
+        ///  Iterates through all the missing values (gaps) of the domain [min..max], without changing them (const_iterator).
         class const_gap_iterator {
 
             private:
@@ -688,7 +684,7 @@ class NsIntVar {
 
     public:
         ///  @{
-        ///  \name  Iterators
+        ///  @name Iterators
 
         typedef Ns_BitSet::const_iterator const_iterator;
 
@@ -848,7 +844,7 @@ class NsIntVar {
         }
 
         ///  @{
-        ///  \name  Auxiliary AC algorithm data-members
+        ///  @name Auxiliary AC algorithm data-members
 
     public:
         ///  Pair of a constraint and the inconsistencies that has provoked.
