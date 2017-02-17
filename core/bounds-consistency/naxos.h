@@ -253,7 +253,7 @@ class NsQueue : public std::queue<TemplType> {
         }
 };
 
-///  \c std::list with exceptions enabled.
+/// std::list with exceptions enabled
 
 template <class TemplType>
 class NsList : public std::list<TemplType> {
@@ -900,13 +900,6 @@ class NsIntVar {
 
         ///  @}
 
-        /////  @{
-        /////  \name  Auxiliary AC algorithm data-members
-        //
-        //
-        /////  True, if the variable has been already put into the AC queue.
-        // bool  markedInAcQueue;
-
         ///  Points to the item in the AC queue that refers to the variable.  If
         ///  there is no such item, the pointer is null.
         Ns_QueueItem* queueItem;
@@ -1194,9 +1187,7 @@ void Ns_inverseConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
                                      const NsIntVarArray* VarArrInv,
                                      const Ns_Constraint* constr);
 
-///  Abstract class that represents a constraint between constrained variables.
-
-///  \internal
+/// Abstract class that represents a constraint between constrained variables
 class Ns_Constraint {
 
     public:
@@ -1210,14 +1201,14 @@ class Ns_Constraint {
         {
         }
 
-        ///  @{
-        ///  \name  AC algorithm methods
+        /// @{
+        /// @name AC algorithm methods
 
         virtual void ArcCons(void) = 0;
 
         virtual void LocalArcCons(Ns_QueueItem& Qitem) = 0;
 
-        ///  @}
+        /// @}
 
         ///  The number of the variables involved in the constraint.
         virtual int varsInvolvedIn(void) const = 0;
@@ -3097,15 +3088,12 @@ inline Ns_ExprSum NsSum(NsIntVarArray& Arr, const NsIndex start,
         return Ns_ExprSum(Arr, start, length);
 }
 
-///  Abstract class that represents an expression having to do with arrays of
-///  constrained variables.
-
-///  \internal
-
+/// Abstract class that represents an expression having to do with arrays of
+/// constrained variables
 class Ns_ExpressionArray {
 
     public:
-        ///  Posts the constraint.
+        /// Posts the constraint
         virtual void post(NsIntVarArray& VarArr) const = 0;
 
         // The destructor of an abstract class should be virtual.
@@ -3139,21 +3127,19 @@ inline Ns_ExprInverse NsInverse(NsIntVarArray& Arr, const NsInt MaxDom)
         return Ns_ExprInverse(Arr, MaxDom);
 }
 
-///  Ns_Expression subcategory describing constraints.
-
-///  The following abstract class represents the expressions category that
-///   can be viewed both as a constraint (e.g. \a X < \a Y) and as an
-///   expression/meta-constraint (e.g. \a Z == \a X < \a Y).
-///   \internal
-
+/// Ns_Expression subcategory describing constraints
+///
+/// The following abstract class represents the expressions category that
+/// can be viewed both as a constraint (e.g. X < Y) and as an
+/// expression/meta-constraint (e.g. Z == X < Y).
 class Ns_ExprConstr : public Ns_Expression {
 
     protected:
-        ///  Positive or negative constraint declaration.
-
-        ///  If \a isPositive \c == \c false then the semantics of
-        ///   the constraint-expression is inverted.
-        ///   E.g. '\a X < \a Y' becomes '\a X >= \a Y'.
+        /// Positive or negative constraint declaration
+        ///
+        /// If isPositive == false then the semantics of
+        /// the constraint-expression is inverted.
+        /// E.g. 'X < Y' becomes 'X >= Y'.
         bool isPositive;
 
     public:
@@ -3164,13 +3150,13 @@ class Ns_ExprConstr : public Ns_Expression {
         ///  Final declaration and post of a constraint.
         virtual Ns_Constraint* postConstraint(bool positively = true) const = 0;
 
-        ///  Uses \c postC(\a VarX, \c true) to post a constraint.
+        ///  Uses postC(VarX, true) to post a constraint.
         virtual void post(NsIntVar& VarX) const
         {
                 postC(VarX, true);
         }
 
-        ///  Uses \c postC(true) to post a constraint.
+        ///  Uses postC(true) to post a constraint.
         virtual NsIntVar& post(void) const
         {
                 return postC(true);
@@ -3824,7 +3810,7 @@ inline Ns_ExprConstrYeqZ NsElement(const Ns_Expression& VarIndexExpr,
 
 ///  An abstract class representing an (internal or constructed by user) goal.
 
-///  Each time a goal is executed by the solver, its method \c GOAL() is
+///  Each time a goal is executed by the solver, its method GOAL() is
 ///   called.  This method can make assignments or remove values from
 ///   constrained variables.
 class NsGoal {
@@ -4042,7 +4028,6 @@ class NsgLabeling : public NsGoal {
 
 ///  When a value is removed from the domain of a variable, an item is
 ///   added into this queue.
-///   \internal
 class Ns_QueueItem {
 
     private:
@@ -4181,8 +4166,6 @@ class Ns_QueueItem {
 
 ///  Normally used for describing the stack holding AND-goals that have to be
 ///  satisfied.  This stack is also called 'stackAND'.
-
-///  \internal
 class Ns_StackGoals : public NsStack<NsGoal*> {
 
     public:
@@ -4198,7 +4181,6 @@ class Ns_SearchNode;
 ///   specific value to assign it to a variable) and it is popped when we
 ///   want to cancel this choice, and we want to revert back to the
 ///   previous problem status.
-///   \internal
 class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
     public:
@@ -4208,8 +4190,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         void clear(void);
 
-        ///  @{
-        ///  \name  Provision of history ids to the search nodes
+        /// @{
+        /// @name Provision of history ids to the search nodes
 
     private:
         ///  History-IDs together with time statistics.
@@ -4446,10 +4428,10 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
     private:
         bool updateMatchesEndNodeRec(iterator it, NsUInt& depth);
 
-        ///  @}
+        /// @}
 
-        ///  @{
-        ///  \name  Representation of the search tree as a graph
+        /// @{
+        /// @name Representation of the search tree as a graph
 
     private:
         /// The mapper's ID.
@@ -4480,7 +4462,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         void solutionNode(const NsIntVar* vObjective);
 
-        ///  @}
+        /// @}
 
         ///  Iterates through all the goals in the current Ns_StackGoals and the
         ///  Ns_StackGoals below it.
@@ -4555,7 +4537,6 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 ///  Describes a search node of the binary search tree.
 
 ///  A critical type that can describe the current status of the problem.
-///   \internal
 struct Ns_SearchNode {
 
     public:
@@ -4747,8 +4728,8 @@ class NsProblemManager {
                 searchNodes.searchToGraphFile(fileName);
         }
 
-        ///  @{
-        ///  \name  Representation of the constraint network as a graph
+        /// @{
+        /// @name Representation of the constraint network as a graph
 
     private:
         ///  File to store the constraint network graph.
@@ -4759,10 +4740,10 @@ class NsProblemManager {
         ///  supported format.
         void constraintsToGraphFile(const char* fileName);
 
-        ///  @}
+        /// @}
 
-        ///  @{
-        ///  \name  Optimization members
+        /// @{
+        /// @name Optimization members
 
     private:
         ///  Our objective is to minimize this constrained variable.
@@ -4793,10 +4774,10 @@ class NsProblemManager {
                 }
         }
 
-        ///  @}
+        /// @}
 
-        ///  @{
-        ///  \name  Time management members
+        /// @{
+        /// @name Time management members
 
     private:
         ///  True if the available time is real (i.e. not system time).
@@ -4834,7 +4815,7 @@ class NsProblemManager {
 
     public:
         ///  Sets the time limit.  After this limit is exceeded, nextSolution()
-        ///  returns \c false.
+        ///  returns false.
         void realTimeLimit(const unsigned long secs)
         {
                 calledTimeLimit = true;
@@ -4843,7 +4824,7 @@ class NsProblemManager {
         }
 
         ///  Sets the CPU time limit.  After this limit is exceeded,
-        ///  nextSolution() returns \c false.
+        ///  nextSolution() returns false.
         void timeLimit(const unsigned long secs)
         {
                 calledTimeLimit = true;
@@ -4852,16 +4833,16 @@ class NsProblemManager {
         }
 
         ///  Sets the limit to the backtracks that search process does.  After
-        ///  this limit is exceeded, nextSolution() returns \c false.
+        ///  this limit is exceeded, nextSolution() returns false.
         void backtrackLimit(const unsigned long lim)
         {
                 backtrackLim = nBacktracks + lim;
         }
 
-        ///  @}
+        /// @}
 
         /// @{
-        /// \name  Search tree splitting functions
+        /// @name Search tree splitting functions
 
         /// The first word of a line that descibes a search tree split.
         static const char* SPLIT_HEADER;
@@ -4907,8 +4888,8 @@ class NsProblemManager {
 
         /// @}
 
-        ///  @{
-        ///  \name  Statistic members
+        /// @{
+        /// @name Statistic members
 
         NsDeque<const NsIntVar*> vars;
         NsUInt domainsSizeMax;
@@ -4974,10 +4955,10 @@ class NsProblemManager {
                           << numConstraints() << "\n";
         }
 
-        ///  @}
+        /// @}
 
-        ///  @{
-        ///  \name  Arrays of variables and constraints for memory management
+        /// @{
+        /// @name Arrays of variables and constraints for memory management
         ///  reasons
 
     private:
@@ -4996,10 +4977,10 @@ class NsProblemManager {
                 constraints.push_back(newConstr);
         }
 
-        ///  @}
+        /// @}
 
-        ///  @{
-        ///  \name  Provision of history ids to the search nodes
+        /// @{
+        /// @name Provision of history ids to the search nodes
 
         unsigned long getCurrentNodeNum(void) const
         {
@@ -5026,7 +5007,7 @@ class NsProblemManager {
                 return searchNodes.isValidHistoryId(di);
         }
 
-        ///  @}
+        /// @}
 
         ///  Saves the bitsetDomain--before being modified--for future
         ///  backtracking purposes.
@@ -5043,7 +5024,7 @@ class NsProblemManager {
 
 #endif // Ns_NAXOS_H
 
-///  \example  nqueens.orig.cpp
+/// @example nqueens.orig.cpp
 ///
 ///  An example of how to use the <span style="font-variant: small-caps;">
 ///   Naxos Solver </span> library to solve the <em>N</em>-queens problem.
@@ -5057,7 +5038,7 @@ class NsProblemManager {
 ///
 ///  Description source: Wikipedia.
 
-///  \example  send_more_money.cpp
+/// @example send_more_money.cpp
 ///
 ///  An example of how to use the <span style="font-variant: small-caps;">
 ///   Naxos Solver </span> library to solve the
@@ -5077,11 +5058,11 @@ class NsProblemManager {
 ///   addition, multiplication, or division. The classic example, published
 ///   in the July 1924 issue of Strand Magazine by Henry Dudeney, is:
 ///
-///\code
+///@code
 ///    S E N D
 ///+   M O R E
 ///= M O N E Y
-///\endcode
+///@endcode
 ///
 ///  The solution to this puzzle is <em>O</em> = 0, <em>M</em> = 1,
 ///   <em>Y</em> = 2, <em>E</em> = 5, <em>N</em> = 6, <em>D</em> = 7,
