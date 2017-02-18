@@ -956,7 +956,7 @@ void Ns_ConstrElement::LocalArcCons(Ns_QueueItem& Qitem)
 /// @{
 /// @name Representation of higher order constraints in a graph
 
-/// Auxiliary function to depict a ternary constraint into a graph file.
+/// Auxiliary function to depict a ternary constraint into a graph file
 void naxos::Ns_ternaryConstraintToGraphFile(
     ofstream& fileConstraintsGraph, const NsIntVar* VarX, const NsIntVar* VarY,
     const NsIntVar* VarZ, const Ns_Constraint* constr, const char* constrName,
@@ -972,7 +972,7 @@ void naxos::Ns_ternaryConstraintToGraphFile(
             << constrName << "\"];\n";
 }
 
-/// Auxiliary function to depict a global constraint into a graph file.
+/// Auxiliary function to depict a global constraint into a graph file
 void naxos::Ns_globalConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                            const NsIntVar* VarX,
                                            const NsIntVarArray* VarArr,
@@ -990,7 +990,7 @@ void naxos::Ns_globalConstraintToGraphFile(ofstream& fileConstraintsGraph,
                              << "\", style=dotted];\n";
 }
 
-/// Auxiliary function to depict an array-constraint into a graph file.
+/// Auxiliary function to depict an array-constraint into a graph file
 void naxos::Ns_arrayConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                           const NsIntVarArray* VarArr,
                                           const Ns_Constraint* constr,
@@ -1008,7 +1008,7 @@ void naxos::Ns_arrayConstraintToGraphFile(ofstream& fileConstraintsGraph,
         }
 }
 
-/// Auxiliary function to depict an Inverse constraint into a graph file.
+/// Auxiliary function to depict an Inverse constraint into a graph file
 void naxos::Ns_inverseConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                             const NsIntVarArray* VarArr,
                                             const NsIntVarArray* VarArrInv,

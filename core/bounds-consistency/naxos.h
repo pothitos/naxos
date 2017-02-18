@@ -52,8 +52,8 @@ class NsException : public std::logic_error {
 
 /// Asserts that the condition is true; if it is not, it throws a NsException
 ///
-/// Here we used the type char* for message, instead of string, plainly
-/// for time-performance reasons.
+/// Here we used the type char* for message, instead of string,
+/// plainly for time-performance reasons.
 inline void assert_Ns(const bool condition, const char* message)
 {
         if (!condition)
