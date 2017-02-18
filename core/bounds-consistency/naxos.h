@@ -12,7 +12,7 @@
 /// internal developing purposes.
 ///
 /// The names of Naxos classes and other declarations begin with
-/// 'Ns'. So it is a good practice not to put this prefix to our
+/// 'Ns', so it is a good practice not to put this prefix to our
 /// classes or data-types. Moreover, prefix 'Nsg' is used for
 /// Naxos goal classes, and prefix 'Ns_' is used for internal
 /// classes that should not be used by the users of Naxos.
@@ -50,10 +50,10 @@ class NsException : public std::logic_error {
         }
 };
 
-///  Asserts that the condition is true.  If it is not, it throws a NsException.
-
-///  Here we used the type char* for message, instead of string, plainly
-///   for time-performance reasons.
+/// Asserts that the condition is true; if it is not, it throws a NsException
+///
+/// Here we used the type char* for message, instead of string, plainly
+/// for time-performance reasons.
 inline void assert_Ns(const bool condition, const char* message)
 {
         if (!condition)
@@ -206,7 +206,6 @@ class NsDeque : public std::deque<TemplType> {
 };
 
 /// std::queue with exceptions enabled.
-
 template <class TemplType>
 class NsQueue : public std::queue<TemplType> {
 
@@ -254,7 +253,6 @@ class NsQueue : public std::queue<TemplType> {
 };
 
 /// std::list with exceptions enabled
-
 template <class TemplType>
 class NsList : public std::list<TemplType> {
 
@@ -396,10 +394,6 @@ class Ns_BitSet {
                 return lastSaveId;
         }
 
-        /////  Points to the item in the AC queue that refers to the variable.
-        /// If there is no such item, the pointer is null.
-        // Ns_QueueItem  *queueItem;
-
         Ns_BitSet(void)
         {
         }
@@ -407,7 +401,6 @@ class Ns_BitSet {
         Ns_BitSet(NsProblemManager& pm_init, const NsInt minDom_init,
                   const NsInt maxDom_init);
 
-        // Ns_IntDomain*
         Ns_BitSet* clone(void)
         {
                 return new Ns_BitSet(*this);
@@ -416,7 +409,6 @@ class Ns_BitSet {
         NsUInt size(void) const
         {
                 return setCount;
-                // return  domainStore.currentDomain().setCount;
         }
 
         bool isBound(void) const
@@ -433,32 +425,23 @@ class Ns_BitSet {
         NsInt max(void) const
         {
                 return maxVal;
-                // return  domainStore.currentDomain().maxVal;
         }
 
         NsInt min(void) const
         {
                 return minVal;
-                // return  domainStore.currentDomain().minVal;
         }
 
         bool containsRange(const NsInt rangeMin, const NsInt rangeMax) const;
-
-        // bool  contains (const NsInt val);
 
         bool removeRange(NsInt rangeMin, NsInt rangeMax);
 
         ///  Generic function to print a domain.
         friend std::ostream& operator<<(std::ostream& os,
                                         const Ns_BitSet& domain);
-        // friend std::ostream&  operator  << (std::ostream& os, Ns_IntDomain&
-        // domain);
-
-        // friend class const_iterator;
 
         ///  Iterates through all the values of the domain, without changing
         ///  them (const_iterator).
-
         class const_iterator {
 
             private:
@@ -477,19 +460,22 @@ class Ns_BitSet {
 
                 bool operator==(const const_iterator& b) const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::==: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_iterator::==: Uninitialized '*this'");
                         return (currVal == b.currVal);
                 }
 
                 bool operator!=(const const_iterator& b) const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::!=: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_iterator::!=: Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::*: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_iterator::*: Uninitialized '*this'");
                         assert_Ns(currVal != NsPLUS_INF,
                                   "Ns_BitSet::const_iterator::*: Bad request '*(something.end())'");
                         return currVal;
@@ -497,21 +483,24 @@ class Ns_BitSet {
 
                 const_iterator& end(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::end: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_iterator::end: Uninitialized '*this'");
                         currVal = NsPLUS_INF;
                         return *this;
                 }
 
                 const_iterator& operator++(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::++: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_iterator::++: Uninitialized '*this'");
                         currVal = domain->next(currVal);
                         return *this;
                 }
 
                 const_iterator& operator--(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::--: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_iterator::--: Uninitialized '*this'");
                         currVal = domain->previous(currVal);
                         return *this;
                 }
@@ -519,9 +508,6 @@ class Ns_BitSet {
 
         ///  Iterates through all the values of the domain, without changing
         ///  them, in reverse order (const_iterator).
-
-        // friend class const_reverse_iterator;
-
         class const_reverse_iterator {
 
             private:
@@ -540,19 +526,22 @@ class Ns_BitSet {
 
                 bool operator==(const const_reverse_iterator& b) const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_iterator::==: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_reverse_iterator::==: Uninitialized '*this'");
                         return (currVal == b.currVal);
                 }
 
                 bool operator!=(const const_reverse_iterator& b) const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_iterator::!=: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_reverse_iterator::!=: Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_iterator::*: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_reverse_iterator::*: Uninitialized '*this'");
                         assert_Ns(currVal != NsPLUS_INF,
                                   "Ns_BitSet::const_reverse_iterator::*: Bad request '*(something.end())'");
                         return currVal;
@@ -560,21 +549,24 @@ class Ns_BitSet {
 
                 const_reverse_iterator& end(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_iterator::end: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_reverse_iterator::end: Uninitialized '*this'");
                         currVal = NsMINUS_INF;
                         return *this;
                 }
 
                 const_reverse_iterator& operator++(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_iterator::++: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_reverse_iterator::++: Uninitialized '*this'");
                         currVal = domain->previous(currVal);
                         return *this;
                 }
 
                 const_reverse_iterator& operator--(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_iterator::--: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_reverse_iterator::--: Uninitialized '*this'");
                         currVal = domain->next(currVal);
                         return *this;
                 }
@@ -600,19 +592,22 @@ class Ns_BitSet {
 
                 bool operator==(const const_gap_iterator& b) const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::==: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_gap_iterator::==: Uninitialized '*this'");
                         return (currGap == b.currGap);
                 }
 
                 bool operator!=(const const_gap_iterator& b) const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::!=: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_gap_iterator::!=: Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::*: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_gap_iterator::*: Uninitialized '*this'");
                         assert_Ns(currGap != NsPLUS_INF,
                                   "Ns_BitSet::const_gap_iterator::*: Bad request '*(something.end())'");
                         return currGap;
@@ -620,14 +615,16 @@ class Ns_BitSet {
 
                 const_gap_iterator& end(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::end: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_gap_iterator::end: Uninitialized '*this'");
                         currGap = NsPLUS_INF;
                         return *this;
                 }
 
                 const_gap_iterator& operator++(void)
                 {
-                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::++: Uninitialized '*this'");
+                        assert_Ns(domain != 0,
+                                  "Ns_BitSet::const_gap_iterator::++: Uninitialized '*this'");
                         currGap = domain->nextGap(currGap);
                         return *this;
                 }
@@ -683,8 +680,8 @@ class NsIntVar {
         Ns_BitSet domain;
 
     public:
-        ///  @{
-        ///  @name Iterators
+        /// @{
+        /// @name Iterators
 
         typedef Ns_BitSet::const_iterator const_iterator;
 
@@ -725,7 +722,7 @@ class NsIntVar {
                 return iterEnd.end();
         }
 
-        ///  @}
+        /// @}
 
         ///  Dummy constructor that allow the Solver's programmer to declare
         ///  uninitialized NsIntVar 's.
@@ -843,8 +840,8 @@ class NsIntVar {
                 return *pm;
         }
 
-        ///  @{
-        ///  @name Auxiliary AC algorithm data-members
+        /// @{
+        /// @name Auxiliary AC algorithm data-members
 
     public:
         ///  Pair of a constraint and the inconsistencies that has provoked.
@@ -867,15 +864,6 @@ class NsIntVar {
         ///  An array of the constraints that the variable is involved in.
         NsDeque<ConstraintAndFailure> constraints;
 
-        /////  An array of the constraints that the variable is involved in.
-        /// The constraints impose Bounds Consistency.
-        // Ns_constraints_array_t  constraintsBoundsCons;
-
-        /////  An array of the constraints that the variable is involved in.
-        /// The constraints impose Arc Consistency, instead of Bounds
-        /// Consistency.  (Arc Consistency is stronger than Bounds Consistency.)
-        // Ns_constraints_array_t  constraintsArcCons;
-
     private:
         ///  The number of the variables connected to this instance, via
         ///  constraints.
@@ -883,7 +871,7 @@ class NsIntVar {
 
         ///  True, if the variable is involved in an 'Inverse' constraint, or
         ///  another constraint that needs to know the values that have been
-        ///  removed from the variable (the w 's in the AC-5 Algorithm).
+        ///  removed from the variable (the w's in the AC-5 Algorithm).
         bool constraintNeedsRemovedValues;
 
     public:
@@ -898,20 +886,11 @@ class NsIntVar {
         ///  Adds a constraint to the collection of constraints of the variable.
         void addConstraint(Ns_Constraint* c);
 
-        ///  @}
+        /// @}
 
         ///  Points to the item in the AC queue that refers to the variable.  If
         ///  there is no such item, the pointer is null.
         Ns_QueueItem* queueItem;
-
-        ///  The item in the AC queue that refers to the variable.  If there is
-        ///  no such item, the pointer is null.  This variable is stored in the
-        ///  domain for backtracking reasons.
-        //      Ns_QueueItem*&
-        // queueItem (void)
-        //{
-        //      return  domain.queueItem;
-        //}
 
         void transparent(void);
 };
@@ -923,8 +902,7 @@ inline std::ostream& operator<<(std::ostream& os, const NsIntVar& Var)
 
 class Ns_ExpressionArray;
 
-///  A flexible array data type, to hold constrained variables (NsIntVar 's).
-
+///  A flexible array data type, to hold constrained variables (NsIntVar's).
 class NsIntVarArray {
 
     private:
@@ -951,7 +929,8 @@ class NsIntVarArray {
 
         void push_front(NsIntVar& Var)
         {
-                assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+                assert_Ns(!addedConstraint,
+                          "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
                 PointArray.push_front(&Var);
         }
 
@@ -961,7 +940,8 @@ class NsIntVarArray {
 
         void push_back(NsIntVar& Var)
         {
-                assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+                assert_Ns(!addedConstraint,
+                          "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
                 PointArray.push_back(&Var);
         }
 
@@ -992,7 +972,8 @@ class NsIntVarArray {
 
                 bool operator==(const iterator& b) const
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::==: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::iterator::==: Uninitialized '*this'");
                         return (it == b.it);
                 }
 
@@ -1003,7 +984,8 @@ class NsIntVarArray {
 
                 NsIntVar& operator*(void)const
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::iterator::*: Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::iterator::*: Bad request '*(something.end())'");
                         return **it;
@@ -1011,7 +993,8 @@ class NsIntVarArray {
 
                 NsIntVar* operator->(void)const
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::iterator::*: Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::iterator::*: Bad request '*(something.end())'");
                         return *it;
@@ -1019,14 +1002,16 @@ class NsIntVarArray {
 
                 iterator& end(void)
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::end: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::iterator::end: Uninitialized '*this'");
                         it = PointArr->end();
                         return *this;
                 }
 
                 iterator& operator++(void)
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::++: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::iterator::++: Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::iterator::end: Bad request '++(something.end())'");
                         ++it;
@@ -1078,7 +1063,8 @@ class NsIntVarArray {
 
                 bool operator==(const const_iterator& b) const
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::const_iterator::==: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::const_iterator::==: Uninitialized '*this'");
                         return (it == b.it);
                 }
 
@@ -1089,7 +1075,8 @@ class NsIntVarArray {
 
                 const NsIntVar& operator*(void)const
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::const_iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::const_iterator::*: Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::const_iterator::*: Bad request '*(something.end())'");
                         return **it;
@@ -1097,7 +1084,8 @@ class NsIntVarArray {
 
                 const NsIntVar* operator->(void)const
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::const_iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::const_iterator::*: Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::const_iterator::*: Bad request '*(something.end())'");
                         return *it;
@@ -1105,14 +1093,16 @@ class NsIntVarArray {
 
                 const_iterator& end(void)
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::const_iterator::end: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::const_iterator::end: Uninitialized '*this'");
                         it = PointArr->end();
                         return *this;
                 }
 
                 const_iterator& operator++(void)
                 {
-                        assert_Ns(PointArr != 0, "NsIntVarArray::const_iterator::++: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0,
+                                  "NsIntVarArray::const_iterator::++: Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
                                   "NsIntVarArray::const_iterator::end: Bad request '++(something.end())'");
                         ++it;
@@ -1245,16 +1235,13 @@ class Ns_Constraint {
                     "Ns_Constraint::toGraphFile: Problem writing to file");
                 fileConstraintsGraph
                     << "\n\t"
-                    << "//  Unimplemented constraint representation\n";
+                    << "// Unimplemented constraint representation\n";
         }
 
         // The destructor of an abstract class should be virtual.
         virtual ~Ns_Constraint(void)
         {
         }
-
-        /////  The priority of the constraint inside the propagation queue.
-        // const NsIndex  PRIORITY;
 };
 
 class Ns_ConstrXinDomain : public Ns_Constraint {
@@ -1289,7 +1276,7 @@ class Ns_ConstrXinDomain : public Ns_Constraint {
         {
                 fileConstraintsGraph << "\n\t//Var" << VarX << " -> Dom"
                                      << &domainPrevious
-                                     << "   [label=\"dom\"];\n";
+                                     << " [label=\"dom\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1316,7 +1303,7 @@ class Ns_ConstrXlessthanY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarX << " -> Var" << VarY
-                                     << "   [label=\"<\"];\n";
+                                     << " [label=\"<\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1343,7 +1330,7 @@ class Ns_ConstrXlesseqthanY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarX << " -> Var" << VarY
-                                     << "   [label=\"<=\"];\n";
+                                     << " [label=\"<=\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1373,7 +1360,7 @@ class Ns_ConstrXeqYplusC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"" << ((C >= 0) ? "+" : "")
+                                     << " [label=\"" << ((C >= 0) ? "+" : "")
                                      << C << "\"];\n";
         }
 
@@ -1404,7 +1391,7 @@ class Ns_ConstrXeqCminusY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"" << C << "-y\"];\n";
+                                     << " [label=\"" << C << "-y\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1419,12 +1406,13 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
 
     public:
         Ns_ConstrXeqYtimesC(NsIntVar* X, NsIntVar* Y, const NsInt C_init)
-          : /*Ns_Constraint(1),*/ VarX(X), VarY(Y), C(C_init)
+          : VarX(X), VarY(Y), C(C_init)
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
                           "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(C != 0, "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: If C==0 the constraint has no reason to exist");
+                assert_Ns(C != 0,
+                          "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: If C==0 the constraint has no reason to exist");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1435,7 +1423,7 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"*" << ((C >= 0) ? "" : "(")
+                                     << " [label=\"*" << ((C >= 0) ? "" : "(")
                                      << C << ((C >= 0) ? "" : ")") << "\"];\n";
         }
 
@@ -1447,7 +1435,6 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
 //  C*Z'.
 //   It requires some special conditions, that allow the efficient application
 //   of the pure arc-consistency--i.e. not only bounds consistency.
-
 class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
 
     private:
@@ -1463,21 +1450,18 @@ class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
                           "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(X->min() >= 0, "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required:  X >= 0");
+                assert_Ns(X->min() >= 0,
+                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required:  X >= 0");
                 assert_Ns(0 <= Y->min() && Y->max() < C,
                           "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required:  0 <= Y < C");
-                assert_Ns(C > 0, "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Condition required:  C > 0");
+                assert_Ns(C > 0,
+                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Condition required:  C > 0");
         }
 
         virtual int varsInvolvedIn(void) const
         {
                 return 3;
         }
-
-        // virtual bool  needsRemovedValues (void)  const
-        //{
-        //      return  true;
-        //}
 
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
@@ -1563,9 +1547,6 @@ class Ns_ConstrXeqYdivC : public Ns_Constraint {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
                           "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: All the variables of a constraint must belong to the same NsProblemManager");
-                // assert_Ns(Y->min() >= 0,
-                //              "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special
-                //              condition required:  Y >= 0");
                 assert_Ns(C != 0, "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required:  C != 0");
         }
 
@@ -1577,7 +1558,7 @@ class Ns_ConstrXeqYdivC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"/" << ((C >= 0) ? "" : "(")
+                                     << " [label=\"/" << ((C >= 0) ? "" : "(")
                                      << C << ((C >= 0) ? "" : ")") << "\"];\n";
         }
 
@@ -1598,8 +1579,10 @@ class Ns_ConstrXeqCdivY : public Ns_Constraint {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
                           "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(Y->min() >= 0, "Ns_ConstrXeqCdivY::Ns_ConstrXeqYdivC: Special condition required:  Y > 0");
-                assert_Ns(C > 0, "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: Special condition required:  C > 0");
+                assert_Ns(Y->min() >= 0,
+                          "Ns_ConstrXeqCdivY::Ns_ConstrXeqYdivC: Special condition required: Y > 0");
+                assert_Ns(C > 0,
+                          "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: Special condition required: C > 0");
                 VarY->remove(0);
         }
 
@@ -1611,7 +1594,7 @@ class Ns_ConstrXeqCdivY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"" << C << "/y\"];\n";
+                                     << " [label=\"" << C << "/y\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1631,8 +1614,10 @@ class Ns_ConstrXeqYmodC : public Ns_Constraint {
                 revisionType = VALUE_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
                           "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(Y->min() >= 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: Special condition required:  Y >= 0");
-                assert_Ns(C > 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: Special condition required:  C > 0");
+                assert_Ns(Y->min() >= 0,
+                          "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: Special condition required: Y >= 0");
+                assert_Ns(C > 0,
+                          "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: Special condition required: C > 0");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1640,15 +1625,10 @@ class Ns_ConstrXeqYmodC : public Ns_Constraint {
                 return 2;
         }
 
-        // virtual bool  needsRemovedValues (void)  const
-        //{
-        //      return  true;
-        //}
-
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"%" << ((C >= 0) ? "" : "(")
+                                     << " [label=\"%" << ((C >= 0) ? "" : "(")
                                      << C << ((C >= 0) ? "" : ")") << "\"];\n";
         }
 
@@ -1678,7 +1658,7 @@ class Ns_ConstrMetaXeqYlessthanC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"(y<" << C << ")\"];\n";
+                                     << " [label=\"(y<" << C << ")\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1737,7 +1717,7 @@ class Ns_ConstrMetaXeqYlesseqthanC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"(y<=" << C << ")\"];\n";
+                                     << " [label=\"(y<=" << C << ")\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1796,7 +1776,7 @@ class Ns_ConstrMetaXeqYgreaterthanC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"(y>" << C << ")\"];\n";
+                                     << " [label=\"(y>" << C << ")\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1826,7 +1806,7 @@ class Ns_ConstrMetaXeqYgreatereqthanC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"(y>=" << C << ")\"];\n";
+                                     << " [label=\"(y>=" << C << ")\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1855,7 +1835,7 @@ class Ns_ConstrMetaXeqYeqC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"(y=" << C << ")\"];\n";
+                                     << " [label=\"(y=" << C << ")\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -1917,33 +1897,12 @@ class Ns_ConstrMetaXeqYneqC : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"(y!=" << C << ")\"];\n";
+                                     << " [label=\"(y!=" << C << ")\"];\n";
         }
 
         virtual void ArcCons(void);
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
-
-// class Ns_ConstrMetaXeqYneqZ : public Ns_Constraint  {
-//      private:
-//              NsIntVar  *VarX, *VarY, *VarZ;
-//
-//      public:
-//              Ns_ConstrMetaXeqYneqZ (NsIntVar *X, NsIntVar *Y, NsIntVar *Z)
-//                      : VarX(X), VarY(Y), VarZ(Z)
-//              {
-//                      assert_Ns( VarX->manager() == VarY->manager()  &&
-//                      VarY->manager() == VarZ->manager(),
-//                      "Ns_ConstrMetaXeqYneqZ::Ns_ConstrMetaXeqYneqZ: All the
-//                      variables of a constraint must belong to the same
-//                      NsProblemManager");
-//              }
-//
-//              virtual int   varsInvolvedIn (void)  const    {  return 3;  }
-//
-//              virtual void  ArcCons      (void)  const;
-//              virtual void  LocalArcCons (Ns_QueueItem& Qitem)  const;
-//};
 
 class Ns_ConstrXeqYandZ : public Ns_Constraint {
 
@@ -2043,7 +2002,7 @@ class Ns_ConstrXorY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarX << " -> Var" << VarY
-                                     << "   [label=\"" << ((neg) ? "NOR" : "OR")
+                                     << " [label=\"" << ((neg) ? "NOR" : "OR")
                                      << "\", arrowhead=none];\n";
         }
 
@@ -2147,7 +2106,7 @@ class Ns_ConstrXeqY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarX << " -> Var" << VarY
-                                     << "   [arrowhead=none];\n";
+                                     << " [arrowhead=none];\n";
         }
 
         virtual void ArcCons(void);
@@ -2174,7 +2133,7 @@ class Ns_ConstrXneqY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarX << " -> Var" << VarY
-                                     << "   [label=\"!=\", arrowhead=none];\n";
+                                     << " [label=\"!=\", arrowhead=none];\n";
         }
 
         virtual void ArcCons(void);
@@ -2202,7 +2161,7 @@ class Ns_ConstrXeqAbsY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << "   [label=\"abs\"];\n";
+                                     << " [label=\"abs\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -2227,11 +2186,6 @@ class Ns_ConstrAllDiff : public Ns_Constraint {
                 Ns_arrayConstraintToGraphFile(fileConstraintsGraph, VarArr,
                                               this, "!=");
         }
-
-        // virtual bool  needsRemovedValues (void)  const
-        //{
-        //      return  true;
-        //}
 
         virtual void ArcCons(void);
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
@@ -2290,9 +2244,6 @@ class Ns_ConstrAllDiffStrong : public Ns_Constraint {
 
         VarPointerGroup_t VarPointerGroup;
 
-        // NsIntVarArray  VarArrGroup;
-        // NsIntVar       vGroupCounter;
-
         const unsigned long Capacity;
 
     public:
@@ -2304,14 +2255,6 @@ class Ns_ConstrAllDiffStrong : public Ns_Constraint {
                 return VarArr.size();
         }
 
-        //      virtual void
-        // toGraphFile (std::ofstream& fileConstraintsGraph)  const
-        //{
-        //      Ns_arrayConstraintToGraphFile(
-        //              fileConstraintsGraph,
-        //              &VarArr, this, "!= strong");
-        //}
-
         virtual void ArcCons(void);
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
@@ -2320,21 +2263,6 @@ class Ns_ConstrCount : public Ns_Constraint {
 
     private:
         NsIntVarArray* VarArr;
-        // const NsDeque<NsInt>&  Values;
-        // const NsDeque<NsInt>&  Occurrences;
-
-        /////  vCount[i].max() is the number of the occurrences of Values[i] in
-        /// VarArr.
-        // NsIntVarArray  vCount;
-
-        /////  vMinValueIndex.min() is the minimum index i in a sorted array
-        /// Values[i], with the property that the occurrences of the
-        /// corresponding value is greater than zero.
-        // NsIntVar  vMinValueIndex;
-
-        /////  vMaxValueIndex.max() is the vMinValueIndex.min() maximum
-        /// equivalent.
-        // NsIntVar  vMaxValueIndex;
 
         typedef Ns_UNORDERED_MAP<Ns_pointer_t, NsIndex> VarIndex_t;
 
@@ -2466,11 +2394,6 @@ class Ns_ConstrInverse : public Ns_Constraint {
                 return (VarArrInv->size() + VarArr->size());
         }
 
-        // virtual bool  needsRemovedValues (void)  const
-        //{
-        //      return  true;
-        //}
-
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 Ns_inverseConstraintToGraphFile(fileConstraintsGraph, VarArr,
@@ -2512,7 +2435,7 @@ class Ns_ConstrElement : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarValue << " -> Var"
-                                     << VarIndex << "   [label=\"element\"];\n";
+                                     << VarIndex << " [label=\"element\"];\n";
         }
 
         virtual void ArcCons(void);
@@ -2581,19 +2504,11 @@ class Ns_ExprYdivC : public Ns_Expression {
 
 inline Ns_ExprYdivC operator/(NsIntVar& Y, const NsInt C)
 {
-        // if (C < 0)
-        //// In order to conform to the requirements of the constraint
-        /// implementation
-        //      return  ( - (Y / -C) );
         return Ns_ExprYdivC(Y, C);
 }
 
 inline Ns_ExprYdivC operator/(const Ns_Expression& Yexpr, const NsInt C)
 {
-        // if (C < 0)
-        //// In order to conform to the requirements of the constraint
-        /// implementation
-        //      return  ( - (Yexpr / -C) );
         return (Yexpr.post() / C);
 }
 
@@ -2846,19 +2761,11 @@ class Ns_ExprCdivZ : public Ns_Expression {
 
 inline Ns_ExprCdivZ operator/(const NsInt C, NsIntVar& Z)
 {
-        // if (C < 0)
-        //// In order to conform to the requirements of the constraint
-        /// implementation
-        //      return  ( - (-C / Z) );
         return Ns_ExprCdivZ(C, Z);
 }
 
 inline Ns_ExprCdivZ operator/(const NsInt C, const Ns_Expression& Zexpr)
 {
-        // if (C < 0)
-        //// In order to conform to the requirements of the constraint
-        /// implementation
-        //      return  ( - (-C / Zexpr) );
         return (C / Zexpr.post());
 }
 
@@ -2914,19 +2821,11 @@ class Ns_ExprYmodC : public Ns_Expression {
 
 inline Ns_ExprYmodC operator%(NsIntVar& Y, const NsInt C)
 {
-        // if (C < 0)
-        //// In order to conform to the requirements of the constraint
-        /// implementation
-        //      return  ( - (Y % -C) );
         return Ns_ExprYmodC(Y, C);
 }
 
 inline Ns_ExprYmodC operator%(const Ns_Expression& Yexpr, const NsInt C)
 {
-        // if (C < 0)
-        //// In order to conform to the requirements of the constraint
-        /// implementation
-        //      return  ( - (Yexpr % -C) );
         return (Yexpr.post() % C);
 }
 
@@ -3068,7 +2967,6 @@ class Ns_ExprSum : public Ns_Expression {
                    const NsIndex length_init)
           : VarArr(VarArr_init), start(start_init), length(length_init)
         {
-                //&&  length >= 0,
                 assert_Ns(start + length <= VarArr.size(),
                           "Ns_ExprSum::Ns_ExprSum: Wrong 'start' or 'length'");
         }
@@ -3209,40 +3107,6 @@ class Ns_ExprConstrYlesseqthanC : public Ns_ExprConstr {
         virtual NsIntVar& postC(bool positively) const;
 };
 
-// class Ns_ExprConstrYgreaterthanC : public Ns_ExprConstr  {
-//      private:
-//              NsIntVar  &VarY;
-//              NsInt  C;
-//
-//      public:
-//              Ns_ExprConstrYgreaterthanC (NsIntVar& Y, const NsInt C_init)
-//                      : VarY(Y), C(C_init)    {   }
-//
-//              virtual Ns_Constraint*  postConstraint (void)  const;
-//
-//              virtual void      post (NsIntVar *VarX)  const;
-//              virtual NsIntVar&  post (void)  const;
-//};
-//
-//
-//
-//
-//
-// class Ns_ExprConstrYgreatereqthanC : public Ns_ExprConstr  {
-//      private:
-//              NsIntVar  &VarY;
-//              NsInt  C;
-//
-//      public:
-//              Ns_ExprConstrYgreatereqthanC (NsIntVar& Y, const NsInt C_init)
-//                      : VarY(Y), C(C_init)    {   }
-//
-//              virtual Ns_Constraint*  postConstraint (void)  const;
-//
-//              virtual void      post (NsIntVar *VarX)  const;
-//              virtual NsIntVar&  post (void)  const;
-//};
-
 class Ns_ExprConstrYeqC : public Ns_ExprConstr {
     private:
         NsIntVar& VarY;
@@ -3260,21 +3124,6 @@ class Ns_ExprConstrYeqC : public Ns_ExprConstr {
         virtual void postC(NsIntVar& VarX, bool positively) const;
         virtual NsIntVar& postC(bool positively) const;
 };
-
-// class Ns_ExprConstrYneqC : public Ns_ExprConstr  {
-//      private:
-//              NsIntVar  &VarY;
-//              NsInt  C;
-//
-//      public:
-//              Ns_ExprConstrYneqC (NsIntVar& Y, const NsInt C_init)
-//                      : VarY(Y), C(C_init)    {   }
-//
-//              virtual Ns_Constraint*  postConstraint (void)  const;
-//
-//              virtual void      post (NsIntVar *VarX)  const;
-//              virtual NsIntVar&  post (void)  const;
-//};
 
 class Ns_ExprConstrYlessthanZ : public Ns_ExprConstr {
 
@@ -3341,10 +3190,8 @@ class Ns_ExprConstrYandZ : public Ns_ExprConstr {
                           "Ns_ExprConstrYandZ::Ns_ExprConstrYandZ: 'VarY' and 'VarZ' should be boolean");
         }
 
-        virtual Ns_Constraint* postConstraint(bool positively) const
+        virtual Ns_Constraint* postConstraint(bool /*positively*/) const
         {
-                // to suppress warnings
-                positively = positively;
                 throw NsException("Ns_ExprConstrYandZ::postConstraint: Please, add the two constraints separately");
         }
 
@@ -3412,17 +3259,12 @@ class Ns_ExprConstrAllDiff : public Ns_ExprConstr {
 
         virtual Ns_Constraint* postConstraint(bool positively) const;
 
-        virtual void postC(NsIntVar& VarX, bool positively) const
+        virtual void postC(NsIntVar& /*VarX*/, bool /*positively*/) const
         {
-                VarX.size(); // to suppress warnings
-                // to suppress warnings
-                positively = positively;
                 throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff cannot be used as a meta-constraint");
         }
-        virtual NsIntVar& postC(bool positively) const
+        virtual NsIntVar& postC(bool /*positively*/) const
         {
-                // to suppress warnings
-                positively = positively;
                 throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff cannot be used as a meta-constraint");
         }
 };
@@ -3455,17 +3297,12 @@ class Ns_ExprConstrCount : public Ns_ExprConstr {
 
         virtual Ns_Constraint* postConstraint(bool positively) const;
 
-        virtual void postC(NsIntVar& VarX, bool positively) const
+        virtual void postC(NsIntVar& /*VarX*/, bool /*positively*/) const
         {
-                VarX.size(); // to suppress warnings
-                // to suppress warnings
-                positively = positively;
                 throw NsException("Ns_ExprConstrCount::postC: NsCount cannot be used as a meta-constraint");
         }
-        virtual NsIntVar& postC(bool positively) const
+        virtual NsIntVar& postC(bool /*positively*/) const
         {
-                // to suppress warnings
-                positively = positively;
                 throw NsException("Ns_ExprConstrCount::postC: NsCount cannot be used as a meta-constraint");
         }
 };
@@ -3769,14 +3606,14 @@ NsCount(NsIntVarArray& Arr, const NsDeque<NsInt>& Values,
 inline Ns_ExprConstrYorZ NsIfThen(const Ns_ExprConstr& Yexpr,
                                   const Ns_ExprConstr& Zexpr)
 {
-        //  "p => q"  is equivalent to  "!p || q".
+        // 'p => q' is equivalent to '!p || q'
         return (!Yexpr || Zexpr);
 }
 
 inline Ns_ExprConstrYeqZ NsEquiv(const Ns_ExprConstr& Yexpr,
                                  const Ns_ExprConstr& Zexpr)
 {
-        //  "p <=> q"  is equivalent to  "p == q".
+        // 'p <=> q' is equivalent to 'p == q'
         return (Yexpr == Zexpr);
 }
 
@@ -3809,7 +3646,7 @@ inline Ns_ExprConstrYeqZ NsElement(const Ns_Expression& VarIndexExpr,
 }
 
 ///  An abstract class representing an (internal or constructed by user) goal.
-
+///
 ///  Each time a goal is executed by the solver, its method GOAL() is
 ///   called.  This method can make assignments or remove values from
 ///   constrained variables.
@@ -3981,7 +3818,6 @@ class NsgInDomain : public NsGoal {
 
         NsGoal* GOAL(void)
         {
-                // std::cout << "  NsgInDomain:    ";
                 if (Var.isBound())
                         return 0;
                 NsInt value = Var.min();
@@ -4008,7 +3844,6 @@ class NsgLabeling : public NsGoal {
 
         NsGoal* GOAL(void)
         {
-                // std::cout << "  NsgLabeling:       ";
                 NsIndex index = NsINDEX_INF;
                 NsUInt minDom = NsUPLUS_INF;
                 for (NsIndex i = 0; i < VarArr.size(); ++i) {
@@ -4025,7 +3860,7 @@ class NsgLabeling : public NsGoal {
 };
 
 ///  The type of the objects in the queue for the AC algorithm.
-
+///
 ///  When a value is removed from the domain of a variable, an item is
 ///   added into this queue.
 class Ns_QueueItem {
@@ -4174,7 +4009,7 @@ class Ns_StackGoals : public NsStack<NsGoal*> {
 
 class Ns_SearchNode;
 
-///  Contains all the Ns_SearchNode 's.
+///  Contains all the Ns_SearchNode's.
 
 ///  A Ns_SearchNode contains the current status of the problem; it is
 ///   pushed into the stack when we make a choice (e.g. when we select a
