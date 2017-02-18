@@ -61,7 +61,7 @@ inline void assert_Ns(const bool condition, const char* message)
 }
 
 // Assertions are disabled when the corresponding DEBUG_LEVEL_* is not
-// #define'd, to improve performance. The first debug level is assumed to
+// #define'd, to improve performance. The Debug Level 1 is assumed to
 // be active by default.
 #ifdef DEBUG_LEVEL_3
 #define DEBUG_LEVEL_2
@@ -123,7 +123,6 @@ class Ns_ExprElement : public Ns_Expression {
     private:
         NsIntVar& VarIndex;
         const NsDeque<NsInt>& intArray;
-        // NsIntVar&  VarValue;
 
     public:
         Ns_ExprElement(NsIntVar& VarIndex_init,
@@ -137,7 +136,7 @@ class Ns_ExprElement : public Ns_Expression {
 };
 
 ///  A flexible array data structure (like std::deque).
-
+///
 ///  A safer version of std::deque that throws an exception when an
 ///   out_of_range request is being made.  It takes advantage of the
 ///   internal at() method that does this work.
@@ -3648,7 +3647,7 @@ inline Ns_ExprConstrYeqZ NsElement(const Ns_Expression& VarIndexExpr,
 ///  An abstract class representing an (internal or constructed by user) goal.
 ///
 ///  Each time a goal is executed by the solver, its method GOAL() is
-///   called.  This method can make assignments or remove values from
+///   called. This method can make assignments or remove values from
 ///   constrained variables.
 class NsGoal {
 
@@ -4585,8 +4584,7 @@ class NsProblemManager {
         ///  Our objective is to minimize this constrained variable.
         NsIntVar* vObjective;
 
-        ///  The minimum upper limit of 'vObjective' found so far (initially
-        ///  +oo).
+        /// The minimum upper limit of 'vObjective' found so far (initially +oo)
         NsInt bestObjective;
 
     public:
@@ -4669,7 +4667,7 @@ class NsProblemManager {
                 timeLim = secs;
         }
 
-        ///  Sets the limit to the backtracks that search process does.  After
+        ///  Sets the limit to the backtracks that search process does. After
         ///  this limit is exceeded, nextSolution() returns false.
         void backtrackLimit(const unsigned long lim)
         {
