@@ -4860,7 +4860,7 @@ class NsProblemManager {
 
 #endif // Ns_NAXOS_H
 
-/// @example nqueens.orig.cpp
+/// @example apps/nqueens.cpp
 ///
 ///  An example of how to use the
 ///   Naxos Solver library to solve the N-queens problem.
@@ -4874,7 +4874,7 @@ class NsProblemManager {
 ///
 ///  Description source: Wikipedia.
 
-/// @example send_more_money.cpp
+/// @example apps/send_more_money.cpp
 ///
 ///  An example of how to use the
 ///   Naxos Solver library to solve the
