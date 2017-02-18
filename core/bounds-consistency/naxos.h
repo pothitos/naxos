@@ -354,7 +354,7 @@ class Ns_QueueItem;
 
 ///  Class describing the domain of a constrained variable as a bit-set.
 
-///  A bit-set is used to hold its values.  If the <em>i</em>-th bit is
+///  A bit-set is used to hold its values.  If the i-th bit is
 ///   active, then the domain contains the value minDom + i.
 class Ns_BitSet {
 
@@ -4326,7 +4326,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 bool operator==(const goal_iterator& b) const
                 {
-                        assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_iterator::==: Uninitialized '*this'");
+                        assert_Ns(stackOfStacks != 0,
+                                  "Ns_StackSearch::goal_iterator::==: Uninitialized '*this'");
                         return (curr_Stack_it == b.curr_Stack_it &&
                                 (curr_Stack_it == stackOfStacks->end() ||
                                  curr_node_it == b.curr_node_it));
@@ -4602,7 +4603,8 @@ class NsProblemManager {
 
         void objectiveUpperLimit(NsInt max)
         {
-                assert_Ns(vObjective != 0, "NsProblemManager::objectiveUpperLimit: No cost variable exists");
+                assert_Ns(vObjective != 0,
+                          "NsProblemManager::objectiveUpperLimit: No cost variable exists");
                 if (bestObjective > max + 1) {
                         bestObjective = max + 1;
                         vObjective->remove(bestObjective, NsPLUS_INF);
@@ -4851,7 +4853,6 @@ class NsProblemManager {
                 searchNodes.top().bitsetsStore.push(
                     Ns_SearchNode::BitsetCopy(bitsetDomain));
                 bitsetDomain.lastSaveHistoryId() = getCurrentHistoryId();
-                // bitsetDomain.queueItem  =  0;
         }
 };
 
@@ -4861,11 +4862,11 @@ class NsProblemManager {
 
 /// @example nqueens.orig.cpp
 ///
-///  An example of how to use the <span style="font-variant: small-caps;">
-///   Naxos Solver </span> library to solve the <em>N</em>-queens problem.
+///  An example of how to use the
+///   Naxos Solver library to solve the N-queens problem.
 ///
-///  The <em>N</em>-queens puzzle is the problem of putting eight chess
-///   queens on an <em>N</em> x <em>N</em> chessboard such that none of
+///  The N-queens puzzle is the problem of putting eight chess
+///   queens on an N x N chessboard such that none of
 ///   them is able to capture any other using the standard chess queen's
 ///   moves.  The queens must be placed in such a way that no two queens
 ///   would be able to attack each other. Thus, a solution requires that no
@@ -4875,9 +4876,9 @@ class NsProblemManager {
 
 /// @example send_more_money.cpp
 ///
-///  An example of how to use the <span style="font-variant: small-caps;">
-///   Naxos Solver </span> library to solve the
-///   <em>SEND</em>+<em>MORE</em>=<em>MONEY</em> problem.
+///  An example of how to use the
+///   Naxos Solver library to solve the
+///   SEND+MORE=MONEY problem.
 ///
 ///  Verbal arithmetic, also known as alphametics, cryptarithmetic,
 ///   crypt-arithmetic, or cryptarithm, is a type of mathematical game
@@ -4899,9 +4900,8 @@ class NsProblemManager {
 ///= M O N E Y
 ///@endcode
 ///
-///  The solution to this puzzle is <em>O</em> = 0, <em>M</em> = 1,
-///   <em>Y</em> = 2, <em>E</em> = 5, <em>N</em> = 6, <em>D</em> = 7,
-///   <em>R</em> = 8, and <em>S</em> = 9.
+///  The solution to this puzzle is O = 0, M = 1, Y = 2, E = 5, N = 6, D = 7,
+///   R = 8, and S = 9.
 ///
 ///  Traditionally, each letter should represent a different digit, and (as
 ///   in ordinary arithmetic notation) the leading digit of a multi-digit
