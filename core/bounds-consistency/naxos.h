@@ -4266,7 +4266,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         /// @}
 
         /// @{
-        /// @name Representation of the search tree as a graph
+        /// Representation of the search tree as a graph
 
     private:
         /// The mapper's ID.
