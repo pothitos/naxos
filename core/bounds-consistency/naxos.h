@@ -99,7 +99,7 @@ class NsIntVar;
 template <class TemplType>
 class NsDeque;
 
-/// An (algebraic etc.) expression between constrained variables
+/// An abstract (algebraic etc.) expression between constrained variables
 class Ns_Expression {
 
     public:
@@ -894,7 +894,7 @@ inline std::ostream& operator<<(std::ostream& os, const NsIntVar& Var)
 
 class Ns_ExpressionArray;
 
-///  A flexible array data type, to hold constrained variables (NsIntVar's).
+/// A flexible array data type, to hold constrained variables (NsIntVar's)
 class NsIntVarArray {
 
     private:
@@ -911,7 +911,7 @@ class NsIntVarArray {
 
         NsIntVarArray& operator=(const Ns_ExpressionArray& expr);
 
-        ///  Signifies that a constraint has been imposed on the array.
+        /// Signifies that a constraint has been imposed on the array
         void addConstraint(void)
         {
                 addedConstraint = true;
@@ -941,8 +941,7 @@ class NsIntVarArray {
 
         class const_iterator;
 
-        ///  Iterator that iterates through the constrained variables of the
-        ///  array.
+        /// Iterator that iterates through the array's constrained variables
         class iterator {
 
             private:
@@ -1022,8 +1021,7 @@ class NsIntVarArray {
                 return iterEnd.end();
         }
 
-        ///  Iterator that iterates through the constrained variables of the
-        ///  array (without modifying them).
+        /// Iterator that goes through the array without modifying its elements
         class const_iterator {
 
             private:
@@ -1173,11 +1171,11 @@ void Ns_inverseConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
 class Ns_Constraint {
 
     public:
-        ///  The 'timestamp' (current removal ID) when the last check of this
-        ///  constraint took place.
+        /// The 'timestamp' (current removal ID) when the last check of this
+        /// constraint took place
         unsigned long lastConstraintCheckTime;
 
-        ///  Constructor.
+        /// Constructor
         Ns_Constraint(void)
           : lastConstraintCheckTime(0), revisionType(BOUNDS_CONSISTENCY)
         {
@@ -1192,34 +1190,34 @@ class Ns_Constraint {
 
         /// @}
 
-        ///  The number of the variables involved in the constraint.
+        /// The number of the variables involved in the constraint
         virtual int varsInvolvedIn(void) const = 0;
 
-        ///  Description of the consistency type that a 'revision' function for
-        ///  a constraint can impose.
+        /// Description of the consistency type that a 'revision' function for
+        /// a constraint can impose
         enum ConsistencyType {
 
-                ///  The revision function needs to know the value that has been
-                ///  removed from the domain (e.g. see Ns_ConstrInverse).
+                /// The revision function needs to know the value that has been
+                /// removed from the domain (e.g. see Ns_ConstrInverse).
                 VALUE_CONSISTENCY,
 
-                ///  The revision function does not need to know the removed
-                ///  values (like VALUE_CONSISTENCY).  It imposes
-                ///  bounds-consistency.
+                /// The revision function does not need to know the removed
+                /// values (like VALUE_CONSISTENCY). It imposes
+                /// bounds-consistency.
                 BOUNDS_CONSISTENCY,
 
-                ///  Like BOUNDS_CONSISTENCY, but revision is imposed in both
-                ///  directions.  E.g. Revision(i,j) is equivalent to
-                ///  Revision(j,i), where i, j are variables.
+                /// Like BOUNDS_CONSISTENCY, but revision is imposed in both
+                /// directions. E.g. Revision(i,j) is equivalent to
+                /// Revision(j,i), where i, j are variables.
                 BIDIRECTIONAL_CONSISTENCY
         };
 
-        ///  Description of the type of revision function (LocalArcCons) for the
-        ///  constraint.
+        /// Description of the type of revision function (LocalArcCons) for the
+        /// constraint
         ConsistencyType revisionType;
 
-        ///  Writes a constraint-edge representation into a graph file, with a
-        ///  format supported by Graphviz.
+        /// Writes a constraint-edge representation into a graph file, with a
+        /// format supported by Graphviz
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 assert_Ns(
@@ -1230,7 +1228,7 @@ class Ns_Constraint {
                     << "// Unimplemented constraint representation\n";
         }
 
-        // The destructor of an abstract class should be virtual.
+        // The destructor of an abstract class should be virtual
         virtual ~Ns_Constraint(void)
         {
         }
@@ -1423,10 +1421,11 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
 
-//  The following constraint is somehow 'stronger' than the simple 'X == Y +
-//  C*Z'.
-//   It requires some special conditions, that allow the efficient application
-//   of the pure arc-consistency--i.e. not only bounds consistency.
+/// This is somehow 'stronger' than the simple 'X == Y + C*Z'
+///
+/// It requires some special conditions, that allow the
+/// efficient application of the pure arc-consistency, i.e. not
+/// only bounds consistency.
 class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
 
     private:
@@ -1443,11 +1442,11 @@ class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
                               &VarY->manager() == &VarZ->manager(),
                           "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: All the variables of a constraint must belong to the same NsProblemManager");
                 assert_Ns(X->min() >= 0,
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required:  X >= 0");
+                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required: X >= 0");
                 assert_Ns(0 <= Y->min() && Y->max() < C,
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required:  0 <= Y < C");
+                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required: 0 <= Y < C");
                 assert_Ns(C > 0,
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Condition required:  C > 0");
+                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Condition required: C > 0");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1539,7 +1538,7 @@ class Ns_ConstrXeqYdivC : public Ns_Constraint {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
                           "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(C != 0, "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required:  C != 0");
+                assert_Ns(C != 0, "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required: C != 0");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1838,8 +1837,8 @@ class Ns_ConstrMetaXeqYeqZ : public Ns_Constraint {
 
     private:
         NsIntVar *VarX, *VarY, *VarZ;
+        /// If neg == true, the constraint becomes 'Ns_ConstrMetaXeqY neq Z'
         const bool neg;
-        // If 'neg==true' the constraint becomes 'Ns_ConstrMetaXeqY neq Z'.
 
     public:
         Ns_ConstrMetaXeqYeqZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z,
@@ -1900,8 +1899,8 @@ class Ns_ConstrXeqYandZ : public Ns_Constraint {
 
     private:
         NsIntVar *VarX, *VarY, *VarZ;
+        /// If neg == true, the constraint becomes 'Ns_ConstrXeqY nand Z'
         const bool neg;
-        // If 'neg==true' the constraint becomes 'Ns_ConstrXeqY nand Z'.
 
     public:
         Ns_ConstrXeqYandZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z, const bool pos)
@@ -1936,8 +1935,8 @@ class Ns_ConstrXeqYorZ : public Ns_Constraint {
 
     private:
         NsIntVar *VarX, *VarY, *VarZ;
+        /// If neg == true, the constraint becomes 'Ns_ConstrXeqY nor Z'
         const bool neg;
-        // If 'neg==true' the constraint becomes 'Ns_ConstrXeqY nor Z'.
 
     public:
         Ns_ConstrXeqYorZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z, const bool pos)
@@ -1972,8 +1971,8 @@ class Ns_ConstrXorY : public Ns_Constraint {
 
     private:
         NsIntVar *VarX, *VarY;
+        /// If neg == true, the constraint becomes 'Constr not X and not Y'
         const bool neg;
-        // If 'neg==true' the constraint becomes 'Constr not X and not Y'.
 
     public:
         Ns_ConstrXorY(NsIntVar* X, NsIntVar* Y, const bool pos)
@@ -2186,10 +2185,8 @@ class Ns_ConstrAllDiff : public Ns_Constraint {
 class Ns_ConstrAllDiffStrong : public Ns_Constraint {
 
     public:
-        //  'groupedNsIntVar', as the name suggests, is a class that
-        //   extends 'NsIntVar', by adding the information concerning
-        //   the id of the group taht the constrained variable belongs to.
-
+        /// Extends 'NsIntVar' by adding the information concerning the id of
+        /// the group that the constrained variable belongs to
         class groupedNsIntVar {
 
             public:
@@ -2978,15 +2975,14 @@ inline Ns_ExprSum NsSum(NsIntVarArray& Arr, const NsIndex start,
         return Ns_ExprSum(Arr, start, length);
 }
 
-/// Abstract class that represents an expression having to do with arrays of
-/// constrained variables
+/// An abstract expression having to do with arrays of constrained variables
 class Ns_ExpressionArray {
 
     public:
         /// Posts the constraint
         virtual void post(NsIntVarArray& VarArr) const = 0;
 
-        // The destructor of an abstract class should be virtual.
+        // The destructor of an abstract class should be virtual
         virtual ~Ns_ExpressionArray(void)
         {
         }
