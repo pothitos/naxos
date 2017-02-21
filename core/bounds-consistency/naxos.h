@@ -60,9 +60,9 @@ inline void assert_Ns(const bool condition, const char* message)
                 throw NsException(message);
 }
 
-// Assertions are disabled when the corresponding DEBUG_LEVEL_* is not
-// #define'd, to improve performance. The Debug Level 1 is assumed to
-// be active by default.
+// Assertions are disabled when the corresponding DEBUG_LEVEL_*
+// is not #define'd, to improve performance. The Debug Level 1
+// is assumed to be active by default.
 #ifdef DEBUG_LEVEL_3
 #define DEBUG_LEVEL_2
 #define assert_Ns_3(condition, message) (assert_Ns((condition), (message)))
@@ -99,20 +99,17 @@ class NsIntVar;
 template <class TemplType>
 class NsDeque;
 
-/// Abstract class that represents an (algebraic etc.) expression between
-/// constrained variables
+/// An (algebraic etc.) expression between constrained variables
 class Ns_Expression {
 
     public:
-        /// Posts the constraint VarX == *this.
-        /// *this represents an Ns_Expression.
+        /// Posts constraint VarX == *this; *this represents an Ns_Expression
         virtual void post(NsIntVar& VarX) const = 0;
 
-        /// Produces/returns a variable to represent the
-        ///   Ns_Expression (*this).
+        /// Produces/returns a variable to represent the Ns_Expression(*this)
         virtual NsIntVar& post(void) const = 0;
 
-        // The destructor of an abstract class should be virtual.
+        // The destructor of an abstract class should be virtual
         virtual ~Ns_Expression(void)
         {
         }
@@ -135,11 +132,11 @@ class Ns_ExprElement : public Ns_Expression {
         virtual NsIntVar& post(void) const;
 };
 
-///  A flexible array data structure (like std::deque).
+/// A flexible array data structure, like std::deque
 ///
-///  A safer version of std::deque that throws an exception when an
-///   out_of_range request is being made.  It takes advantage of the
-///   internal at() method that does this work.
+/// A safer version of std::deque that throws an exception when
+/// an out_of_range request is being made. It takes advantage of
+/// the internal at() method that does this work.
 template <class TemplType>
 class NsDeque : public std::deque<TemplType> {
 
@@ -204,7 +201,7 @@ class NsDeque : public std::deque<TemplType> {
         }
 };
 
-/// std::queue with exceptions enabled.
+/// std::queue with exceptions enabled
 template <class TemplType>
 class NsQueue : public std::queue<TemplType> {
 
@@ -326,68 +323,67 @@ typedef size_t Ns_pointer_t;
 
 typedef NsDeque<NsIntVar*> Ns_PointArray_t;
 
-///  Array index type.
+/// Array index type
 typedef Ns_PointArray_t::size_type NsIndex;
 
-///  Array index maximum size.
+/// Array index maximum size
 const NsIndex NsINDEX_INF = Ns_PointArray_t().max_size();
 
-///  The Ns_HistoryId_t of an object can be used to see whether it is valid.
-
-///  Each frame of the Ns_StackSearch NsProblemManager::searchNodes is
-///   represented by its level.  Each level has its own valid id
-///   that stops being valid when the frame is popped.
+/// The Ns_HistoryId_t of an object can be used to see whether it is valid
+///
+/// Each frame of the Ns_StackSearch
+/// NsProblemManager::searchNodes is represented by its level.
+/// Each level has its own valid id that stops being valid when
+/// the frame is popped.
 struct Ns_HistoryId_t {
 
-        ///  The depth of the node in the search tree.
+        /// The depth of the node in the search tree
         NsIndex level;
 
-        ///  The identity of the search node.
+        /// The identity of the search node
         NsUInt id;
 };
 
 class NsProblemManager;
-// class NsProblemManager::NsListOfVars;
 
 class Ns_QueueItem;
 
-///  Class describing the domain of a constrained variable as a bit-set.
-
-///  A bit-set is used to hold its values.  If the i-th bit is
-///   active, then the domain contains the value minDom + i.
+/// Class describing the domain of a constrained variable as a bit-set
+///
+/// A bit-set is used to hold its values. If the i-th bit is
+/// active, then the domain contains the value minDom + i.
 class Ns_BitSet {
 
     private:
-        ///  The problem manager to which the domain belongs to.
+        /// The problem manager to which the domain belongs to
         NsProblemManager* pm;
 
-        ///  The initial minimum value of the domain.
+        /// The initial minimum value of the domain
         NsInt minDom;
 
-        ///  Minimum value of the domain.
+        /// Minimum value of the domain
         NsInt minVal;
 
-        ///  Maximum value of the domain.
+        /// Maximum value of the domain
         NsInt maxVal;
 
-        ///  Number of the bits (active or inactive) of the bit-set.
+        /// Number of the bits (active or inactive) of the bit-set
         NsUInt nBits;
 
-        ///  Number of the active bits (values) of the domain.
+        /// Number of the active bits (values) of the domain
         NsUInt setCount;
 
-        ///  An array consisting of machine words.  It contains the bits for the
-        ///  bitset.
+        /// An array consisting of machine words: the bits for the bitset
         NsDeque<size_t> machw;
 
-        ///  The number of bits that a machine word can hold.
+        /// The number of bits that a machine word can hold
         static const NsUInt MW_BITS = CHAR_BIT * sizeof(size_t);
 
-        ///  The 'timestamp' that can be used in chronological backtracking.
+        /// The 'timestamp' that can be used in chronological backtracking
         Ns_HistoryId_t lastSaveId;
 
     public:
-        ///  Returns the 'lastSaveId'.
+        /// Returns the 'lastSaveId'
         Ns_HistoryId_t& lastSaveHistoryId(void)
         {
                 return lastSaveId;
@@ -435,12 +431,11 @@ class Ns_BitSet {
 
         bool removeRange(NsInt rangeMin, NsInt rangeMax);
 
-        ///  Generic function to print a domain.
+        /// Generic function to print a domain
         friend std::ostream& operator<<(std::ostream& os,
                                         const Ns_BitSet& domain);
 
-        ///  Iterates through all the values of the domain, without changing
-        ///  them (const_iterator).
+        /// Iterates through the values of the domain, without changing them
         class const_iterator {
 
             private:
@@ -505,8 +500,7 @@ class Ns_BitSet {
                 }
         };
 
-        ///  Iterates through all the values of the domain, without changing
-        ///  them, in reverse order (const_iterator).
+        /// Iterates reversely through the domain values, without changing them
         class const_reverse_iterator {
 
             private:
@@ -571,7 +565,7 @@ class Ns_BitSet {
                 }
         };
 
-        ///  Iterates through all the missing values (gaps) of the domain [min..max], without changing them (const_iterator).
+        /// Iterates through all the missing values (gaps) of the domain
         class const_gap_iterator {
 
             private:
@@ -668,14 +662,14 @@ typedef NsDeque<Ns_Constraint*> Ns_constraints_array_t;
 
 class Ns_Expression;
 
-///  Represents a constrained variable.
+/// A constrained variable
 class NsIntVar {
 
     private:
-        ///  Each constrained variable belongs to a specific NsProblemManager.
+        /// Each constrained variable belongs to a specific NsProblemManager
         NsProblemManager* pm;
 
-        ///  The domain of the constrained variable.
+        /// The domain of the constrained variable
         Ns_BitSet domain;
 
     public:
@@ -723,11 +717,9 @@ class NsIntVar {
 
         /// @}
 
-        ///  Dummy constructor that allow the Solver's programmer to declare
-        ///  uninitialized NsIntVar 's.
+        /// Dummy constructor for the declaration of an uninitialized NsIntVar
         NsIntVar(void)
           : pm(0),
-            // domain(0),
             arcsConnectedTo(0),
             constraintNeedsRemovedValues(false),
             queueItem(0)
@@ -741,18 +733,19 @@ class NsIntVar {
 
         NsIntVar& operator=(const Ns_Expression& expr);
 
-        //  Methods that remove values from the domain follow...
+        /// @{
+        /// @name Methods that remove values from the domain
 
         void removeAll(void);
 
         void remove(const NsInt val)
         {
                 return remove(val, val);
-                // removeSingle(val, 0);
         }
 
-        ///  To remove a value, plus recording the constraint that made this
-        ///  removal.  If c==0 no constraint is recorded.
+        /// Removes a value, plus recording the constraint that called it
+        ///
+        /// If c == 0, no constraint is recorded.
         bool removeSingle(const NsInt val, const Ns_Constraint* c)
         {
                 return removeRange(val, val, c);
@@ -773,7 +766,9 @@ class NsIntVar {
         bool removeRange(const NsInt first, const NsInt last,
                          const Ns_Constraint* c, bool& modified);
 
-        ///  Assigns a value to the constrained variable.
+        /// @}
+
+        /// Assigns a value to the constrained variable
         void set(const NsInt val)
         {
                 assert_Ns(val != NsMINUS_INF && val != NsPLUS_INF,
@@ -807,8 +802,7 @@ class NsIntVar {
                 return domain.max();
         }
 
-        ///  If the constrained variable is instantiated, the method returns its
-        ///  value.
+        /// If the constrained variable is instantiated, this returns its value
         NsInt value(void) const
         {
                 assert_Ns(isBound(),
@@ -833,7 +827,7 @@ class NsIntVar {
 
         friend std::ostream& operator<<(std::ostream& os, const NsIntVar& Var);
 
-        ///  The NsProblemManager that the variable belongs to.
+        /// The NsProblemManager that the variable belongs to
         NsProblemManager& manager(void) const
         {
                 return *pm;
@@ -843,52 +837,51 @@ class NsIntVar {
         /// @name Auxiliary AC algorithm data-members
 
     public:
-        ///  Pair of a constraint and the inconsistencies that has provoked.
-
+        /// Pair of a constraint and the inconsistencies that has provoked
         struct ConstraintAndFailure {
 
-                ///  The constraint.
+                /// The constraint
                 Ns_Constraint* constr;
 
-                ///  The inconsistencies that constr provoked.
+                /// The inconsistencies that constr provoked
                 unsigned long failures;
 
-                ///  Constructor.
+                /// Constructor
                 ConstraintAndFailure(Ns_Constraint* constr_init)
                   : constr(constr_init), failures(0)
                 {
                 }
         };
 
-        ///  An array of the constraints that the variable is involved in.
+        /// An array of the constraints that the variable is involved in
         NsDeque<ConstraintAndFailure> constraints;
 
     private:
-        ///  The number of the variables connected to this instance, via
-        ///  constraints.
+        /// The number of other variables connected to this via constraints
         int arcsConnectedTo;
 
-        ///  True, if the variable is involved in an 'Inverse' constraint, or
-        ///  another constraint that needs to know the values that have been
-        ///  removed from the variable (the w's in the AC-5 Algorithm).
+        /// True, if the variable is involved in an 'Inverse' constraint, or
+        /// another constraint that needs to know the values that have been
+        /// removed from the variable (the w's in the AC-5 Algorithm)
         bool constraintNeedsRemovedValues;
 
     public:
-        ///  Returns true if the variable is involved in an 'Inverse'
-        ///  constraint, or another constraint that needs to know the values
-        ///  that have been removed from the variable.
+        /// Returns true if the variable is involved in an 'Inverse' constraint,
+        /// or another constraint that needs to know the values that have been
+        /// removed from the variable
         bool storeRemovedValues(void) const
         {
                 return constraintNeedsRemovedValues;
         }
 
-        ///  Adds a constraint to the collection of constraints of the variable.
+        /// Adds a constraint to the collection of constraints of the variable
         void addConstraint(Ns_Constraint* c);
 
         /// @}
 
-        ///  Points to the item in the AC queue that refers to the variable.  If
-        ///  there is no such item, the pointer is null.
+        /// Points to the item in the AC queue that refers to the variable
+        ///
+        /// If there is no such item, the pointer is null.
         Ns_QueueItem* queueItem;
 
         void transparent(void);
