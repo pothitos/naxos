@@ -348,7 +348,7 @@ void destroy_goal(NsGoal* g)
         }
 }
 
-// Reimplements difftime() to address MinGW issues
+/// Reimplements difftime() to address MinGW issues
 inline double DiffTime(time_t time2, time_t time1)
 {
         return (time2 - time1);

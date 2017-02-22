@@ -109,7 +109,7 @@ class Ns_Expression {
         /// Produces/returns a variable to represent the Ns_Expression(*this)
         virtual NsIntVar& post(void) const = 0;
 
-        // The destructor of an abstract class should be virtual
+        /// The destructor of an abstract class should be virtual
         virtual ~Ns_Expression(void)
         {
         }
@@ -1228,7 +1228,7 @@ class Ns_Constraint {
                     << "// Unimplemented constraint representation\n";
         }
 
-        // The destructor of an abstract class should be virtual
+        /// The destructor of an abstract class should be virtual
         virtual ~Ns_Constraint(void)
         {
         }
@@ -2982,7 +2982,7 @@ class Ns_ExpressionArray {
         /// Posts the constraint
         virtual void post(NsIntVarArray& VarArr) const = 0;
 
-        // The destructor of an abstract class should be virtual
+        /// The destructor of an abstract class should be virtual
         virtual ~Ns_ExpressionArray(void)
         {
         }
@@ -3665,7 +3665,7 @@ class NsGoal {
 
         virtual NsGoal* GOAL(void) = 0;
 
-        // The destructor of an abstract class should be virtual.
+        /// The destructor of an abstract class should be virtual.
         virtual ~NsGoal(void)
         {
         }
