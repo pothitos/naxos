@@ -3761,7 +3761,6 @@ class NsgSetValue : public NsGoal {
 
         NsGoal* GOAL(void)
         {
-                // std::cout << "  NsgSetValue:   ";
                 Var.set(value);
                 return 0;
         }
@@ -3783,7 +3782,6 @@ class NsgRemoveValue : public NsGoal {
 
         NsGoal* GOAL(void)
         {
-                // std::cout << "  NsgRemoveValue:";
                 Var.remove(value);
                 return 0;
         }
