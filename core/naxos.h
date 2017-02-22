@@ -3015,16 +3015,16 @@ inline Ns_ExprInverse NsInverse(NsIntVarArray& Arr, const NsInt MaxDom)
 
 /// Ns_Expression subcategory describing constraints
 ///
-/// The following abstract class represents the expressions category that
-/// can be viewed both as a constraint (e.g. X < Y) and as an
-/// expression/meta-constraint (e.g. Z == X < Y).
+/// The following abstract class represents the expressions
+/// category that can be viewed both as a constraint (e.g. X < Y)
+/// and as an expression/meta-constraint (e.g. Z == X < Y).
 class Ns_ExprConstr : public Ns_Expression {
 
     protected:
         /// Positive or negative constraint declaration
         ///
-        /// If isPositive == false then the semantics of
-        /// the constraint-expression is inverted.
+        /// If isPositive == false, then the semantics
+        /// of the constraint-expression is inverted.
         /// E.g. 'X < Y' becomes 'X >= Y'.
         bool isPositive;
 
@@ -3033,27 +3033,27 @@ class Ns_ExprConstr : public Ns_Expression {
         {
         }
 
-        ///  Final declaration and post of a constraint.
+        ///  Final declaration and post of a constraint
         virtual Ns_Constraint* postConstraint(bool positively = true) const = 0;
 
-        ///  Uses postC(VarX, true) to post a constraint.
+        /// Uses postC(VarX, true) to post a constraint
         virtual void post(NsIntVar& VarX) const
         {
                 postC(VarX, true);
         }
 
-        ///  Uses postC(true) to post a constraint.
+        /// Uses postC(true) to post a constraint
         virtual NsIntVar& post(void) const
         {
                 return postC(true);
         }
 
-        ///  Extends Ns_Expression::post(NsIntVar &VarX) const in the way that
-        ///  it can inverse the semantics of the constraint.
+        /// Extends Ns_Expression::post(NsIntVar &VarX) const in the way that it
+        /// can inverse the semantics of the constraint
         virtual void postC(NsIntVar& VarX, bool positively = true) const = 0;
 
-        ///  Extends Ns_Expression::post() in the way that it can inverse the
-        ///  semantics of the constraint.
+        /// Extends Ns_Expression::post() in the way that it can inverse the
+        /// semantics of the constraint
         virtual NsIntVar& postC(bool positively = true) const = 0;
 };
 
@@ -3633,11 +3633,11 @@ inline Ns_ExprConstrYeqZ NsElement(const Ns_Expression& VarIndexExpr,
         return NsElement(VarIndexExpr.post(), intArray, VarValueExpr.post());
 }
 
-///  An abstract class representing an (internal or constructed by user) goal.
+/// An abstract class representing an (internal or constructed by user) goal
 ///
-///  Each time a goal is executed by the solver, its method GOAL() is
-///   called. This method can make assignments or remove values from
-///   constrained variables.
+/// Each time a goal is executed by the solver, its method
+/// GOAL() is called. This method can make assignments or
+/// remove values from constrained variables.
 class NsGoal {
 
     public:
@@ -3665,13 +3665,13 @@ class NsGoal {
 
         virtual NsGoal* GOAL(void) = 0;
 
-        /// The destructor of an abstract class should be virtual.
+        /// The destructor of an abstract class should be virtual
         virtual ~NsGoal(void)
         {
         }
 };
 
-///  The first kind of 'meta-goal' (i.e. goal used to combine two other goals).
+/// The first kind of 'meta-goal' (i.e. goal used to combine two other goals)
 class NsgAND : public NsGoal {
 
     private:
@@ -3708,8 +3708,7 @@ class NsgAND : public NsGoal {
         }
 };
 
-///  The second--and last--kind of 'meta-goal' (i.e. goal used to combine two
-///  other goals).
+/// The second--and last--kind of 'meta-goal'
 class NsgOR : public NsGoal {
 
     private:
@@ -3746,7 +3745,7 @@ class NsgOR : public NsGoal {
         }
 };
 
-///  A simple goal that assigns a value to a constrained variable.
+/// A simple goal that assigns a value to a constrained variable
 class NsgSetValue : public NsGoal {
 
     private:
@@ -3766,8 +3765,7 @@ class NsgSetValue : public NsGoal {
         }
 };
 
-///  A goal that removes a value from the domain of a given constrained
-///  variable.
+/// A goal that removes a value from the domain of a given constrained variable
 class NsgRemoveValue : public NsGoal {
 
     private:
@@ -3787,11 +3785,12 @@ class NsgRemoveValue : public NsGoal {
         }
 };
 
-///  A goal that tries to instantiate a constrained variable.
-
-///  I.e. it assigns a value from the domain of the variable;
-///   if this assignment results to an inconsistency, it removes the value
-///   from the domain, and continues trying the rest of the values.
+/// A goal that tries to instantiate a constrained variable
+///
+/// I.e. it assigns a value from the domain of the variable; if
+/// this assignment results to an inconsistency, it removes the
+/// value from the domain, and continues trying the rest of the
+/// values.
 class NsgInDomain : public NsGoal {
 
     private:
@@ -3813,11 +3812,12 @@ class NsgInDomain : public NsGoal {
         }
 };
 
-///  The generalization of NsgInDomain that applies to arrays.
-
-///  It uses NsgInDomain to iteratively instantiate each variable of the
-///   array.  The next variable that is chosen is the one having the
-///   minimum domain size (according to the 'first-fail' heuristic).
+/// The generalization of NsgInDomain that applies to arrays
+///
+/// It uses NsgInDomain to iteratively instantiate each variable
+/// of the array. The next variable that is chosen is the one
+/// having the minimum domain size (according to the
+/// 'first-fail' heuristic).
 class NsgLabeling : public NsGoal {
 
     private:
@@ -3845,10 +3845,10 @@ class NsgLabeling : public NsGoal {
         }
 };
 
-///  The type of the objects in the queue for the AC algorithm.
+/// The type of the objects in the queue for the AC algorithm
 ///
-///  When a value is removed from the domain of a variable, an item is
-///   added into this queue.
+/// When a value is removed from the domain of a variable, an
+/// item is added into this queue.
 class Ns_QueueItem {
 
     private:
@@ -4880,9 +4880,9 @@ class NsProblemManager {
 ///   in the July 1924 issue of Strand Magazine by Henry Dudeney, is:
 ///
 /// @code
-///     S E N D
-/// +   M O R E
-/// = M O N E Y
+///      S E N D
+///  +   M O R E
+///  = M O N E Y
 /// @endcode
 ///
 ///  The solution to this puzzle is O = 0, M = 1, Y = 2, E = 5, N = 6, D = 7,
