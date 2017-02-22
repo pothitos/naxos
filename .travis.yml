@@ -53,6 +53,8 @@ matrix:
     - env: DIRECTORY="apps/CELAR/"
            DATASET="SCEN10"
 
+    - env: DIRECTORY="apps/Hadoop/"
+
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp01.ctt"
            METHOD="DFS"
@@ -111,8 +113,6 @@ matrix:
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp14.ctt"
            METHOD="ONESAMP"
-
-    - env: DIRECTORY="apps/hadoop/"
 
     - env: DIRECTORY="plugins/apps/"
 
