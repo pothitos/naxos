@@ -1,6 +1,6 @@
 # Naxos Directory
 NAXOS = ../../core/bounds-consistency
-NAXOS_AC = ../../core/arc-consistency
+NAXOS_AC = core-arc-consistency
 
 # Compiler Options
 CXX      = $(CPATH)g++
