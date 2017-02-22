@@ -1,7 +1,7 @@
 # Compiler and Linker Options
 NDIR = ../../core/bounds-consistency
 NDIR_AC = ../naxos-AC
-ADIR = ../../amorgos
+ADIR = ../../plugins
 
 CC = $(CPATH)g++
 WFLAGS = -pedantic -Wall -W -Wshadow -Werror

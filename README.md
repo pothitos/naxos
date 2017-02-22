@@ -10,4 +10,4 @@ integers. Please read the [manual](manual/README.md) in
 order to use it [[BibTeX](manual/naxos.bib)].
 
 _Amorgos_, a search methods library written by Foivos
-Theocharis, is also included.
+Theocharis, is also included in the `plugins` directory.
