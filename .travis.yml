@@ -114,7 +114,7 @@ matrix:
 
     - env: DIRECTORY="apps/hadoop/"
 
-    - env: DIRECTORY="amorgos/apps/"
+    - env: DIRECTORY="plugins/apps/"
 
 script:
     - cd $DIRECTORY
