@@ -1,5 +1,5 @@
 # Compiler and Linker Options
-NDIR = ../../core/bounds-consistency
+NDIR = ../../core
 NDIR_AC = ../../naxos-AC
 ADIR = ../../plugins
 

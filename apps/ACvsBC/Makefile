@@ -1,5 +1,5 @@
 # Naxos Directory
-NAXOS = ../../core/bounds-consistency
+NAXOS = ../../core
 NAXOS_AC = core-arc-consistency
 
 # Compiler Options

@@ -5,7 +5,7 @@ set -ev
 MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
 $MEM_CHECK ./naxos-xcsp3 > /dev/null
 
-SOLVER_FILES="../../core/bounds-consistency/*.h ../../core/bounds-consistency/*.cpp"
+SOLVER_FILES="../../core/*.h ../../core/*.cpp"
 # Ensure that Naxos Solver can be considered as a "Mini-Solver".
 # According to the First International XCSP3 Competition: "A
 # mini-solver is a solver whose code must be composed of

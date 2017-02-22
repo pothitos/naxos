@@ -1,5 +1,5 @@
 # Naxos Directory
-NAXOS = ../../core/bounds-consistency
+NAXOS = ../../core
 
 # Amorgos Directory
 AMORGOS = ..
