@@ -4880,9 +4880,9 @@ class NsProblemManager {
 ///   in the July 1924 issue of Strand Magazine by Henry Dudeney, is:
 ///
 /// @code
-///      S E N D
-///  +   M O R E
-///  = M O N E Y
+///     S E N D
+/// +   M O R E
+/// = M O N E Y
 /// @endcode
 ///
 ///  The solution to this puzzle is O = 0, M = 1, Y = 2, E = 5, N = 6, D = 7,
