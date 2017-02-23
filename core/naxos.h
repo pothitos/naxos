@@ -3852,41 +3852,40 @@ class NsgLabeling : public NsGoal {
 class Ns_QueueItem {
 
     private:
-        ///  The domain of this variable has been modified.
+        /// The domain of this variable has been modified
         NsIntVar* varFired;
 
-        ///  The index of the constraint to check.
+        /// The index of the constraint to check
         NsDeque<NsIntVar::ConstraintAndFailure>::size_type currentConstr;
 
         struct RemovedValueRecord_t;
 
-        ///  The index of the removed value that will be checked against
-        ///  constraints (that require arc consistency).
+        /// The index of the removed value that will be checked against
+        /// constraints (that require arc consistency)
         NsDeque<RemovedValueRecord_t>::size_type currentRemovedValue;
 
-        ///  Holds information having to do with the modification (if any) of
-        ///  the bounds of varFired.
-
+        /// Holds information having to do with the modification (if any) of the
+        /// bounds of varFired
         struct RemovedBoundRecord_t {
 
-                ///  True if the minimum or maximum of the domain of varFired
-                ///  has been changed.
+                /// True if the minimum or maximum of the domain of varFired has
+                /// been changed
                 bool removedBound;
 
-                ///  The constraint that fired the last modification of the
-                ///  bounds of varFired.  If no constraint provoked the removal,
-                ///  then constrFired==0.
+                /// The constraint that fired the last modification of the
+                /// bounds of varFired. If no constraint provoked the removal,
+                /// then constrFired == 0.
                 const Ns_Constraint* constrFired;
 
-                ///  The domain removal serial number.
+                /// The domain removal serial number
                 unsigned long removalTime;
 
-                ///  Constructor.
+                /// Constructor
                 RemovedBoundRecord_t(void) : removedBound(false)
                 {
                 }
 
-                ///  Records a bounds modification.
+                /// Records a bounds modification
                 void boundChangedBy(const Ns_Constraint* constrFired_init,
                                     const unsigned long removalTime_init)
                 {
@@ -3896,25 +3895,24 @@ class Ns_QueueItem {
                 }
         };
 
-        ///  Used to record a modification of the bounds (if any).
+        /// Used to record a modification of the bounds (if any)
         RemovedBoundRecord_t removedBoundRec;
 
-        ///  Describes the removal of the member removedValue from the domain of
-        ///  varFired.  (Contains the value that was removed, and which
-        ///  constraint did it.)
-
+        /// Describes the removal of the member removedValue from the domain of
+        /// varFired. Contains the value that was removed, and which constraint
+        /// did it.
         struct RemovedValueRecord_t {
 
-                ///  The value that was taken from the domain of varFired.  (The
-                ///  'w' of the AC-5 algorithm.)
+                /// The value that was taken from the domain of varFired. The
+                /// 'w' of the AC-5 algorithm.
                 const NsInt value;
 
-                ///  The constraint that fired the removal of the value
-                ///  removedValue from the domain of the variable varFired.  If
-                ///  no constraint provoked the removal, then constrFired==0.
+                /// The constraint that fired the removal of the value
+                /// removedValue from the domain of the variable varFired. If
+                /// no constraint provoked the removal, then constrFired == 0.
                 const Ns_Constraint* constrFired;
 
-                ///  Constructor.
+                /// Constructor
                 RemovedValueRecord_t(const NsInt removedValue_init,
                                      const Ns_Constraint* constrFired_init)
                   : value(removedValue_init), constrFired(constrFired_init)
@@ -3922,12 +3920,11 @@ class Ns_QueueItem {
                 }
         };
 
-        ///  An array that records the values removed from the domain of
-        ///  varFired.
+        /// An array that records the values removed from the domain of varFired
         NsDeque<RemovedValueRecord_t> removedValues;
 
     public:
-        ///  Constructor.
+        /// Constructor
         Ns_QueueItem(NsIntVar* varFired_init)
           : varFired(varFired_init), currentConstr(0), currentRemovedValue(0)
         {
@@ -3937,10 +3934,9 @@ class Ns_QueueItem {
         {
                 if (varFired->queueItem == this)
                         varFired->queueItem = 0;
-                //  Is there any possibility of varFired->queueItem !=
-                //   this ?  Yes, when there are two items in AC queue for
-                //   'varFired', the first being examined now by the AC
-                //   algorithm.
+                // Is there any possibility of varFired->queueItem != this?
+                // Yes, when there are two items in AC queue for 'varFired',
+                // the first being examined now by the AC algorithm.
         }
 
         void boundChangedBy(const Ns_Constraint* constr);
@@ -3950,26 +3946,26 @@ class Ns_QueueItem {
 
         Ns_Constraint* getNextConstraint(void);
 
-        ///  Returns the variable that fired the constraint propagation.
+        /// Returns the variable that fired the constraint propagation
         NsIntVar* getVarFired(void) const
         {
                 return varFired;
         }
 
-        ///  Returns the value that has been removed from the variable.
+        /// Returns the value that has been removed from the variable
         NsInt getW(void) const
         {
                 return removedValues[currentRemovedValue - 1].value;
         }
 
-        ///  When a constraint provokes an inconsistency, then its rank (index
-        ///  in the 'varFired->constraints' array) should be updated according
-        ///  to the current number of inconsistencies it provoked (according to
-        ///  a heuristic).
+        /// When a constraint provokes an inconsistency, then its rank (index in
+        /// the 'varFired->constraints' array) should be updated according to
+        /// the current number of inconsistencies it provoked (according to a
+        /// heuristic)
         void resortConstraints(const Ns_Constraint* constr) const
         {
-                //  The following statement 'corrects' currentConstr
-                //   by assigning the proper value to constrFailed.
+                // The following statement 'corrects' currentConstr
+                // by assigning the proper value to constrFailed.
                 long constrFailed =
                     (constr->revisionType == Ns_Constraint::VALUE_CONSISTENCY)
                         ? currentConstr
@@ -3985,8 +3981,8 @@ class Ns_QueueItem {
         }
 };
 
-///  Normally used for describing the stack holding AND-goals that have to be
-///  satisfied.  This stack is also called 'stackAND'.
+/// Normally used for describing the stack holding AND-goals that have to be
+/// satisfied. This stack is also called 'stackAND'.
 class Ns_StackGoals : public NsStack<NsGoal*> {
 
     public:
@@ -3995,13 +3991,13 @@ class Ns_StackGoals : public NsStack<NsGoal*> {
 
 class Ns_SearchNode;
 
-///  Contains all the Ns_SearchNode's.
-
-///  A Ns_SearchNode contains the current status of the problem; it is
-///   pushed into the stack when we make a choice (e.g. when we select a
-///   specific value to assign it to a variable) and it is popped when we
-///   want to cancel this choice, and we want to revert back to the
-///   previous problem status.
+/// Contains all the Ns_SearchNode's
+///
+/// A Ns_SearchNode contains the current status of the problem;
+/// it is pushed into the stack when we make a choice (e.g. when
+/// we select a specific value to assign it to a variable) and
+/// it is popped when we want to cancel this choice, and we want
+/// to revert back to the previous problem status.
 class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
     public:
@@ -4015,33 +4011,33 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         /// @name Provision of history ids to the search nodes
 
     private:
-        ///  History-IDs together with time statistics.
+        /// History-IDs together with time statistics
         struct history_time_t {
 
-                ///  An ID for the current history level.
+                /// An ID for the current history level
                 NsUInt validHistoryId;
 
-                ///  An ID for the current node number.
+                /// An ID for the current node number
                 NsUInt searchTreeNodeNum;
 
-                ///  The time consumed all the nodes in this level.
+                /// The time consumed all the nodes in this level
                 double timeSum;
 
-                ///  The number of the descendants of all nodes in this level
-                ///  squared.
+                /// The number of the descendants of all nodes in this level
+                /// squared
                 double descSum2;
 
-                ///  The mean number of the descendants of all nodes in this
-                ///  level.
+                /// The mean number of the descendants of all nodes in this
+                /// level
                 double descMean;
 
-                ///  The sum of the weights of timeSum terms.
+                /// The sum of the weights of timeSum terms
                 double timeWeights;
 
-                ///  The sum of the weights of the descSum terms.
+                /// The sum of the weights of the descSum terms
                 double descWeights;
 
-                ///  Constructor.
+                /// Constructor
                 history_time_t(void)
                   : validHistoryId(0),
                     timeSum(0.0),
@@ -4052,7 +4048,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 {
                 }
 
-                /// Augments the valid history ID and updates statistics.
+                /// Augments the valid history ID and updates statistics
                 void invalidate(const clock_t timeBorn,
                                 const double timeSimChild,
                                 const unsigned long descNow,
@@ -4069,7 +4065,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         timeSum += timeNode * timeWeight;
                         timeWeights += timeWeight;
                         // Compute descendants weighted mean and variance:
-                        //  temp = weight + sumweight
+                        // temp = weight + sumweight
                         double temp = descWeight + descWeights;
                         // delta = x - mean
                         double delta = descNode - descMean;
@@ -4084,7 +4080,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         descWeights += descWeight;
                 }
 
-                /// The mean value of the time spent in this level.
+                /// The mean value of the time spent in this level
                 double meanTime(void) const
                 {
                         assert_Ns(validHistoryId != 0,
@@ -4092,7 +4088,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                         return (timeSum / timeWeights);
                 }
 
-                /// The mean value of the descendants of a node in this level.
+                /// The mean value of the descendants of a node in this level
                 double meanDesc(void) const
                 {
                         assert_Ns(validHistoryId != 0,
@@ -4101,22 +4097,22 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 }
 
                 /// The mean value of the descendants of a node in this level
-                /// plus the standard deviation.
+                /// plus the standard deviation
                 double standardDeviationDesc(void) const
                 {
                         assert_Ns(validHistoryId > 1,
                                   "history_time_t::standardDeviationDesc: Cannot get standard deviation");
-                        // variance_n = M2/sumweight
+                        // variance_n = M2 / sumweight
                         double variance_n = descSum2 / descWeights;
                         // variance = variance_n *
-                        // len(dataWeightPairs)/(len(dataWeightPairs) - 1)
+                        // len(dataWeightPairs) / (len(dataWeightPairs) - 1)
                         double variance =
                             variance_n * validHistoryId / (validHistoryId - 1);
                         return sqrt(variance);
                 }
 
                 /// The mean value of the descendants of a node in this level
-                /// plus the standard deviation.
+                /// plus the standard deviation
                 double meanDescPlusSD(void) const
                 {
                         return (descMean + standardDeviationDesc());
@@ -4128,42 +4124,42 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         unsigned long nSearchTreeNodes;
 
     public:
-        ///  The mean value of the time spent in the next level.
+        /// The mean value of the time spent in the next level
         double nextMeanTime(void) const
         {
                 return history_time[size()].meanTime();
         }
 
-        ///  The mean value of the descendants in the next level.
+        /// The mean value of the descendants in the next level
         double nextMeanDesc(void) const
         {
                 return history_time[size()].meanDesc();
         }
 
-        ///  The mean value of the descendants in the next level plus the
-        ///  standard deviation.
+        /// The mean value of the descendants in the next level plus the
+        /// standard deviation
         double nextMeanDescPlusSD(void) const
         {
                 return history_time[size()].meanDescPlusSD();
         }
 
-        ///  Decides whether the next level will be explored or simulated.
+        /// Decides whether the next level will be explored or simulated
         bool overrideNextLevel(void)
         {
                 if (history_time.size() < size() + 1 ||
                     history_time[size()].validHistoryId < 2)
                         return false;
-                // Simulation ratio corresponds to expected descendants.
+                // Simulation ratio corresponds to expected descendants
                 double simRatio = pow(simulationRatio, nextMeanDescPlusSD());
                 double random = rand() / (RAND_MAX + 1.0);
                 return (random <= simRatio);
         }
 
-        /// The search tree split to be explored starts from this node.
+        /// The search tree split to be explored starts from this node
         NsList<NsUInt> startNode;
 
     private:
-        /// The search tree split to be explored ends up in this node.
+        /// The search tree split to be explored ends up in this node
         NsDeque<NsUInt> endNode;
 
     public:
@@ -4171,7 +4167,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         bool splitEnded(void);
 
-        /// Tests whether splitEnded() tells the truth.
+        /// Tests whether splitEnded() tells the truth
         bool TEST_splitEnded(void) const;
 
     private:
@@ -4188,7 +4184,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         void pop(void);
 
-        ///  Restores the validHistoryId 's state as it was before search began.
+        /// Restores the validHistoryId's state as it was before search began
         void reset(void)
         {
                 history_time[0].validHistoryId = 0;
@@ -4223,10 +4219,10 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 return (di.id == history_time[di.level].validHistoryId);
         }
 
-        ///  Virtual extra time used for simulation.
+        /// Virtual extra time used for simulation
         double timeSimulated;
 
-        ///  The percentage of the real search time vs total simulation time.
+        /// The percentage of the real search time vs total simulation time
         double simulationRatio;
 
         void currentPath(void) const
@@ -4238,8 +4234,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         void currentPathRec(const_iterator it) const;
 
     public:
-        ///  When endNode is changed, it is called to update the nodes
-        ///  matchesEndNode statuses.
+        /// When endNode is changed, it is called to update the nodes
+        /// matchesEndNode statuses
         void updateMatchesEndNode(void)
         {
                 NsUInt depth;
@@ -4255,25 +4251,25 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         /// @name Representation of the search tree as a graph
 
     private:
-        /// The mapper's ID.
+        /// The mapper's ID
         int mapper;
 
-        /// The mapper's current input line.
+        /// The mapper's current input line
         std::string mapperLine;
 
-        /// The time the mapper started to process a line.
+        /// The time the mapper started to process a line
         double mapperLineStartTime;
 
-        /// File to store the MapReduce mapper's input.
+        /// File to store the MapReduce mapper's input
         std::ofstream fileMapperInput;
 
-        ///  File to store the search tree graph.
+        /// File to store the search tree graph
         std::ofstream fileSearchGraph;
 
-        ///  True if it should write the objective value.
+        /// True if it should write the objective value
         bool recordObjective;
 
-        ///  The last recorded objectiveValue.
+        /// The last recorded objectiveValue
         NsInt objectiveValue;
 
     public:
@@ -4285,22 +4281,22 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
         /// @}
 
-        ///  Iterates through all the goals in the current Ns_StackGoals and the
-        ///  Ns_StackGoals below it.
-
-        ///  All of them consist a stack of Ns_StackGoals, named stackOfStacks.
+        /// Iterates through all the goals in the current Ns_StackGoals and the
+        /// Ns_StackGoals below it
+        ///
+        /// All of them consist a stack of Ns_StackGoals, named stackOfStacks.
         class goal_iterator {
 
             private:
-                ///  A stack containing the search nodes (so each frame of this
-                ///  stack contains a Ns_StackGoals).
+                /// A stack containing the search nodes (so each frame of this
+                /// stack contains a Ns_StackGoals)
                 Ns_StackSearch* stackOfStacks;
 
-                ///  Points to the current search node.
+                /// Points to the current search node
                 Ns_StackSearch::iterator curr_Stack_it;
 
-                ///  Points to the current goal (in the Ns_StackGoals) of the
-                ///  current search node.
+                /// Points to the current goal (in the Ns_StackGoals) of the
+                /// current search node
                 Ns_StackGoals::iterator curr_node_it;
 
             public:
@@ -4356,23 +4352,23 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
         }
 };
 
-///  Describes a search node of the binary search tree.
-
-///  A critical type that can describe the current status of the problem.
+/// Describes a search node of the binary search tree
+///
+/// A critical type that can describe the current status of the problem.
 struct Ns_SearchNode {
 
     public:
-        ///  Alternative goal to satisfy if search fails.
+        /// Alternative goal to satisfy if search fails
         NsGoal* goalNextChoice;
 
-        ///  Pointer to the first goal of the previous search level that has not
-        ///  been yet satisfied.
+        /// Pointer to the first goal of the previous search level that has not
+        /// been yet satisfied
         Ns_StackSearch::goal_iterator delayedGoal;
 
-        ///  All the goals of this list should be satisfied.
+        /// All the goals of this list should be satisfied
         Ns_StackGoals stackAND;
 
-        ///  Constructor.
+        /// Constructor
         Ns_SearchNode(NsGoal* goalNextChoice_init,
                       Ns_StackSearch::goal_iterator git,
                       const unsigned long descBorn_init)
@@ -4386,19 +4382,19 @@ struct Ns_SearchNode {
         {
         }
 
-        ///  Describes a tuple (BitsetDomainPointer, BitsetDomain).
+        /// Describes a tuple (BitsetDomainPointer, BitsetDomain)
         class BitsetCopy {
 
             private:
-                ///  Pointer to a bit-set domain.
+                /// Pointer to a bit-set domain
                 Ns_BitSet* bitsetDomainPointer;
 
-                ///  A copy of the above instance--created for future
-                ///  backtracking reasons.
+                /// A copy of the above instance--created for future
+                /// backtracking reasons
                 Ns_BitSet bitsetDomainCopy;
 
             public:
-                ///  Copy-constructor.
+                /// Copy-constructor
                 BitsetCopy(Ns_BitSet& bitsetDomain)
                   : bitsetDomainPointer(&bitsetDomain),
                     bitsetDomainCopy(bitsetDomain)
@@ -4406,7 +4402,7 @@ struct Ns_SearchNode {
                 }
 
                 /// Restores the copy back to the original domain place (i.e.
-                /// pointer).
+                /// pointer)
                 void restore(void)
                 {
                         *bitsetDomainPointer = bitsetDomainCopy;
@@ -4414,12 +4410,11 @@ struct Ns_SearchNode {
         };
 
     private:
-        ///  List to contain the saved bit-set domains.
-
+        /// List to contain the saved bit-set domains
         class BitsetsStore : public NsStack<BitsetCopy> {
 
             public:
-                ///  Restores all the saved bit-set domains.
+                /// Restores all the saved bit-set domains
                 void restore(void)
                 {
                         while (!empty()) {
@@ -4430,28 +4425,28 @@ struct Ns_SearchNode {
         };
 
     public:
-        ///  Store to keep the previous states of the modified bit-sets.
+        /// Store to keep the previous states of the modified bit-sets
         BitsetsStore bitsetsStore;
 
-        ///  The node's children number.
+        /// The node's children number
         NsUInt children;
 
-        ///  True if the current search node and its predecessors match the
-        ///  endNode.
+        /// True if the current search node and its predecessors match the
+        /// endNode
         bool matchesEndNode;
 
-        ///  When the node was born?
+        /// When the node was born?
         const clock_t timeBorn;
 
-        ///  How many tree nodes pushes existed when the node was born?
+        /// How many tree nodes pushes existed when the node was born?
         const unsigned long descBorn;
 
-        ///  Virtual extra time, used in the simulation of the search tree
-        ///  exploration.
+        /// Virtual extra time, used in the simulation of the search tree
+        /// exploration
         double timeSimChild;
 
-        ///  Virtual extra descendants, used in the simulation of the search
-        ///  tree exploration.
+        /// Virtual extra descendants, used in the simulation of the search tree
+        /// exploration
         double descSimChild;
 };
 
