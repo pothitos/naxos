@@ -19,7 +19,7 @@ test $SLOC -lt 8000
 ! grep ".\{161\}" $SOLVER_FILES
 
 # Fix coding style of all source files
-find ../.. -iname '*.h' -or -iname '*.cpp' -exec clang-format-5.0 -i {} +
+find ../.. \( -iname '*.h' -or -iname '*.cpp' \) -exec clang-format-5.0 -i {} +
 # List the file that need reformatting
 cd -
 git ls-files -m
