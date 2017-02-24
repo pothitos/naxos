@@ -16,8 +16,7 @@ SLOC=$(cat $SOLVER_FILES | grep -v "^$" | grep -v "^ *//" | wc -l)
 echo "$SLOC pure source lines of code"
 test $SLOC -lt 8000
 # Ensure that the maximum line width limit isn't exceeded
-# Temporarily disable test
-(! grep ".\{161\}" $SOLVER_FILES) || true
+(! grep ".\{161\}" $SOLVER_FILES)
 
 # Fix coding style of all source files
 find ../.. \( -iname '*.h' -or -iname '*.cpp' \) -exec clang-format-5.0 -i {} +
