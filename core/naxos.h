@@ -4958,7 +4958,7 @@ class NsProblemManager {
 #endif // Ns_NAXOS_H
 
 /// @example nqueens.cpp
-/// How to use Naxos to solve the N-queens problem
+/// How to use Naxos to solve the N-queens problem.
 ///
 /// The N-queens puzzle is the problem of putting eight chess
 /// queens on an N x N chessboard such that none of them is able
@@ -4969,7 +4969,7 @@ class NsProblemManager {
 /// diagonal. [Description source: Wikipedia]
 
 /// @example send_more_money.cpp
-/// How to use Naxos to solve SEND + MORE = MONEY cryptarithm
+/// How to use Naxos to solve SEND + MORE = MONEY cryptarithm.
 ///
 /// Verbal arithmetic, also known as alphametics,
 /// cryptarithmetic, crypt-arithmetic, or cryptarithm, is a type
