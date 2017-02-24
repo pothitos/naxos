@@ -4458,30 +4458,29 @@ struct Ns_SearchNode {
 class NsProblemManager {
 
     private:
-        ///  The stack containing the choice points that have been appeared
-        ///  during search.  Each choice point forms a binary search tree node.
+        /// The stack containing the choice points that have been appeared
+        /// during search. Each choice point forms a binary search tree node.
         Ns_StackSearch searchNodes;
 
-        ///  AC algorithm event-queue type.
+        /// AC algorithm event-queue type
         typedef NsQueue<Ns_QueueItem> Ns_Queue_t;
 
-        ///  AC algorithm event-queue.
+        /// AC algorithm event-queue
         Ns_Queue_t Q;
 
-        ///  True, if an inconsistency has been found.
+        /// True, if an inconsistency has been found
         bool foundInconsistency;
 
         bool arcConsistent(void);
 
         bool backtrack(void);
 
-        ///  The list of the soft (meta)constraints to be satisfied.
+        /// The list of the soft (meta)constraints to be satisfied
         NsIntVarArray vSoftConstraintsTerms;
 
     public:
-        ///  If a fileNameSearchGraph is provided, then a file is created with
-        ///  the search tree in a Graphviz supported format.
-
+        /// If a fileNameSearchGraph is provided, then a file is created with
+        /// the search tree in a Graphviz supported format.
         NsProblemManager(void)
           : foundInconsistency(false),
             vObjective(0),
@@ -4505,7 +4504,7 @@ class NsProblemManager {
 
         ~NsProblemManager(void);
 
-        ///  Adds a goal to be executed/satisfied.
+        /// Adds a goal to be executed/satisfied
         void addGoal(NsGoal* goal)
         {
                 if (goal != 0)
@@ -4516,13 +4515,13 @@ class NsProblemManager {
 
         void add(const Ns_ExprConstr& expr, const NsInt weight);
 
-        ///  Returns the AC algorithm queue.
+        /// Returns the AC algorithm queue
         Ns_Queue_t& getQueue(void)
         {
                 return Q;
         }
 
-        ///  Informs NsProblemManager than an inconsistency has been found.
+        /// Informs NsProblemManager than an inconsistency has been found
         void foundAnInconsistency(void)
         {
                 foundInconsistency = true;
@@ -4532,14 +4531,14 @@ class NsProblemManager {
 
         void restart(void);
 
-        ///  Writes to a file the (splits) input of a mapper.
+        /// Writes to a file the (splits) input of a mapper
         void mapperInputToFile(const char* fileName, int mapper)
         {
                 searchNodes.mapperInputToFile(fileName, mapper);
         }
 
-        ///  Writes to a file a view of the search tree in a Graphviz supported
-        ///  format.
+        /// Writes to a file a view of the search tree in a Graphviz supported
+        /// format
         void searchToGraphFile(const char* fileName)
         {
                 searchNodes.searchToGraphFile(fileName);
@@ -4549,12 +4548,12 @@ class NsProblemManager {
         /// @name Representation of the constraint network as a graph
 
     private:
-        ///  File to store the constraint network graph.
+        /// File to store the constraint network graph
         std::ofstream fileConstraintsGraph;
 
     public:
-        ///  Writes to a file a view of the constraint network in a Graphviz
-        ///  supported format.
+        /// Writes to a file a view of the constraint network in a Graphviz
+        /// supported format
         void constraintsToGraphFile(const char* fileName);
 
         /// @}
@@ -4563,7 +4562,7 @@ class NsProblemManager {
         /// @name Optimization members
 
     private:
-        ///  Our objective is to minimize this constrained variable.
+        /// Our objective is to minimize this constrained variable
         NsIntVar* vObjective;
 
         /// The minimum upper limit of 'vObjective' found so far (initially +oo)
@@ -4597,42 +4596,42 @@ class NsProblemManager {
         /// @name Time management members
 
     private:
-        ///  True if the available time is real (i.e. not system time).
+        /// True if the available time is real (i.e. not system time)
         bool isRealTime;
 
-        ///  The first (system) time that nextSolution() has been called.
+        /// The first (system) time that nextSolution() has been called
         clock_t startTime;
 
-        ///  The first time that nextSolution() has been called.
+        /// The first time that nextSolution() has been called
         time_t startRealTime;
 
-        ///  Available time (for running the search process) in seconds.
+        /// Available time (for running the search process) in seconds
         unsigned long timeLim;
 
-        ///  True if nextSolution() has not been yet called.
+        /// True if nextSolution() has not been yet called
         bool firstNextSolution;
 
-        ///  True if a limit to the available time (for search process) has been
-        ///  set.
+        /// True if a limit to the available time (for search process) has been
+        /// set
         bool calledTimeLimit;
 
-        ///  The first (system) time that nextSolution() has been called for the
-        ///  current search space split.
+        /// The first (system) time that nextSolution() has been called for the
+        /// current search space split
         clock_t startSplitTime;
 
-        ///  Available time ticks for running the search process for one search
-        ///  space split.
+        /// Available time ticks for running the search process for one search
+        /// space split
         clock_t timeSplitLim;
 
-        ///  The previous recorded node by the splitting process.
+        /// The previous recorded node by the splitting process
         NsUInt startNodeId;
 
-        /// Flag set by nextSolution() when time is up.
+        /// Flag set by nextSolution() when time is up
         bool timeIsUp;
 
     public:
-        ///  Sets the time limit.  After this limit is exceeded, nextSolution()
-        ///  returns false.
+        /// Sets the time limit. After this limit is exceeded, nextSolution()
+        /// returns false.
         void realTimeLimit(const unsigned long secs)
         {
                 calledTimeLimit = true;
@@ -4640,8 +4639,8 @@ class NsProblemManager {
                 timeLim = secs;
         }
 
-        ///  Sets the CPU time limit.  After this limit is exceeded,
-        ///  nextSolution() returns false.
+        /// Sets the CPU time limit. After this limit is exceeded,
+        /// nextSolution() returns false.
         void timeLimit(const unsigned long secs)
         {
                 calledTimeLimit = true;
@@ -4649,8 +4648,8 @@ class NsProblemManager {
                 timeLim = secs;
         }
 
-        ///  Sets the limit to the backtracks that search process does. After
-        ///  this limit is exceeded, nextSolution() returns false.
+        /// Sets the limit to the backtracks that search process does. After
+        /// this limit is exceeded, nextSolution() returns false.
         void backtrackLimit(const unsigned long lim)
         {
                 backtrackLim = nBacktracks + lim;
@@ -4661,17 +4660,17 @@ class NsProblemManager {
         /// @{
         /// @name Search tree splitting functions
 
-        /// The first word of a line that descibes a search tree split.
+        /// The first word of a line that descibes a search tree split
         static const char* SPLIT_HEADER;
 
         /// Prints out the header, e.g. the word "Split", in front of each line
-        /// that designates a search tree split.
+        /// that designates a search tree split
         void splitHeader(void)
         {
                 std::cout << SPLIT_HEADER << " ";
         }
 
-        /// Sets the time ticks limit for each search space split.
+        /// Sets the time ticks limit for each search space split
         void splitTimeLimit(const double secs, const double simulationRatio)
         {
                 clock_t ticks = secs * CLOCKS_PER_SEC;
@@ -4689,7 +4688,7 @@ class NsProblemManager {
                 searchNodes.currentPath();
         }
 
-        /// Explore specific search tree splits described in standard input.
+        /// Explore specific search tree splits described in standard input
         bool readSplit(void)
         {
                 return searchNodes.readSplit(splitEnd);
@@ -4697,7 +4696,7 @@ class NsProblemManager {
 
     private:
         /// Contains a string describing the last path of the current search
-        /// tree split.
+        /// tree split
         std::string splitEnd;
 
     public:
@@ -4750,7 +4749,7 @@ class NsProblemManager {
                 return searchNodes.numSearchTreeNodes();
         }
 
-        ///  Collects the constrained variables of the problem.
+        /// Collects the constrained variables of the problem
         void addVar(const NsIntVar* Var)
         {
                 vars.push_back(Var);
@@ -4758,14 +4757,14 @@ class NsProblemManager {
                         domainsSizeMax = Var->size();
         }
 
-        ///  Removes the last variable pointer recorded, to correct a problem
-        ///  created by Ns_Expression::post(Var).
+        /// Removes the last variable pointer recorded, to correct a problem
+        /// created by Ns_Expression::post(Var)
         void removeLastVar(void)
         {
                 vars.resize(vars.size() - 1);
         }
 
-        ///  Prints statistics about the CSP parameters.
+        /// Prints statistics about the CSP parameters
         void printCspParameters(void) const
         {
                 std::cout << numVars() << "\t" << domainsSizeMax << "\t"
@@ -4775,8 +4774,7 @@ class NsProblemManager {
         /// @}
 
         /// @{
-        /// @name Arrays of variables and constraints for memory management
-        ///  reasons
+        /// @name Arrays of variables and constraints used for memory management
 
     private:
         NsDeque<NsIntVar*> intermediateVars;
@@ -4826,8 +4824,7 @@ class NsProblemManager {
 
         /// @}
 
-        ///  Saves the bitsetDomain--before being modified--for future
-        ///  backtracking purposes.
+        /// Saves the bitsetDomain for future backtracking purposes
         void saveBitsetDomain(Ns_BitSet& bitsetDomain)
         {
                 searchNodes.top().bitsetsStore.push(
@@ -4841,38 +4838,35 @@ class NsProblemManager {
 #endif // Ns_NAXOS_H
 
 /// @example nqueens.cpp
+/// How to use Naxos to solve the N-queens problem
 ///
-///  An example of how to use the
-///   Naxos Solver library to solve the N-queens problem.
-///
-///  The N-queens puzzle is the problem of putting eight chess
-///   queens on an N x N chessboard such that none of
-///   them is able to capture any other using the standard chess queen's
-///   moves.  The queens must be placed in such a way that no two queens
-///   would be able to attack each other. Thus, a solution requires that no
-///   two queens share the same row, column, or diagonal.
-///
-///  Description source: Wikipedia.
+/// The N-queens puzzle is the problem of putting eight chess
+/// queens on an N x N chessboard such that none of them is able
+/// to capture any other using the standard chess queen's moves.
+/// The queens must be placed in such a way that no two queens
+/// would be able to attack each other. Thus, a solution
+/// requires that no two queens share the same row, column, or
+/// diagonal. [Description source: Wikipedia]
 
 /// @example send_more_money.cpp
+/// How to use Naxos to solve SEND + MORE = MONEY cryptarithm
 ///
-///  An example of how to use the
-///   Naxos Solver library to solve the
-///   SEND+MORE=MONEY problem.
+/// Verbal arithmetic, also known as alphametics,
+/// cryptarithmetic, crypt-arithmetic, or cryptarithm, is a type
+/// of mathematical game consisting of a mathematical equation
+/// among unknown numbers, whose digits are represented by
+/// letters. The goal is to identify the value of each letter.
+/// The name can be extended to puzzles that use non-alphabetic
+/// symbols instead of letters. This is often a technique used
+/// by teachers to get students excited about math subjects such
+/// as algebra 1 honors. Supposedly, students will think it is
+/// cool to add, subtract, multiply, and divide their favorite
+/// words and letters.
 ///
-///  Verbal arithmetic, also known as alphametics, cryptarithmetic,
-///   crypt-arithmetic, or cryptarithm, is a type of mathematical game
-///   consisting of a mathematical equation among unknown numbers, whose
-///   digits are represented by letters. The goal is to identify the value
-///   of each letter. The name can be extended to puzzles that use
-///   non-alphabetic symbols instead of letters. This is often a technique
-///   used by teachers to get students excited about math subjects such as
-///   algebra 1 honors. Supposedly, students will think it is cool to add,
-///   subtract, multiply, and divide their favorite words and letters.
-///
-///  The equation is typically a basic operation of arithmetic, such as
-///   addition, multiplication, or division. The classic example, published
-///   in the July 1924 issue of Strand Magazine by Henry Dudeney, is:
+/// The equation is typically a basic operation of arithmetic,
+/// such as addition, multiplication, or division. The classic
+/// example, published in the July 1924 issue of Strand Magazine
+/// by Henry Dudeney, is:
 ///
 /// @code
 ///     S E N D
@@ -4880,13 +4874,12 @@ class NsProblemManager {
 /// = M O N E Y
 /// @endcode
 ///
-///  The solution to this puzzle is O = 0, M = 1, Y = 2, E = 5, N = 6, D = 7,
-///   R = 8, and S = 9.
+/// The solution to this puzzle is O = 0, M = 1, Y = 2, E = 5,
+/// N = 6, D = 7, R = 8, and S = 9.
 ///
-///  Traditionally, each letter should represent a different digit, and (as
-///   in ordinary arithmetic notation) the leading digit of a multi-digit
-///   number must not be zero. A good puzzle should have a unique solution,
-///   and the letters should make up a cute phrase (as in the example
-///   above).
-///
-///  Description source: Wikipedia.
+/// Traditionally, each letter should represent a different
+/// digit, and (as in ordinary arithmetic notation) the leading
+/// digit of a multi-digit number must not be zero. A good
+/// puzzle should have a unique solution, and the letters should
+/// make up a cute phrase (as in the example above).
+/// [Description source: Wikipedia]
