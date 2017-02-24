@@ -15,12 +15,12 @@ class timetableException : public std::logic_error {
 };
 
 // Panic function for Timetabling
-inline void assert_that(const bool test, const char *error_message)
+inline void assert_that(const bool test, const char* error_message)
 //  Here we used the type 'char*' for 'error_message',
 //  instead of 'string', plainly for time-performance reasons.
 {
-        if ( !test )
-                throw  timetableException(error_message);
+        if (!test)
+                throw timetableException(error_message);
 }
 
 #endif // ERROR_H

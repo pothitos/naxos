@@ -1,27 +1,32 @@
 #ifndef NS_ISAMP_H
 #define NS_ISAMP_H
 
-#include <naxos.h>
 #include "heuristics.h"
+#include <naxos.h>
 
-namespace  naxos {
+namespace naxos {
 
 class AmIsampStepping : public NsGoal {
     private:
-        NsIntVarArray&  Vars;
-        int  nProbes;
+        NsIntVarArray& Vars;
+        int nProbes;
 
-        VariableHeuristic *varHeur;
-        ValueHeuristic *valHeur;
+        VariableHeuristic* varHeur;
+        ValueHeuristic* valHeur;
+
     public:
-        AmIsampStepping (NsIntVarArray& Vars_init, int numProbes,
-                           VariableHeuristic *varHeuristic = new VarHeurMRV,
-                           ValueHeuristic *valHeuristic = new ValHeurRand)
-                : Vars(Vars_init), nProbes(numProbes), varHeur(varHeuristic),
-                  valHeur(valHeuristic) {}
+        AmIsampStepping(NsIntVarArray& Vars_init, int numProbes,
+                        VariableHeuristic* varHeuristic = new VarHeurMRV,
+                        ValueHeuristic* valHeuristic = new ValHeurRand)
+          : Vars(Vars_init),
+            nProbes(numProbes),
+            varHeur(varHeuristic),
+            valHeur(valHeuristic)
+        {
+        }
 
-        NsGoal  *GOAL (void);
+        NsGoal* GOAL(void);
 };
 
-}								 // end namespace
-#endif							 // NS_ISAMP_H
+} // end namespace
+#endif // NS_ISAMP_H

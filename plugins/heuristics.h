@@ -11,7 +11,9 @@ namespace naxos {
 class VariableHeuristic {
     public:
         virtual int select(const naxos::NsIntVarArray&) = 0;
-        virtual ~VariableHeuristic() {}
+        virtual ~VariableHeuristic()
+        {
+        }
 };
 
 class VarHeurFirst : public VariableHeuristic {
@@ -32,7 +34,7 @@ class VarHeurRand : public VariableHeuristic {
 /*******
 class VarHeurDegree : public VariableHeuristic{
 public:
-	int select(const naxos::NsIntVarArray& Vars);
+        int select(const naxos::NsIntVarArray& Vars);
 };
 */
 
@@ -42,13 +44,14 @@ public:
 class ValueHeuristic {
     public:
         virtual naxos::NsInt select(const naxos::NsIntVar&) = 0;
-        virtual ~ValueHeuristic() {}
-
-        virtual naxos::NsInt
-        select (const naxos::NsIntVar& V, double& piece)
+        virtual ~ValueHeuristic()
         {
-                piece  =  1.0 / V.size();
-                return  select(V);
+        }
+
+        virtual naxos::NsInt select(const naxos::NsIntVar& V, double& piece)
+        {
+                piece = 1.0 / V.size();
+                return select(V);
         }
 };
 
@@ -62,5 +65,5 @@ class ValHeurRand : public ValueHeuristic {
         naxos::NsInt select(const naxos::NsIntVar& V);
 };
 
-}								 // end namespace
-#endif							 // NS_HEURISTICS_H
+} // end namespace
+#endif // NS_HEURISTICS_H

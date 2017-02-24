@@ -1,36 +1,42 @@
 #ifndef NS_ONESAMP_H
 #define NS_ONESAMP_H
 
-#include <naxos.h>
 #include "heuristics.h"
+#include <naxos.h>
 
-namespace  naxos {
+namespace naxos {
 
 class AmOnesampLabeling : public NsGoal {
     private:
-        NsIntVarArray&  Vars;
+        NsIntVarArray& Vars;
 
-        VariableHeuristic *varHeur;
-        ValueHeuristic *valHeur;
+        VariableHeuristic* varHeur;
+        ValueHeuristic* valHeur;
+
     public:
-        AmOnesampLabeling (NsIntVarArray& Vars_init,
-                             VariableHeuristic *varHeuristic = new VarHeurFirst,
-                             ValueHeuristic *valHeuristic = new ValHeurFirst)
-                : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic) {}
-        NsGoal  *GOAL (void);
+        AmOnesampLabeling(NsIntVarArray& Vars_init,
+                          VariableHeuristic* varHeuristic = new VarHeurFirst,
+                          ValueHeuristic* valHeuristic = new ValHeurFirst)
+          : Vars(Vars_init), varHeur(varHeuristic), valHeur(valHeuristic)
+        {
+        }
+        NsGoal* GOAL(void);
 };
 
 class AmOnesampInDomain : public NsGoal {
     private:
-        NsIntVar&  V;
+        NsIntVar& V;
 
-        ValueHeuristic *valHeur;
+        ValueHeuristic* valHeur;
+
     public:
         AmOnesampInDomain(NsIntVar& Var,
-                            ValueHeuristic *valHeuristic = new ValHeurFirst)
-                : V(Var), valHeur(valHeuristic) {}
-        NsGoal  *GOAL (void);
+                          ValueHeuristic* valHeuristic = new ValHeurFirst)
+          : V(Var), valHeur(valHeuristic)
+        {
+        }
+        NsGoal* GOAL(void);
 };
 
-}								 // end namespace
-#endif							 // NS_ONESAMP_H
+} // end namespace
+#endif // NS_ONESAMP_H

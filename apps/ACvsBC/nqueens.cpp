@@ -1,20 +1,20 @@
 // Part of https://github.com/pothitos/naxos
 
-#include <naxos.h>
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
+#include <naxos.h>
 
 using namespace naxos;
 using namespace std;
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
         try {
                 int N = (argc > 1) ? atoi(argv[1]) : 8;
                 NsProblemManager pm;
                 NsIntVarArray Var, VarPlus, VarMinus;
                 for (int i = 0; i < N; ++i) {
-                        Var.push_back(NsIntVar(pm, 0, N-1));
+                        Var.push_back(NsIntVar(pm, 0, N - 1));
                         VarPlus.push_back(Var[i] + i);
                         VarMinus.push_back(Var[i] - i);
                 }

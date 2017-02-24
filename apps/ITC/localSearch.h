@@ -3,10 +3,10 @@
 #ifndef LOCALSEARCH_H
 #define LOCALSEARCH_H
 
-#include "timetabling.h"
 #include "heuristics.h"
-#include <naxos.h>
+#include "timetabling.h"
 #include <amorgos.h>
+#include <naxos.h>
 
 #if 0
 class goalLocalSearch : public naxos::NsGoal {
@@ -38,52 +38,20 @@ class goalLocalSearch : public naxos::NsGoal {
 class goalLsWeek : public naxos::NsGoal {
 
     private:
-        naxos::NsIntVarArray&  vLectPeriod;
-        naxos::NsIntVarArray&  vLectPeriodSortedByHeur;
-        naxos::NsIntVarArray&  vLectRoom;
+        naxos::NsIntVarArray& vLectPeriod;
+        naxos::NsIntVarArray& vLectPeriodSortedByHeur;
+        naxos::NsIntVarArray& vLectRoom;
 
-        struct itcProblem_t&  pr;
-
-        naxos::VariableHeuristic&     varHeur;
-        naxos::ValueHeuristic&        valHeur;
-        naxos::NsDeque<unsigned>&  lanAssigns;
-
-        int  currentDay;
-
-    public:
-        goalLsWeek (naxos::NsIntVarArray& vLectPeriod_init,
-                    naxos::NsIntVarArray& vLectPeriodSortedByHeur_init,
-                    naxos::NsIntVarArray& vLectRoom_init,
-                    struct itcProblem_t& pr_init,
-                    naxos::VariableHeuristic& varHeur_init,
-                    naxos::ValueHeuristic& valHeur_init,
-                    naxos::NsDeque<unsigned>& lanAssigns_init,
-                    const int currentDay_init)
-                : vLectPeriod(vLectPeriod_init), vLectPeriodSortedByHeur(vLectPeriodSortedByHeur_init),
-                  vLectRoom(vLectRoom_init), pr(pr_init),
-                  varHeur(varHeur_init), valHeur(valHeur_init), lanAssigns(lanAssigns_init),
-                  currentDay(currentDay_init)   {    }
-
-        NsGoal  *GOAL (void);
-};
-
-class goalLsDay : public naxos::NsGoal {
-
-    private:
-        naxos::NsIntVarArray&  vLectPeriod;
-        naxos::NsIntVarArray&  vLectPeriodSortedByHeur;
-        naxos::NsIntVarArray&  vLectRoom;
-
-        struct itcProblem_t&  pr;
+        struct itcProblem_t& pr;
 
         naxos::VariableHeuristic& varHeur;
         naxos::ValueHeuristic& valHeur;
-        naxos::NsDeque<unsigned>&  lanAssigns;
+        naxos::NsDeque<unsigned>& lanAssigns;
 
-        const int  currentDay;
+        int currentDay;
 
     public:
-        goalLsDay (naxos::NsIntVarArray& vLectPeriod_init,
+        goalLsWeek(naxos::NsIntVarArray& vLectPeriod_init,
                    naxos::NsIntVarArray& vLectPeriodSortedByHeur_init,
                    naxos::NsIntVarArray& vLectRoom_init,
                    struct itcProblem_t& pr_init,
@@ -91,12 +59,56 @@ class goalLsDay : public naxos::NsGoal {
                    naxos::ValueHeuristic& valHeur_init,
                    naxos::NsDeque<unsigned>& lanAssigns_init,
                    const int currentDay_init)
-                : vLectPeriod(vLectPeriod_init), vLectPeriodSortedByHeur(vLectPeriodSortedByHeur_init),
-                  vLectRoom(vLectRoom_init), pr(pr_init),
-                  varHeur(varHeur_init), valHeur(valHeur_init), lanAssigns(lanAssigns_init),
-                  currentDay(currentDay_init)   {    }
+          : vLectPeriod(vLectPeriod_init),
+            vLectPeriodSortedByHeur(vLectPeriodSortedByHeur_init),
+            vLectRoom(vLectRoom_init),
+            pr(pr_init),
+            varHeur(varHeur_init),
+            valHeur(valHeur_init),
+            lanAssigns(lanAssigns_init),
+            currentDay(currentDay_init)
+        {
+        }
 
-        NsGoal  *GOAL (void);
+        NsGoal* GOAL(void);
+};
+
+class goalLsDay : public naxos::NsGoal {
+
+    private:
+        naxos::NsIntVarArray& vLectPeriod;
+        naxos::NsIntVarArray& vLectPeriodSortedByHeur;
+        naxos::NsIntVarArray& vLectRoom;
+
+        struct itcProblem_t& pr;
+
+        naxos::VariableHeuristic& varHeur;
+        naxos::ValueHeuristic& valHeur;
+        naxos::NsDeque<unsigned>& lanAssigns;
+
+        const int currentDay;
+
+    public:
+        goalLsDay(naxos::NsIntVarArray& vLectPeriod_init,
+                  naxos::NsIntVarArray& vLectPeriodSortedByHeur_init,
+                  naxos::NsIntVarArray& vLectRoom_init,
+                  struct itcProblem_t& pr_init,
+                  naxos::VariableHeuristic& varHeur_init,
+                  naxos::ValueHeuristic& valHeur_init,
+                  naxos::NsDeque<unsigned>& lanAssigns_init,
+                  const int currentDay_init)
+          : vLectPeriod(vLectPeriod_init),
+            vLectPeriodSortedByHeur(vLectPeriodSortedByHeur_init),
+            vLectRoom(vLectRoom_init),
+            pr(pr_init),
+            varHeur(varHeur_init),
+            valHeur(valHeur_init),
+            lanAssigns(lanAssigns_init),
+            currentDay(currentDay_init)
+        {
+        }
+
+        NsGoal* GOAL(void);
 };
 
 #if 0
@@ -162,4 +174,4 @@ class goalLsOneSlice : public naxos::NsGoal {
         NsGoal  *GOAL (void);
 };
 #endif
-#endif							 // LOCALSEARCH_H
+#endif // LOCALSEARCH_H

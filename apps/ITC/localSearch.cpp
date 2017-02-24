@@ -41,40 +41,42 @@ goalLocalSearch::GOAL (void)
 }
 #endif
 
-NsGoal *
-goalLsWeek::GOAL (void)
+NsGoal* goalLsWeek::GOAL(void)
 {
-        //cout << "  goalLsWeek\n";
-        if ( currentDay >= pr.days ) {
+        // cout << "  goalLsWeek\n";
+        if (currentDay >= pr.days) {
                 vLectPeriod[0].removeAll();
-                return  0;
+                return 0;
         }
         ++currentDay;
-        //cout << Vars << "\n";
-        //cout << classVars << "\n";
-        return  ( new NsgOR( new goalLsDay(vLectPeriod, vLectPeriodSortedByHeur, vLectRoom, pr,
-                                           varHeur, valHeur, lanAssigns, (currentDay-1)) ,
-                             new goalLsWeek(*this) ) );
+        // cout << Vars << "\n";
+        // cout << classVars << "\n";
+        return (new NsgOR(new goalLsDay(vLectPeriod, vLectPeriodSortedByHeur,
+                                        vLectRoom, pr, varHeur, valHeur,
+                                        lanAssigns, (currentDay - 1)),
+                          new goalLsWeek(*this)));
 }
 
-NsGoal *
-goalLsDay::GOAL (void)
+NsGoal* goalLsDay::GOAL(void)
 {
-        //cout << "    goalLsDay -- (Day:" << currentDay << ")\n";
-        int  i, j, k;
-        for (k=0,i=0;  i < pr.ncourses;  ++i) {
-                for (j=0;  j < pr.course[i].lectures;  ++j,++k) {
-                        if ( pr.course[i].periodScheduled[j] / pr.days != currentDay ) {
-                                vLectPeriod[k].set( pr.course[i].periodScheduled[j] );
-                                vLectRoom[k].set( pr.course[i].roomScheduled[j] );
+        // cout << "    goalLsDay -- (Day:" << currentDay << ")\n";
+        int i, j, k;
+        for (k = 0, i = 0; i < pr.ncourses; ++i) {
+                for (j = 0; j < pr.course[i].lectures; ++j, ++k) {
+                        if (pr.course[i].periodScheduled[j] / pr.days !=
+                            currentDay) {
+                                vLectPeriod[k].set(
+                                    pr.course[i].periodScheduled[j]);
+                                vLectRoom[k].set(pr.course[i].roomScheduled[j]);
                         }
                 }
         }
-        return  metaSearchMethodGoal(pr, vLectPeriod, vLectPeriodSortedByHeur, varHeur, valHeur, lanAssigns);
-        //if (setup.search_method == 2)
-        //	return  (new AmLds(Vars, classVars, vi, setup, days, hours, cancel, progress));
-        //else
-        //	return  (new AmDfsLabeling(Vars, classVars, vi, setup, days, hours, cancel, progress));
+        return metaSearchMethodGoal(pr, vLectPeriod, vLectPeriodSortedByHeur,
+                                    varHeur, valHeur, lanAssigns);
+        // if (setup.search_method == 2)
+        //	return  (new AmLds(Vars, classVars, vi, setup, days, hours,
+        //cancel, progress));  else 	return  (new AmDfsLabeling(Vars,
+        //classVars, vi, setup, days, hours, cancel, progress));
 }
 
 #if 0
