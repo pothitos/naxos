@@ -454,47 +454,48 @@ class Ns_BitSet {
 
                 bool operator==(const const_iterator& b) const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_iterator::==: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::==: "
+                                               "Uninitialized '*this'");
                         return (currVal == b.currVal);
                 }
 
                 bool operator!=(const const_iterator& b) const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_iterator::!=: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::!=: "
+                                               "Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_iterator::*: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::*: "
+                                               "Uninitialized '*this'");
                         assert_Ns(currVal != NsPLUS_INF,
-                                  "Ns_BitSet::const_iterator::*: Bad request '*(something.end())'");
+                                  "Ns_BitSet::const_iterator::*: Bad request "
+                                  "'*(something.end())'");
                         return currVal;
                 }
 
                 const_iterator& end(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_iterator::end: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::end:"
+                                               " Uninitialized '*this'");
                         currVal = NsPLUS_INF;
                         return *this;
                 }
 
                 const_iterator& operator++(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_iterator::++: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::++: "
+                                               "Uninitialized '*this'");
                         currVal = domain->next(currVal);
                         return *this;
                 }
 
                 const_iterator& operator--(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_iterator::--: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_iterator::--: "
+                                               "Uninitialized '*this'");
                         currVal = domain->previous(currVal);
                         return *this;
                 }
@@ -519,47 +520,54 @@ class Ns_BitSet {
 
                 bool operator==(const const_reverse_iterator& b) const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_reverse_iterator::==: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
+                                               "iterator::==: Uninitialized "
+                                               "'*this'");
                         return (currVal == b.currVal);
                 }
 
                 bool operator!=(const const_reverse_iterator& b) const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_reverse_iterator::!=: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
+                                               "iterator::!=: Uninitialized "
+                                               "'*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_reverse_iterator::*: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
+                                               "iterator::*: Uninitialized "
+                                               "'*this'");
                         assert_Ns(currVal != NsPLUS_INF,
-                                  "Ns_BitSet::const_reverse_iterator::*: Bad request '*(something.end())'");
+                                  "Ns_BitSet::const_reverse_iterator::*: Bad "
+                                  "request '*(something.end())'");
                         return currVal;
                 }
 
                 const_reverse_iterator& end(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_reverse_iterator::end: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
+                                               "iterator::end: Uninitialized "
+                                               "'*this'");
                         currVal = NsMINUS_INF;
                         return *this;
                 }
 
                 const_reverse_iterator& operator++(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_reverse_iterator::++: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
+                                               "iterator::++: Uninitialized "
+                                               "'*this'");
                         currVal = domain->previous(currVal);
                         return *this;
                 }
 
                 const_reverse_iterator& operator--(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_reverse_iterator::--: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_reverse_"
+                                               "iterator::--: Uninitialized "
+                                               "'*this'");
                         currVal = domain->next(currVal);
                         return *this;
                 }
@@ -585,39 +593,40 @@ class Ns_BitSet {
 
                 bool operator==(const const_gap_iterator& b) const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_gap_iterator::==: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
+                                               "==: Uninitialized '*this'");
                         return (currGap == b.currGap);
                 }
 
                 bool operator!=(const const_gap_iterator& b) const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_gap_iterator::!=: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
+                                               "!=: Uninitialized '*this'");
                         return !(*this == b);
                 }
 
                 NsInt operator*(void)const
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_gap_iterator::*: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
+                                               "*: Uninitialized '*this'");
                         assert_Ns(currGap != NsPLUS_INF,
-                                  "Ns_BitSet::const_gap_iterator::*: Bad request '*(something.end())'");
+                                  "Ns_BitSet::const_gap_iterator::*: Bad "
+                                  "request '*(something.end())'");
                         return currGap;
                 }
 
                 const_gap_iterator& end(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_gap_iterator::end: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
+                                               "end: Uninitialized '*this'");
                         currGap = NsPLUS_INF;
                         return *this;
                 }
 
                 const_gap_iterator& operator++(void)
                 {
-                        assert_Ns(domain != 0,
-                                  "Ns_BitSet::const_gap_iterator::++: Uninitialized '*this'");
+                        assert_Ns(domain != 0, "Ns_BitSet::const_gap_iterator::"
+                                               "++: Uninitialized '*this'");
                         currGap = domain->nextGap(currGap);
                         return *this;
                 }
@@ -921,8 +930,10 @@ class NsIntVarArray {
 
         void push_front(NsIntVar& Var)
         {
-                assert_Ns(!addedConstraint,
-                          "NsIntVarArray::push_front: Cannot add another variable, because a constraint has been already imposed on the array");
+                assert_Ns(!addedConstraint, "NsIntVarArray::push_front: Cannot "
+                                            "add another variable, because a "
+                                            "constraint has been already "
+                                            "imposed on the array");
                 PointArray.push_front(&Var);
         }
 
@@ -932,8 +943,10 @@ class NsIntVarArray {
 
         void push_back(NsIntVar& Var)
         {
-                assert_Ns(!addedConstraint,
-                          "NsIntVarArray::push_back: Cannot add another variable, because a constraint has been already imposed on the array");
+                assert_Ns(!addedConstraint, "NsIntVarArray::push_back: Cannot "
+                                            "add another variable, because a "
+                                            "constraint has been already "
+                                            "imposed on the array");
                 PointArray.push_back(&Var);
         }
 
@@ -963,8 +976,8 @@ class NsIntVarArray {
 
                 bool operator==(const iterator& b) const
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::iterator::==: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::==: "
+                                                 "Uninitialized '*this'");
                         return (it == b.it);
                 }
 
@@ -975,36 +988,39 @@ class NsIntVarArray {
 
                 NsIntVar& operator*(void)const
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::*: "
+                                                 "Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
-                                  "NsIntVarArray::iterator::*: Bad request '*(something.end())'");
+                                  "NsIntVarArray::iterator::*: Bad request "
+                                  "'*(something.end())'");
                         return **it;
                 }
 
                 NsIntVar* operator->(void)const
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::*: "
+                                                 "Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
-                                  "NsIntVarArray::iterator::*: Bad request '*(something.end())'");
+                                  "NsIntVarArray::iterator::*: Bad request "
+                                  "'*(something.end())'");
                         return *it;
                 }
 
                 iterator& end(void)
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::iterator::end: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::end:"
+                                                 " Uninitialized '*this'");
                         it = PointArr->end();
                         return *this;
                 }
 
                 iterator& operator++(void)
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::iterator::++: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::iterator::++: "
+                                                 "Uninitialized '*this'");
                         assert_Ns(it != PointArr->end(),
-                                  "NsIntVarArray::iterator::end: Bad request '++(something.end())'");
+                                  "NsIntVarArray::iterator::end: Bad request "
+                                  "'++(something.end())'");
                         ++it;
                         return *this;
                 }
@@ -1053,8 +1069,9 @@ class NsIntVarArray {
 
                 bool operator==(const const_iterator& b) const
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::const_iterator::==: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::const_"
+                                                 "iterator::==: Uninitialized "
+                                                 "'*this'");
                         return (it == b.it);
                 }
 
@@ -1065,36 +1082,43 @@ class NsIntVarArray {
 
                 const NsIntVar& operator*(void)const
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::const_iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::const_"
+                                                 "iterator::*: Uninitialized "
+                                                 "'*this'");
                         assert_Ns(it != PointArr->end(),
-                                  "NsIntVarArray::const_iterator::*: Bad request '*(something.end())'");
+                                  "NsIntVarArray::const_iterator::*: Bad "
+                                  "request '*(something.end())'");
                         return **it;
                 }
 
                 const NsIntVar* operator->(void)const
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::const_iterator::*: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::const_"
+                                                 "iterator::*: Uninitialized "
+                                                 "'*this'");
                         assert_Ns(it != PointArr->end(),
-                                  "NsIntVarArray::const_iterator::*: Bad request '*(something.end())'");
+                                  "NsIntVarArray::const_iterator::*: Bad "
+                                  "request '*(something.end())'");
                         return *it;
                 }
 
                 const_iterator& end(void)
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::const_iterator::end: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::const_"
+                                                 "iterator::end: Uninitialized "
+                                                 "'*this'");
                         it = PointArr->end();
                         return *this;
                 }
 
                 const_iterator& operator++(void)
                 {
-                        assert_Ns(PointArr != 0,
-                                  "NsIntVarArray::const_iterator::++: Uninitialized '*this'");
+                        assert_Ns(PointArr != 0, "NsIntVarArray::const_"
+                                                 "iterator::++: Uninitialized "
+                                                 "'*this'");
                         assert_Ns(it != PointArr->end(),
-                                  "NsIntVarArray::const_iterator::end: Bad request '++(something.end())'");
+                                  "NsIntVarArray::const_iterator::end: Bad "
+                                  "request '++(something.end())'");
                         ++it;
                         return *this;
                 }
@@ -1282,7 +1306,9 @@ class Ns_ConstrXlessthanY : public Ns_Constraint {
         Ns_ConstrXlessthanY(NsIntVar* X, NsIntVar* Y) : VarX(X), VarY(Y)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXlessthanY::Ns_ConstrXlessthanY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXlessthanY::Ns_ConstrXlessthanY: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1309,7 +1335,9 @@ class Ns_ConstrXlesseqthanY : public Ns_Constraint {
         Ns_ConstrXlesseqthanY(NsIntVar* X, NsIntVar* Y) : VarX(X), VarY(Y)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXlesseqthanY::Ns_ConstrXlesseqthanY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXlesseqthanY::Ns_ConstrXlesseqthanY: All "
+                          "the variables of a constraint must belong to the "
+                          "same NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1339,7 +1367,9 @@ class Ns_ConstrXeqYplusC : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqYplusC::Ns_ConstrXeqYplusC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqYplusC::Ns_ConstrXeqYplusC: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1370,7 +1400,9 @@ class Ns_ConstrXeqCminusY : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqCminusY::Ns_ConstrXeqCminusY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqCminusY::Ns_ConstrXeqCminusY: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1400,9 +1432,12 @@ class Ns_ConstrXeqYtimesC : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(C != 0,
-                          "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: If C==0 the constraint has no reason to exist");
+                          "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
+                assert_Ns(C != 0, "Ns_ConstrXeqYtimesC::Ns_ConstrXeqYtimesC: "
+                                  "If C==0 the constraint has no reason to "
+                                  "exist");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1440,13 +1475,20 @@ class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
                 revisionType = VALUE_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(X->min() >= 0,
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required: X >= 0");
+                          "Ns_ConstrXeqYplusCZspecial::Ns_"
+                          "ConstrXeqYplusCZspecial: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
+                assert_Ns(X->min() >= 0, "Ns_ConstrXeqYplusCZspecial::Ns_"
+                                         "ConstrXeqYplusCZspecial: Special "
+                                         "condition required: X >= 0");
                 assert_Ns(0 <= Y->min() && Y->max() < C,
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Special condition required: 0 <= Y < C");
-                assert_Ns(C > 0,
-                          "Ns_ConstrXeqYplusCZspecial::Ns_ConstrXeqYplusCZspecial: Condition required: C > 0");
+                          "Ns_ConstrXeqYplusCZspecial::Ns_"
+                          "ConstrXeqYplusCZspecial: Special condition "
+                          "required: 0 <= Y < C");
+                assert_Ns(C > 0, "Ns_ConstrXeqYplusCZspecial::Ns_"
+                                 "ConstrXeqYplusCZspecial: Condition required: "
+                                 "C > 0");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1477,7 +1519,9 @@ class Ns_ConstrXeqYplusZ : public Ns_Constraint {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrXeqYplusZ::Ns_ConstrXeqYplusZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqYplusZ::Ns_ConstrXeqYplusZ: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1507,7 +1551,9 @@ class Ns_ConstrXeqYtimesZ : public Ns_Constraint {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrXeqYtimesZ::Ns_ConstrXeqYtimesZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqYtimesZ::Ns_ConstrXeqYtimesZ: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1537,8 +1583,11 @@ class Ns_ConstrXeqYdivC : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(C != 0, "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: Special condition required: C != 0");
+                          "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
+                assert_Ns(C != 0, "Ns_ConstrXeqYdivC::Ns_ConstrXeqYdivC: "
+                                  "Special condition required: C != 0");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1569,11 +1618,13 @@ class Ns_ConstrXeqCdivY : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(Y->min() >= 0,
-                          "Ns_ConstrXeqCdivY::Ns_ConstrXeqYdivC: Special condition required: Y > 0");
-                assert_Ns(C > 0,
-                          "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: Special condition required: C > 0");
+                          "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
+                assert_Ns(Y->min() >= 0, "Ns_ConstrXeqCdivY::Ns_ConstrXeqYdivC:"
+                                         " Special condition required: Y > 0");
+                assert_Ns(C > 0, "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: "
+                                 "Special condition required: C > 0");
                 VarY->remove(0);
         }
 
@@ -1604,11 +1655,13 @@ class Ns_ConstrXeqYmodC : public Ns_Constraint {
         {
                 revisionType = VALUE_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: All the variables of a constraint must belong to the same NsProblemManager");
-                assert_Ns(Y->min() >= 0,
-                          "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: Special condition required: Y >= 0");
-                assert_Ns(C > 0,
-                          "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: Special condition required: C > 0");
+                          "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
+                assert_Ns(Y->min() >= 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC:"
+                                         " Special condition required: Y >= 0");
+                assert_Ns(C > 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: "
+                                 "Special condition required: C > 0");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1638,7 +1691,10 @@ class Ns_ConstrMetaXeqYlessthanC : public Ns_Constraint {
           : VarX(X), VarY(Y), C(C_init)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrMetaXeqYlessthanC::Ns_ConstrMetaXeqYlessthanC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYlessthanC::Ns_"
+                          "ConstrMetaXeqYlessthanC: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1667,7 +1723,10 @@ class Ns_ConstrMetaXeqYlessthanZ : public Ns_Constraint {
         {
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrMetaXeqYlessthanZ::Ns_ConstrMetaXeqYlessthanZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYlessthanZ::Ns_"
+                          "ConstrMetaXeqYlessthanZ: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1697,7 +1756,10 @@ class Ns_ConstrMetaXeqYlesseqthanC : public Ns_Constraint {
           : VarX(X), VarY(Y), C(C_init)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrMetaXeqYlesseqthanC::Ns_ConstrMetaXeqYlesseqthanC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYlesseqthanC::Ns_"
+                          "ConstrMetaXeqYlesseqthanC: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1726,7 +1788,10 @@ class Ns_ConstrMetaXeqYlesseqthanZ : public Ns_Constraint {
         {
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrMetaXeqYlesseqthanZ::Ns_ConstrMetaXeqYlesseqthanZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYlesseqthanZ::Ns_"
+                          "ConstrMetaXeqYlesseqthanZ: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1756,7 +1821,10 @@ class Ns_ConstrMetaXeqYgreaterthanC : public Ns_Constraint {
           : VarX(X), VarY(Y), C(C_init)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrMetaXeqYgreaterthanC::Ns_ConstrMetaXeqYgreaterthanC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYgreaterthanC::Ns_"
+                          "ConstrMetaXeqYgreaterthanC: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1786,7 +1854,10 @@ class Ns_ConstrMetaXeqYgreatereqthanC : public Ns_Constraint {
           : VarX(X), VarY(Y), C(C_init)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrMetaXeqYgreatereqthanC::Ns_ConstrMetaXeqYgreatereqthanC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYgreatereqthanC::Ns_"
+                          "ConstrMetaXeqYgreatereqthanC: All the variables of "
+                          "a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1815,7 +1886,9 @@ class Ns_ConstrMetaXeqYeqC : public Ns_Constraint {
           : VarX(X), VarY(Y), C(C_init)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrMetaXeqYeqC::Ns_ConstrMetaXeqYeqC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYeqC::Ns_ConstrMetaXeqYeqC: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1847,7 +1920,9 @@ class Ns_ConstrMetaXeqYeqZ : public Ns_Constraint {
         {
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrMetaXeqYeqZ::Ns_ConstrMetaXeqYeqZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYeqZ::Ns_ConstrMetaXeqYeqZ: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1877,7 +1952,9 @@ class Ns_ConstrMetaXeqYneqC : public Ns_Constraint {
           : VarX(X), VarY(Y), C(C_init)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrMetaXeqYneqC::Ns_ConstrMetaXeqYneqC: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrMetaXeqYneqC::Ns_ConstrMetaXeqYneqC: All "
+                          "the variables of a constraint must belong to the "
+                          "same NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1908,11 +1985,14 @@ class Ns_ConstrXeqYandZ : public Ns_Constraint {
         {
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrXeqYandZ::Ns_ConstrXeqYandZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqYandZ::Ns_ConstrXeqYandZ: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
                 assert_Ns(0 <= VarX->min() && VarX->max() <= 1 &&
                               0 <= VarY->min() && VarY->max() <= 1 &&
                               0 <= VarZ->min() && VarZ->max() <= 1,
-                          "Ns_ConstrXeqYandZ::Ns_ConstrXeqYandZ: All the variables should be \"boolean\"");
+                          "Ns_ConstrXeqYandZ::Ns_ConstrXeqYandZ: All the "
+                          "variables should be \"boolean\"");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1944,11 +2024,14 @@ class Ns_ConstrXeqYorZ : public Ns_Constraint {
         {
                 assert_Ns(&VarX->manager() == &VarY->manager() &&
                               &VarY->manager() == &VarZ->manager(),
-                          "Ns_ConstrXeqYorZ::Ns_ConstrXeqYorZ: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqYorZ::Ns_ConstrXeqYorZ: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
                 assert_Ns(0 <= VarX->min() && VarX->max() <= 1 &&
                               0 <= VarY->min() && VarY->max() <= 1 &&
                               0 <= VarZ->min() && VarZ->max() <= 1,
-                          "Ns_ConstrXeqYorZ::Ns_ConstrXeqYorZ: All the variables should be \"boolean\"");
+                          "Ns_ConstrXeqYorZ::Ns_ConstrXeqYorZ: All the "
+                          "variables should be \"boolean\"");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -1979,10 +2062,13 @@ class Ns_ConstrXorY : public Ns_Constraint {
           : VarX(X), VarY(Y), neg(!pos)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXorY::Ns_ConstrXorY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXorY::Ns_ConstrXorY: All the variables of "
+                          "a constraint must belong to the same "
+                          "NsProblemManager");
                 assert_Ns(0 <= VarX->min() && VarX->max() <= 1 &&
                               0 <= VarY->min() && VarY->max() <= 1,
-                          "Ns_ConstrXorY::Ns_ConstrXorY: All the variables should be \"boolean\"");
+                          "Ns_ConstrXorY::Ns_ConstrXorY: All the variables "
+                          "should be \"boolean\"");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -2086,7 +2172,9 @@ class Ns_ConstrXeqY : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqY::Ns_ConstrXeqY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqY::Ns_ConstrXeqY: All the variables of "
+                          "a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -2113,7 +2201,9 @@ class Ns_ConstrXneqY : public Ns_Constraint {
         Ns_ConstrXneqY(NsIntVar* X, NsIntVar* Y) : VarX(X), VarY(Y)
         {
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXneqY::Ns_ConstrXneqY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXneqY::Ns_ConstrXneqY: All the variables "
+                          "of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -2141,7 +2231,9 @@ class Ns_ConstrXeqAbsY : public Ns_Constraint {
         {
                 revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
-                          "Ns_ConstrXeqAbsY::cononstrXeqAbsY: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrXeqAbsY::cononstrXeqAbsY: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
         }
 
         virtual int varsInvolvedIn(void) const
@@ -2214,12 +2306,15 @@ class Ns_ConstrAllDiffStrong : public Ns_Constraint {
                 void setGroup(const group_t groupVal)
                 {
                         assert_Ns(vGroup.contains(groupVal - 1),
-                                  "groupedNsIntVar::setGroup: 'groupVal-1' is not contained in 'vGroup'");
+                                  "groupedNsIntVar::setGroup: 'groupVal-1' is "
+                                  "not contained in 'vGroup'");
                         assert_Ns(
                             vGroup.removeRange(NsMINUS_INF, groupVal - 1, 0),
-                            "groupedNsIntVar::setGroup: Could not change group to 'groupVal'");
+                            "groupedNsIntVar::setGroup: Could not change group "
+                            "to 'groupVal'");
                         assert_Ns(group() == groupVal,
-                                  "groupedNsIntVar::setGroup: Not succesful change of group to 'groupVal'");
+                                  "groupedNsIntVar::setGroup: Not succesful "
+                                  "change of group to 'groupVal'");
                 }
 
                 bool removeDomain(const NsIntVar& V, const Ns_Constraint* c);
@@ -2286,7 +2381,9 @@ class Ns_ConstrCount : public Ns_Constraint {
                     split_positions(0)
                 {
                         assert_Ns(occurrence >= 0,
-                                  "Ns_ConstrCount::ValueOccurrence_t::ValueOccurrence_t: negative value in 'occurrence'");
+                                  "Ns_ConstrCount::ValueOccurrence_t::"
+                                  "ValueOccurrence_t: negative value in "
+                                  "'occurrence'");
                         vCount.push_back(NsIntVar(pm, 0, occurrence));
                 }
 
@@ -2300,7 +2397,9 @@ class Ns_ConstrCount : public Ns_Constraint {
                     split_positions(&split_positions_init)
                 {
                         assert_Ns(occurrence >= 0,
-                                  "Ns_ConstrCount::ValueOccurrence_t::ValueOccurrence_t: negative value in 'occurrence'");
+                                  "Ns_ConstrCount::ValueOccurrence_t::"
+                                  "ValueOccurrence_t: negative value in "
+                                  "'occurrence'");
                         for (NsIndex i = 0; i < split_positions->size(); ++i)
                                 vCount.push_back(NsIntVar(pm, 0, Split));
                         vCount.push_back(NsIntVar(pm, 0, occurrence % Split));
@@ -2410,7 +2509,9 @@ class Ns_ConstrElement : public Ns_Constraint {
         {
                 revisionType = VALUE_CONSISTENCY;
                 assert_Ns(&VarIndex->manager() == &VarValue->manager(),
-                          "Ns_ConstrElement::Ns_ConstrElement: All the variables of a constraint must belong to the same NsProblemManager");
+                          "Ns_ConstrElement::Ns_ConstrElement: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
                 assert_Ns(
                     !intArray.empty(),
                     "Ns_ConstrElement::Ns_ConstrElement: Empty element array");
@@ -3175,12 +3276,14 @@ class Ns_ExprConstrYandZ : public Ns_ExprConstr {
         {
                 assert_Ns(0 <= VarY.min() && VarY.max() <= 1 &&
                               0 <= VarZ.min() && VarZ.max() <= 1,
-                          "Ns_ExprConstrYandZ::Ns_ExprConstrYandZ: 'VarY' and 'VarZ' should be boolean");
+                          "Ns_ExprConstrYandZ::Ns_ExprConstrYandZ: 'VarY' and "
+                          "'VarZ' should be boolean");
         }
 
         virtual Ns_Constraint* postConstraint(bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrYandZ::postConstraint: Please, add the two constraints separately");
+                throw NsException("Ns_ExprConstrYandZ::postConstraint: Please, "
+                                  "add the two constraints separately");
         }
 
         virtual void postC(NsIntVar& VarX, bool positively) const;
@@ -3198,7 +3301,8 @@ class Ns_ExprConstrYorZ : public Ns_ExprConstr {
         {
                 assert_Ns(0 <= VarY.min() && VarY.max() <= 1 &&
                               0 <= VarZ.min() && VarZ.max() <= 1,
-                          "Ns_ExprConstrYorZ::Ns_ExprConstrYorZ: 'VarY' and 'VarZ' should be boolean");
+                          "Ns_ExprConstrYorZ::Ns_ExprConstrYorZ: 'VarY' and "
+                          "'VarZ' should be boolean");
         }
 
         virtual Ns_Constraint* postConstraint(bool positively) const;
@@ -3249,11 +3353,13 @@ class Ns_ExprConstrAllDiff : public Ns_ExprConstr {
 
         virtual void postC(NsIntVar& /*VarX*/, bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff cannot be used as a meta-constraint");
+                throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff "
+                                  "cannot be used as a meta-constraint");
         }
         virtual NsIntVar& postC(bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff cannot be used as a meta-constraint");
+                throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff "
+                                  "cannot be used as a meta-constraint");
         }
 };
 
@@ -3287,11 +3393,13 @@ class Ns_ExprConstrCount : public Ns_ExprConstr {
 
         virtual void postC(NsIntVar& /*VarX*/, bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrCount::postC: NsCount cannot be used as a meta-constraint");
+                throw NsException("Ns_ExprConstrCount::postC: NsCount cannot "
+                                  "be used as a meta-constraint");
         }
         virtual NsIntVar& postC(bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrCount::postC: NsCount cannot be used as a meta-constraint");
+                throw NsException("Ns_ExprConstrCount::postC: NsCount cannot "
+                                  "be used as a meta-constraint");
         }
 };
 
@@ -4084,7 +4192,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 double meanTime(void) const
                 {
                         assert_Ns(validHistoryId != 0,
-                                  "history_time_t::meanTime: Cannot get mean value of an empty set");
+                                  "history_time_t::meanTime: Cannot get mean "
+                                  "value of an empty set");
                         return (timeSum / timeWeights);
                 }
 
@@ -4092,7 +4201,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 double meanDesc(void) const
                 {
                         assert_Ns(validHistoryId != 0,
-                                  "history_time_t::meanDesc: Cannot get mean value of an empty set");
+                                  "history_time_t::meanDesc: Cannot get mean "
+                                  "value of an empty set");
                         return descMean;
                 }
 
@@ -4101,7 +4211,8 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
                 double standardDeviationDesc(void) const
                 {
                         assert_Ns(validHistoryId > 1,
-                                  "history_time_t::standardDeviationDesc: Cannot get standard deviation");
+                                  "history_time_t::standardDeviationDesc: "
+                                  "Cannot get standard deviation");
                         // variance_n = M2 / sumweight
                         double variance_n = descSum2 / descWeights;
                         // variance = variance_n *
@@ -4308,8 +4419,9 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 bool operator==(const goal_iterator& b) const
                 {
-                        assert_Ns(stackOfStacks != 0,
-                                  "Ns_StackSearch::goal_iterator::==: Uninitialized '*this'");
+                        assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_"
+                                                      "iterator::==: "
+                                                      "Uninitialized '*this'");
                         return (curr_Stack_it == b.curr_Stack_it &&
                                 (curr_Stack_it == stackOfStacks->end() ||
                                  curr_node_it == b.curr_node_it));
@@ -4322,17 +4434,20 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 
                 NsGoal* operator*(void)const
                 {
-                        assert_Ns(stackOfStacks != 0,
-                                  "Ns_StackSearch::goal_iterator::*: Uninitialized '*this'");
-                        assert_Ns(curr_Stack_it != stackOfStacks->end(),
-                                  "Ns_StackSearch::goal_iterator::*: Bad request");
+                        assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_"
+                                                      "iterator::*: "
+                                                      "Uninitialized '*this'");
+                        assert_Ns(
+                            curr_Stack_it != stackOfStacks->end(),
+                            "Ns_StackSearch::goal_iterator::*: Bad request");
                         return *curr_node_it;
                 }
 
                 goal_iterator& end(void)
                 {
-                        assert_Ns(stackOfStacks != 0,
-                                  "Ns_StackSearch::goal_iterator::end: Uninitialized '*this'");
+                        assert_Ns(stackOfStacks != 0, "Ns_StackSearch::goal_"
+                                                      "iterator::end: "
+                                                      "Uninitialized '*this'");
                         curr_Stack_it = stackOfStacks->end();
                         return *this;
                 }
@@ -4496,10 +4611,13 @@ class NsProblemManager {
             backtrackLim(0)
         {
                 assert_Ns(sizeof(NsIntVar*) <= sizeof(Ns_pointer_t),
-                          "NsProblemManager::NsProblemManager: Cannot run on this machine, because a pointer does not fit in an 'size_t' (the 'unordered_set' type)");
+                          "NsProblemManager::NsProblemManager: Cannot run on "
+                          "this machine, because a pointer does not fit in an "
+                          "'size_t' (the 'unordered_set' type)");
                 assert_Ns(searchNodes.push(Ns_SearchNode(
                               0, searchNodes.gbegin(), numSearchTreeNodes())),
-                          "NsProblemManager::NsProblemManager: First push should succeed");
+                          "NsProblemManager::NsProblemManager: First push "
+                          "should succeed");
         }
 
         ~NsProblemManager(void);
@@ -4582,8 +4700,9 @@ class NsProblemManager {
 
         void objectiveUpperLimit(NsInt max)
         {
-                assert_Ns(vObjective != 0,
-                          "NsProblemManager::objectiveUpperLimit: No cost variable exists");
+                assert_Ns(vObjective != 0, "NsProblemManager::"
+                                           "objectiveUpperLimit: No cost "
+                                           "variable exists");
                 if (bestObjective > max + 1) {
                         bestObjective = max + 1;
                         vObjective->remove(bestObjective, NsPLUS_INF);
@@ -4675,7 +4794,8 @@ class NsProblemManager {
         {
                 clock_t ticks = secs * CLOCKS_PER_SEC;
                 assert_Ns(0.0 <= simulationRatio && simulationRatio <= 1.0,
-                          "NsProblemManager::splitTimeLimit: 'simulationRatio' must be between 0 and 1");
+                          "NsProblemManager::splitTimeLimit: 'simulationRatio' "
+                          "must be between 0 and 1");
                 timeSplitLim = ticks;
                 searchNodes.simulationRatio = simulationRatio;
                 if (timeSplitLim == 0)
