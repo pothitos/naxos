@@ -3134,7 +3134,7 @@ class Ns_ExprConstr : public Ns_Expression {
         {
         }
 
-        ///  Final declaration and post of a constraint
+        /// Final declaration and post of a constraint
         virtual Ns_Constraint* postConstraint(bool positively = true) const = 0;
 
         /// Uses postC(VarX, true) to post a constraint
