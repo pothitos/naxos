@@ -127,4 +127,4 @@ script:
     - cd -
 
 after_success:
-  - coveralls -b $DIRECTORY
+  - coveralls -b $DIRECTORY -b $DIRECTORY -e $DIRECTORY/CMakeFiles -e apps/XCSP3/parser
