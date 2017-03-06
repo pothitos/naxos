@@ -8,7 +8,7 @@ add_subdirectory(../../core ../../core)
 include(ExternalProject)
 ExternalProject_Add(XCSP3-CPP-Parser
     PREFIX parser
-    GIT_REPOSITORY https://github.com/pothitos/XCSP3-CPP-Parser.git
+    GIT_REPOSITORY https://github.com/xcsp3team/XCSP3-CPP-Parser.git
     CONFIGURE_COMMAND ""
     BINARY_DIR parser/src/XCSP3-CPP-Parser/samples
     BUILD_COMMAND make lib
