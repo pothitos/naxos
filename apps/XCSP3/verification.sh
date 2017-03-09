@@ -24,7 +24,7 @@ then
     # Fix coding style of all source files
     find ../.. \( -iname "*.h" -or -iname "*.cpp" \) \
         -exec clang-format-5.0 -i {} +
-    # List the file that may need reformatting
+    # List the files that may need reformatting
     cd -
     git ls-files -m
     cd -
