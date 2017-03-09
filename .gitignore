@@ -13,6 +13,9 @@ CTestTestfile.cmake
 DartConfiguration.tcl
 Testing
 
+# Unit testing framework
+catch.hpp
+
 # Naxos executables
 *.AC
 celar_solver
@@ -20,6 +23,7 @@ crew_scheduling
 itc_solver
 magic_square
 naxos-xcsp3
+naxos-xcsp3-test
 nqueens
 numpart
 send_more_money
