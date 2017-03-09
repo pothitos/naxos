@@ -1,7 +1,7 @@
 # Compiled object files
 *.o
 
-# Compiled Static libraries
+# Compiled static libraries
 *.a
 
 # CMake intermediate Files
