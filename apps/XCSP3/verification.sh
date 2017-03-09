@@ -18,9 +18,14 @@ test $SLOC -lt 8000
 # Ensure that the maximum line width limit isn't exceeded
 (! grep ".\{161\}" $SOLVER_FILES)
 
-# Fix coding style of all source files
-find ../.. \( -iname "*.h" -or -iname "*.cpp" \) -exec clang-format-5.0 -i {} +
-# List the file that may need reformatting
-cd -
-git ls-files -m
-cd -
+# Check coding style in TraviS CI
+if [ "$CONTINUOUS_INTEGRATION" = "true" ]
+then
+    # Fix coding style of all source files
+    find ../.. \( -iname "*.h" -or -iname "*.cpp" \) \
+        -exec clang-format-5.0 -i {} +
+    # List the file that may need reformatting
+    cd -
+    git ls-files -m
+    cd -
+fi
