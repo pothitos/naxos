@@ -32,3 +32,11 @@ We should cover the following statements, where
  + Variable and Expression between Variable and Variable
     - (_x_ ⊕ _y_) ⊙ _y_
     - _x_ ⊙ (_y_ ⊕ _z_)
+
+## Extensional Constraints
+
+## `allDifferent`
+
+## `sum`
+
+## `element`
