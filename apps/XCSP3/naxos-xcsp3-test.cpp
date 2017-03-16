@@ -1,37 +1,47 @@
 /// @file
-/// Links the XCSP3 parser to Naxos solver
+/// Unit tests for XCSP3 mini-solver competition
 ///
 /// Part of https://github.com/pothitos/naxos
 
-#include <cstdlib>
-#include <iostream>
+// The following tells Catch to provide a main() - only do this in one cpp file
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
 #include <naxos.h>
 
 using namespace naxos;
-using namespace std;
 
-int main(int argc, char* argv[])
-{
-        try {
-                int N = (argc > 1) ? atoi(argv[1]) : 8;
-                NsProblemManager pm;
-                NsIntVarArray Var, VarPlus, VarMinus;
-                for (int i = 0; i < N; ++i) {
-                        Var.push_back(NsIntVar(pm, 0, N - 1));
-                        VarPlus.push_back(Var[i] + i);
-                        VarMinus.push_back(Var[i] - i);
+SCENARIO("vectors can be sized and resized", "[vector]") {
+        GIVEN("A vector with some items") {
+                std::vector<int> v(5);
+                REQUIRE(v.size() == 5);
+                REQUIRE(v.capacity() >= 5);
+                WHEN("the size is increased") {
+                        v.resize(10);
+                        THEN("the size and capacity change") {
+                                REQUIRE(v.size() == 10);
+                                REQUIRE(v.capacity() >= 10);
+                        }
                 }
-                pm.add(NsAllDiff(Var));
-                pm.add(NsAllDiff(VarPlus));
-                pm.add(NsAllDiff(VarMinus));
-                pm.addGoal(new NsgLabeling(Var));
-                while (pm.nextSolution() != false)
-                        cout << Var << "\n";
-        } catch (exception& exc) {
-                cerr << exc.what() << "\n";
-                return 1;
-        } catch (...) {
-                cerr << "Unknown exception\n";
-                return 1;
+                WHEN("the size is reduced") {
+                        v.resize(0);
+                        THEN("the size changes but not capacity") {
+                                REQUIRE(v.size() == 0);
+                                REQUIRE(v.capacity() >= 5);
+                        }
+                }
+                WHEN("more capacity is reserved") {
+                        v.reserve(10);
+                        THEN("the capacity changes but not the size") {
+                                REQUIRE(v.size() == 5);
+                                REQUIRE(v.capacity() >= 10);
+                        }
+                }
+                WHEN("less capacity is reserved") {
+                        v.reserve(0);
+                        THEN("neither size nor capacity are changed") {
+                                REQUIRE(v.size() == 5);
+                                REQUIRE(v.capacity() >= 5);
+                        }
+                }
         }
 }
