@@ -24,6 +24,10 @@ then
     # Fix coding style of all source files
     find ../.. \( -iname "*.h" -or -iname "*.cpp" \) \
         -exec clang-format-5.0 -i {} +
+    # Use an individual coding style for Catch unit test macros:
+    # Don't wrap braces after functions/macros
+    sed -i 's/AfterFunction: *true/AfterFunction: false/' ../../.clang-format
+    clang-format-5.0 -i verification/naxos-xcsp3-test.cpp
     # List the files that may need reformatting
     cd -
     git ls-files -m
