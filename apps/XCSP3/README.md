@@ -35,7 +35,29 @@ We should cover the following statements, where
 
 ## Extensional Constraints
 
-## `allDifferent`
+These constraints are also called _table constraints_. An
+example follows.
+
+```xml
+<extension id="c1">
+  <list>x1 x2 x3</list>
+  <supports>(0, 1, 0) (1, 0, 0) (1, 1, 0) (1, 1, 1)</supports>
+</extension>
+<extension id="c2">
+  <list>y1 y2 y3 y4</list>
+  <conflicts>(1, 2, 3, 4) (3, 1, 3, 4)</conflicts>
+</extension>
+```
+
+The above means that the allowed combinations of values for
+the variables `x1`, `x2`, and `x3` is included inside the
+`supports` tag. On the other hand, the dissallowed
+combinations of values for the variables `y1`, `y2`, `y3`,
+and `y4` is included in the `conflicts` tag.
+
+## AllDifferent
+
+The classic AllDifferent constraint for arrays.
 
 ## `sum`
 
