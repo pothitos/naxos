@@ -58,9 +58,12 @@ the variables `x1`, `x2`, and `x3` is included inside the
 combinations of values for the variables `y1`, `y2`, `y3`,
 and `y4` is included in the `conflicts` tag.
 
+Special symbols such as `*` or `{1, 2}` are not accepted.
+
 ## AllDifferent
 
-The classic AllDifferent constraint for arrays.
+The classic AllDifferent constraint for arrays. The tag
+`except` is not accepted.
 
 ## Sum
 
@@ -88,17 +91,14 @@ intensional constraints.
 
 ## Element
 
+A simplified element constraint (without `startIndex` and `rank` attributes) is supported.
+
 ```xml
 <element id="c1">
-  <list startIndex="1"> x1 x2 x3 x4 </list>
+  <list> x1 x2 x3 x4 </list>
   <index> i </index>
   <value> v </value>
 </element>
 ```
 
-```xml
-<element id="c2">
-  <list> y[] </list>
-  <value> z </value>
-</element>
-```
+The above describes the relation `x[i] = v`.
