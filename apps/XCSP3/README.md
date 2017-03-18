@@ -59,6 +59,28 @@ and `y4` is included in the `conflicts` tag.
 
 The classic AllDifferent constraint for arrays.
 
-## `sum`
+## Sum
+
+This constraint implies that the (weighted) sum of a set of
+variables is limited by another variable.
+
+```xml
+<sum id="c1">
+  <list>x1 x2 x3</list>
+  <coeffs>1 2 3</coeffs>
+  <condition>(gt, y)</condition>
+</sum>
+```
+
+The above example means that the weighted sum `1 * x1 + 2 *
+x2 + 3 * x3` is limited by (`gt` greater than) `y`. The
+symbol `y` could be also a constant.
+
+Please note that in place of the constants `1`, `2`, and
+`3`, there could be constrained variables, e.g. `z1`, `z2`,
+and `z3`. Also, in place of `gt`, there could be the
+operators `lt`, `le`, `ge`, `eq`, or `ne`. All of these
+correspond to the ⊙ relational operator of the above
+intensional constraints.
 
 ## `element`
