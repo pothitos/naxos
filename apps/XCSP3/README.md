@@ -83,4 +83,19 @@ operators `lt`, `le`, `ge`, `eq`, or `ne`. All of these
 correspond to the ⊙ relational operator of the above
 intensional constraints.
 
-## `element`
+## Element
+
+```xml
+<element id="c1">
+  <list startIndex="1"> x1 x2 x3 x4 </list>
+  <index> i </index>
+  <value> v </value>
+</element>
+```
+
+```xml
+<element id="c2">
+  <list> y[] </list>
+  <value> z </value>
+</element>
+```
