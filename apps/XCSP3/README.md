@@ -40,12 +40,15 @@ example follows.
 
 ```xml
 <extension id="c1">
-  <list>x1 x2 x3</list>
-  <supports>(0, 1, 0) (1, 0, 0) (1, 1, 0) (1, 1, 1)</supports>
+  <list> x1 x2 x3 </list>
+  <supports> (0, 1, 0) (1, 0, 0) (1, 1, 0) (1, 1, 1) </supports>
 </extension>
+```
+
+```xml
 <extension id="c2">
-  <list>y1 y2 y3 y4</list>
-  <conflicts>(1, 2, 3, 4) (3, 1, 3, 4)</conflicts>
+  <list> y1 y2 y3 y4 </list>
+  <conflicts> (1, 2, 3, 4) (3, 1, 3, 4) </conflicts>
 </extension>
 ```
 
@@ -66,9 +69,9 @@ variables is limited by another variable.
 
 ```xml
 <sum id="c1">
-  <list>x1 x2 x3</list>
-  <coeffs>1 2 3</coeffs>
-  <condition>(gt, y)</condition>
+  <list> x1 x2 x3 </list>
+  <coeffs> 1 2 3 </coeffs>
+  <condition> (gt, y) </condition>
 </sum>
 ```
 
