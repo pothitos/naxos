@@ -35,8 +35,8 @@ We should cover the following statements, where
 
 ## Extensional Constraints
 
-These constraints are also called _table constraints_. An
-example follows.
+These constraints are also called _table constraints_. Two
+examples follow.
 
 ```xml
 <extension id="c1">
