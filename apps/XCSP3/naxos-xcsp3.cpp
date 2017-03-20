@@ -11,13 +11,18 @@
 using namespace naxos;
 using namespace std;
 
+bool in_critical_area;
+bool interrupted;
 NsIntVarArray* VarSolution;
 
-void printSolution(void)
+void printSolutionAndExit(void)
 {
         if (VarSolution == 0) {
-                cout << "s UNSATISFIABLE\n";
+                // No solution found and search hasn't been completed
+                cout << "s UNKNOWN\n";
         } else {
+                // A solution has been found
+                // Status SATISFIABLE or OPTIMUM FOUND has been already printed
                 cout << "v <instantiation>\n"
                      << "v   <list> x[] </list>\n"
                      << "v   <values> " << *VarSolution << " </values>\n"
@@ -26,17 +31,17 @@ void printSolution(void)
         exit(0);
 }
 
-void signalHandler(int /*signum*/)
+void interruptionHandler(int /*signum*/)
 {
-        printSolution();
+        if (in_critical_area)
+                interrupted = true; // Flag interruption, but continue execution
+        else
+                printSolutionAndExit();
 }
 
 int main(int argc, char* argv[])
 {
         try {
-                VarSolution = 0;
-                // Register signal SIGINT and its signal handler
-                signal(SIGINT, signalHandler);
                 // Parse the input filename command line argument
                 if (argc != 2) {
                         cerr << "Usage: " << argv[0] << " BENCHNAME\n";
@@ -59,21 +64,39 @@ int main(int argc, char* argv[])
                 cout << "c Created " << pm.numVars() << " variables and "
                      << pm.numConstraints()
                      << " constraints, including intermediates\n";
+                VarSolution = 0;
+                in_critical_area = false;
+                interrupted = false;
+                // Register interruption signal handler
+                signal(SIGINT, interruptionHandler);
                 while (pm.nextSolution() != false) {
+                        in_critical_area = true;
+                        // Record solution
                         VarSolution = &Var;
                         if (vObjectivePointer == 0) {
-                                signal(SIGINT, SIG_IGN); // Ignore SIGINT
+                                signal(SIGINT, SIG_IGN); // No more interruption
                                 cout << "s SATISFIABLE\n";
-                                printSolution();
+                                printSolutionAndExit();
                         } else {
                                 cout << "o " << vObjectivePointer->value()
                                      << endl;
                         }
+                        in_critical_area = false;
+                        // Check if interrupted while in critical area
+                        if (interrupted) {
+                                cout << "s SATISFIABLE\n";
+                                printSolutionAndExit();
+                        }
                 }
-                signal(SIGINT, SIG_IGN); // Ignore SIGINT
-                if (VarSolution != 0)
+                // Search has been completed
+                signal(SIGINT, SIG_IGN); // No more interruption
+                if (vObjectivePointer == 0) {
+                        // Non-optimization search didn't find a solution
+                        cout << "s UNSATISFIABLE\n";
+                } else {
                         cout << "s OPTIMUM FOUND\n";
-                printSolution();
+                        printSolutionAndExit();
+                }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
                 return 1;
