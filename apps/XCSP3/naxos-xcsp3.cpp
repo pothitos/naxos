@@ -69,8 +69,7 @@ int main(int argc, char* argv[])
                                      << endl;
                         }
                 }
-                // Ignore SIGINT
-                signal(SIGINT, SIG_IGN);
+                signal(SIGINT, SIG_IGN); // Ignore SIGINT
                 if (VarSolution != 0)
                         cout << "s OPTIMUM FOUND\n";
                 printSolution();
