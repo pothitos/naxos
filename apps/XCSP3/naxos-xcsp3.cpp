@@ -15,10 +15,14 @@ NsIntVarArray* VarSolution;
 
 void printSolution(void)
 {
-        cout << "v <instantiation>\n"
-             << "v   <list> x[] </list>\n"
-             << "v   <values> " << *VarSolution << " </values>\n"
-             << "v </instantiation>\n";
+        if (VarSolution == 0) {
+                cout << "s UNSATISFIABLE\n";
+        } else {
+                cout << "v <instantiation>\n"
+                     << "v   <list> x[] </list>\n"
+                     << "v   <values> " << *VarSolution << " </values>\n"
+                     << "v </instantiation>\n";
+        }
         exit(0);
 }
 
@@ -67,12 +71,9 @@ int main(int argc, char* argv[])
                 }
                 // Ignore SIGINT
                 signal(SIGINT, SIG_IGN);
-                if (VarSolution == 0) {
-                        cout << "s UNSATISFIABLE\n";
-                } else {
+                if (VarSolution != 0)
                         cout << "s OPTIMUM FOUND\n";
-                        printSolution();
-                }
+                printSolution();
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
                 return 1;
