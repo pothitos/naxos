@@ -21,10 +21,12 @@ int main(int argc, char* argv[])
         try {
                 // Register signal SIGINT and its signal handler
                 signal(SIGINT, signalHandler);
+                // Parse the input filename command line argument
                 if (argc != 2) {
                         cerr << "Usage: " << argv[0] << " BENCHNAME\n";
                         return 1;
                 }
+                // State the Constraint Satisfaction Problem
                 int N = 8;
                 NsProblemManager pm;
                 NsIntVarArray Var, VarPlus, VarMinus;
