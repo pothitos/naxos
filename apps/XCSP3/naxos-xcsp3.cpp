@@ -11,14 +11,26 @@
 using namespace naxos;
 using namespace std;
 
+NsIntVarArray* VarSolution;
+
+void printSolution(void)
+{
+        cout << "v <instantiation>\n"
+             << "v   <list> x[] </list>\n"
+             << "v   <values> " << *VarSolution << " </values>\n"
+             << "v </instantiation>\n";
+        exit(0);
+}
+
 void signalHandler(int /*signum*/)
 {
-        exit(0);
+        printSolution();
 }
 
 int main(int argc, char* argv[])
 {
         try {
+                VarSolution = 0;
                 // Register signal SIGINT and its signal handler
                 signal(SIGINT, signalHandler);
                 // Parse the input filename command line argument
@@ -38,9 +50,29 @@ int main(int argc, char* argv[])
                 pm.add(NsAllDiff(Var));
                 pm.add(NsAllDiff(VarPlus));
                 pm.add(NsAllDiff(VarMinus));
+                NsIntVar* vObjectivePointer = 0;
                 pm.addGoal(new NsgLabeling(Var));
-                while (pm.nextSolution() != false)
-                        cout << Var << "\n";
+                cout << "c Created " << pm.numVars() << " variables and "
+                     << pm.numConstraints()
+                     << " constraints, including intermediates.\n";
+                while (pm.nextSolution() != false) {
+                        VarSolution = &Var;
+                        if (vObjectivePointer == 0) {
+                                cout << "s SATISFIABLE\n";
+                                printSolution();
+                        } else {
+                                cout << "o " << vObjectivePointer->value()
+                                     << endl;
+                        }
+                }
+                // Ignore SIGINT
+                signal(SIGINT, SIG_IGN);
+                if (VarSolution == 0) {
+                        cout << "s UNSATISFIABLE\n";
+                } else {
+                        cout << "s OPTIMUM FOUND\n";
+                        printSolution();
+                }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
                 return 1;
