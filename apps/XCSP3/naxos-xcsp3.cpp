@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
                 pm.addGoal(new NsgLabeling(Var));
                 cout << "c Created " << pm.numVars() << " variables and "
                      << pm.numConstraints()
-                     << " constraints, including intermediates.\n";
+                     << " constraints, including intermediates\n";
                 while (pm.nextSolution() != false) {
                         VarSolution = &Var;
                         if (vObjectivePointer == 0) {
