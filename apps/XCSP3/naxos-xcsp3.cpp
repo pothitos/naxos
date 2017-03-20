@@ -3,6 +3,7 @@
 ///
 /// Part of https://github.com/pothitos/naxos
 
+#include <csignal>
 #include <cstdlib>
 #include <iostream>
 #include <naxos.h>
@@ -10,9 +11,16 @@
 using namespace naxos;
 using namespace std;
 
+void signalHandler(int /*signum*/)
+{
+        exit(0);
+}
+
 int main(int argc, char* argv[])
 {
         try {
+                // Register signal SIGINT and its signal handler
+                signal(SIGINT, signalHandler);
                 if (argc != 2) {
                         cerr << "Usage: " << argv[0] << " BENCHNAME\n";
                         return 1;
