@@ -62,6 +62,7 @@ int main(int argc, char* argv[])
                 while (pm.nextSolution() != false) {
                         VarSolution = &Var;
                         if (vObjectivePointer == 0) {
+                                signal(SIGINT, SIG_IGN); // Ignore SIGINT
                                 cout << "s SATISFIABLE\n";
                                 printSolution();
                         } else {
