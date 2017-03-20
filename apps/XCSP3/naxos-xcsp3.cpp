@@ -37,6 +37,7 @@ void interruptionHandler(int /*signum*/)
                 // Flag interruption, but continue execution
                 interrupted = true;
         } else {
+                // The interruption happened in pm.nextSolution()
                 if (VarSolution != 0)
                         cout << "s SATISFIABLE\n";
                 printSolutionAndExit();
@@ -78,7 +79,6 @@ int main(int argc, char* argv[])
                         // Record solution
                         VarSolution = &Var;
                         if (vObjectivePointer == 0) {
-                                signal(SIGINT, SIG_IGN); // No more interruption
                                 cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
                         } else {
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
                                 interruptionHandler(SIGINT); // resume function
                 }
                 // Search has been completed
-                signal(SIGINT, SIG_IGN); // No more interruption
+                in_critical_area = true;
                 if (vObjectivePointer == 0) {
                         // Non-optimization search didn't find a solution
                         cout << "s UNSATISFIABLE\n";
