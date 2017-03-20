@@ -33,10 +33,14 @@ void printSolutionAndExit(void)
 
 void interruptionHandler(int /*signum*/)
 {
-        if (in_critical_area)
-                interrupted = true; // Flag interruption, but continue execution
-        else
+        if (in_critical_area) {
+                // Flag interruption, but continue execution
+                interrupted = true;
+        } else {
+                if (VarSolution != 0)
+                        cout << "s SATISFIABLE\n";
                 printSolutionAndExit();
+        }
 }
 
 int main(int argc, char* argv[])
@@ -83,10 +87,8 @@ int main(int argc, char* argv[])
                         }
                         in_critical_area = false;
                         // Check if interrupted while in critical area
-                        if (interrupted) {
-                                cout << "s SATISFIABLE\n";
-                                printSolutionAndExit();
-                        }
+                        if (interrupted)
+                                interruptionHandler(SIGINT); // resume function
                 }
                 // Search has been completed
                 signal(SIGINT, SIG_IGN); // No more interruption
