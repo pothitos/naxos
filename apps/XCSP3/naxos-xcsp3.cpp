@@ -13,7 +13,11 @@ using namespace std;
 int main(int argc, char* argv[])
 {
         try {
-                int N = (argc > 1) ? atoi(argv[1]) : 8;
+                if (argc != 2) {
+                        cerr << "Usage: " << argv[0] << " BENCHNAME\n";
+                        return 1;
+                }
+                int N = 8;
                 NsProblemManager pm;
                 NsIntVarArray Var, VarPlus, VarMinus;
                 for (int i = 0; i < N; ++i) {
