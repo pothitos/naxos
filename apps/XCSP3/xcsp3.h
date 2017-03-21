@@ -350,28 +350,16 @@ void displayList(vector<T>& list, string separator = " ")
 
 void displayList(vector<XVariable*>& list, string separator = " ")
 {
-        if (list.
-
-            size()
-
-            > 8) {
+        if (list.size() > 8) {
                 for (int i = 0; i < 3; i++)
                         cout << list[i]->id << separator;
                 cout << " ... ";
-                for (unsigned int i = list.size() - 4; i < list.
-
-                                                           size();
-
-                     i++)
+                for (unsigned int i = list.size() - 4; i < list.size(); i++)
                         cout << list[i]->id << separator;
                 cout << endl;
                 return;
         }
-        for (unsigned int i = 0; i < list.
-
-                                     size();
-
-             i++)
+        for (unsigned int i = 0; i < list.size(); i++)
                 cout << list[i]->id << separator;
         cout << endl;
 }
