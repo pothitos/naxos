@@ -1,6 +1,6 @@
  - [Previous Section](Expressions.md)
  - [Contents](README.md)
-------------------------
+---
 
 
 # Examples
@@ -256,5 +256,5 @@ for (i = 0; i < N; ++i)
 
 The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
----------------------------
+---
  - [Next Section](Goals.md)

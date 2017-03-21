@@ -1,6 +1,6 @@
  - [Previous Section](Errors.md)
  - [Contents](README.md)
-------------------------
+---
 
 
 # Constrained Variables
@@ -186,5 +186,5 @@ Finally, the operator `<<` has been overloaded in order to
 print the variable to an output stream, by writing e.g.
 `cout << Var;`.
 
-----------------------------
+---
  - [Next Section](Arrays.md)

@@ -1,5 +1,5 @@
  - [Contents](README.md)
-------------------------
+---
 
 
 # Introduction
@@ -60,5 +60,5 @@ constraint and the variables involved will continue to exist
 after the function returns. In the same circumstance in
 _Naxos Solver_ we would have a segmentation fault.
 
-----------------------------
+---
  - [Next Section](Errors.md)

@@ -1,6 +1,6 @@
  - [Previous Section](Examples.md)
  - [Contents](README.md)
-------------------------
+---
 
 
 # Search via Goals
@@ -199,5 +199,5 @@ define our own goals, like `NsgLabeling` and `NsgInDomain`.
 The aim is to make search more efficient by using heuristic
 functions to take better decisions/choices.
 
-------------------------
+---
  - [Contents](README.md)

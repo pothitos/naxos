@@ -1,6 +1,6 @@
  - [Previous Section](Introduction.md)
  - [Contents](README.md)
-------------------------
+---
 
 
 # Error Handling
@@ -38,5 +38,5 @@ It is not a good programming practice to to use exceptions
 inside the algorithms body. In most cases, exceptions should
 "wrap" our programs.
 
--------------------------------
+---
  - [Next Section](Variables.md)

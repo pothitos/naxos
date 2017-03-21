@@ -1,6 +1,6 @@
  - [Previous Section](Arrays.md)
  - [Contents](README.md)
-------------------------
+---
 
 
 # Problem Manager
@@ -178,5 +178,5 @@ We cannot call this function inside goals, but outside them.
 E.g. we can call it at the code "level" we call
 `nextSolution()`.
 
----------------------------------
+---
  - [Next Section](Expressions.md)

@@ -1,6 +1,6 @@
  - [Previous Section](Variables.md)
  - [Contents](README.md)
-------------------------
+---
 
 
 # Constrained Variable Arrays
@@ -124,5 +124,5 @@ The difference in `NsDeque` is that it always checks that we
 are inside the array bounds; if we exceed them, the
 corresponding exception is thrown.
 
-------------------------------------
+---
  - [Next Section](ProblemManager.md)
