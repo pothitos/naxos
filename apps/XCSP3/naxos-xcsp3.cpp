@@ -81,6 +81,7 @@ int main(int argc, char* argv[])
                         if (vObjectivePointer == 0) {
                                 cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
+                                // Non-optimization search finishes here
                         } else {
                                 cout << "o " << vObjectivePointer->value()
                                      << endl;
@@ -92,8 +93,7 @@ int main(int argc, char* argv[])
                 }
                 // Search has been completed
                 searching = false;
-                if (vObjectivePointer == 0) {
-                        // Non-optimization search didn't find a solution
+                if (VarSolution == 0) {
                         cout << "s UNSATISFIABLE\n";
                 } else {
                         cout << "s OPTIMUM FOUND\n";
