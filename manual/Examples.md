@@ -20,16 +20,16 @@ way that no two items share the same line, column or
 diagonal. The following table displays an example for _N_ =
 8, i.e. 8 queens that are not attacked.
 
-       | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
--------|---|---|---|---|---|---|---|---|
- __1__ |   |   |   |   |   | ♕ |   |   |
- __2__ |   |   | ♕ |   |   |   |   |   |
- __3__ |   |   |   |   | ♕ |   |   |   |
- __4__ |   |   |   |   |   |   | ♕ |   |
- __5__ | ♕ |   |   |   |   |   |   |   |
- __6__ |   |   |   | ♕ |   |   |   |   |
- __7__ |   | ♕ |   |   |   |   |   |   |
- __8__ |   |   |   |   |   |   |   | ♕ |
+|       | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|-------|---|---|---|---|---|---|---|---|
+| __1__ |   |   |   |   |   | ♕ |   |   |
+| __2__ |   |   | ♕ |   |   |   |   |   |
+| __3__ |   |   |   |   | ♕ |   |   |   |
+| __4__ |   |   |   |   |   |   | ♕ |   |
+| __5__ | ♕ |   |   |   |   |   |   |   |
+| __6__ |   |   |   | ♕ |   |   |   |   |
+| __7__ |   | ♕ |   |   |   |   |   |   |
+| __8__ |   |   |   |   |   |   |   | ♕ |
 
 Thus, in each column 0, 1, ..., _N_-1 we will have a queen.
 It remains to find out the _line_ where each queen will be
