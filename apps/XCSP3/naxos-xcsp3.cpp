@@ -11,7 +11,7 @@
 using namespace naxos;
 using namespace std;
 
-bool in_critical_area;
+bool searching;
 bool interrupted;
 NsIntVarArray* VarSolution;
 
@@ -33,14 +33,14 @@ void printSolutionAndExit(void)
 
 void interruptionHandler(int /*signum*/)
 {
-        if (in_critical_area) {
-                // Flag interruption, but continue execution
-                interrupted = true;
-        } else {
-                // The interruption happened in pm.nextSolution()
+        if (searching) {
+                // The interruption happened inside pm.nextSolution()
                 if (VarSolution != 0)
                         cout << "s SATISFIABLE\n";
                 printSolutionAndExit();
+        } else {
+                // Flag interruption, but continue execution
+                interrupted = true;
         }
 }
 
@@ -70,12 +70,12 @@ int main(int argc, char* argv[])
                      << pm.numConstraints()
                      << " constraints, including intermediates\n";
                 VarSolution = 0;
-                in_critical_area = false;
                 interrupted = false;
+                searching = true;
                 // Register interruption signal handler
                 signal(SIGINT, interruptionHandler);
                 while (pm.nextSolution() != false) {
-                        in_critical_area = true;
+                        searching = false;
                         // Record solution
                         VarSolution = &Var;
                         if (vObjectivePointer == 0) {
@@ -85,13 +85,13 @@ int main(int argc, char* argv[])
                                 cout << "o " << vObjectivePointer->value()
                                      << endl;
                         }
-                        in_critical_area = false;
+                        searching = true;
                         // Check if interrupted while in critical area
                         if (interrupted)
                                 interruptionHandler(SIGINT); // resume function
                 }
                 // Search has been completed
-                in_critical_area = true;
+                searching = false;
                 if (vObjectivePointer == 0) {
                         // Non-optimization search didn't find a solution
                         cout << "s UNSATISFIABLE\n";
