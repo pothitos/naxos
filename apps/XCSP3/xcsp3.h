@@ -26,8 +26,8 @@
 #ifndef COSOCO_XCSP3PRINTCALLBACKS_H
 #define COSOCO_XCSP3PRINTCALLBACKS_H
 
-#include "XCSP3CoreCallbacks.h"
-#include "XCSP3Variable.h"
+#include <XCSP3CoreCallbacks.h>
+
 /**
  * This is an example that prints useful informations of a XCSP3 instance.
  * You need to create your own class and to override functions of the callback.

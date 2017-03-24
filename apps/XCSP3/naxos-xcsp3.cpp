@@ -3,6 +3,8 @@
 ///
 /// Part of https://github.com/pothitos/naxos
 
+#include "xcsp3.h"
+#include <XCSP3CoreParser.h>
 #include <csignal>
 #include <cstdlib>
 #include <iostream>
@@ -52,6 +54,10 @@ int main(int argc, char* argv[])
                         cerr << "Usage: " << argv[0] << " BENCHNAME\n";
                         return 1;
                 }
+                // Interface between the parser and the solver
+                XCSP3PrintCallbacks cb;
+                XCSP3CoreParser parser(&cb);
+                parser.parse(argv[1]);
                 // State the Constraint Satisfaction Problem
                 int N = 8;
                 NsProblemManager pm;
