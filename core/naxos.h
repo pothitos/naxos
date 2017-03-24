@@ -12,10 +12,11 @@
 /// internal developing purposes.
 ///
 /// The names of Naxos classes and other declarations begin with
-/// 'Ns', so it is a good practice not to put this prefix to our
-/// classes or data-types. Moreover, prefix 'Nsg' is used for
-/// Naxos goal classes, and prefix 'Ns_' is used for internal
-/// classes that should not be used by the users of Naxos.
+/// 'Ns', so it is a good practice not to put this prefix to
+/// your classes or data-types. Moreover, prefix 'Nsg' is used
+/// for Naxos goal classes, and prefix 'Ns_' is used for
+/// internal classes that should not be used by the users of
+/// Naxos.
 
 #ifndef Ns_NAXOS_H
 #define Ns_NAXOS_H
