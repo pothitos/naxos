@@ -55,8 +55,8 @@ int main(int argc, char* argv[])
                         return 1;
                 }
                 // Interface between the parser and the solver
-                XCSP3PrintCallbacks cb;
-                XCSP3CoreParser parser(&cb);
+                XCSP3Core::XCSP3PrintCallbacks cb;
+                XCSP3Core::XCSP3CoreParser parser(&cb);
                 parser.parse(argv[1]);
                 // State the Constraint Satisfaction Problem
                 int N = 8;
