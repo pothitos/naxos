@@ -2,7 +2,7 @@
 set -ev
 
 # Check for memory leaks
-MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
+MEM_CHECK="valgrind -q --leak-check=full"
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml \
     > /dev/null
 
