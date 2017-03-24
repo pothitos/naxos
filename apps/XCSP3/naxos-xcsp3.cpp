@@ -3,7 +3,7 @@
 ///
 /// Part of https://github.com/pothitos/naxos
 
-#include "xcsp3.h"
+#include "translator.h"
 #include <XCSP3CoreParser.h>
 #include <csignal>
 #include <cstdlib>
