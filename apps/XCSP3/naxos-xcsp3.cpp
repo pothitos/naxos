@@ -65,6 +65,8 @@ int main(int argc, char* argv[])
                         Var.push_back(NsIntVar(pm, 1, 3));
                 pm.add(NsAllDiff(Var));
                 NsIntVar* vObjectivePointer = 0;
+                //vObjectivePointer = &Var[2];
+                //pm.minimize(*vObjectivePointer);
                 pm.addGoal(new NsgLabeling(Var));
                 cout << "c Created " << pm.numVars() << " variables and "
                      << pm.numConstraints()
