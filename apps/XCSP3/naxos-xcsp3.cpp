@@ -59,17 +59,11 @@ int main(int argc, char* argv[])
                 XCSP3Core::XCSP3CoreParser parser(&cb);
                 parser.parse(argv[1]);
                 // State the Constraint Satisfaction Problem
-                int N = 8;
                 NsProblemManager pm;
-                NsIntVarArray Var, VarPlus, VarMinus;
-                for (int i = 0; i < N; ++i) {
-                        Var.push_back(NsIntVar(pm, 0, N - 1));
-                        VarPlus.push_back(Var[i] + i);
-                        VarMinus.push_back(Var[i] - i);
-                }
+                NsIntVarArray Var;
+                for (int i = 0; i < 3; ++i)
+                        Var.push_back(NsIntVar(pm, 1, 3));
                 pm.add(NsAllDiff(Var));
-                pm.add(NsAllDiff(VarPlus));
-                pm.add(NsAllDiff(VarMinus));
                 NsIntVar* vObjectivePointer = 0;
                 pm.addGoal(new NsgLabeling(Var));
                 cout << "c Created " << pm.numVars() << " variables and "
