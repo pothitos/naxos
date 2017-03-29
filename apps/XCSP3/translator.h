@@ -3,7 +3,7 @@
 ///
 /// Part of https://github.com/pothitos/naxos
 
-/*=============================================================================
+/*
  * parser for CSP instances represented in XCSP3 Format
  *
  * Copyright (c) 2015 xcp3.org (contact <at> xcsp3.org)
@@ -26,7 +26,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *=============================================================================
  */
 #ifndef COSOCO_XCSP3PRINTCALLBACKS_H
 #define COSOCO_XCSP3PRINTCALLBACKS_H
