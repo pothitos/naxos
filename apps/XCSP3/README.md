@@ -53,10 +53,10 @@ examples follow.
 ```
 
 The above means that the allowed combinations of values for
-the variables `x1`, `x2`, and `x3` is included inside the
+the variables `x1`, `x2`, and `x3` are included inside the
 `supports` tag. On the other hand, the dissallowed
 combinations of values for the variables `y1`, `y2`, `y3`,
-and `y4` is included in the `conflicts` tag.
+and `y4` are included in the `conflicts` tag.
 
 Special symbols such as `*` or `{1, 2}` are not accepted.
 
