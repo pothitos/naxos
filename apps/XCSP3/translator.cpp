@@ -127,6 +127,18 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         displayList(values);
 }
 
+void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
+{
+        cout << "\n    intension constraint : " << id << " : " << expr << endl;
+}
+
+void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
+                                              XVariable* x, int k, XVariable* y)
+{
+        cout << "\n   intension constraint " << id << ": " << x->id
+             << (k >= 0 ? "+" : "") << k << " op " << y->id << endl;
+}
+
 void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                                               vector<XVariable*> list,
                                               vector<vector<int>>& tuples,
@@ -156,18 +168,6 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
 {
         cout << "\n    extension constraint similar as previous one: " << id
              << endl;
-}
-
-void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
-{
-        cout << "\n    intension constraint : " << id << " : " << expr << endl;
-}
-
-void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
-                                              XVariable* x, int k, XVariable* y)
-{
-        cout << "\n   intension constraint " << id << ": " << x->id
-             << (k >= 0 ? "+" : "") << k << " op " << y->id << endl;
 }
 
 void Xcsp3_to_Naxos::buildConstraintRegular(string id, vector<XVariable*>& list,

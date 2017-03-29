@@ -70,6 +70,12 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
         virtual void buildVariableInteger(string id,
                                           vector<int>& values) override;
 
+        virtual void buildConstraintIntension(string id, string expr) override;
+
+        virtual void buildConstraintPrimitive(string id, OrderType op,
+                                              XVariable* x, int k,
+                                              XVariable* y) override;
+
         virtual void buildConstraintExtension(string id,
                                               vector<XVariable*> list,
                                               vector<vector<int>>& tuples,
@@ -84,12 +90,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
                                                 vector<XVariable*> list,
                                                 bool support,
                                                 bool hasStar) override;
-
-        virtual void buildConstraintIntension(string id, string expr) override;
-
-        virtual void buildConstraintPrimitive(string id, OrderType op,
-                                              XVariable* x, int k,
-                                              XVariable* y) override;
 
         virtual void
         buildConstraintRegular(string id, vector<XVariable*>& list, string st,
