@@ -28,19 +28,9 @@
 
 #include <XCSP3CoreCallbacks.h>
 
-/**
- * This is an example that prints useful informations of a XCSP3 instance.
- * You need to create your own class and to override functions of the callback.
- * We suggest to make a map between XVariable and your own variables in order to
- * facilitate the constructions of constraints.
- *
- * see main.cc to show declaration of the parser
- *
- */
-
 namespace XCSP3Core {
 
-class XCSP3PrintCallbacks : public XCSP3CoreCallbacks {
+class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
     public:
         virtual void beginInstance(InstanceType type) override;
 

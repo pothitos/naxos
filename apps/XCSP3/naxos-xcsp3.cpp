@@ -55,8 +55,8 @@ int main(int argc, char* argv[])
                         return 1;
                 }
                 // Interface between the parser and the solver
-                XCSP3Core::XCSP3PrintCallbacks cb;
-                XCSP3Core::XCSP3CoreParser parser(&cb);
+                XCSP3Core::Xcsp3_to_Naxos callbacks;
+                XCSP3Core::XCSP3CoreParser parser(&callbacks);
                 parser.parse(argv[1]);
                 // State the Constraint Satisfaction Problem
                 NsProblemManager pm;
@@ -65,8 +65,8 @@ int main(int argc, char* argv[])
                         Var.push_back(NsIntVar(pm, 1, 3));
                 pm.add(NsAllDiff(Var));
                 NsIntVar* vObjectivePointer = 0;
-                //vObjectivePointer = &Var[2];
-                //pm.minimize(*vObjectivePointer);
+                // vObjectivePointer = &Var[2];
+                // pm.minimize(*vObjectivePointer);
                 pm.addGoal(new NsgLabeling(Var));
                 cout << "c Created " << pm.numVars() << " variables and "
                      << pm.numConstraints()
