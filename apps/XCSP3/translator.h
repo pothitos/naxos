@@ -326,6 +326,9 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
                                                   vector<XVariable*>& list,
                                                   vector<int>& values) override;
 
+        /// @{
+        /// @name Constraint Optimization
+
         virtual void buildObjectiveMinimizeExpression(string expr) override;
 
         virtual void buildObjectiveMaximizeExpression(string expr) override;
@@ -347,6 +350,8 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         virtual void buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list) override;
+
+        /// @}
 };
 }
 
