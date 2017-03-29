@@ -175,62 +175,12 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
              << endl;
 }
 
-void Xcsp3_to_Naxos::buildConstraintRegular(string id, vector<XVariable*>& list,
-                                            string start, vector<string>& final,
-                                            vector<XTransition>& transitions)
-{
-        cout << "\n    regular constraint" << endl;
-        cout << "        ";
-        displayList(list);
-        cout << "        start: " << start << endl;
-        cout << "        final: ";
-        displayList(final, ",");
-        cout << endl;
-        cout << "        transitions: ";
-        for (unsigned int i = 0;
-             i < (transitions.size() > 4 ? 4 : transitions.size()); i++) {
-                cout << "(" << transitions[i].from << "," << transitions[i].val
-                     << "," << transitions[i].to << ") ";
-        }
-        if (transitions.size() > 4)
-                cout << "...";
-        cout << endl;
-}
-
-void Xcsp3_to_Naxos::buildConstraintMDD(string id, vector<XVariable*>& list,
-                                        vector<XTransition>& transitions)
-{
-        cout << "\n    mdd constraint" << endl;
-        cout << "        ";
-        displayList(list);
-        cout << "        transitions: ";
-        for (unsigned int i = 0;
-             i < (transitions.size() > 4 ? 4 : transitions.size()); i++) {
-                cout << "(" << transitions[i].from << "," << transitions[i].val
-                     << "," << transitions[i].to << ") ";
-        }
-        if (transitions.size() > 4)
-                cout << "...";
-        cout << endl;
-}
-
 void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
                                                  vector<XVariable*>& list)
 {
         cout << "\n    allDiff constraint" << id << endl;
         cout << "        ";
         displayList(list);
-}
-
-void Xcsp3_to_Naxos::buildConstraintAlldifferentExcept(string id,
-                                                       vector<XVariable*>& list,
-                                                       vector<int>& except)
-{
-        cout << "\n    allDiff constraint with exceptions" << id << endl;
-        cout << "        ";
-        displayList(list);
-        cout << "        Exceptions:";
-        displayList(except);
 }
 
 void Xcsp3_to_Naxos::buildConstraintAlldifferentList(
@@ -241,16 +191,6 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferentList(
              i++) {
                 cout << "        ";
                 displayList(lists[i]);
-        }
-}
-
-void Xcsp3_to_Naxos::buildConstraintAlldifferentMatrix(
-    string id, vector<vector<XVariable*>>& matrix)
-{
-        cout << "\n    allDiff matrix constraint" << id << endl;
-        for (unsigned int i = 0; i < matrix.size(); i++) {
-                cout << "        ";
-                displayList(matrix[i]);
         }
 }
 

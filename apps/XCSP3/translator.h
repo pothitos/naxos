@@ -113,15 +113,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         /// @}
 
-        virtual void
-        buildConstraintRegular(string id, vector<XVariable*>& list, string st,
-                               vector<string>& final,
-                               vector<XTransition>& transitions) override;
-
-        virtual void
-        buildConstraintMDD(string id, vector<XVariable*>& list,
-                           vector<XTransition>& transitions) override;
-
         /// @{
         /// @name AllDifferent
 
@@ -129,15 +120,8 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
         buildConstraintAlldifferent(string id,
                                     vector<XVariable*>& list) override;
 
-        virtual void
-        buildConstraintAlldifferentExcept(string id, vector<XVariable*>& list,
-                                          vector<int>& except) override;
-
         virtual void buildConstraintAlldifferentList(
             string id, vector<vector<XVariable*>>& lists) override;
-
-        virtual void buildConstraintAlldifferentMatrix(
-            string id, vector<vector<XVariable*>>& matrix) override;
 
         /// @}
 
