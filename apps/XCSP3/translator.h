@@ -27,6 +27,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 #ifndef COSOCO_XCSP3PRINTCALLBACKS_H
 #define COSOCO_XCSP3PRINTCALLBACKS_H
 
@@ -38,7 +39,6 @@ namespace XCSP3Core {
 class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
     public:
-
         /// @{
         /// @name Variables Definition
 
