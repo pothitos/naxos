@@ -42,8 +42,6 @@ namespace XCSP3Core {
 
 class XCSP3PrintCallbacks : public XCSP3CoreCallbacks {
     public:
-        XCSP3PrintCallbacks();
-
         virtual void beginInstance(InstanceType type) override;
 
         virtual void endInstance() override;

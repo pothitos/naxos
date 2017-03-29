@@ -2,10 +2,6 @@
 
 using namespace XCSP3Core;
 
-XCSP3PrintCallbacks::XCSP3PrintCallbacks() : XCSP3CoreCallbacks()
-{
-}
-
 template <class T>
 void displayList(vector<T>& list, string separator = " ")
 {
