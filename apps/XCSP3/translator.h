@@ -1,3 +1,8 @@
+/// @file
+/// Interface between XCSP3 definitions and Naxos
+///
+/// Part of https://github.com/pothitos/naxos
+
 /*=============================================================================
  * parser for CSP instances represented in XCSP3 Format
  *
@@ -30,8 +35,14 @@
 
 namespace XCSP3Core {
 
+/// The XCSP3 parser invokes the functions of this class
 class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
+
     public:
+
+        /// @{
+        /// @name Variables Definition
+
         virtual void beginInstance(InstanceType type) override;
 
         virtual void endInstance() override;
@@ -70,11 +81,21 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
         virtual void buildVariableInteger(string id,
                                           vector<int>& values) override;
 
+        /// @}
+
+        /// @{
+        /// @name Intensional Constraints
+
         virtual void buildConstraintIntension(string id, string expr) override;
 
         virtual void buildConstraintPrimitive(string id, OrderType op,
                                               XVariable* x, int k,
                                               XVariable* y) override;
+
+        /// @}
+
+        /// @{
+        /// @name Extensional Constraints
 
         virtual void buildConstraintExtension(string id,
                                               vector<XVariable*> list,
@@ -91,6 +112,8 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
                                                 bool support,
                                                 bool hasStar) override;
 
+        /// @}
+
         virtual void
         buildConstraintRegular(string id, vector<XVariable*>& list, string st,
                                vector<string>& final,
@@ -99,6 +122,9 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
         virtual void
         buildConstraintMDD(string id, vector<XVariable*>& list,
                            vector<XTransition>& transitions) override;
+
+        /// @{
+        /// @name AllDifferent
 
         virtual void
         buildConstraintAlldifferent(string id,
@@ -113,6 +139,8 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         virtual void buildConstraintAlldifferentMatrix(
             string id, vector<vector<XVariable*>>& matrix) override;
+
+        /// @}
 
         virtual void buildConstraintAllEqual(string id,
                                              vector<XVariable*>& list) override;
@@ -132,6 +160,9 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
         buildConstraintLexMatrix(string id, vector<vector<XVariable*>>& matrix,
                                  OrderType order) override;
 
+        /// @{
+        /// @name Sum
+
         virtual void buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<int>& coeffs,
                                         XCondition& cond) override;
@@ -142,6 +173,8 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
         virtual void buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<XVariable*>& coeffs,
                                         XCondition& cond) override;
+
+        /// @}
 
         virtual void buildConstraintAtMost(string id, vector<XVariable*>& list,
                                            int value, int k) override;
@@ -228,6 +261,9 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
                                             RankType rank,
                                             XCondition& xc) override;
 
+        /// @{
+        /// @name Element
+
         virtual void buildConstraintElement(string id, vector<XVariable*>& list,
                                             int value) override;
 
@@ -242,6 +278,8 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
                                             int startIndex, XVariable* index,
                                             RankType rank,
                                             XVariable* value) override;
+
+        /// @}
 
         virtual void buildConstraintChannel(string id, vector<XVariable*>& list,
                                             int startIndex) override;

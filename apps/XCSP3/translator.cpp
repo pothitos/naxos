@@ -1,3 +1,8 @@
+/// @file
+/// Implementation of the interface between XCSP3 and Naxos
+///
+/// Part of https://github.com/pothitos/naxos
+
 #include "translator.h"
 
 using namespace XCSP3Core;
