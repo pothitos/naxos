@@ -120,24 +120,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         /// @}
 
-        virtual void buildConstraintAllEqual(string id,
-                                             vector<XVariable*>& list) override;
-
-        virtual void
-        buildConstraintNotAllEqual(string id,
-                                   vector<XVariable*>& list) override;
-
-        virtual void buildConstraintOrdered(string id, vector<XVariable*>& list,
-                                            OrderType order) override;
-
-        virtual void buildConstraintLex(string id,
-                                        vector<vector<XVariable*>>& lists,
-                                        OrderType order) override;
-
-        virtual void
-        buildConstraintLexMatrix(string id, vector<vector<XVariable*>>& matrix,
-                                 OrderType order) override;
-
         /// @{
         /// @name Sum
 
