@@ -136,32 +136,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         /// @}
 
-        virtual void buildConstraintAtMost(string id, vector<XVariable*>& list,
-                                           int value, int k) override;
-
-        virtual void buildConstraintAtLeast(string id, vector<XVariable*>& list,
-                                            int value, int k) override;
-
-        virtual void buildConstraintExactlyK(string id,
-                                             vector<XVariable*>& list,
-                                             int value, int k) override;
-
-        virtual void buildConstraintAmong(string id, vector<XVariable*>& list,
-                                          vector<int>& values, int k) override;
-
-        virtual void buildConstraintExactlyVariable(string id,
-                                                    vector<XVariable*>& list,
-                                                    int value,
-                                                    XVariable* x) override;
-
-        virtual void buildConstraintCount(string id, vector<XVariable*>& list,
-                                          vector<int>& values,
-                                          XCondition& xc) override;
-
-        virtual void buildConstraintCount(string id, vector<XVariable*>& list,
-                                          vector<XVariable*>& values,
-                                          XCondition& xc) override;
-
         virtual void buildConstraintNValues(string id, vector<XVariable*>& list,
                                             vector<int>& except,
                                             XCondition& xc) override;
