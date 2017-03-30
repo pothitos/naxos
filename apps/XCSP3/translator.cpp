@@ -167,14 +167,6 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
         cout << (*variable) << endl;
 }
 
-void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
-                                                vector<XVariable*> list,
-                                                bool support, bool hasStar)
-{
-        cout << "\n    extension constraint similar as previous one: " << id
-             << endl;
-}
-
 void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
                                                  vector<XVariable*>& list)
 {
