@@ -136,65 +136,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         /// @}
 
-        virtual void buildConstraintNValues(string id, vector<XVariable*>& list,
-                                            vector<int>& except,
-                                            XCondition& xc) override;
-
-        virtual void buildConstraintNValues(string id, vector<XVariable*>& list,
-                                            XCondition& xc) override;
-
-        virtual void buildConstraintCardinality(string id,
-                                                vector<XVariable*>& list,
-                                                vector<int> values,
-                                                vector<int>& occurs,
-                                                bool closed) override;
-
-        virtual void buildConstraintCardinality(string id,
-                                                vector<XVariable*>& list,
-                                                vector<int> values,
-                                                vector<XVariable*>& occurs,
-                                                bool closed) override;
-
-        virtual void buildConstraintCardinality(string id,
-                                                vector<XVariable*>& list,
-                                                vector<int> values,
-                                                vector<XInterval>& occurs,
-                                                bool closed) override;
-
-        virtual void buildConstraintCardinality(string id,
-                                                vector<XVariable*>& list,
-                                                vector<XVariable*> values,
-                                                vector<int>& occurs,
-                                                bool closed) override;
-
-        virtual void buildConstraintCardinality(string id,
-                                                vector<XVariable*>& list,
-                                                vector<XVariable*> values,
-                                                vector<XVariable*>& occurs,
-                                                bool closed) override;
-
-        virtual void buildConstraintCardinality(string id,
-                                                vector<XVariable*>& list,
-                                                vector<XVariable*> values,
-                                                vector<XInterval>& occurs,
-                                                bool closed) override;
-
-        virtual void buildConstraintMinimum(string id, vector<XVariable*>& list,
-                                            XCondition& xc) override;
-
-        virtual void buildConstraintMinimum(string id, vector<XVariable*>& list,
-                                            XVariable* index, int startIndex,
-                                            RankType rank,
-                                            XCondition& xc) override;
-
-        virtual void buildConstraintMaximum(string id, vector<XVariable*>& list,
-                                            XCondition& xc) override;
-
-        virtual void buildConstraintMaximum(string id, vector<XVariable*>& list,
-                                            XVariable* index, int startIndex,
-                                            RankType rank,
-                                            XCondition& xc) override;
-
         /// @{
         /// @name Element
 
