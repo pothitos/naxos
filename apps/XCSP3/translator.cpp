@@ -99,16 +99,6 @@ void Xcsp3_to_Naxos::endBlock()
         cout << "   end group of constraint" << endl;
 }
 
-void Xcsp3_to_Naxos::beginSlide(string id, bool circular)
-{
-        cout << "   start slide " << id << endl;
-}
-
-void Xcsp3_to_Naxos::endSlide()
-{
-        cout << "   end slide" << endl;
-}
-
 void Xcsp3_to_Naxos::beginObjectives()
 {
         cout << "   start Objective " << endl;

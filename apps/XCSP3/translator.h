@@ -66,10 +66,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         virtual void endBlock() override;
 
-        virtual void beginSlide(string id, bool circular) override;
-
-        virtual void endSlide() override;
-
         virtual void beginObjectives() override;
 
         virtual void endObjectives() override;
