@@ -152,52 +152,6 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         /// @}
 
-        virtual void buildConstraintChannel(string id, vector<XVariable*>& list,
-                                            int startIndex) override;
-
-        virtual void buildConstraintChannel(string id,
-                                            vector<XVariable*>& list1,
-                                            int startIndex1,
-                                            vector<XVariable*>& list2,
-                                            int startIndex2) override;
-
-        virtual void buildConstraintChannel(string id, vector<XVariable*>& list,
-                                            int startIndex,
-                                            XVariable* value) override;
-
-        virtual void buildConstraintStretch(string id, vector<XVariable*>& list,
-                                            vector<int>& values,
-                                            vector<XInterval>& widths) override;
-
-        virtual void
-        buildConstraintStretch(string id, vector<XVariable*>& list,
-                               vector<int>& values, vector<XInterval>& widths,
-                               vector<vector<int>>& patterns) override;
-
-        virtual void buildConstraintNoOverlap(string id,
-                                              vector<XVariable*>& origins,
-                                              vector<int>& lengths,
-                                              bool zeroIgnored) override;
-
-        virtual void buildConstraintNoOverlap(string id,
-                                              vector<XVariable*>& origins,
-                                              vector<XVariable*>& lengths,
-                                              bool zeroIgnored) override;
-
-        virtual void
-        buildConstraintNoOverlap(string id, vector<vector<XVariable*>>& origins,
-                                 vector<vector<int>>& lengths,
-                                 bool zeroIgnored) override;
-
-        virtual void
-        buildConstraintNoOverlap(string id, vector<vector<XVariable*>>& origins,
-                                 vector<vector<XVariable*>>& lengths,
-                                 bool zeroIgnored) override;
-
-        virtual void buildConstraintInstantiation(string id,
-                                                  vector<XVariable*>& list,
-                                                  vector<int>& values) override;
-
         /// @{
         /// @name Constraint Optimization
 
