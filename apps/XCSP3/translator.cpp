@@ -244,6 +244,12 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             int startIndex, XVariable* index,
                                             RankType rank, int value)
 {
+        if (startIndex != 0)
+                throw invalid_argument("startIndex argument of element "
+                                       "constraint should be 0");
+        if (rank != ANY)
+                throw invalid_argument("rank argument of element "
+                                       "constraint should be any");
         cout << "\n    element constant (with index) constraint" << endl;
         cout << "        ";
         displayList(list);
@@ -257,6 +263,12 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             int startIndex, XVariable* index,
                                             RankType rank, XVariable* value)
 {
+        if (startIndex != 0)
+                throw invalid_argument("startIndex argument of element "
+                                       "constraint should be 0");
+        if (rank != ANY)
+                throw invalid_argument("rank argument of element "
+                                       "constraint should be any");
         cout << "\n    element variable (with index) constraint" << endl;
         cout << "        ";
         displayList(list);
