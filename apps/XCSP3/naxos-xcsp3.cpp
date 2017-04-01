@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
                         return 1;
                 }
                 // Interface between the parser and the solver
-                XCSP3Core::Xcsp3_to_Naxos callbacks;
+                Xcsp3_to_Naxos callbacks;
                 XCSP3Core::XCSP3CoreParser parser(&callbacks);
                 parser.parse(argv[1]);
                 // State the Constraint Satisfaction Problem

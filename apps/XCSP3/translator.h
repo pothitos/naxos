@@ -33,16 +33,14 @@
 
 #include <XCSP3CoreCallbacks.h>
 
-namespace XCSP3Core {
-
 /// The XCSP3 parser invokes the functions of this class
-class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
+class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
     public:
         /// @{
         /// @name Variables Definition
 
-        virtual void beginInstance(InstanceType type) override;
+        virtual void beginInstance(XCSP3Core::InstanceType type) override;
 
         virtual void endInstance() override;
 
@@ -83,77 +81,84 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         virtual void buildConstraintIntension(string id, string expr) override;
 
-        virtual void buildConstraintPrimitive(string id, OrderType op,
-                                              XVariable* x, int k,
-                                              XVariable* y) override;
+        virtual void buildConstraintPrimitive(string id,
+                                              XCSP3Core::OrderType op,
+                                              XCSP3Core::XVariable* x, int k,
+                                              XCSP3Core::XVariable* y) override;
 
         /// @}
 
         /// @{
         /// @name Extensional Constraints
 
-        virtual void buildConstraintExtension(string id,
-                                              vector<XVariable*> list,
-                                              vector<vector<int>>& tuples,
-                                              bool support,
-                                              bool hasStar) override;
+        virtual void
+        buildConstraintExtension(string id, vector<XCSP3Core::XVariable*> list,
+                                 vector<vector<int>>& tuples, bool support,
+                                 bool hasStar) override;
 
-        virtual void buildConstraintExtension(string id, XVariable* variable,
+        virtual void buildConstraintExtension(string id,
+                                              XCSP3Core::XVariable* variable,
                                               vector<int>& tuples, bool support,
                                               bool hasStar) override;
 
-        virtual void buildConstraintExtensionAs(string id,
-                                                vector<XVariable*> list,
-                                                bool support,
-                                                bool hasStar) override;
+        virtual void
+        buildConstraintExtensionAs(string id,
+                                   vector<XCSP3Core::XVariable*> list,
+                                   bool support, bool hasStar) override;
 
         /// @}
 
         /// @{
         /// @name AllDifferent
 
-        virtual void
-        buildConstraintAlldifferent(string id,
-                                    vector<XVariable*>& list) override;
+        virtual void buildConstraintAlldifferent(
+            string id, vector<XCSP3Core::XVariable*>& list) override;
 
         virtual void buildConstraintAlldifferentList(
-            string id, vector<vector<XVariable*>>& lists) override;
+            string id, vector<vector<XCSP3Core::XVariable*>>& lists) override;
 
         /// @}
 
         /// @{
         /// @name Sum
 
-        virtual void buildConstraintSum(string id, vector<XVariable*>& list,
+        virtual void buildConstraintSum(string id,
+                                        vector<XCSP3Core::XVariable*>& list,
                                         vector<int>& coeffs,
-                                        XCondition& cond) override;
+                                        XCSP3Core::XCondition& cond) override;
 
-        virtual void buildConstraintSum(string id, vector<XVariable*>& list,
-                                        XCondition& cond) override;
+        virtual void buildConstraintSum(string id,
+                                        vector<XCSP3Core::XVariable*>& list,
+                                        XCSP3Core::XCondition& cond) override;
 
-        virtual void buildConstraintSum(string id, vector<XVariable*>& list,
-                                        vector<XVariable*>& coeffs,
-                                        XCondition& cond) override;
+        virtual void buildConstraintSum(string id,
+                                        vector<XCSP3Core::XVariable*>& list,
+                                        vector<XCSP3Core::XVariable*>& coeffs,
+                                        XCSP3Core::XCondition& cond) override;
 
         /// @}
 
         /// @{
         /// @name Element
 
-        virtual void buildConstraintElement(string id, vector<XVariable*>& list,
+        virtual void buildConstraintElement(string id,
+                                            vector<XCSP3Core::XVariable*>& list,
                                             int value) override;
 
-        virtual void buildConstraintElement(string id, vector<XVariable*>& list,
-                                            XVariable* value) override;
+        virtual void
+        buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
+                               XCSP3Core::XVariable* value) override;
 
-        virtual void buildConstraintElement(string id, vector<XVariable*>& list,
-                                            int startIndex, XVariable* index,
-                                            RankType rank, int value) override;
+        virtual void
+        buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
+                               int startIndex, XCSP3Core::XVariable* index,
+                               XCSP3Core::RankType rank, int value) override;
 
-        virtual void buildConstraintElement(string id, vector<XVariable*>& list,
-                                            int startIndex, XVariable* index,
-                                            RankType rank,
-                                            XVariable* value) override;
+        virtual void
+        buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
+                               int startIndex, XCSP3Core::XVariable* index,
+                               XCSP3Core::RankType rank,
+                               XCSP3Core::XVariable* value) override;
 
         /// @}
 
@@ -164,26 +169,29 @@ class Xcsp3_to_Naxos : public XCSP3CoreCallbacks {
 
         virtual void buildObjectiveMaximizeExpression(string expr) override;
 
-        virtual void buildObjectiveMinimizeVariable(XVariable* x) override;
+        virtual void
+        buildObjectiveMinimizeVariable(XCSP3Core::XVariable* x) override;
 
-        virtual void buildObjectiveMaximizeVariable(XVariable* x) override;
+        virtual void
+        buildObjectiveMaximizeVariable(XCSP3Core::XVariable* x) override;
 
-        virtual void buildObjectiveMinimize(ExpressionObjective type,
-                                            vector<XVariable*>& list,
+        virtual void buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
+                                            vector<XCSP3Core::XVariable*>& list,
                                             vector<int>& coefs) override;
 
-        virtual void buildObjectiveMaximize(ExpressionObjective type,
-                                            vector<XVariable*>& list,
+        virtual void buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
+                                            vector<XCSP3Core::XVariable*>& list,
                                             vector<int>& coefs) override;
 
-        virtual void buildObjectiveMinimize(ExpressionObjective type,
-                                            vector<XVariable*>& list) override;
+        virtual void
+        buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
+                               vector<XCSP3Core::XVariable*>& list) override;
 
-        virtual void buildObjectiveMaximize(ExpressionObjective type,
-                                            vector<XVariable*>& list) override;
+        virtual void
+        buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
+                               vector<XCSP3Core::XVariable*>& list) override;
 
         /// @}
 };
-}
 
 #endif // COSOCO_XCSP3PRINTCALLBACKS_H
