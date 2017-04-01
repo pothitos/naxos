@@ -122,11 +122,13 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         displayList(values);
 }
 
+/// Intension constraint
 void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
         cout << "\n    intension constraint : " << id << " : " << expr << endl;
 }
 
+/// Primitive constraint x +- k op y
 void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
                                               XVariable* x, int k, XVariable* y)
 {
@@ -134,6 +136,7 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
              << (k >= 0 ? "+" : "") << k << " op " << y->id << endl;
 }
 
+/// Extension constraint
 void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                                               vector<XVariable*> list,
                                               vector<vector<int>>& tuples,
@@ -147,6 +150,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
         displayList(list);
 }
 
+/// Unary extension constraint
 void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
                                               vector<int>& tuples, bool support,
                                               bool hasStar)
@@ -157,6 +161,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
         cout << (*variable) << endl;
 }
 
+/// Extension constraint with exactly the same tuples as the previous one
 void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
                                                 vector<XVariable*> list,
                                                 bool support, bool hasStar)
@@ -184,6 +189,7 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferentList(
         }
 }
 
+/// Weighted sum constraint
 void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<int>& coeffs, XCondition& cond)
 {
@@ -204,6 +210,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
         cout << cond << endl;
 }
 
+/// Unweighted sum constraint
 void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         XCondition& cond)
 {
@@ -213,6 +220,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
         cout << cond << endl;
 }
 
+/// Sum constraint with variables as weights
 void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<XVariable*>& coeffs,
                                         XCondition& cond)
@@ -231,6 +239,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
         cout << cond << endl;
 }
 
+/// Value is somewhere in the list
 void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             int value)
 {
@@ -240,6 +249,7 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
         cout << "        value: " << value << endl;
 }
 
+/// Variable is somewhere in the list
 void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             XVariable* value)
 {
@@ -249,6 +259,7 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
         cout << "        value: " << *value << endl;
 }
 
+/// Value is in position index inside the list
 void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             int startIndex, XVariable* index,
                                             RankType rank, int value)
@@ -261,6 +272,7 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
         cout << "        index : " << *index << endl;
 }
 
+/// Variable is in position index inside the list
 void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             int startIndex, XVariable* index,
                                             RankType rank, XVariable* value)
@@ -273,11 +285,13 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
         cout << "        index : " << *index << endl;
 }
 
+/// The expression can only be a variable (identifier)
 void Xcsp3_to_Naxos::buildObjectiveMinimizeExpression(string expr)
 {
         cout << "\n    objective: minimize" << expr << endl;
 }
 
+/// The expression can only be a variable (identifier)
 void Xcsp3_to_Naxos::buildObjectiveMaximizeExpression(string expr)
 {
         cout << "\n    objective: maximize" << expr << endl;

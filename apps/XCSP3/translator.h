@@ -38,7 +38,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
     public:
         /// @{
-        /// @name Variables Definition
+        /// @name Mark where the tags start or end
 
         virtual void beginInstance(XCSP3Core::InstanceType type) override;
 
@@ -67,6 +67,11 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         virtual void beginObjectives() override;
 
         virtual void endObjectives() override;
+
+        /// @}
+
+        /// @{
+        /// @name Constrained variables definition
 
         virtual void buildVariableInteger(string id, int minValue,
                                           int maxValue) override;
@@ -174,6 +179,11 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
         virtual void
         buildObjectiveMaximizeVariable(XCSP3Core::XVariable* x) override;
+
+        /// @}
+
+        /// @{
+        /// @name Constraint Optimization: The objective is a sum
 
         virtual void buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
                                             vector<XCSP3Core::XVariable*>& list,
