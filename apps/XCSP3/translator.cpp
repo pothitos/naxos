@@ -239,26 +239,6 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
         cout << cond << endl;
 }
 
-/// Value is somewhere in the list
-void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
-                                            int value)
-{
-        cout << "\n    element constant constraint" << endl;
-        cout << "        ";
-        displayList(list);
-        cout << "        value: " << value << endl;
-}
-
-/// Variable is somewhere in the list
-void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
-                                            XVariable* value)
-{
-        cout << "\n    element variable constraint" << endl;
-        cout << "        ";
-        displayList(list);
-        cout << "        value: " << *value << endl;
-}
-
 /// Value is in position index inside the list
 void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             int startIndex, XVariable* index,

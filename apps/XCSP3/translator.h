@@ -146,14 +146,6 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Element
 
-        virtual void buildConstraintElement(string id,
-                                            vector<XCSP3Core::XVariable*>& list,
-                                            int value) override;
-
-        virtual void
-        buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
-                               XCSP3Core::XVariable* value) override;
-
         virtual void
         buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
                                int startIndex, XCSP3Core::XVariable* index,
