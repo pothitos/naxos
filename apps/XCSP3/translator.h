@@ -162,10 +162,6 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Constraint Optimization
 
-        virtual void buildObjectiveMinimizeExpression(string expr) override;
-
-        virtual void buildObjectiveMaximizeExpression(string expr) override;
-
         virtual void
         buildObjectiveMinimizeVariable(XCSP3Core::XVariable* x) override;
 

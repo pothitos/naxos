@@ -277,18 +277,6 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
         cout << "        index : " << *index << endl;
 }
 
-/// The expression can only be a variable (identifier)
-void Xcsp3_to_Naxos::buildObjectiveMinimizeExpression(string expr)
-{
-        cout << "\n    objective: minimize" << expr << endl;
-}
-
-/// The expression can only be a variable (identifier)
-void Xcsp3_to_Naxos::buildObjectiveMaximizeExpression(string expr)
-{
-        cout << "\n    objective: maximize" << expr << endl;
-}
-
 void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
 {
         cout << "\n    objective: minimize variable " << x << endl;
