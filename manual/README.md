@@ -1,9 +1,5 @@
 # Naxos Solver User's Guide
 
-<p align="center">
-  <img src="https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg">
-</p>
-
 _Naxos Solver_ is a constraint satisfaction problems
 _solver_. "_Naxos_" is the name of the Greek island where
 the solver was built in the beginning. It is implemented and
@@ -13,6 +9,10 @@ Informatics and Telecommunications of the National and
 Kapodistrian University of Athens. The aim of this handbook
 is to provide all the information needed by an application
 developer of the library.
+
+<p align="center">
+  <img src="https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg">
+</p>
 
 
 ## Contents
