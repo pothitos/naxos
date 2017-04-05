@@ -1,6 +1,8 @@
 # Naxos Solver User's Guide
 
-![Naxos Solver Logo](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg)
+<p align="center">
+  <img src="https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg">
+</p>
 
 _Naxos Solver_ is a constraint satisfaction problems
 _solver_. "_Naxos_" is the name of the Greek island where
