@@ -1,6 +1,6 @@
  - [Contents](README.md)
----
 
+---
 
 # Introduction
 
@@ -61,4 +61,5 @@ after the function returns. In the same circumstance in
 _Naxos Solver_ we would have a segmentation fault.
 
 ---
+
  - [Next Section](Errors.md)

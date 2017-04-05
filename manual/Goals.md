@@ -1,7 +1,7 @@
  - [Previous Section](Examples.md)
  - [Contents](README.md)
----
 
+---
 
 # Search via Goals
 
@@ -202,4 +202,5 @@ The aim is to make search more efficient by using heuristic
 functions to take better decisions/choices.
 
 ---
+
  - [Contents](README.md)

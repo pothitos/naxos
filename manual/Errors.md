@@ -1,7 +1,7 @@
  - [Previous Section](Introduction.md)
  - [Contents](README.md)
----
 
+---
 
 # Error Handling
 
@@ -39,4 +39,5 @@ inside the algorithms body. In most cases, exceptions should
 "wrap" our programs.
 
 ---
+
  - [Next Section](Variables.md)

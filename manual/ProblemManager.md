@@ -1,7 +1,7 @@
  - [Previous Section](Arrays.md)
  - [Contents](README.md)
----
 
+---
 
 # Problem Manager
 
@@ -179,4 +179,5 @@ E.g. we can call it at the code "level" we call
 `nextSolution()`.
 
 ---
+
  - [Next Section](Expressions.md)

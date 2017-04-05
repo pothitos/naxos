@@ -1,7 +1,7 @@
  - [Previous Section](Errors.md)
  - [Contents](README.md)
----
 
+---
 
 # Constrained Variables
 
@@ -187,4 +187,5 @@ print the variable to an output stream, by writing e.g.
 `cout << Var;`.
 
 ---
+
  - [Next Section](Arrays.md)

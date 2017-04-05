@@ -1,7 +1,7 @@
  - [Previous Section](ProblemManager.md)
  - [Contents](README.md)
----
 
+---
 
 # Expressions
 
@@ -229,4 +229,5 @@ _j_ ⇔ _Y_[_j_] = _i_. This is done using an Inverse
 constraint.
 
 ---
+
  - [Next Section](Examples.md)
