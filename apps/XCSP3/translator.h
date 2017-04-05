@@ -160,7 +160,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @}
 
         /// @{
-        /// @name Constraint Optimization
+        /// @name Constraint Optimization for a variable
 
         virtual void
         buildObjectiveMinimizeVariable(XCSP3Core::XVariable* x) override;
@@ -171,7 +171,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @}
 
         /// @{
-        /// @name Constraint Optimization: The objective is a sum
+        /// @name Constraint Optimization for an array of variables
 
         virtual void buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
                                             vector<XCSP3Core::XVariable*>& list,
