@@ -178,6 +178,16 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
         displayList(list);
 }
 
+/// Unweighted sum constraint
+void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
+                                        XCondition& cond)
+{
+        cout << "\n        unweighted sum constraint:";
+        cout << "        ";
+        displayList(list, "+");
+        cout << cond << endl;
+}
+
 /// Weighted sum constraint
 void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<int>& coeffs, XCondition& cond)
@@ -196,16 +206,6 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                         cout << (coeffs.size() == 0 ? 1 : coeffs[i]) << "*"
                              << *(list[i]) << " ";
         }
-        cout << cond << endl;
-}
-
-/// Unweighted sum constraint
-void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
-                                        XCondition& cond)
-{
-        cout << "\n        unweighted sum constraint:";
-        cout << "        ";
-        displayList(list, "+");
         cout << cond << endl;
 }
 
@@ -277,6 +277,18 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
+                                            vector<XVariable*>& list)
+{
+        XCSP3CoreCallbacks::buildObjectiveMinimize(type, list);
+}
+
+void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
+                                            vector<XVariable*>& list)
+{
+        XCSP3CoreCallbacks::buildObjectiveMaximize(type, list);
+}
+
+void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list,
                                             vector<int>& coefs)
 {
@@ -288,16 +300,4 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<int>& coefs)
 {
         XCSP3CoreCallbacks::buildObjectiveMaximize(type, list, coefs);
-}
-
-void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
-                                            vector<XVariable*>& list)
-{
-        XCSP3CoreCallbacks::buildObjectiveMinimize(type, list);
-}
-
-void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
-                                            vector<XVariable*>& list)
-{
-        XCSP3CoreCallbacks::buildObjectiveMaximize(type, list);
 }

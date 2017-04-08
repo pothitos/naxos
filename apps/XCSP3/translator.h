@@ -126,11 +126,11 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
         virtual void buildConstraintSum(string id,
                                         vector<XCSP3Core::XVariable*>& list,
-                                        vector<int>& coeffs,
                                         XCSP3Core::XCondition& cond) override;
 
         virtual void buildConstraintSum(string id,
                                         vector<XCSP3Core::XVariable*>& list,
+                                        vector<int>& coeffs,
                                         XCSP3Core::XCondition& cond) override;
 
         virtual void buildConstraintSum(string id,
@@ -170,14 +170,6 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Constraint Optimization for an array of variables
 
-        virtual void buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
-                                            vector<XCSP3Core::XVariable*>& list,
-                                            vector<int>& coefs) override;
-
-        virtual void buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
-                                            vector<XCSP3Core::XVariable*>& list,
-                                            vector<int>& coefs) override;
-
         virtual void
         buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
                                vector<XCSP3Core::XVariable*>& list) override;
@@ -185,6 +177,14 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         virtual void
         buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
                                vector<XCSP3Core::XVariable*>& list) override;
+
+        virtual void buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
+                                            vector<XCSP3Core::XVariable*>& list,
+                                            vector<int>& coefs) override;
+
+        virtual void buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
+                                            vector<XCSP3Core::XVariable*>& list,
+                                            vector<int>& coefs) override;
 
         /// @}
 };
