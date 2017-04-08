@@ -6,7 +6,7 @@
 /*
  * parser for CSP instances represented in XCSP3 Format
  *
- * Copyright (c) 2015 xcp3.org (contact <at> xcsp3.org)
+ * Copyright (c) 2015 xcsp3.org (contact <at> xcsp3.org)
  * Copyright (c) 2008 Olivier ROUSSEL (olivier.roussel <at> cril.univ-artois.fr)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
