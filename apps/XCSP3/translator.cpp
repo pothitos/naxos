@@ -178,17 +178,6 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
         displayList(list);
 }
 
-void Xcsp3_to_Naxos::buildConstraintAlldifferentList(
-    string id, vector<vector<XVariable*>>& lists)
-{
-        cout << "\n    allDiff list constraint" << id << endl;
-        for (unsigned int i = 0; i < (lists.size() < 4 ? lists.size() : 3);
-             i++) {
-                cout << "        ";
-                displayList(lists[i]);
-        }
-}
-
 /// Weighted sum constraint
 void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<int>& coeffs, XCondition& cond)

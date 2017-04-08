@@ -119,9 +119,6 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         virtual void buildConstraintAlldifferent(
             string id, vector<XCSP3Core::XVariable*>& list) override;
 
-        virtual void buildConstraintAlldifferentList(
-            string id, vector<vector<XCSP3Core::XVariable*>>& lists) override;
-
         /// @}
 
         /// @{
