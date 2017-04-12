@@ -6,6 +6,7 @@
 #include "translator.h"
 
 using namespace XCSP3Core;
+using namespace std;
 
 template <class T>
 void displayList(vector<T>& list, string separator = " ")
