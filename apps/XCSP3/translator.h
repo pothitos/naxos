@@ -35,8 +35,15 @@
 
 /// The XCSP3 parser invokes the functions of this class
 class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
+    private:
+        /// Display default parser's messages
+        bool verbose;
 
     public:
+        Xcsp3_to_Naxos(bool verbose_init) : verbose(verbose_init)
+        {
+        }
+
         /// @{
         /// @name Mark where the tags start or end
 

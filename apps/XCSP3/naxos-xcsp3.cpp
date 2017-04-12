@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <naxos.h>
+#include <string>
 
 using namespace naxos;
 using namespace std;
@@ -49,13 +50,16 @@ void interruptionHandler(int /*signum*/)
 int main(int argc, char* argv[])
 {
         try {
-                // Parse the input filename command line argument
-                if (argc != 2) {
+                // Check if the verbose argument '-v' exists
+                bool verbose = false;
+                if (argc == 3 && string(argv[2]) == "-v") {
+                        verbose = true;
+                } else if (argc != 2) {
                         cerr << "Usage: " << argv[0] << " BENCHNAME\n";
                         return 1;
                 }
                 // Interface between the parser and the solver
-                Xcsp3_to_Naxos callbacks;
+                Xcsp3_to_Naxos callbacks(verbose);
                 XCSP3Core::XCSP3CoreParser parser(&callbacks);
                 parser.parse(argv[1]);
                 // State the Constraint Satisfaction Problem

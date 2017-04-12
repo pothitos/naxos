@@ -3,10 +3,8 @@ set -ev
 
 # Check for memory leaks
 MEM_CHECK="valgrind -q"
-$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml \
-    > /dev/null
-$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml > \
-    /dev/null
+$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
+$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 
 SOLVER_FILES="../../core/*.h ../../core/*.cpp"
 # Ensure that Naxos Solver can be considered as a "Mini-Solver".
