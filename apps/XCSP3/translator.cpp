@@ -44,6 +44,8 @@ void Xcsp3_to_Naxos::beginInstance(InstanceType type)
 {
         if (verbose)
                 cout << "Start Instance - type=" << type << endl;
+        if (instanceAlreadyBegan)
+                throw invalid_argument("Only one CSP definition can be read");
 }
 
 void Xcsp3_to_Naxos::endInstance()

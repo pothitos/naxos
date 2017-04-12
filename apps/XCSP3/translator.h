@@ -39,8 +39,12 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// Display default parser's messages
         bool verbose;
 
+        /// The CSP definition parsing has already begun
+        bool instanceAlreadyBegan;
+
     public:
-        Xcsp3_to_Naxos(bool verbose_init) : verbose(verbose_init)
+        Xcsp3_to_Naxos(bool verbose_init)
+          : verbose(verbose_init), instanceAlreadyBegan(false)
         {
         }
 
