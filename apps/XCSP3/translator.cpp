@@ -176,6 +176,9 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                 cout << "        ";
                 displayList(list);
         }
+        if (hasStar)
+                throw invalid_argument("Short tables, i.e. tables with tuples "
+                                       "containing '*', are not accepted");
 }
 
 /// Unary extension constraint
@@ -191,6 +194,9 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
                      << endl;
                 cout << (*variable) << endl;
         }
+        if (hasStar)
+                throw invalid_argument("Short tables, i.e. tables with tuples "
+                                       "containing '*', are not accepted");
 }
 
 /// Extension constraint with exactly the same tuples as the previous one
@@ -202,6 +208,9 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
                 cout << "\n    extension constraint similar as previous one: "
                      << id << endl;
         }
+        if (hasStar)
+                throw invalid_argument("Short tables, i.e. tables with tuples "
+                                       "containing '*', are not accepted");
 }
 
 void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
