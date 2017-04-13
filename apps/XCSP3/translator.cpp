@@ -11,32 +11,34 @@ using namespace std;
 template <class T>
 void displayList(vector<T>& list, string separator = " ")
 {
+        typename vector<T>::size_type i;
         if (list.size() > 8) {
-                for (int i = 0; i < 3; i++)
+                for (i = 0; i < 3; i++)
                         cout << list[i] << separator;
                 cout << " ... ";
-                for (int i = list.size() - 4; i < list.size(); i++)
+                for (i = list.size() - 4; i < list.size(); i++)
                         cout << list[i] << separator;
                 cout << endl;
                 return;
         }
-        for (int i = 0; i < list.size(); i++)
+        for (i = 0; i < list.size(); i++)
                 cout << list[i] << separator;
         cout << endl;
 }
 
 void displayList(vector<XVariable*>& list, string separator = " ")
 {
+        vector<XVariable*>::size_type i;
         if (list.size() > 8) {
-                for (int i = 0; i < 3; i++)
+                for (i = 0; i < 3; i++)
                         cout << list[i]->id << separator;
                 cout << " ... ";
-                for (unsigned int i = list.size() - 4; i < list.size(); i++)
+                for (i = list.size() - 4; i < list.size(); i++)
                         cout << list[i]->id << separator;
                 cout << endl;
                 return;
         }
-        for (unsigned int i = 0; i < list.size(); i++)
+        for (i = 0; i < list.size(); i++)
                 cout << list[i]->id << separator;
         cout << endl;
 }
