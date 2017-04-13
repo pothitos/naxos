@@ -229,7 +229,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         XCondition& cond)
 {
         if (verbose) {
-                cout << "\n        unweighted sum constraint:";
+                cout << "\n        unweighted sum constraint " << id << ":";
                 cout << "        ";
                 displayList(list, "+");
                 cout << cond << endl;
@@ -241,7 +241,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<int>& coeffs, XCondition& cond)
 {
         if (verbose) {
-                cout << "\n        sum constraint:";
+                cout << "\n        sum constraint " << id << ":";
                 if (list.size() > 8) {
                         for (int i = 0; i < 3; i++)
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
@@ -266,7 +266,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         XCondition& cond)
 {
         if (verbose) {
-                cout << "\n        scalar sum constraint:";
+                cout << "\n        scalar sum constraint " << id << ":";
                 if (list.size() > 8) {
                         for (int i = 0; i < 3; i++)
                                 cout << coeffs[i]->id << "*" << *(list[i])
@@ -291,7 +291,7 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             RankType rank, int value)
 {
         if (verbose) {
-                cout << "\n    element constant (with index) constraint"
+                cout << "\n    element constant (with index) constraint " << id
                      << endl;
                 cout << "        ";
                 displayList(list);
@@ -313,7 +313,7 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             RankType rank, XVariable* value)
 {
         if (verbose) {
-                cout << "\n    element variable (with index) constraint"
+                cout << "\n    element variable (with index) constraint" << id
                      << endl;
                 cout << "        ";
                 displayList(list);
