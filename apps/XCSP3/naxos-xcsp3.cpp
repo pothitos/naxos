@@ -72,9 +72,11 @@ int main(int argc, char* argv[])
                 // vObjectivePointer = &Var[2];
                 // pm.minimize(*vObjectivePointer);
                 pm.addGoal(new NsgLabeling(Var));
-                cout << "c Created " << pm.numVars() << " variables and "
-                     << pm.numConstraints()
-                     << " constraints, including intermediates\n";
+                if (verbose) {
+                        cout << "c Created " << pm.numVars()
+                             << " variables and " << pm.numConstraints()
+                             << " constraints, including intermediates\n";
+                }
                 VarSolution = 0;
                 interrupted = false;
                 searching = true;
