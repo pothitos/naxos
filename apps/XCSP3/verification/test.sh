@@ -1,11 +1,6 @@
 #! /bin/sh
 set -ev
 
-# Check for memory leaks
-MEM_CHECK="valgrind -q"
-$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
-$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
-
 SOLVER_FILES="../../core/*.h ../../core/*.cpp"
 # Ensure that Naxos Solver can be considered as a "Mini-Solver".
 # According to the First International XCSP3 Competition: "A
@@ -35,3 +30,8 @@ then
     git ls-files -m
     cd -
 fi
+
+# Check for memory leaks
+MEM_CHECK="valgrind -q"
+$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
+$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
