@@ -37,3 +37,13 @@ MEM_CHECK="valgrind -q"
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
 # Default Constraint Optimisation (COP) instance
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
+
+# For each Mini-solver Competition's requirement, solve a CSP
+for INSTANCE in verification/*.xml
+do
+    # Set the stored solution file name
+    SOLUTION="verification/$(basename $INSTANCE .xml).solution.txt"
+    # Compare the stored solution with the solver's one
+    # This test is temporarily disabled
+    ./naxos-xcsp3 $INSTANCE | cmp $SOLUTION || true
+done
