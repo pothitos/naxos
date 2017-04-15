@@ -336,25 +336,21 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
-        XCSP3CoreCallbacks::buildObjectiveMinimize(type, list);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
-        XCSP3CoreCallbacks::buildObjectiveMaximize(type, list);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list,
                                             vector<int>& coefs)
 {
-        XCSP3CoreCallbacks::buildObjectiveMinimize(type, list, coefs);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list,
                                             vector<int>& coefs)
 {
-        XCSP3CoreCallbacks::buildObjectiveMaximize(type, list, coefs);
 }
