@@ -240,16 +240,16 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                 if (list.size() > 8) {
                         for (int i = 0; i < 3; i++)
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
-                                     << "*" << *(list[i]) << " ";
+                                     << "*" << *list[i] << " ";
                         cout << "... ";
                         for (unsigned int i = list.size() - 4; i < list.size();
                              i++)
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
-                                     << "*" << *(list[i]) << " ";
+                                     << "*" << *list[i] << " ";
                 } else {
                         for (unsigned int i = 0; i < list.size(); i++)
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
-                                     << "*" << *(list[i]) << " ";
+                                     << "*" << *list[i] << " ";
                 }
                 cout << cond << "\n";
         }
@@ -264,17 +264,14 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                 cout << "    scalar sum " << id << ": ";
                 if (list.size() > 8) {
                         for (int i = 0; i < 3; i++)
-                                cout << coeffs[i]->id << "*" << *(list[i])
-                                     << " ";
+                                cout << coeffs[i]->id << "*" << *list[i] << " ";
                         cout << "... ";
                         for (unsigned int i = list.size() - 4; i < list.size();
                              i++)
-                                cout << coeffs[i]->id << "*" << *(list[i])
-                                     << " ";
+                                cout << coeffs[i]->id << "*" << *list[i] << " ";
                 } else {
                         for (unsigned int i = 0; i < list.size(); i++)
-                                cout << coeffs[i]->id << "*" << *(list[i])
-                                     << " ";
+                                cout << coeffs[i]->id << "*" << *list[i] << " ";
                 }
                 cout << cond << "\n";
         }
