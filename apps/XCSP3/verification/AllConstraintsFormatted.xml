@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <var id="zz">0..10</var>
+    <var id="yy" as="zz" />
+    <array id="x" size="[7]">0..10</array>
+    <var id="xx" as="x" />
+    <array id="y" size="[4][4]">0..10</array>
+    <array id="a" size="[3][5]">
+      <domain for="a[0][]">1..10</domain>
+      <domain for="a[1][]">1..20</domain>
+      <domain for="a[2][]">1..15</domain>
+    </array>
+    <array id="b" size="[10]">
+      <domain for="b[4]">0 1</domain>
+      <domain for="others">2 4 6</domain>
+    </array>
+    <array id="c" size="[5][5][5]">
+      <domain for="c[][0..1][] c[][2][2..4]">0..10</domain>
+      <domain for="others">0 1</domain>
+    </array>
+    <var id="cc" as="c" />
+  </variables>
+  <constraints>
+    <allDifferent>x[1..5]</allDifferent>
+    <sum>
+      <list>x[1] 
+x[2]   x[3]</list>
+      <coeffs>1 2 3</coeffs>
+      <condition>(in,3..6)</condition>
+    </sum>
+    <block class="symmetryBreaking">
+      <element>
+        <list>x[]</list>
+        <index>y[0][0]</index>
+        <value>4</value>
+      </element>
+      <element>
+        <list startIndex="0">x[]</list>
+        <index>y[0][0]</index>
+        <value>y[1][1]</value>
+      </element>
+    </block>
+    <group id="g">
+      <intension>eq(add(%0,%1),%2)</intension>
+      <args>x[0] x[1] x[2]</args>
+      <args>x[3] x[0] x[4]</args>
+    </group>
+    <intension>le(add(x[0],3),x[1])</intension>
+  </constraints>
+  <objectives>
+    <minimize type="sum">
+      <list>x[] y[0][0]</list>
+      <coeffs>1 1 1 1 1 1 1 25000</coeffs>
+    </minimize>
+  </objectives>
+</instance>
