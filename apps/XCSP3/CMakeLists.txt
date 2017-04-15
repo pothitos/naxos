@@ -28,14 +28,5 @@ add_executable(naxos-xcsp3 naxos-xcsp3.cpp translator.cpp)
 target_link_libraries(naxos-xcsp3 naxos ${LIBXML2_LIBRARIES} parserxcsp3core)
 add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser)
 
-file(DOWNLOAD
-     https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp
-     verification/catch.hpp)
-
-add_executable(verification/naxos-xcsp3-test verification/naxos-xcsp3-test.cpp)
-target_link_libraries(verification/naxos-xcsp3-test naxos parserxcsp3core)
-add_dependencies(verification/naxos-xcsp3-test XCSP3-CPP-Parser)
-
 enable_testing()
 add_test(verification verification/test.sh)
-add_test(naxos-xcsp3-test verification/naxos-xcsp3-test)
