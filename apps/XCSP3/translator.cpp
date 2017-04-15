@@ -306,9 +306,10 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
         if (verbose) {
                 cout << "    element variable (with index) " << id << ": ";
                 displayList(list);
-                cout << "      value: " << *value << ", "
-                     << "      start index: " << startIndex << ", "
-                     << "      index: " << *index << "\n";
+                cout << "      "
+                     << "value: " << *value << ", "
+                     << "start index: " << startIndex << ", "
+                     << "index: " << *index << "\n";
         }
         if (startIndex != 0)
                 throw invalid_argument("startIndex argument of element "
