@@ -169,10 +169,10 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
         if (verbose) {
                 cout << "    extension " << (support ? "support" : "conflict")
                      << " " << id << "\n"
-                     << "     "
-                     << " arity: " << list.size()
-                     << " tuples: " << tuples.size() << " star: " << hasStar
-                     << "\n"
+                     << "      "
+                     << "arity: " << list.size() << ", "
+                     << "tuples: " << tuples.size() << ", "
+                     << "star: " << hasStar << "\n"
                      << "      ";
                 displayList(list);
         }
@@ -189,9 +189,9 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
         if (verbose) {
                 cout << "    extension " << (support ? "support" : "conflict")
                      << " with one variable " << id << "\n"
-                     << "     "
-                     << " tuples: " << tuples.size() << " star: " << hasStar
-                     << "\n"
+                     << "      "
+                     << "tuples: " << tuples.size() << ", "
+                     << "star: " << hasStar << "\n"
                      << "      " << *variable << "\n";
         }
         if (hasStar)
@@ -225,8 +225,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         XCondition& cond)
 {
         if (verbose) {
-                cout << "\n        unweighted sum constraint " << id << ":";
-                cout << "        ";
+                cout << "    sum " << id << ": ";
                 displayList(list, "+");
                 cout << cond << "\n";
         }
@@ -237,12 +236,12 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         vector<int>& coeffs, XCondition& cond)
 {
         if (verbose) {
-                cout << "\n        sum constraint " << id << ":";
+                cout << "    sum " << id << ": ";
                 if (list.size() > 8) {
                         for (int i = 0; i < 3; i++)
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
                                      << "*" << *(list[i]) << " ";
-                        cout << " ... ";
+                        cout << "... ";
                         for (unsigned int i = list.size() - 4; i < list.size();
                              i++)
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
@@ -262,12 +261,12 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         XCondition& cond)
 {
         if (verbose) {
-                cout << "\n        scalar sum constraint " << id << ":";
+                cout << "    scalar sum " << id << ": ";
                 if (list.size() > 8) {
                         for (int i = 0; i < 3; i++)
                                 cout << coeffs[i]->id << "*" << *(list[i])
                                      << " ";
-                        cout << " ... ";
+                        cout << "... ";
                         for (unsigned int i = list.size() - 4; i < list.size();
                              i++)
                                 cout << coeffs[i]->id << "*" << *(list[i])
@@ -287,13 +286,12 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             RankType rank, int value)
 {
         if (verbose) {
-                cout << "\n    element constant (with index) constraint " << id
-                     << "\n";
-                cout << "        ";
+                cout << "    element constant (with index) " << id << ": ";
                 displayList(list);
-                cout << "        value: " << value << "\n";
-                cout << "        Start index : " << startIndex << "\n";
-                cout << "        index : " << *index << "\n";
+                cout << "      "
+                     << "value: " << value << ", "
+                     << "start index: " << startIndex << ", "
+                     << "index: " << *index << "\n";
         }
         if (startIndex != 0)
                 throw invalid_argument("startIndex argument of element "
@@ -309,13 +307,11 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                                             RankType rank, XVariable* value)
 {
         if (verbose) {
-                cout << "\n    element variable (with index) constraint" << id
-                     << "\n";
-                cout << "        ";
+                cout << "    element variable (with index) " << id << ": ";
                 displayList(list);
-                cout << "        value: " << *value << "\n";
-                cout << "        Start index : " << startIndex << "\n";
-                cout << "        index : " << *index << "\n";
+                cout << "      value: " << *value << ", "
+                     << "      start index: " << startIndex << ", "
+                     << "      index: " << *index << "\n";
         }
         if (startIndex != 0)
                 throw invalid_argument("startIndex argument of element "
