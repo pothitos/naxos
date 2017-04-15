@@ -18,12 +18,12 @@ void displayList(vector<T>& list, string separator = " ")
                 cout << " ... ";
                 for (i = list.size() - 4; i < list.size(); i++)
                         cout << list[i] << separator;
-                cout << endl;
+                cout << "\n";
                 return;
         }
         for (i = 0; i < list.size(); i++)
                 cout << list[i] << separator;
-        cout << endl;
+        cout << "\n";
 }
 
 void displayList(vector<XVariable*>& list, string separator = " ")
@@ -35,18 +35,18 @@ void displayList(vector<XVariable*>& list, string separator = " ")
                 cout << " ... ";
                 for (i = list.size() - 4; i < list.size(); i++)
                         cout << list[i]->id << separator;
-                cout << endl;
+                cout << "\n";
                 return;
         }
         for (i = 0; i < list.size(); i++)
                 cout << list[i]->id << separator;
-        cout << endl;
+        cout << "\n";
 }
 
 void Xcsp3_to_Naxos::beginInstance(InstanceType type)
 {
         if (verbose)
-                cout << "Start Instance - type=" << type << endl;
+                cout << "Start Instance - type=" << type << "\n";
         if (instanceAlreadyBegan)
                 throw invalid_argument("Only one CSP definition can be read");
 }
@@ -54,25 +54,25 @@ void Xcsp3_to_Naxos::beginInstance(InstanceType type)
 void Xcsp3_to_Naxos::endInstance()
 {
         if (verbose)
-                cout << "End SAX parsing " << endl;
+                cout << "End SAX parsing " << "\n";
 }
 
 void Xcsp3_to_Naxos::beginVariables()
 {
         if (verbose)
-                cout << " start variables declaration" << endl;
+                cout << " start variables declaration" << "\n";
 }
 
 void Xcsp3_to_Naxos::endVariables()
 {
         if (verbose)
-                cout << " end variables declaration" << endl << endl;
+                cout << " end variables declaration" << "\n";
 }
 
 void Xcsp3_to_Naxos::beginVariableArray(string id)
 {
         if (verbose)
-                cout << "    array: " << id << endl;
+                cout << "    array: " << id << "\n";
 }
 
 void Xcsp3_to_Naxos::endVariableArray()
@@ -82,57 +82,57 @@ void Xcsp3_to_Naxos::endVariableArray()
 void Xcsp3_to_Naxos::beginConstraints()
 {
         if (verbose)
-                cout << " start constraints declaration" << endl;
+                cout << " start constraints declaration" << "\n";
 }
 
 void Xcsp3_to_Naxos::endConstraints()
 {
         if (verbose)
-                cout << "\n end constraints declaration" << endl << endl;
+                cout << "\n end constraints declaration" << "\n";
 }
 
 void Xcsp3_to_Naxos::beginGroup(string id)
 {
         if (verbose)
-                cout << "   start group of constraint " << id << endl;
+                cout << "   start group of constraint " << id << "\n";
 }
 
 void Xcsp3_to_Naxos::endGroup()
 {
         if (verbose)
-                cout << "   end group of constraint" << endl;
+                cout << "   end group of constraint" << "\n";
 }
 
 void Xcsp3_to_Naxos::beginBlock(string classes)
 {
         if (verbose)
                 cout << "   start block of constraint classes = " << classes
-                     << endl;
+                     << "\n";
 }
 
 void Xcsp3_to_Naxos::endBlock()
 {
         if (verbose)
-                cout << "   end group of constraint" << endl;
+                cout << "   end group of constraint" << "\n";
 }
 
 void Xcsp3_to_Naxos::beginObjectives()
 {
         if (verbose)
-                cout << "   start Objective " << endl;
+                cout << "   start Objective " << "\n";
 }
 
 void Xcsp3_to_Naxos::endObjectives()
 {
         if (verbose)
-                cout << "   end Objective " << endl;
+                cout << "   end Objective " << "\n";
 }
 
 void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
 {
         if (verbose) {
                 cout << "    var " << id << " : " << minValue << "..."
-                     << maxValue << endl;
+                     << maxValue << "\n";
         }
 }
 
@@ -150,7 +150,7 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
         if (verbose) {
                 cout << "\n    intension constraint : " << id << " : " << expr
-                     << endl;
+                     << "\n";
         }
 }
 
@@ -160,7 +160,7 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
 {
         if (verbose) {
                 cout << "\n   intension constraint " << id << ": " << x->id
-                     << (k >= 0 ? "+" : "") << k << " op " << y->id << endl;
+                     << (k >= 0 ? "+" : "") << k << " op " << y->id << "\n";
         }
 }
 
@@ -171,11 +171,11 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                                               bool support, bool hasStar)
 {
         if (verbose) {
-                cout << "\n    extension constraint : " << id << endl;
+                cout << "\n    extension constraint : " << id << "\n";
                 cout << "        " << (support ? "support" : "conflict")
                      << " arity:" << list.size()
                      << " nb tuples: " << tuples.size() << " star: " << hasStar
-                     << endl;
+                     << "\n";
                 cout << "        ";
                 displayList(list);
         }
@@ -191,11 +191,11 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
 {
         if (verbose) {
                 cout << "\n    extension constraint with one variable: " << id
-                     << endl;
+                     << "\n";
                 cout << "        " << (support ? "support" : "conflict")
                      << " nb tuples: " << tuples.size() << " star: " << hasStar
-                     << endl;
-                cout << (*variable) << endl;
+                     << "\n";
+                cout << (*variable) << "\n";
         }
         if (hasStar)
                 throw invalid_argument("Short tables, i.e. tables with tuples "
@@ -209,7 +209,7 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
 {
         if (verbose) {
                 cout << "\n    extension constraint similar as previous one: "
-                     << id << endl;
+                     << id << "\n";
         }
         if (hasStar)
                 throw invalid_argument("Short tables, i.e. tables with tuples "
@@ -220,7 +220,7 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
                                                  vector<XVariable*>& list)
 {
         if (verbose) {
-                cout << "\n    allDiff constraint" << id << endl;
+                cout << "\n    allDiff constraint" << id << "\n";
                 cout << "        ";
                 displayList(list);
         }
@@ -234,7 +234,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                 cout << "\n        unweighted sum constraint " << id << ":";
                 cout << "        ";
                 displayList(list, "+");
-                cout << cond << endl;
+                cout << cond << "\n";
         }
 }
 
@@ -258,7 +258,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                 cout << (coeffs.size() == 0 ? 1 : coeffs[i])
                                      << "*" << *(list[i]) << " ";
                 }
-                cout << cond << endl;
+                cout << cond << "\n";
         }
 }
 
@@ -283,7 +283,7 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                 cout << coeffs[i]->id << "*" << *(list[i])
                                      << " ";
                 }
-                cout << cond << endl;
+                cout << cond << "\n";
         }
 }
 
@@ -294,12 +294,12 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
 {
         if (verbose) {
                 cout << "\n    element constant (with index) constraint " << id
-                     << endl;
+                     << "\n";
                 cout << "        ";
                 displayList(list);
-                cout << "        value: " << value << endl;
-                cout << "        Start index : " << startIndex << endl;
-                cout << "        index : " << *index << endl;
+                cout << "        value: " << value << "\n";
+                cout << "        Start index : " << startIndex << "\n";
+                cout << "        index : " << *index << "\n";
         }
         if (startIndex != 0)
                 throw invalid_argument("startIndex argument of element "
@@ -316,12 +316,12 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
 {
         if (verbose) {
                 cout << "\n    element variable (with index) constraint" << id
-                     << endl;
+                     << "\n";
                 cout << "        ";
                 displayList(list);
-                cout << "        value: " << *value << endl;
-                cout << "        Start index : " << startIndex << endl;
-                cout << "        index : " << *index << endl;
+                cout << "        value: " << *value << "\n";
+                cout << "        Start index : " << startIndex << "\n";
+                cout << "        index : " << *index << "\n";
         }
         if (startIndex != 0)
                 throw invalid_argument("startIndex argument of element "
@@ -334,13 +334,13 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
 void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
 {
         if (verbose)
-                cout << "\n    objective: minimize variable " << x << endl;
+                cout << "\n    objective: minimize variable " << x << "\n";
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
 {
         if (verbose)
-                cout << "\n    objective: maximize variable " << x << endl;
+                cout << "\n    objective: maximize variable " << x << "\n";
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
