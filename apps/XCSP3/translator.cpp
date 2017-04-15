@@ -60,13 +60,13 @@ void Xcsp3_to_Naxos::endInstance()
 void Xcsp3_to_Naxos::beginVariables()
 {
         if (verbose)
-                cout << "  start variables declaration\n";
+                cout << "  start variables\n";
 }
 
 void Xcsp3_to_Naxos::endVariables()
 {
         if (verbose)
-                cout << "  end variables declaration" << "\n";
+                cout << "  end variables\n";
 }
 
 void Xcsp3_to_Naxos::beginVariableArray(string id)
@@ -82,38 +82,37 @@ void Xcsp3_to_Naxos::endVariableArray()
 void Xcsp3_to_Naxos::beginConstraints()
 {
         if (verbose)
-                cout << "  start constraints declaration\n";
+                cout << "  start constraints\n";
 }
 
 void Xcsp3_to_Naxos::endConstraints()
 {
         if (verbose)
-                cout << "  end constraints declaration\n";
+                cout << "  end constraints\n";
 }
 
 void Xcsp3_to_Naxos::beginGroup(string id)
 {
         if (verbose)
-                cout << "    start group of constraint " << id << "\n";
+                cout << "    start group " << id << "\n";
 }
 
 void Xcsp3_to_Naxos::endGroup()
 {
         if (verbose)
-                cout << "    end group of constraint\n";
+                cout << "    end group\n";
 }
 
 void Xcsp3_to_Naxos::beginBlock(string classes)
 {
         if (verbose)
-                cout << "    start block of constraint classes = " << classes
-                     << "\n";
+                cout << "    start block of classes " << classes << "\n";
 }
 
 void Xcsp3_to_Naxos::endBlock()
 {
         if (verbose)
-                cout << "    end group of constraint\n";
+                cout << "    end group\n";
 }
 
 void Xcsp3_to_Naxos::beginObjectives()
@@ -147,10 +146,8 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
 /// Intension constraint
 void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
-        if (verbose) {
-                cout << "\n    intension constraint : " << id << " : " << expr
-                     << "\n";
-        }
+        if (verbose)
+                cout << "    intension " << id << ": " << expr << "\n";
 }
 
 /// Primitive constraint x +- k op y
@@ -158,7 +155,7 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
                                               XVariable* x, int k, XVariable* y)
 {
         if (verbose) {
-                cout << "\n   intension constraint " << id << ": " << x->id
+                cout << "    intension " << id << ": " << x->id
                      << (k >= 0 ? "+" : "") << k << " op " << y->id << "\n";
         }
 }
@@ -170,12 +167,13 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                                               bool support, bool hasStar)
 {
         if (verbose) {
-                cout << "\n    extension constraint : " << id << "\n";
-                cout << "        " << (support ? "support" : "conflict")
-                     << " arity:" << list.size()
-                     << " nb tuples: " << tuples.size() << " star: " << hasStar
-                     << "\n";
-                cout << "        ";
+                cout << "    extension " << (support ? "support" : "conflict")
+                     << " " << id << "\n"
+                     << "     "
+                     << " arity: " << list.size()
+                     << " tuples: " << tuples.size() << " star: " << hasStar
+                     << "\n"
+                     << "      ";
                 displayList(list);
         }
         if (hasStar)
@@ -189,12 +187,12 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
                                               bool hasStar)
 {
         if (verbose) {
-                cout << "\n    extension constraint with one variable: " << id
-                     << "\n";
-                cout << "        " << (support ? "support" : "conflict")
-                     << " nb tuples: " << tuples.size() << " star: " << hasStar
-                     << "\n";
-                cout << (*variable) << "\n";
+                cout << "    extension " << (support ? "support" : "conflict")
+                     << " with one variable " << id << "\n"
+                     << "     "
+                     << " tuples: " << tuples.size() << " star: " << hasStar
+                     << "\n"
+                     << "      " << *variable << "\n";
         }
         if (hasStar)
                 throw invalid_argument("Short tables, i.e. tables with tuples "
@@ -206,10 +204,8 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
                                                 vector<XVariable*> list,
                                                 bool support, bool hasStar)
 {
-        if (verbose) {
-                cout << "\n    extension constraint similar as previous one: "
-                     << id << "\n";
-        }
+        if (verbose)
+                cout << "    extension same as above " << id << "\n";
         if (hasStar)
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
