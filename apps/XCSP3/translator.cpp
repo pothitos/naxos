@@ -106,7 +106,7 @@ void Xcsp3_to_Naxos::endGroup()
 void Xcsp3_to_Naxos::beginBlock(string classes)
 {
         if (verbose)
-                cout << "    start block of classes " << classes << "\n";
+                cout << "    start block of class " << classes << "\n";
 }
 
 void Xcsp3_to_Naxos::endBlock()
