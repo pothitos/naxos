@@ -15,7 +15,7 @@ void displayList(vector<T>& list, string separator = " ")
         if (list.size() > 8) {
                 for (i = 0; i < 3; i++)
                         cout << list[i] << separator;
-                cout << " ... ";
+                cout << "..." << separator;
                 for (i = list.size() - 4; i < list.size(); i++)
                         cout << list[i] << separator;
                 cout << "\n";
@@ -32,7 +32,7 @@ void displayList(vector<XVariable*>& list, string separator = " ")
         if (list.size() > 8) {
                 for (i = 0; i < 3; i++)
                         cout << list[i]->id << separator;
-                cout << " ... ";
+                cout << "..." << separator;
                 for (i = list.size() - 4; i < list.size(); i++)
                         cout << list[i]->id << separator;
                 cout << "\n";
@@ -215,8 +215,7 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
                                                  vector<XVariable*>& list)
 {
         if (verbose) {
-                cout << "\n    allDiff constraint" << id << "\n";
-                cout << "        ";
+                cout << "    allDifferent " << id << ": ";
                 displayList(list);
         }
 }
