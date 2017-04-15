@@ -112,7 +112,7 @@ void Xcsp3_to_Naxos::beginBlock(string classes)
 void Xcsp3_to_Naxos::endBlock()
 {
         if (verbose)
-                cout << "    end group\n";
+                cout << "    end block\n";
 }
 
 void Xcsp3_to_Naxos::beginObjectives()
