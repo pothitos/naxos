@@ -184,7 +184,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
 }
 
 /// Unary extension constraint
-void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
+void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
                                               vector<int>& tuples, bool support,
                                               bool hasStar)
 {
@@ -194,7 +194,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* variable,
                      << "      "
                      << "tuples: " << tuples.size() << ", "
                      << "star: " << hasStar << "\n"
-                     << "      " << *variable << "\n";
+                     << "      " << *var << "\n";
         }
         if (hasStar)
                 throw invalid_argument("Short tables, i.e. tables with tuples "

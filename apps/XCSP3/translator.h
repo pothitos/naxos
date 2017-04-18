@@ -124,7 +124,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                                  bool hasStar) override;
 
         virtual void buildConstraintExtension(string id,
-                                              XCSP3Core::XVariable* variable,
+                                              XCSP3Core::XVariable* var,
                                               vector<int>& tuples, bool support,
                                               bool hasStar) override;
 
