@@ -8,7 +8,6 @@
 #include <csignal>
 #include <cstdlib>
 #include <iostream>
-#include <naxos.h>
 #include <string>
 
 using namespace naxos;

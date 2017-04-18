@@ -32,6 +32,8 @@
 #define COSOCO_XCSP3PRINTCALLBACKS_H
 
 #include <XCSP3CoreCallbacks.h>
+#include <naxos.h>
+#include <unordered_map>
 
 /// The XCSP3 parser invokes the functions of this class
 class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
@@ -41,6 +43,15 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
         /// The CSP definition parsing has already begun
         bool instanceAlreadyBegan;
+
+        /// The problem manager
+        naxos::NsProblemManager pm;
+
+        /// Hash table with strings (ID) as keys and variables as values
+        typedef std::unordered_map<string, naxos::NsIntVar> stringToVar_t;
+
+        /// Maps a string to a constrained variable
+        stringToVar_t variable;
 
     public:
         Xcsp3_to_Naxos(bool verbose_init)

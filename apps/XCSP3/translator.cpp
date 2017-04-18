@@ -6,6 +6,7 @@
 #include "translator.h"
 
 using namespace XCSP3Core;
+using namespace naxos;
 using namespace std;
 
 template <class T>
@@ -133,6 +134,7 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
                 cout << "    var " << id << ": " << minValue << "..."
                      << maxValue << "\n";
         }
+        variable[id] = NsIntVar(pm, minValue, maxValue);
 }
 
 void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
