@@ -4,6 +4,7 @@
 /// Part of https://github.com/pothitos/naxos
 
 #include "translator.h"
+#include <algorithm>
 
 using namespace XCSP3Core;
 using namespace naxos;
@@ -142,6 +143,19 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         if (verbose) {
                 cout << "    var " << id << ": ";
                 displayList(values);
+        }
+        if (values.empty()) {
+                throw domain_error("The domain of a constrained variable "
+                                   "cannot be empty");
+        }
+        // Ensure that the values are ordered
+        sort(values.begin(), values.end());
+        // Set variable's domain to be the whole values[0]..values[N-1]
+        variable[id] = NsIntVar(pm, values.front(), values.back());
+        // Remove gaps from the variable's domain
+        for (vector<int>::size_type i = 0; i < values.size() - 1; ++i) {
+                for (int val = values[i] + 1; val < values[i + 1]; ++val)
+                        variable[id].remove(val);
         }
 }
 
