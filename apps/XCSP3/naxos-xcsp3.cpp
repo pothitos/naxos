@@ -71,6 +71,7 @@ int main(int argc, char* argv[])
                 // vObjectivePointer = &Var[2];
                 // pm.minimize(*vObjectivePointer);
                 pm.addGoal(new NsgLabeling(Var));
+                // Initialize variables for search
                 VarSolution = 0;
                 interrupted = false;
                 searching = true;
