@@ -192,9 +192,10 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                      << "      ";
                 displayList(list);
         }
-        if (hasStar)
+        if (hasStar) {
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
+        }
 }
 
 /// Unary extension constraint
@@ -210,9 +211,10 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
                      << "star: " << hasStar << "\n"
                      << "      " << *var << "\n";
         }
-        if (hasStar)
+        if (hasStar) {
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
+        }
 }
 
 /// Extension constraint with exactly the same tuples as the previous one
@@ -222,9 +224,10 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
 {
         if (verbose)
                 cout << "    extension same as above " << id << "\n";
-        if (hasStar)
+        if (hasStar) {
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
+        }
 }
 
 void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
@@ -306,12 +309,14 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                      << "start index: " << startIndex << ", "
                      << "index: " << *index << "\n";
         }
-        if (startIndex != 0)
+        if (startIndex != 0) {
                 throw invalid_argument("startIndex argument of element "
                                        "constraint should be 0");
-        if (rank != ANY)
+        }
+        if (rank != ANY) {
                 throw invalid_argument("rank argument of element "
                                        "constraint should be any");
+        }
 }
 
 /// Variable is in position index inside the list
@@ -327,12 +332,14 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                      << "start index: " << startIndex << ", "
                      << "index: " << *index << "\n";
         }
-        if (startIndex != 0)
+        if (startIndex != 0) {
                 throw invalid_argument("startIndex argument of element "
                                        "constraint should be 0");
-        if (rank != ANY)
+        }
+        if (rank != ANY) {
                 throw invalid_argument("rank argument of element "
                                        "constraint should be any");
+        }
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
