@@ -1,0 +1,17 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <array id="q" size="[4]"> 0..3 </array>
+  </variables>
+  <constraints>
+    <allDifferent> q[] </allDifferent>
+    <group>
+      <intension> ne(%0,dist(%1,%2)) </intension>
+      <args> 1 q[0] q[1] </args>
+      <args> 2 q[0] q[2] </args>
+      <args> 3 q[0] q[3] </args>
+      <args> 1 q[1] q[2] </args>
+      <args> 2 q[1] q[3] </args>
+      <args> 1 q[2] q[3] </args>
+    </group>
+  </constraints>
+</instance>
