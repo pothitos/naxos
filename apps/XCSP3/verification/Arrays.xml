@@ -1,0 +1,12 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <var id="X"> 0..7 </var>
+    <array id="ArrayA" size="[3]"> 1..10 </array>
+    <array id="ArrayB" size="[2][2]">
+      <domain for="ArrayB[1][]"> -2..2 </domain>
+      <domain for="others"> 2 4 6 </domain>
+    </array>
+    <array id="ArrayC" size="[2][2][2]"> -3..3 </array>
+    <var id="X1" as="X" />
+  </variables>
+</instance>
