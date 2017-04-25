@@ -1,0 +1,5 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <var id="X"> 0..10 </var>
+  </variables>
+</instance>
