@@ -39,7 +39,7 @@ for INSTANCE in verification/*.xml \
                 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 do
     # Set the stored solution file name
-    SOLUTION="verification/$(basename $INSTANCE .xml).solution.txt"
+    SOLUTION="verification/$(basename $INSTANCE .xml).sol"
     # Compare the stored solution with the solver's one
     # This test is temporarily disabled
     ./naxos-xcsp3 $INSTANCE | cmp $SOLUTION || true
