@@ -3,7 +3,7 @@
     <array id="X" size="[2][6]"> 1..5 </array>
   </variables>
   <constraints>
-    <block class="Variable condition Constant">
+    <block class="Variable comparison Constant">
       <intension> eq(X[0][0],3) </intension>
       <intension> ne(X[0][1],1) </intension>
       <intension> lt(X[0][2],2) </intension>
@@ -11,7 +11,7 @@
       <intension> gt(X[0][4],3) </intension>
       <intension> ge(X[0][5],5) </intension>
     </block>
-    <block class="Constant condition Variable">
+    <block class="Constant comparison Variable">
       <intension> eq(4,X[1][0]) </intension>
       <intension> ne(1,X[1][1]) </intension>
       <intension> lt(2,X[1][2]) </intension>
