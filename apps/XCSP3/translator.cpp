@@ -174,6 +174,10 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
                 cout << "    intension " << id << ": " << x->id
                      << (k >= 0 ? "+" : "") << k << " op " << y->id << "\n";
         }
+        if (op == IN) {
+                throw invalid_argument("Membership operator 'in' is not "
+                                       "accepted");
+        }
 }
 
 /// Extension constraint
