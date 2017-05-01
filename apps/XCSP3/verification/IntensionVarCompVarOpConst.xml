@@ -1,0 +1,26 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <var id="X0"> 1..2 </var>
+    <var id="Y0"> 1..2 </var>
+    <var id="X1"> 1..2 </var>
+    <var id="Y1"> 1..2 </var>
+    <var id="X2"> 1..2 </var>
+    <var id="Y2"> 1..2 </var>
+    <var id="X3"> 1..2 </var>
+    <var id="Y3"> 1..2 </var>
+    <var id="X4"> 1..3 </var>
+    <var id="Y4"> 1..2 </var>
+    <var id="X5"> 1..2 </var>
+    <var id="Y5"> 1..2 </var>
+  </variables>
+  <constraints>
+    <block class="Variable comparison Variable operator Constant">
+      <intension> eq(X0,mul(Y0,2)) </intension>
+      <intension> ne(X1,div(Y1,2)) </intension>
+      <intension> lt(X2,mod(Y2,3)) </intension>
+      <intension> le(X3,dist(Y3,1)) </intension>
+      <intension> gt(X4,add(Y4,1)) </intension>
+      <intension> ge(X5,sub(Y5,1)) </intension>
+    </block>
+  </constraints>
+</instance>
