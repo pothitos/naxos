@@ -53,6 +53,23 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// Maps a string to a constrained variable
         stringToVar_t variable;
 
+        /// The variables will be instantiated with NsgLabeling
+        naxos::NsIntVarArray AllVars;
+
+        /// The string with all the names (IDs) of the variables
+        std::string AllVarsNames;
+
+        /// Facilitates the displaying an instantiation of the variables
+        void recordVar(const std::string VarName, const naxos::NsIntVar& Var)
+        {
+                // If there's a variable already recorded,
+                // add a separator before the new variable's name
+                if (!AllVarsNames.empty())
+                        AllVarsNames += " ";
+                AllVarsNames += VarName;
+                AllVars.push_back(Var);
+        }
+
     public:
         Xcsp3_to_Naxos(bool verbose_init)
           : verbose(verbose_init), instanceAlreadyBegan(false)

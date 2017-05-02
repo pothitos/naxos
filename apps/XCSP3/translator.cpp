@@ -136,6 +136,7 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
                      << maxValue << "\n";
         }
         variable[id] = NsIntVar(pm, minValue, maxValue);
+        recordVar(id, variable[id]);
 }
 
 void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
@@ -157,6 +158,7 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
                 for (int val = values[i] + 1; val < values[i + 1]; ++val)
                         variable[id].remove(val);
         }
+        recordVar(id, variable[id]);
 }
 
 /// Intension constraint
