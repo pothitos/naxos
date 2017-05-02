@@ -30,7 +30,7 @@ We should cover the following statements, where
     - _x_ ⊙ (_y_ ⊕ _k_)
     - _x_ ⊙ (_k_ ⊕ _y_)
  + Variable and Expression between Variable and Variable
-    - (_x_ ⊕ _y_) ⊙ _y_
+    - (_x_ ⊕ _y_) ⊙ _z_
     - _x_ ⊙ (_y_ ⊕ _z_)
 
 ## Extensional Constraints
