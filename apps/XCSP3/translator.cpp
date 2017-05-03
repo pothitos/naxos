@@ -57,6 +57,9 @@ void Xcsp3_to_Naxos::endInstance()
 {
         if (verbose)
                 cout << "end SAX parsing\n";
+        if (AllVars.empty())
+                throw invalid_argument("No constrained variables defined");
+        pm.addGoal(new NsgLabeling(AllVars));
 }
 
 void Xcsp3_to_Naxos::beginVariables()

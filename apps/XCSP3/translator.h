@@ -62,18 +62,59 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// Facilitates the displaying an instantiation of the variables
         void recordVar(const std::string VarName, const naxos::NsIntVar& Var)
         {
-                // If there's a variable already recorded,
-                // add a separator before the new variable's name
-                if (!AllVarsNames.empty())
-                        AllVarsNames += " ";
-                AllVarsNames += VarName;
+                AllVarsNames += VarName + " ";
                 AllVars.push_back(Var);
         }
+
+        /// @{
+        /// @name Storing and displaying a solution
+
+    private:
+        /// The last solution found
+        naxos::NsDeque<naxos::NsInt> AllVarsValues;
+
+    public:
+        /// Returns true if a solution has been recorded
+        bool solutionIsRecored(void) const
+        {
+                return !AllVarsValues.empty();
+        }
+
+        /// Stores the current solution
+        void recordSolution(void)
+        {
+                AllVarsValues.clear();
+                for (auto Var: AllVars)
+                        AllVarsValues.push_back(Var.min());
+                // We store the minimum value as a representative of the
+                // domain in case it contains more than one value (when
+                // it is a non-instantiated/useless variable).
+        }
+
+        /// Prints the solution in the XCSP3 Competition format
+        void printSolution(void)
+        {
+                std::cout << "v <instantiation>\n"
+                          << "v   <list> " << AllVarsNames << "</list>\n"
+                          << "v   <values> ";
+                for (auto value: AllVarsValues)
+                        std::cout << value << " ";
+                std::cout << "</values>\n"
+                          << "v </instantiation>\n";
+        }
+
+        /// @}
 
     public:
         Xcsp3_to_Naxos(const bool verbose_init)
           : verbose(verbose_init), instanceAlreadyBegan(false)
         {
+        }
+
+        /// Exposes problem manager's search function
+        bool nextSolution(void)
+        {
+                return pm.nextSolution();
         }
 
         /// @{

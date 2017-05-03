@@ -15,20 +15,17 @@ using namespace std;
 
 bool searching;
 bool interrupted;
-NsIntVarArray* VarSolution;
+Xcsp3_to_Naxos *solver;
 
 void printSolutionAndExit(void)
 {
-        if (VarSolution == 0) {
-                // No solution found and search hasn't been completed
-                cout << "s UNKNOWN\n";
-        } else {
+        if (solver->solutionIsRecored()) {
                 // A solution has been found
                 // Status SATISFIABLE or OPTIMUM FOUND has been already printed
-                cout << "v <instantiation>\n"
-                     << "v   <list> x[] </list>\n"
-                     << "v   <values> " << *VarSolution << " </values>\n"
-                     << "v </instantiation>\n";
+                solver->printSolution();
+        } else {
+                // No solution found and search hasn't been completed
+                cout << "s UNKNOWN\n";
         }
         exit(0);
 }
@@ -37,7 +34,7 @@ void interruptionHandler(int /*signum*/)
 {
         if (searching) {
                 // The interruption happened inside pm.nextSolution()
-                if (VarSolution != 0)
+                if (solver->solutionIsRecored())
                         cout << "s SATISFIABLE\n";
                 printSolutionAndExit();
         } else {
@@ -59,28 +56,20 @@ int main(int argc, char* argv[])
                 }
                 // Interface between the parser and the solver
                 Xcsp3_to_Naxos callbacks(verbose);
-                XCSP3Core::XCSP3CoreParser parser(&callbacks);
+                solver = &callbacks;
+                XCSP3Core::XCSP3CoreParser parser(solver);
                 parser.parse(argv[1]);
-                // State the Constraint Satisfaction Problem
-                NsProblemManager pm;
-                NsIntVarArray Var;
-                for (int i = 0; i < 3; ++i)
-                        Var.push_back(NsIntVar(pm, 1, 3));
-                pm.add(NsAllDiff(Var));
                 NsIntVar* vObjectivePointer = 0;
                 // vObjectivePointer = &Var[2];
                 // pm.minimize(*vObjectivePointer);
-                pm.addGoal(new NsgLabeling(Var));
                 // Initialize variables for search
-                VarSolution = 0;
                 interrupted = false;
                 searching = true;
                 // Register interruption signal handler
                 signal(SIGINT, interruptionHandler);
-                while (pm.nextSolution() != false) {
+                while (solver->nextSolution() != false) {
                         searching = false;
-                        // Record solution
-                        VarSolution = &Var;
+                        solver->recordSolution();
                         if (vObjectivePointer == 0) {
                                 cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
@@ -96,11 +85,11 @@ int main(int argc, char* argv[])
                 }
                 // Search has been completed
                 searching = false;
-                if (VarSolution == 0) {
-                        cout << "s UNSATISFIABLE\n";
-                } else {
+                if (solver->solutionIsRecored()) {
                         cout << "s OPTIMUM FOUND\n";
                         printSolutionAndExit();
+                } else {
+                        cout << "s UNSATISFIABLE\n";
                 }
         } catch (exception& exc) {
                 cerr << exc.what() << "\n";
