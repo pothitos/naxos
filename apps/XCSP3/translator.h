@@ -122,6 +122,12 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                 return constraintOptimisationMode;
         }
 
+        /// Exposes problem manager's objective variable
+        const naxos::NsIntVar& getObjective(void) const
+        {
+                return pm.getObjective();
+        }
+
         /// Exposes problem manager's search function
         bool nextSolution(void)
         {
