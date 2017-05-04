@@ -102,3 +102,9 @@ A simplified element constraint (without `startIndex` and `rank` attributes) is 
 ```
 
 The above describes the relation `x[i] = v`.
+
+## Objective in Constraint Optimisation
+
+> The type of the objective cannot be `product` or `lex`,
+> and when it is `expression`, it can only be a variable
+> (identifier).
