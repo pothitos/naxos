@@ -41,6 +41,9 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// Display default parser's messages
         bool verbose;
 
+        /// The CSP has an objective (to be minimized)
+        bool constraintOptimisationMode;
+
         /// The CSP definition parsing has already begun
         bool instanceAlreadyBegan;
 
@@ -107,8 +110,16 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
     public:
         Xcsp3_to_Naxos(const bool verbose_init)
-          : verbose(verbose_init), instanceAlreadyBegan(false)
+          : verbose(verbose_init),
+            constraintOptimisationMode(false),
+            instanceAlreadyBegan(false)
         {
+        }
+
+        /// Returns true if we are in COP mode
+        bool constraintOptimisation(void)
+        {
+                return constraintOptimisationMode;
         }
 
         /// Exposes problem manager's search function
