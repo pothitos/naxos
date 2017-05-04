@@ -95,7 +95,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         }
 
         /// Prints the solution in the XCSP3 Competition format
-        void printSolution(void)
+        void printSolution(void) const
         {
                 std::cout << "v <instantiation>\n"
                           << "v   <list> " << AllVarsNames << "</list>\n"
@@ -117,7 +117,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         }
 
         /// Returns true if we are in COP mode
-        bool constraintOptimisation(void)
+        bool constraintOptimisation(void) const
         {
                 return constraintOptimisationMode;
         }
