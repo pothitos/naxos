@@ -4688,6 +4688,14 @@ class NsProblemManager {
         NsInt bestObjective;
 
     public:
+        /// Exposes the objective variable
+        const NsIntVar& getObjective(void) const
+        {
+                assert_Ns(vObjective != 0, "NsProblemManager::getObjective: "
+                                           "Objective variable not set");
+                return *vObjective;
+        }
+
         void minimize(NsIntVar& VarObjective)
         {
                 assert_Ns(vObjective == 0,
