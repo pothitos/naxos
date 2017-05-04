@@ -4690,6 +4690,8 @@ class NsProblemManager {
     public:
         void minimize(NsIntVar& VarObjective)
         {
+                assert_Ns(vObjective == 0,
+                          "minimize() cannot be called more than one time");
                 vObjective = &VarObjective;
                 bestObjective = NsPLUS_INF;
         }
