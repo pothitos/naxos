@@ -15,7 +15,7 @@ using namespace std;
 
 bool searching;
 bool interrupted;
-Xcsp3_to_Naxos *solver;
+Xcsp3_to_Naxos* solver;
 
 void printSolutionAndExit(void)
 {
