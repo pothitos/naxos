@@ -355,6 +355,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
         if (verbose)
                 cout << "    minimize var " << x << "\n";
         constraintOptimisationMode = true;
+        pm.minimize(variable[x->id]);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
@@ -362,6 +363,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
         if (verbose)
                 cout << "    maximize var " << x << "\n";
         constraintOptimisationMode = true;
+        pm.minimize(-variable[x->id]);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
