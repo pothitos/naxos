@@ -59,9 +59,6 @@ int main(int argc, char* argv[])
                 solver = &callbacks;
                 XCSP3Core::XCSP3CoreParser parser(solver);
                 parser.parse(argv[1]);
-                NsIntVar* vObjectivePointer = 0;
-                // vObjectivePointer = &Var[2];
-                // pm.minimize(*vObjectivePointer);
                 // Initialize variables for search
                 interrupted = false;
                 searching = true;
@@ -70,12 +67,12 @@ int main(int argc, char* argv[])
                 while (solver->nextSolution() != false) {
                         searching = false;
                         solver->recordSolution();
-                        if (vObjectivePointer == 0) {
+                        if (solver->constraintOptimisation()) {
                                 cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
                                 // Non-optimization search finishes here
                         } else {
-                                cout << "o " << vObjectivePointer->value()
+                                cout << "o " << solver->getObjective().value()
                                      << endl;
                         }
                         searching = true;
