@@ -245,6 +245,8 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
                 cout << "    allDifferent " << id << ": ";
                 displayList(list);
         }
+        collectArray(list);
+        pm.add(NsAllDiff(arrays.back()));
 }
 
 /// Unweighted sum constraint
