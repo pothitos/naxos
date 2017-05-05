@@ -63,7 +63,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         std::string AllVarsNames;
 
         /// Facilitates the displaying an instantiation of the variables
-        void recordVar(const std::string VarName, const naxos::NsIntVar& Var)
+        void recordVar(const std::string& VarName, naxos::NsIntVar& Var)
         {
                 AllVarsNames += VarName + " ";
                 AllVars.push_back(Var);
