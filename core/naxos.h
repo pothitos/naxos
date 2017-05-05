@@ -815,8 +815,8 @@ class NsIntVar {
         /// If the constrained variable is instantiated, this returns its value
         NsInt value(void) const
         {
-                assert_Ns(isBound(),
-                          "NsIntVar::value: '*this': Not a bound NsIntVar");
+                assert_Ns(isBound(), "NsIntVar::value: Called for an "
+                                     "uninstantiated variable");
                 return domain.min();
         }
 
