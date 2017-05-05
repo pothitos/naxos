@@ -109,6 +109,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @}
 
     public:
+        /// Constructor
         Xcsp3_to_Naxos(const bool verbose_init)
           : verbose(verbose_init),
             constraintOptimisationMode(false),
