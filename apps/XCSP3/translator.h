@@ -51,7 +51,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         naxos::NsProblemManager pm;
 
         /// Hash table with strings (ID) as keys and variables as values
-        typedef std::unordered_map<string, naxos::NsIntVar> stringToVar_t;
+        typedef std::unordered_map<std::string, naxos::NsIntVar> stringToVar_t;
 
         /// Maps a string to a constrained variable
         stringToVar_t variable;
@@ -158,7 +158,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
         virtual void endVariables() override;
 
-        virtual void beginVariableArray(string id) override;
+        virtual void beginVariableArray(std::string id) override;
 
         virtual void endVariableArray() override;
 
@@ -166,11 +166,11 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
         virtual void endConstraints() override;
 
-        virtual void beginGroup(string id) override;
+        virtual void beginGroup(std::string id) override;
 
         virtual void endGroup() override;
 
-        virtual void beginBlock(string classes) override;
+        virtual void beginBlock(std::string classes) override;
 
         virtual void endBlock() override;
 
@@ -183,20 +183,21 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Constrained variables definition
 
-        virtual void buildVariableInteger(string id, int minValue,
+        virtual void buildVariableInteger(std::string id, int minValue,
                                           int maxValue) override;
 
-        virtual void buildVariableInteger(string id,
-                                          vector<int>& values) override;
+        virtual void buildVariableInteger(std::string id,
+                                          std::vector<int>& values) override;
 
         /// @}
 
         /// @{
         /// @name Intensional Constraints
 
-        virtual void buildConstraintIntension(string id, string expr) override;
+        virtual void buildConstraintIntension(std::string id,
+                                              std::string expr) override;
 
-        virtual void buildConstraintPrimitive(string id,
+        virtual void buildConstraintPrimitive(std::string id,
                                               XCSP3Core::OrderType op,
                                               XCSP3Core::XVariable* x, int k,
                                               XCSP3Core::XVariable* y) override;
@@ -207,18 +208,20 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @name Extensional Constraints
 
         virtual void
-        buildConstraintExtension(string id, vector<XCSP3Core::XVariable*> list,
-                                 vector<vector<int>>& tuples, bool support,
-                                 bool hasStar) override;
+        buildConstraintExtension(std::string id,
+                                 std::vector<XCSP3Core::XVariable*> list,
+                                 std::vector<std::vector<int>>& tuples,
+                                 bool support, bool hasStar) override;
 
-        virtual void buildConstraintExtension(string id,
+        virtual void buildConstraintExtension(std::string id,
                                               XCSP3Core::XVariable* var,
-                                              vector<int>& tuples, bool support,
+                                              std::vector<int>& tuples,
+                                              bool support,
                                               bool hasStar) override;
 
         virtual void
-        buildConstraintExtensionAs(string id,
-                                   vector<XCSP3Core::XVariable*> list,
+        buildConstraintExtensionAs(std::string id,
+                                   std::vector<XCSP3Core::XVariable*> list,
                                    bool support, bool hasStar) override;
 
         /// @}
@@ -227,26 +230,27 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @name AllDifferent
 
         virtual void buildConstraintAlldifferent(
-            string id, vector<XCSP3Core::XVariable*>& list) override;
+            std::string id, std::vector<XCSP3Core::XVariable*>& list) override;
 
         /// @}
 
         /// @{
         /// @name Sum
 
-        virtual void buildConstraintSum(string id,
-                                        vector<XCSP3Core::XVariable*>& list,
-                                        XCSP3Core::XCondition& cond) override;
+        virtual void
+        buildConstraintSum(std::string id,
+                           std::vector<XCSP3Core::XVariable*>& list,
+                           XCSP3Core::XCondition& cond) override;
 
-        virtual void buildConstraintSum(string id,
-                                        vector<XCSP3Core::XVariable*>& list,
-                                        vector<int>& coeffs,
-                                        XCSP3Core::XCondition& cond) override;
+        virtual void buildConstraintSum(
+            std::string id, std::vector<XCSP3Core::XVariable*>& list,
+            std::vector<int>& coeffs, XCSP3Core::XCondition& cond) override;
 
-        virtual void buildConstraintSum(string id,
-                                        vector<XCSP3Core::XVariable*>& list,
-                                        vector<XCSP3Core::XVariable*>& coeffs,
-                                        XCSP3Core::XCondition& cond) override;
+        virtual void
+        buildConstraintSum(std::string id,
+                           std::vector<XCSP3Core::XVariable*>& list,
+                           std::vector<XCSP3Core::XVariable*>& coeffs,
+                           XCSP3Core::XCondition& cond) override;
 
         /// @}
 
@@ -254,15 +258,15 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @name Element
 
         virtual void
-        buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
+        buildConstraintElement(std::string id,
+                               std::vector<XCSP3Core::XVariable*>& list,
                                int startIndex, XCSP3Core::XVariable* index,
                                XCSP3Core::RankType rank, int value) override;
 
-        virtual void
-        buildConstraintElement(string id, vector<XCSP3Core::XVariable*>& list,
-                               int startIndex, XCSP3Core::XVariable* index,
-                               XCSP3Core::RankType rank,
-                               XCSP3Core::XVariable* value) override;
+        virtual void buildConstraintElement(
+            std::string id, std::vector<XCSP3Core::XVariable*>& list,
+            int startIndex, XCSP3Core::XVariable* index,
+            XCSP3Core::RankType rank, XCSP3Core::XVariable* value) override;
 
         /// @}
 
@@ -280,21 +284,23 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Constraint Optimization for an array of variables
 
+        virtual void buildObjectiveMinimize(
+            XCSP3Core::ExpressionObjective type,
+            std::vector<XCSP3Core::XVariable*>& list) override;
+
+        virtual void buildObjectiveMaximize(
+            XCSP3Core::ExpressionObjective type,
+            std::vector<XCSP3Core::XVariable*>& list) override;
+
         virtual void
         buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
-                               vector<XCSP3Core::XVariable*>& list) override;
+                               std::vector<XCSP3Core::XVariable*>& list,
+                               std::vector<int>& coefs) override;
 
         virtual void
         buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
-                               vector<XCSP3Core::XVariable*>& list) override;
-
-        virtual void buildObjectiveMinimize(XCSP3Core::ExpressionObjective type,
-                                            vector<XCSP3Core::XVariable*>& list,
-                                            vector<int>& coefs) override;
-
-        virtual void buildObjectiveMaximize(XCSP3Core::ExpressionObjective type,
-                                            vector<XCSP3Core::XVariable*>& list,
-                                            vector<int>& coefs) override;
+                               std::vector<XCSP3Core::XVariable*>& list,
+                               std::vector<int>& coefs) override;
 
         /// @}
 };
