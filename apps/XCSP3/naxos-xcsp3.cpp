@@ -68,12 +68,12 @@ int main(int argc, char* argv[])
                         searching = false;
                         solver->recordSolution();
                         if (solver->constraintOptimisation()) {
+                                cout << "o " << solver->getObjective().value()
+                                     << endl;
+                        } else {
                                 cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
                                 // Non-optimization search finishes here
-                        } else {
-                                cout << "o " << solver->getObjective().value()
-                                     << endl;
                         }
                         searching = true;
                         // Check if interrupted while in critical area
