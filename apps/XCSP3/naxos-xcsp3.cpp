@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
                         searching = false;
                         solver->recordSolution();
                         if (solver->constraintOptimisation()) {
-                                cout << "o " << solver->getObjective().value()
+                                cout << "o " << solver->getObjectiveValue()
                                      << endl;
                         } else {
                                 cout << "s SATISFIABLE\n";

@@ -41,8 +41,11 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// Display default parser's messages
         bool verbose;
 
-        /// The CSP has an objective (to be minimized)
+        /// The CSP has an objective
         bool constraintOptimisationMode;
+
+        /// The sign of the objective variable is -1 for maximization
+        int objectiveSign;
 
         /// The CSP definition parsing has already begun
         bool instanceAlreadyBegan;
@@ -135,10 +138,10 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                 return constraintOptimisationMode;
         }
 
-        /// Exposes problem manager's objective variable
-        const naxos::NsIntVar& getObjective(void) const
+        /// Returns the objective variable's current value
+        naxos::NsInt getObjectiveValue(void) const
         {
-                return pm.getObjective();
+                return objectiveSign * pm.getObjective().value();
         }
 
         /// Exposes problem manager's search function

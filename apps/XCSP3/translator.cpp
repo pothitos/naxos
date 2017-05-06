@@ -357,7 +357,8 @@ void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
         if (verbose)
                 cout << "    minimize var " << x << "\n";
         constraintOptimisationMode = true;
-        pm.minimize(variable[x->id]);
+        objectiveSign = +1;
+        pm.minimize(objectiveSign * variable[x->id]);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
@@ -365,19 +366,22 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
         if (verbose)
                 cout << "    maximize var " << x << "\n";
         constraintOptimisationMode = true;
-        pm.minimize(-variable[x->id]);
+        objectiveSign = -1;
+        pm.minimize(objectiveSign * variable[x->id]);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
         constraintOptimisationMode = true;
+        objectiveSign = +1;
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
         constraintOptimisationMode = true;
+        objectiveSign = -1;
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
@@ -385,6 +389,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<int>& coefs)
 {
         constraintOptimisationMode = true;
+        objectiveSign = +1;
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
@@ -392,4 +397,5 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<int>& coefs)
 {
         constraintOptimisationMode = true;
+        objectiveSign = -1;
 }
