@@ -31,8 +31,7 @@ MEM_CHECK="valgrind -q"
 # Default Traveling Salesman Problem instance
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
 # Default Constraint Optimisation (COP) instance
-# This test is temporarily disabled
-$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml || true
+$MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 
 # For each Mini-solver Competition's requirement, solve a CSP
 for INSTANCE in verification/*.xml \
