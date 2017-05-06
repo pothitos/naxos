@@ -74,7 +74,7 @@ variables is limited by another variable.
 <sum id="c1">
   <list> x1 x2 x3 </list>
   <coeffs> 1 2 3 </coeffs>
-  <condition> (gt, y) </condition>
+  <condition> (gt,y) </condition>
 </sum>
 ```
 
