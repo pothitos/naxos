@@ -1,4 +1,4 @@
-# Naxos Solver [![Build Status](https://travis-ci.org/pothitos/naxos.svg?branch=master)](https://travis-ci.org/pothitos/naxos) [![Coverage Status](https://coveralls.io/repos/github/pothitos/naxos/badge.svg)](https://coveralls.io/github/pothitos/naxos)
+# Naxos Solver [![Build Status](https://travis-ci.org/pothitos/naxos.svg?branch=master)](https://travis-ci.org/pothitos/naxos)
 
 <img src="https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg" align="right">
 

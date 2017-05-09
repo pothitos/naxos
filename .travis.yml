@@ -3,12 +3,6 @@
 
 language: cpp
 
-before_install:
-  - pip install --user urllib3[secure] cpp-coveralls
-    # Work around https://github.com/eddyxu/cpp-coveralls/issues/108 by manually
-    # installing the pyOpenSSL module and injecting it into urllib3 as per
-    # https://urllib3.readthedocs.io/en/latest/user-guide.html#ssl-py2
-  - sed -i -e '/^import sys$/a import urllib3.contrib.pyopenssl\nurllib3.contrib.pyopenssl.inject_into_urllib3()' $(which coveralls)
 env:
   global:
     - COVERAGE="--coverage"
@@ -125,6 +119,3 @@ script:
     - make -j
     - test -e CMakeLists.txt && ctest -V || make test
     - cd -
-
-after_success:
-  - coveralls -b $DIRECTORY -e $DIRECTORY/CMakeFiles -e apps/XCSP3/parser
