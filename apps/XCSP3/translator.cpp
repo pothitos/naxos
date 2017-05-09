@@ -249,6 +249,55 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
         pm.add(NsAllDiff(arrays.back()));
 }
 
+/// Enforces sum constraint for every possible condition
+template <class T>
+void Xcsp3_to_Naxos::unfoldSumConstraintCondition(NsIntVarArray& array,
+                                                  const OrderType condition,
+                                                  T& operand)
+{
+        switch (condition) {
+        case EQ:
+                pm.add(NsSum(array) == operand);
+                break;
+        case NE:
+                pm.add(NsSum(array) != operand);
+                break;
+        case LT:
+                pm.add(NsSum(array) < operand);
+                break;
+        case LE:
+                pm.add(NsSum(array) <= operand);
+                break;
+        case GT:
+                pm.add(NsSum(array) > operand);
+                break;
+        case GE:
+                pm.add(NsSum(array) >= operand);
+                break;
+        default:
+                throw invalid_argument("Unsupported sum condition");
+                break;
+        }
+}
+
+/// Enforces sum constraint for every possible operand
+void Xcsp3_to_Naxos::unfoldSumConstraintOperand(NsIntVarArray& array,
+                                                const XCondition& cond)
+{
+        switch (cond.operandType) {
+        case INTEGER:
+                unfoldSumConstraintCondition(array, cond.op, cond.val);
+                break;
+        case VARIABLE:
+                unfoldSumConstraintCondition(array, cond.op,
+                                             variable[cond.var]);
+                break;
+        default:
+                throw invalid_argument("Unsupported operand for sum");
+                break;
+        }
+}
+
 /// Unweighted sum constraint
 void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                                         XCondition& cond)
@@ -258,6 +307,8 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                 displayList(list, "+");
                 cout << cond << "\n";
         }
+        collectArray(list);
+        unfoldSumConstraintOperand(arrays.back(), cond);
 }
 
 /// Weighted sum constraint

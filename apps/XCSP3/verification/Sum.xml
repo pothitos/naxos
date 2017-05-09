@@ -1,0 +1,12 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <array id="X" size="[3]"> 0..3 </array>
+    <var id="Y"> 8..10 </var>
+  </variables>
+  <constraints>
+    <sum>
+      <list> X[] </list>
+      <condition> (gt,Y) </condition>
+    </sum>
+  </constraints>
+</instance>
