@@ -1,0 +1,14 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <array id="X" size="[2]"> -1..1 </array>
+    <array id="Y" size="[2]"> -1..1 </array>
+    <var id="Z"> -1..0 </var>
+  </variables>
+  <constraints>
+    <sum>
+      <list> X[] </list>
+      <coeffs> Y[] </coeffs>
+      <condition> (lt,Z) </condition>
+    </sum>
+  </constraints>
+</instance>
