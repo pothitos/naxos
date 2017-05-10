@@ -25,7 +25,7 @@
     <sum>
       <list> x[1] x[2] x[3] </list>
       <coeffs> 1 2 3 </coeffs>
-      <condition> (in,3..6) </condition>
+      <condition> (ge,3) </condition>
     </sum>
     <block class="symmetryBreaking">
       <element>
