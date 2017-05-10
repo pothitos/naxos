@@ -178,9 +178,31 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
                 cout << "    intension " << id << ": " << x->id
                      << (k >= 0 ? "+" : "") << k << " op " << y->id << "\n";
         }
-        if (op == IN) {
-                throw invalid_argument("Membership operator 'in' is not "
-                                       "accepted");
+        NsIntVar& VarX = variable[x->id];
+        NsIntVar& VarY = variable[y->id];
+        switch (op) {
+        case EQ:
+                pm.add(VarX + k == VarY);
+                break;
+        case NE:
+                pm.add(VarX + k != VarY);
+                break;
+        case LT:
+                pm.add(VarX + k < VarY);
+                break;
+        case LE:
+                pm.add(VarX + k <= VarY);
+                break;
+        case GT:
+                pm.add(VarX + k > VarY);
+                break;
+        case GE:
+                pm.add(VarX + k >= VarY);
+                break;
+        default:
+                throw invalid_argument("Unsupported operator for intension "
+                                       "constraint");
+                break;
         }
 }
 
