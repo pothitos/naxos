@@ -10,7 +10,7 @@ using namespace XCSP3Core;
 using namespace naxos;
 using namespace std;
 
-template <class T>
+template <typename T>
 void displayList(vector<T>& list, string separator = " ")
 {
         typename vector<T>::size_type i;
@@ -250,7 +250,7 @@ void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
 }
 
 /// Enforces sum constraint for every possible condition
-template <class T>
+template <typename T>
 void Xcsp3_to_Naxos::unfoldSumConstraintCondition(NsIntVarArray& array,
                                                   const OrderType condition,
                                                   T& operand)

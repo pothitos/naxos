@@ -6,7 +6,7 @@
 #ifndef Ns_STACK_H
 #define Ns_STACK_H
 
-template <class TemplType>
+template <typename TemplType>
 class NsStack {
 
     protected:
@@ -234,7 +234,7 @@ class NsStack {
         }
 };
 
-template <class TemplType>
+template <typename TemplType>
 NsStack<TemplType>& NsStack<TemplType>::operator=(const NsStack& stackOther)
 {
         nFrames = stackOther.nFrames;

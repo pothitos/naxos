@@ -241,7 +241,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @name Sum
 
     private:
-        template <class T>
+        template <typename T>
         void unfoldSumConstraintCondition(naxos::NsIntVarArray& array,
                                           const XCSP3Core::OrderType condition,
                                           T& operand);

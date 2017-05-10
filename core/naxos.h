@@ -97,7 +97,7 @@ const NsUInt NsUPLUS_INF = ULONG_MAX;
 
 class NsIntVar;
 
-template <class TemplType>
+template <typename TemplType>
 class NsDeque;
 
 /// An abstract (algebraic etc.) expression between constrained variables
@@ -138,7 +138,7 @@ class Ns_ExprElement : public Ns_Expression {
 /// A safer version of std::deque that throws an exception when
 /// an out_of_range request is being made. It takes advantage of
 /// the internal at() method that does this work.
-template <class TemplType>
+template <typename TemplType>
 class NsDeque : public std::deque<TemplType> {
 
     public:
@@ -203,7 +203,7 @@ class NsDeque : public std::deque<TemplType> {
 };
 
 /// std::queue with exceptions enabled
-template <class TemplType>
+template <typename TemplType>
 class NsQueue : public std::queue<TemplType> {
 
     public:
@@ -250,7 +250,7 @@ class NsQueue : public std::queue<TemplType> {
 };
 
 /// std::list with exceptions enabled
-template <class TemplType>
+template <typename TemplType>
 class NsList : public std::list<TemplType> {
 
     public:
@@ -314,7 +314,7 @@ class NsList : public std::list<TemplType> {
 };
 
 /// An unordered_set
-template <class TemplType>
+template <typename TemplType>
 class NsSet : public Ns_UNORDERED_SET<TemplType> {
 };
 
