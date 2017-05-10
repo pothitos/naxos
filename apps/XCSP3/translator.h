@@ -90,7 +90,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         void recordSolution(void)
         {
                 AllVarsValues.clear();
-                for (auto Var : AllVars)
+                for (auto& Var : AllVars)
                         AllVarsValues.push_back(Var.min());
                 // We store the minimum value as a representative of the
                 // domain in case it contains more than one value (when
@@ -119,7 +119,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         void collectArray(const std::vector<XCSP3Core::XVariable*>& list)
         {
                 arrays.push_back(naxos::NsIntVarArray());
-                for (auto var : list)
+                for (auto& var : list)
                         arrays.back().push_back(variable[var->id]);
         }
 
