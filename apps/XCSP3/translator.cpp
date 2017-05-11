@@ -168,6 +168,60 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
         if (verbose)
                 cout << "    intension " << id << ": " << expr << "\n";
+        if (expr.size() < 4 || expr[2] != '(' || expr[expr.size() - 1] != ')')
+                throw invalid_argument("Invalid intension constraint");
+        string comparison = expr.substr(0, 2);
+        // Get rid of the "xx()" comparison
+        expr = expr.substr(3, expr.size() - 4);
+        // Store comparison into 'comp' variable
+        OrderType comp;
+        if (comparison == "eq")
+                comp = EQ;
+        else if (comparison == "ne")
+                comp = NE;
+        else if (comparison == "lt")
+                comp = LT;
+        else if (comparison == "le")
+                comp = LE;
+        else if (comparison == "gt")
+                comp = GT;
+        else if (comparison == "ge")
+                comp = GE;
+        else
+                throw invalid_argument("Invalid intension constraint");
+        // Break expression into tokens
+        bool insideParentheses = false;
+        string currentToken, token1, token2;
+        string operation, operand1, operand2;
+        for (auto c : expr) {
+                if (c == '(') {
+                        if (insideParentheses) {
+                                throw invalid_argument("Only one arithmetic "
+                                                       "operation is "
+                                                       "permitted");
+                        }
+                        insideParentheses = true;
+                        operation = currentToken;
+                        currentToken = "";
+                } else if (c == ')') {
+                        if (!insideParentheses)
+                                throw invalid_argument("Unmatched parenthesis");
+                        insideParentheses = false;
+                        operand2 = currentToken;
+                        currentToken = "";
+                } else if (c == ',') {
+                        if (insideParentheses) {
+                                operand1 = currentToken;
+                                currentToken = "";
+                        } else {
+                                token1 = currentToken;
+                                currentToken = "";
+                        }
+                } else {
+                        currentToken += c;
+                }
+        }
+        token2 = currentToken;
 }
 
 /// Primitive constraint x +- k op y
