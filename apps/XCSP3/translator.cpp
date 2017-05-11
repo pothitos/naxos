@@ -184,24 +184,22 @@ OrderType parseComparison(const string& comparison)
                 throw invalid_argument("Invalid intension constraint");
 }
 
-} // end namespace
-
-/// Intension constraint
-void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
+/// Tokenizes the expression inside a comparison, i.e. "add(X,1),Y"
+///
+/// The above expression is tokenized into operation="add",
+/// operand1="X", operand2="1", token2="Y". The string token1 is
+/// empty; this means that it is represented by the
+/// "operation(operand1,operand2)" strings.
+///
+/// Similarly, the expression "X,sub(Y-1)" is broken up into
+/// token1="X", operation="sub", operand1="Y", operand2="1". The
+/// string token2 is empty, because it is substituted by the
+/// three oper* strings.
+void parseExpression(const string& expr, string& token1, string& token2,
+                     string& operation, string& operand1, string& operand2)
 {
-        if (verbose)
-                cout << "    intension " << id << ": " << expr << "\n";
-        if (expr.size() < 4 || expr[2] != '(' || expr[expr.size() - 1] != ')')
-                throw invalid_argument("Invalid intension constraint");
-        string comparison = expr.substr(0, 2);
-        // Store comparison into 'comp' variable
-        OrderType comp = parseComparison(comparison);
-        // Get rid of the "xx()" comparison
-        expr = expr.substr(3, expr.size() - 4);
-        // Break expression into tokens
+        string currentToken;
         bool insideParentheses = false;
-        string currentToken, token1, token2;
-        string operation, operand1, operand2;
         for (auto c : expr) {
                 if (c == '(') {
                         if (insideParentheses) {
@@ -231,6 +229,26 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
                 }
         }
         token2 = currentToken;
+}
+
+} // end namespace
+
+/// Intension constraint
+void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
+{
+        if (verbose)
+                cout << "    intension " << id << ": " << expr << "\n";
+        if (expr.size() < 4 || expr[2] != '(' || expr[expr.size() - 1] != ')')
+                throw invalid_argument("Invalid intension constraint");
+        string comparison = expr.substr(0, 2);
+        // Store comparison into 'comp' variable
+        OrderType comp = parseComparison(comparison);
+        // Get rid of the "xx()" comparison
+        expr = expr.substr(3, expr.size() - 4);
+        // Break internal expression into tokens
+        string token1, token2;
+        string operation, operand1, operand2;
+        parseExpression(expr, token1, token2, operation, operand1, operand2);
 }
 
 /// Primitive constraint x +- k op y
