@@ -233,6 +233,14 @@ void parseExpression(const string& expr, string& token1, string& token2,
 
 } // end namespace
 
+/// Create an intensional constraint using its expression tokens
+void Xcsp3_to_Naxos::addIntensionConstraint(OrderType comparison,
+                                            string& token1, string& token2,
+                                            string& operation, string& operand1,
+                                            string& operand2)
+{
+}
+
 /// Intension constraint
 void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
@@ -249,6 +257,9 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
         string token1, token2;
         string operation, operand1, operand2;
         parseExpression(expr, token1, token2, operation, operand1, operand2);
+        // Set the constraint
+        addIntensionConstraint(comp, token1, token2, operation, operand1,
+                               operand2);
 }
 
 /// Primitive constraint x +- k op y
