@@ -163,6 +163,29 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         recordVar(id, variable[id]);
 }
 
+namespace {
+
+/// Converts a comparison string to the corresponding enum constant
+OrderType parseComparison(const string& comparison)
+{
+        if (comparison == "eq")
+                return EQ;
+        else if (comparison == "ne")
+                return NE;
+        else if (comparison == "lt")
+                return LT;
+        else if (comparison == "le")
+                return LE;
+        else if (comparison == "gt")
+                return GT;
+        else if (comparison == "ge")
+                return GE;
+        else
+                throw invalid_argument("Invalid intension constraint");
+}
+
+} // end namespace
+
 /// Intension constraint
 void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
@@ -171,24 +194,10 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
         if (expr.size() < 4 || expr[2] != '(' || expr[expr.size() - 1] != ')')
                 throw invalid_argument("Invalid intension constraint");
         string comparison = expr.substr(0, 2);
+        // Store comparison into 'comp' variable
+        OrderType comp = parseComparison(comparison);
         // Get rid of the "xx()" comparison
         expr = expr.substr(3, expr.size() - 4);
-        // Store comparison into 'comp' variable
-        OrderType comp;
-        if (comparison == "eq")
-                comp = EQ;
-        else if (comparison == "ne")
-                comp = NE;
-        else if (comparison == "lt")
-                comp = LT;
-        else if (comparison == "le")
-                comp = LE;
-        else if (comparison == "gt")
-                comp = GT;
-        else if (comparison == "ge")
-                comp = GE;
-        else
-                throw invalid_argument("Invalid intension constraint");
         // Break expression into tokens
         bool insideParentheses = false;
         string currentToken, token1, token2;
