@@ -1,0 +1,22 @@
+<instance format="XCSP3" type="CSP">
+  <variables>
+    <var id="X0"> 0..3 </var>
+    <var id="X1"> 0..4 </var>
+    <var id="X2"> -1..2 </var>
+    <var id="I"> 0..2 </var>
+    <var id="J"> -1..10 </var>
+    <var id="Y"> -2..-1 </var>
+  </variables>
+  <constraints>
+    <element>
+      <list> X0 X1 X2 </list>
+      <index> I </index>
+      <value> 4 </value>
+    </element>
+    <element>
+      <list startIndex="0"> X0 X1 X2 </list>
+      <index> J </index>
+      <value> Y </value>
+    </element>
+  </constraints>
+</instance>

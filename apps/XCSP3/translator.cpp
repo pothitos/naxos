@@ -509,6 +509,10 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                 throw invalid_argument("rank argument of element "
                                        "constraint should be any");
         }
+        NsIntVar& VarIndex = variable[index->id];
+        collectArray(list);
+        // TODO: Implement VarArr[Var] constraint
+        // pm.add(arrays.back()[VarIndex] == value);
 }
 
 /// Variable is in position index inside the list
@@ -532,6 +536,11 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                 throw invalid_argument("rank argument of element "
                                        "constraint should be any");
         }
+        NsIntVar& VarIndex = variable[index->id];
+        NsIntVar& VarValue = variable[value->id];
+        collectArray(list);
+        // TODO: Implement VarArr[Var] constraint
+        // pm.add(arrays.back()[VarIndex] == VarValue);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
