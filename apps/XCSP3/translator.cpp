@@ -299,6 +299,26 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
         }
 }
 
+/// Unary extension constraint
+void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
+                                              vector<int>& tuples, bool support,
+                                              bool hasStar)
+{
+        if (verbose) {
+                cout << "    extension " << (support ? "support" : "conflict")
+                     << " with one variable " << id << "\n"
+                     << "      "
+                     << "tuples: " << tuples.size() << ", "
+                     << "star: " << hasStar << "\n"
+                     << "      " << *var << "\n";
+        }
+        if (hasStar) {
+                throw invalid_argument("Short tables, i.e. tables with tuples "
+                                       "containing '*', are not accepted");
+        }
+        // TODO
+}
+
 /// Extension constraint
 void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                                               vector<XVariable*> list,
@@ -314,26 +334,6 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                      << "star: " << hasStar << "\n"
                      << "      ";
                 displayList(list);
-        }
-        if (hasStar) {
-                throw invalid_argument("Short tables, i.e. tables with tuples "
-                                       "containing '*', are not accepted");
-        }
-        // TODO
-}
-
-/// Unary extension constraint
-void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
-                                              vector<int>& tuples, bool support,
-                                              bool hasStar)
-{
-        if (verbose) {
-                cout << "    extension " << (support ? "support" : "conflict")
-                     << " with one variable " << id << "\n"
-                     << "      "
-                     << "tuples: " << tuples.size() << ", "
-                     << "star: " << hasStar << "\n"
-                     << "      " << *var << "\n";
         }
         if (hasStar) {
                 throw invalid_argument("Short tables, i.e. tables with tuples "

@@ -218,17 +218,17 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Extensional Constraints
 
-        virtual void
-        buildConstraintExtension(std::string id,
-                                 std::vector<XCSP3Core::XVariable*> list,
-                                 std::vector<std::vector<int>>& tuples,
-                                 bool support, bool hasStar) override;
-
         virtual void buildConstraintExtension(std::string id,
                                               XCSP3Core::XVariable* var,
                                               std::vector<int>& tuples,
                                               bool support,
                                               bool hasStar) override;
+
+        virtual void
+        buildConstraintExtension(std::string id,
+                                 std::vector<XCSP3Core::XVariable*> list,
+                                 std::vector<std::vector<int>>& tuples,
+                                 bool support, bool hasStar) override;
 
         virtual void
         buildConstraintExtensionAs(std::string id,
