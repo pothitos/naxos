@@ -4,6 +4,7 @@
     <array id="B" size="[3]"> 1..3 </array>
     <array id="C" size="[3]"> 1..3 </array>
     <var id="X"> 1..3 </var>
+    <var id="Y"> 1..3 </var>
   </variables>
   <constraints>
     <extension>
@@ -26,9 +27,13 @@
       <list> C[] </list>
       <conflicts> (1,1,2)(1,1,3) </conflicts>
     </extension>
-    <extension>
-      <list> X </list>
-      <conflicts> 1 </conflicts>
-    </extension>
+    <group>
+      <extension>
+        <list> %0 </list>
+        <conflicts> 1 2 </conflicts>
+      </extension>
+      <args> X </args>
+      <args> Y </args>
+    </group>
   </constraints>
 </instance>
