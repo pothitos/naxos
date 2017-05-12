@@ -239,6 +239,7 @@ void Xcsp3_to_Naxos::addIntensionConstraint(OrderType comparison,
                                             string& operation, string& operand1,
                                             string& operand2)
 {
+        // TODO
 }
 
 /// Intension constraint
@@ -318,6 +319,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
         }
+        // TODO
 }
 
 /// Unary extension constraint
@@ -337,6 +339,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
         }
+        // TODO
 }
 
 /// Extension constraint with exactly the same tuples as the previous one
@@ -350,6 +353,7 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
         }
+        // TODO
 }
 
 void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
@@ -566,6 +570,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
 {
         constraintOptimisationMode = true;
         objectiveSign = +1;
+        // TODO
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
@@ -573,6 +578,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
 {
         constraintOptimisationMode = true;
         objectiveSign = -1;
+        // TODO
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
@@ -581,6 +587,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
 {
         constraintOptimisationMode = true;
         objectiveSign = +1;
+        // TODO
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
@@ -589,4 +596,5 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
 {
         constraintOptimisationMode = true;
         objectiveSign = -1;
+        // TODO
 }
