@@ -187,15 +187,15 @@ OrderType parseComparison(const string& comparison)
 /// Tokenizes the expression inside a comparison, i.e. "add(X,1),Y"
 ///
 /// The above expression is tokenized into operation="add",
-/// operand1="X", operand2="1", token2="Y". The string token1 is
-/// empty; this means that it is represented by the
+/// operand1="X", operand2="1", tokenRight="Y". The string
+/// tokenLeft is empty; this means that it is represented by the
 /// "operation(operand1,operand2)" strings.
 ///
 /// Similarly, the expression "X,sub(Y-1)" is broken up into
-/// token1="X", operation="sub", operand1="Y", operand2="1". The
-/// string token2 is empty, because it is substituted by the
-/// three oper* strings.
-void parseExpression(const string& expr, string& token1, string& token2,
+/// tokenLeft="X", operation="sub", operand1="Y", operand2="1".
+/// The string tokenRight is empty, because it is substituted by
+/// the three oper* strings.
+void parseExpression(const string& expr, string& tokenLeft, string& tokenRight,
                      string& operation, string& operand1, string& operand2)
 {
         string currentToken;
@@ -221,23 +221,22 @@ void parseExpression(const string& expr, string& token1, string& token2,
                                 operand1 = currentToken;
                                 currentToken = "";
                         } else {
-                                token1 = currentToken;
+                                tokenLeft = currentToken;
                                 currentToken = "";
                         }
                 } else {
                         currentToken += c;
                 }
         }
-        token2 = currentToken;
+        tokenRight = currentToken;
 }
 
 } // end namespace
 
-/// Create an intensional constraint using its expression tokens
-void Xcsp3_to_Naxos::addIntensionConstraint(OrderType comparison,
-                                            string& token1, string& token2,
-                                            string& operation, string& operand1,
-                                            string& operand2)
+/// Convert the left-hand constraint part into its corresponding type
+void Xcsp3_to_Naxos::unfoldLeftToken(OrderType comparison, string& tokenLeft,
+                                     string& tokenRight, string& operation,
+                                     string& operand1, string& operand2)
 {
         // TODO
 }
@@ -255,12 +254,13 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
         // Get rid of the "xx()" comparison
         expr = expr.substr(3, expr.size() - 4);
         // Break internal expression into tokens
-        string token1, token2;
+        string tokenLeft, tokenRight;
         string operation, operand1, operand2;
-        parseExpression(expr, token1, token2, operation, operand1, operand2);
+        parseExpression(expr, tokenLeft, tokenRight, operation, operand1,
+                        operand2);
         // Set the constraint
-        addIntensionConstraint(comp, token1, token2, operation, operand1,
-                               operand2);
+        unfoldLeftToken(comp, tokenLeft, tokenRight, operation, operand1,
+                        operand2);
 }
 
 /// Primitive constraint x +- k op y

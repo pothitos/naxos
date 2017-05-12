@@ -198,11 +198,10 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @name Intensional Constraints
 
     private:
-        void addIntensionConstraint(XCSP3Core::OrderType comparison,
-                                    std::string& token1, std::string& token2,
-                                    std::string& operation,
-                                    std::string& operand1,
-                                    std::string& operand2);
+        void unfoldLeftToken(XCSP3Core::OrderType comparison,
+                             std::string& tokenLeft, std::string& tokenRight,
+                             std::string& operation, std::string& operand1,
+                             std::string& operand2);
 
     public:
         virtual void buildConstraintIntension(std::string id,
