@@ -165,6 +165,20 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
 
 namespace {
 
+// Returns true upon success of conversion of str to num
+bool strToLong(const string& str, long& num)
+{
+        try {
+                size_t endPosition;
+                num = stol(str, &endPosition);
+                if (endPosition != str.size())
+                        return false; // There're stray characters after number
+                return true;
+        } catch (...) {
+                return false;
+        }
+}
+
 /// Converts a comparison string to the corresponding enum constant
 OrderType parseComparison(const string& comparison)
 {
