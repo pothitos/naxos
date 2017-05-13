@@ -247,7 +247,7 @@ void parseExpression(const string& expr, string& tokenLeft, string& tokenRight,
 
 } // end namespace
 
-/// Convert the left-hand constraint part into its corresponding type
+/// Converts the left-hand constraint part into its corresponding type
 void Xcsp3_to_Naxos::unfoldLeftToken(OrderType comparison, string& tokenLeft,
                                      string& tokenRight, string& operation,
                                      string& operand1, string& operand2)
