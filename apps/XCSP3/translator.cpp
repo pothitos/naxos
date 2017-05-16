@@ -310,7 +310,30 @@ template <typename T1, typename T2>
 void Xcsp3_to_Naxos::addIntensionConstraint(OrderType comparison, T1& tokenLeft,
                                             T2& tokenRight)
 {
-        // TODO
+        switch (comparison) {
+        case EQ:
+                pm.add(tokenLeft == tokenRight);
+                break;
+        case NE:
+                pm.add(tokenLeft != tokenRight);
+                break;
+        case LT:
+                pm.add(tokenLeft < tokenRight);
+                break;
+        case LE:
+                pm.add(tokenLeft <= tokenRight);
+                break;
+        case GT:
+                pm.add(tokenLeft > tokenRight);
+                break;
+        case GE:
+                pm.add(tokenLeft >= tokenRight);
+                break;
+        default:
+                throw invalid_argument("Unsupported operator for intension "
+                                       "constraint");
+                break;
+        }
 }
 
 /// Converts the string 'operand1 operation operand2' into a Naxos expression
