@@ -376,7 +376,22 @@ template <typename T1, typename T2>
 NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprOperation(const string& operation,
                                                     T1& operand1, T2& operand2)
 {
+        if (operation == "add")
+                return (operand1 + operand2).post();
+        else if (operation == "sub")
+                return (operand1 - operand2).post();
+        else if (operation == "mul")
+                return (operand1 * operand2).post();
         // TODO
+        //else if (operation == "div")
+        //        return (operand1 / operand2).post();
+        //else if (operation == "mod")
+        //        return (operand1 % operand2).post();
+        else if (operation == "dist")
+                return (NsAbs(operand1 - operand2)).post();
+        else
+                throw invalid_argument("Unsupported operator for intension "
+                                       "constraint");
 }
 
 /// Intension constraint
