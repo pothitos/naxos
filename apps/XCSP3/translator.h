@@ -212,6 +212,10 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                               const std::string& operand1 = "",
                               const std::string& operand2 = "");
 
+        template <typename T1, typename T2>
+        void addIntensionConstraint(XCSP3Core::OrderType comparison,
+                                    T1& tokenLeft, T2& tokenRight);
+
         naxos::NsIntVar& unfoldArithmExprToken1(const std::string& operation,
                                                 const std::string& operand1,
                                                 const std::string& operand2);
