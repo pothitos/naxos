@@ -266,9 +266,26 @@ void Xcsp3_to_Naxos::unfoldLeftToken(
         }
 }
 
+/// Materializes the right-hand constraint part, when the left is a constant
+void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsInt tokenLeft,
+                                      const string& tokenRight,
+                                      const string& operation,
+                                      const string& operand1,
+                                      const string& operand2)
+{
+        NsInt constant;
+        if (tokenRight.empty()) { // Left token is an expression
+                NsIntVar& VarTmp =
+                    unfoldArithmExprToken1(operation, operand1, operand2);
+                addIntensionConstraint(comparison, tokenLeft, VarTmp);
+        } else { // Left token is a variable
+                addIntensionConstraint(comparison, tokenLeft,
+                                       variable[tokenRight]);
+        }
+}
+
 /// Converts the right-hand constraint part into its corresponding type
-template <typename T>
-void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, T& tokenLeft,
+void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsIntVar& tokenLeft,
                                       const string& tokenRight,
                                       const string& operation,
                                       const string& operand1,

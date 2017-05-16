@@ -205,8 +205,15 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                              const std::string& operand1,
                              const std::string& operand2);
 
-        template <typename T>
-        void unfoldRightToken(XCSP3Core::OrderType comparison, T& tokenLeft,
+        void unfoldRightToken(XCSP3Core::OrderType comparison,
+                              naxos::NsInt tokenLeft,
+                              const std::string& tokenRight,
+                              const std::string& operation,
+                              const std::string& operand1,
+                              const std::string& operand2);
+
+        void unfoldRightToken(XCSP3Core::OrderType comparison,
+                              naxos::NsIntVar& tokenLeft,
                               const std::string& tokenRight,
                               const std::string& operation = "",
                               const std::string& operand1 = "",
