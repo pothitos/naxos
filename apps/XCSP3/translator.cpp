@@ -309,10 +309,19 @@ NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken1(const string& operation,
                                               operand2);
 }
 
-/// Converts the right-hand operand into its corresponding type
-template <typename T1>
+/// Materializes the right-hand operand, when the left is a constant
 NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken2(const string& operation,
-                                                 T1& operand1,
+                                                 NsInt operand1,
+                                                 const string& operand2)
+{
+        // Right operand is necessarily a variable
+        return unfoldArithmExprOperation(operation, operand1,
+                                         variable[operand2]);
+}
+
+/// Converts the right-hand operand into its corresponding type
+NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken2(const string& operation,
+                                                 NsIntVar& operand1,
                                                  const string& operand2)
 {
         NsInt constant;

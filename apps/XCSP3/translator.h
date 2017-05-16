@@ -220,9 +220,12 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                                                 const std::string& operand1,
                                                 const std::string& operand2);
 
-        template <typename T1>
         naxos::NsIntVar& unfoldArithmExprToken2(const std::string& operation,
-                                                T1& operand1,
+                                                naxos::NsInt operand1,
+                                                const std::string& operand2);
+
+        naxos::NsIntVar& unfoldArithmExprToken2(const std::string& operation,
+                                                naxos::NsIntVar& operand1,
                                                 const std::string& operand2);
 
         template <typename T1, typename T2>
