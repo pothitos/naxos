@@ -248,9 +248,66 @@ void parseExpression(const string& expr, string& tokenLeft, string& tokenRight,
 } // end namespace
 
 /// Converts the left-hand constraint part into its corresponding type
-void Xcsp3_to_Naxos::unfoldLeftToken(OrderType comparison, string& tokenLeft,
-                                     string& tokenRight, string& operation,
-                                     string& operand1, string& operand2)
+void Xcsp3_to_Naxos::unfoldLeftToken(
+    OrderType comparison, const string& tokenLeft, const string& tokenRight,
+    const string& operation, const string& operand1, const string& operand2)
+{
+        NsInt constant;
+        if (tokenLeft.empty()) { // Left token is an expression
+                NsIntVar& VarTmp =
+                    unfoldArithmExprToken1(operation, operand1, operand2);
+                unfoldRightToken(comparison, VarTmp, tokenRight);
+        } else if (strToLong(tokenLeft, constant)) { // Left token is a constant
+                unfoldRightToken(comparison, constant, tokenRight, operation,
+                                 operand1, operand2);
+        } else { // Left token is a variable
+                unfoldRightToken(comparison, variable[tokenLeft], tokenRight,
+                                 operation, operand1, operand2);
+        }
+}
+
+/// Converts the right-hand constraint part into its corresponding type
+template <typename T>
+void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, T& tokenLeft,
+                                      const string& tokenRight,
+                                      const string& operation,
+                                      const string& operand1,
+                                      const string& operand2)
+{
+        // TODO
+}
+
+/// Converts the string 'operand1 operation operand2' into a Naxos expression
+NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken1(const string& operation,
+                                                 const string& operand1,
+                                                 const string& operand2)
+{
+        NsInt constant;
+        if (strToLong(operand1, constant)) // Left operand is a constant
+                return unfoldArithmExprToken2(operation, constant, operand2);
+        else // Left operand is a variable
+                return unfoldArithmExprToken2(operation, variable[operand1],
+                                              operand2);
+}
+
+/// Converts the right-hand operand into its corresponding type
+template <typename T1>
+NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken2(const string& operation,
+                                                 T1& operand1,
+                                                 const string& operand2)
+{
+        NsInt constant;
+        if (strToLong(operand2, constant)) // Right operand is a constant
+                return unfoldArithmExprOperation(operation, operand1, constant);
+        else // Right operand is a variable
+                return unfoldArithmExprOperation(operation, operand1,
+                                                 variable[operand2]);
+}
+
+/// Materializes the arithmetic operation string
+template <typename T1, typename T2>
+NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprOperation(const string& operation,
+                                                    T1& operand1, T2& operand2)
 {
         // TODO
 }

@@ -199,9 +199,31 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
     private:
         void unfoldLeftToken(XCSP3Core::OrderType comparison,
-                             std::string& tokenLeft, std::string& tokenRight,
-                             std::string& operation, std::string& operand1,
-                             std::string& operand2);
+                             const std::string& tokenLeft,
+                             const std::string& tokenRight,
+                             const std::string& operation,
+                             const std::string& operand1,
+                             const std::string& operand2);
+
+        template <typename T>
+        void unfoldRightToken(XCSP3Core::OrderType comparison, T& tokenLeft,
+                              const std::string& tokenRight,
+                              const std::string& operation = "",
+                              const std::string& operand1 = "",
+                              const std::string& operand2 = "");
+
+        naxos::NsIntVar& unfoldArithmExprToken1(const std::string& operation,
+                                                const std::string& operand1,
+                                                const std::string& operand2);
+
+        template <typename T1>
+        naxos::NsIntVar& unfoldArithmExprToken2(const std::string& operation,
+                                                T1& operand1,
+                                                const std::string& operand2);
+
+        template <typename T1, typename T2>
+        naxos::NsIntVar& unfoldArithmExprOperation(const std::string& operation,
+                                                   T1& operand1, T2& operand2);
 
     public:
         virtual void buildConstraintIntension(std::string id,
