@@ -273,7 +273,6 @@ void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsInt tokenLeft,
                                       const string& operand1,
                                       const string& operand2)
 {
-        NsInt constant;
         if (tokenRight.empty()) { // Left token is an expression
                 NsIntVar& VarTmp =
                     unfoldArithmExprToken1(operation, operand1, operand2);
