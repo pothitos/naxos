@@ -25,6 +25,7 @@ matrix:
             - g++-4.9
             - valgrind
             - clang-format-5.0
+            - coreutils
       before_script:
         - CXX=g++-4.9
 
