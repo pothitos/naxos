@@ -1,0 +1,15 @@
+<instance format="XCSP3" type="COP">
+  <variables>
+    <var id="X"> -3..-1 </var>
+    <var id="Y"> -3..-1 </var>
+    <var id="Z"> 1..9 </var>
+  </variables>
+  <constraints>
+    <intension> eq(Z,mul(X,Y)) </intension>
+  </constraints>
+  <objectives>
+    <minimize type ="minimum">
+      <list> X Y Z </list>
+    </minimize>
+  </objectives>
+</instance>
