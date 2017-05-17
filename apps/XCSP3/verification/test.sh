@@ -33,6 +33,11 @@ $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
 # Default Constraint Optimisation (COP) instance
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 
+# Limit the available time for searching a solution
+timeout -s SIGINT --preserve-status 10 $MEM_CHECK ./naxos-xcsp3 verification/without_solutions/AllConstraints.xml
+# Reduce the available time, while not performing a memory test
+timeout -s SIGINT --preserve-status 5 ./naxos-xcsp3 verification/without_solutions/AllConstraintsFormatted.xml
+
 # For each Mini-solver Competition's requirement, solve a CSP
 for INSTANCE in verification/*.xml
 do
