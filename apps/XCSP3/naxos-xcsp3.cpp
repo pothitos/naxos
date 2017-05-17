@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
                 interrupted = false;
                 searching = true;
                 // Register interruption signal handler
-                signal(SIGINT, interruptionHandler);
+                signal(SIGTERM, interruptionHandler);
                 while (solver->nextSolution() != false) {
                         searching = false;
                         solver->recordSolution();
@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
                         searching = true;
                         // Check if interrupted while in critical area
                         if (interrupted)
-                                interruptionHandler(SIGINT); // resume function
+                                interruptionHandler(SIGTERM); // resume function
                 }
                 // Search has been completed
                 searching = false;
