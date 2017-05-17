@@ -112,11 +112,11 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @}
 
     private:
-        /// Collect created arrays here for future garbage destruction
+        /// Collects created arrays here for future garbage destruction
         naxos::NsList<naxos::NsIntVarArray> arrays;
 
-        /// Convert an XCSP3 array into a Naxos array
-        void collectArray(const std::vector<XCSP3Core::XVariable*>& list)
+        /// Converts an XCSP3 array into a Naxos array
+        void collectArray(std::vector<XCSP3Core::XVariable*>& list)
         {
                 arrays.push_back(naxos::NsIntVarArray());
                 for (auto& var : list)
