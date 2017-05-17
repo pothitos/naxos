@@ -34,9 +34,7 @@ $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 
 # For each Mini-solver Competition's requirement, solve a CSP
-for INSTANCE in verification/*.xml \
-                parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml \
-                parser/src/XCSP3-CPP-Parser/instances/obj.xml
+for INSTANCE in verification/*.xml
 do
     # Set the stored solution file name
     SOLUTION="verification/$(basename $INSTANCE .xml).sol"
