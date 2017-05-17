@@ -35,10 +35,12 @@ $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 
 # List 'timeout' command options
 timeout --help
-# Limit the available time for searching a solution
-timeout -s SIGINT --preserve-status 10 $MEM_CHECK ./naxos-xcsp3 verification/without_solutions/AllConstraints.xml
-# Reduce the available time, while not performing a memory test
-timeout -s SIGINT --preserve-status 5 ./naxos-xcsp3 verification/without_solutions/AllConstraintsFormatted.xml
+# Limit the available time to 10s for searching a solution
+timeout --signal=SIGINT --kill-after=1s 10s \
+    $MEM_CHECK ./naxos-xcsp3 verification/without_solutions/AllConstraints.xml || test $? = 124
+# Reduce the available time to 5s, while not testing memory
+timeout --signal=SIGINT --kill-after=1s 5s \
+    ./naxos-xcsp3 verification/without_solutions/AllConstraintsFormatted.xml || test $? = 124
 
 # For each Mini-solver Competition's requirement, solve a CSP
 for INSTANCE in verification/*.xml
