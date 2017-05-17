@@ -1,6 +1,7 @@
 # This is used by Travis CI site in order
 # to build and test the library online.
 
+dist: trusty
 language: cpp
 
 env:
