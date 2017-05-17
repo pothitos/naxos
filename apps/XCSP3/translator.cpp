@@ -750,7 +750,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
 void Xcsp3_to_Naxos::addObjectiveArray(ExpressionObjective type)
 {
         constraintOptimisationMode = true;
-        NsIntVarArray objArray = arrays.back();
+        NsIntVarArray& objArray = arrays.back();
         switch (type) {
         case SUM_O:
                 pm.minimize(objectiveSign * NsSum(objArray));
