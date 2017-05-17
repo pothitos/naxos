@@ -33,8 +33,8 @@ $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml
 # Default Constraint Optimisation (COP) instance
 $MEM_CHECK ./naxos-xcsp3 parser/src/XCSP3-CPP-Parser/instances/obj.xml
 
-# List 'timeout' command options
-timeout --help
+# Display 'timeout' command version
+timeout --version
 # Limit the available time to 10s for searching a solution
 timeout --signal=SIGINT --kill-after=1s 10s \
     $MEM_CHECK ./naxos-xcsp3 verification/without_solutions/AllConstraints.xml || test $? = 124
