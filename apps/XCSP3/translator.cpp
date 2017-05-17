@@ -604,14 +604,8 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
                 }
                 cout << cond << "\n";
         }
-        // Push a new array in the end of the arrays' collection
-        arrays.push_back(NsIntVarArray());
-        // Create a reference to the new array
-        NsIntVarArray& array = arrays.back();
-        // Add the new array's items
-        for (vector<XVariable*>::size_type i = 0; i < list.size(); ++i)
-                array.push_back(coeffs.at(i) * variable[list[i]->id]);
-        unfoldSumConstraintOperand(array, cond);
+        collectArray(list, coeffs);
+        unfoldSumConstraintOperand(arrays.back(), cond);
 }
 
 /// Sum constraint with variables as weights
@@ -722,7 +716,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
         objectiveSign = +1;
-        // TODO
+        collectArray(list);
         addObjectiveArray(type);
 }
 
@@ -730,7 +724,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
         objectiveSign = -1;
-        // TODO
+        collectArray(list);
         addObjectiveArray(type);
 }
 
@@ -739,7 +733,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<int>& coefs)
 {
         objectiveSign = +1;
-        // TODO
+        collectArray(list, coefs);
         addObjectiveArray(type);
 }
 
@@ -748,7 +742,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<int>& coefs)
 {
         objectiveSign = -1;
-        // TODO
+        collectArray(list, coefs);
         addObjectiveArray(type);
 }
 

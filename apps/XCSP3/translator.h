@@ -123,6 +123,18 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                         arrays.back().push_back(variable[var->id]);
         }
 
+        /// Converts an XCSP3 array with weights into a Naxos array
+        void collectArray(std::vector<XCSP3Core::XVariable*>& list,
+                          std::vector<int>& coeffs)
+        {
+                arrays.push_back(naxos::NsIntVarArray());
+                // Add the new array's items
+                for (std::vector<XCSP3Core::XVariable*>::size_type i = 0;
+                     i < list.size(); ++i)
+                        arrays.back().push_back(coeffs.at(i) *
+                                                variable[list[i]->id]);
+        }
+
     public:
         /// Constructor
         Xcsp3_to_Naxos(const bool verbose_init)
