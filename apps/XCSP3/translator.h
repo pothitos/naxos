@@ -358,6 +358,9 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                                std::vector<XCSP3Core::XVariable*>& list,
                                std::vector<int>& coefs) override;
 
+    private:
+        void addObjectiveArray(XCSP3Core::ExpressionObjective type);
+
         /// @}
 };
 

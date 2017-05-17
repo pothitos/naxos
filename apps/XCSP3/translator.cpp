@@ -721,33 +721,54 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
-        constraintOptimisationMode = true;
         objectiveSign = +1;
         // TODO
+        addObjectiveArray(type);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list)
 {
-        constraintOptimisationMode = true;
         objectiveSign = -1;
         // TODO
+        addObjectiveArray(type);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,
                                             vector<XVariable*>& list,
                                             vector<int>& coefs)
 {
-        constraintOptimisationMode = true;
         objectiveSign = +1;
         // TODO
+        addObjectiveArray(type);
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
                                             vector<XVariable*>& list,
                                             vector<int>& coefs)
 {
-        constraintOptimisationMode = true;
         objectiveSign = -1;
         // TODO
+        addObjectiveArray(type);
+}
+
+/// Sets the objective goal for arrays
+void Xcsp3_to_Naxos::addObjectiveArray(ExpressionObjective type)
+{
+        constraintOptimisationMode = true;
+        NsIntVarArray objArray = arrays.back();
+        switch (type) {
+        case SUM_O:
+                pm.minimize(objectiveSign * NsSum(objArray));
+                break;
+        case MINIMUM_O:
+                pm.minimize(objectiveSign * NsMin(objArray));
+                break;
+        case MAXIMUM_O:
+                pm.minimize(objectiveSign * NsMax(objArray));
+                break;
+        default:
+                throw invalid_argument("Unsupported objective type");
+                break;
+        }
 }
