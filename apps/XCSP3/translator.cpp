@@ -149,8 +149,8 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
                 displayList(values);
         }
         if (values.empty()) {
-                throw domain_error("The domain of a constrained variable "
-                                   "cannot be empty");
+                throw domain_error("The domain of the constrained variable '" +
+                                   id + "' cannot be empty");
         }
         // Ensure that the values are ordered
         sort(values.begin(), values.end());
@@ -195,7 +195,8 @@ OrderType parseComparison(const string& comparison)
         else if (comparison == "ge")
                 return GE;
         else
-                throw invalid_argument("Invalid intension constraint");
+                throw invalid_argument("Invalid intension constraint '" +
+                                       comparison + "'");
 }
 
 /// Tokenizes the expression inside a comparison, i.e. "add(X,1),Y"
@@ -218,15 +219,18 @@ void parseExpression(const string& expr, string& tokenLeft, string& tokenRight,
                 if (c == '(') {
                         if (insideParentheses) {
                                 throw invalid_argument("Only one arithmetic "
-                                                       "operation is "
-                                                       "permitted");
+                                                       "operation is permitted "
+                                                       "in '" +
+                                                       expr + "'");
                         }
                         insideParentheses = true;
                         operation = currentToken;
                         currentToken = "";
                 } else if (c == ')') {
-                        if (!insideParentheses)
-                                throw invalid_argument("Unmatched parenthesis");
+                        if (!insideParentheses) {
+                                throw invalid_argument(
+                                    "Unmatched parenthesis in '" + expr + "'");
+                        }
                         insideParentheses = false;
                         operand2 = currentToken;
                         currentToken = "";
@@ -390,8 +394,8 @@ NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprOperation(const string& operation,
         else if (operation == "dist")
                 return (NsAbs(operand1 - operand2)).post();
         else
-                throw invalid_argument("Unsupported operator for intension "
-                                       "constraint");
+                throw invalid_argument("Unsupported operator '" + operation +
+                                       "' for intension constraint");
 }
 
 /// Intension constraint
@@ -399,8 +403,10 @@ void Xcsp3_to_Naxos::buildConstraintIntension(string id, string expr)
 {
         if (verbose)
                 cout << "    intension " << id << ": " << expr << "\n";
-        if (expr.size() < 4 || expr[2] != '(' || expr[expr.size() - 1] != ')')
-                throw invalid_argument("Invalid intension constraint");
+        if (expr.size() < 4 || expr[2] != '(' || expr[expr.size() - 1] != ')') {
+                throw invalid_argument("Invalid intension constraint '" + expr +
+                                       "'");
+        }
         string comparison = expr.substr(0, 2);
         // Store comparison into 'comp' variable
         OrderType comp = parseComparison(comparison);
