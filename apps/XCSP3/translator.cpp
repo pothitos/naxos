@@ -138,8 +138,8 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
                 cout << "    var " << id << ": " << minValue << "..."
                      << maxValue << "\n";
         }
-        variable[id] = NsIntVar(pm, minValue, maxValue);
-        recordVar(id, variable[id]);
+        variableStore[id] = NsIntVar(pm, minValue, maxValue);
+        recordVar(id, variable(id));
 }
 
 void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
@@ -155,12 +155,12 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         // Ensure that the values are ordered
         sort(values.begin(), values.end());
         // Set variable's domain to be the whole values[0]..values[N-1]
-        variable[id] = NsIntVar(pm, values.front(), values.back());
+        variableStore[id] = NsIntVar(pm, values.front(), values.back());
         // Remove gaps from the variable's domain
         for (vector<int>::size_type i = 0; i < values.size() - 1; ++i)
                 for (int val = values[i] + 1; val < values[i + 1]; ++val)
-                        variable[id].remove(val);
-        recordVar(id, variable[id]);
+                        variable(id).remove(val);
+        recordVar(id, variable(id));
 }
 
 namespace {
@@ -261,7 +261,7 @@ void Xcsp3_to_Naxos::unfoldLeftToken(
                 unfoldRightToken(comparison, constant, tokenRight, operation,
                                  operand1, operand2);
         } else { // Left token is a variable
-                unfoldRightToken(comparison, variable[tokenLeft], tokenRight,
+                unfoldRightToken(comparison, variable(tokenLeft), tokenRight,
                                  operation, operand1, operand2);
         }
 }
@@ -279,7 +279,7 @@ void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsInt tokenLeft,
                 addIntensionConstraint(comparison, tokenLeft, VarTmp);
         } else { // Left token is a variable
                 addIntensionConstraint(comparison, tokenLeft,
-                                       variable[tokenRight]);
+                                       variable(tokenRight));
         }
 }
 
@@ -300,7 +300,7 @@ void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsIntVar& tokenLeft,
                 addIntensionConstraint(comparison, tokenLeft, constant);
         } else { // Left token is a variable
                 addIntensionConstraint(comparison, tokenLeft,
-                                       variable[tokenRight]);
+                                       variable(tokenRight));
         }
 }
 
@@ -344,7 +344,7 @@ NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken1(const string& operation,
         if (strToLong(operand1, constant)) // Left operand is a constant
                 return unfoldArithmExprToken2(operation, constant, operand2);
         else // Left operand is a variable
-                return unfoldArithmExprToken2(operation, variable[operand1],
+                return unfoldArithmExprToken2(operation, variable(operand1),
                                               operand2);
 }
 
@@ -355,7 +355,7 @@ NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken2(const string& operation,
 {
         // Right operand is necessarily a variable
         return unfoldArithmExprOperation(operation, operand1,
-                                         variable[operand2]);
+                                         variable(operand2));
 }
 
 /// Converts the right-hand operand into its corresponding type
@@ -368,7 +368,7 @@ NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprToken2(const string& operation,
                 return unfoldArithmExprOperation(operation, operand1, constant);
         else // Right operand is a variable
                 return unfoldArithmExprOperation(operation, operand1,
-                                                 variable[operand2]);
+                                                 variable(operand2));
 }
 
 /// Materializes the arithmetic operation string
@@ -424,8 +424,8 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
                 cout << "    intension " << id << ": " << x->id
                      << (k >= 0 ? "+" : "") << k << " op " << y->id << "\n";
         }
-        NsIntVar& VarX = variable[x->id];
-        NsIntVar& VarY = variable[y->id];
+        NsIntVar& VarX = variable(x->id);
+        NsIntVar& VarY = variable(y->id);
         switch (op) {
         case EQ:
                 pm.add(VarX + k == VarY);
@@ -561,7 +561,7 @@ void Xcsp3_to_Naxos::unfoldSumConstraintOperand(NsIntVarArray& array,
                 break;
         case VARIABLE:
                 unfoldSumConstraintCondition(array, cond.op,
-                                             variable[cond.var]);
+                                             variable(cond.var));
                 break;
         default:
                 throw invalid_argument("Unsupported operand for sum");
@@ -634,8 +634,8 @@ void Xcsp3_to_Naxos::buildConstraintSum(string id, vector<XVariable*>& list,
         NsIntVarArray& array = arrays.back();
         // Add the new array's items
         for (vector<XVariable*>::size_type i = 0; i < list.size(); ++i)
-                array.push_back(variable[coeffs.at(i)->id] *
-                                variable[list[i]->id]);
+                array.push_back(variable(coeffs.at(i)->id) *
+                                variable(list[i]->id));
         unfoldSumConstraintOperand(array, cond);
 }
 
@@ -660,7 +660,7 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                 throw invalid_argument("rank argument of element "
                                        "constraint should be any");
         }
-        NsIntVar& VarIndex = variable[index->id];
+        NsIntVar& VarIndex = variable(index->id);
         collectArray(list);
         // TODO: Implement VarArr[Var] constraint
         // pm.add(arrays.back()[VarIndex] == value);
@@ -687,8 +687,8 @@ void Xcsp3_to_Naxos::buildConstraintElement(string id, vector<XVariable*>& list,
                 throw invalid_argument("rank argument of element "
                                        "constraint should be any");
         }
-        NsIntVar& VarIndex = variable[index->id];
-        NsIntVar& VarValue = variable[value->id];
+        NsIntVar& VarIndex = variable(index->id);
+        NsIntVar& VarValue = variable(value->id);
         collectArray(list);
         // TODO: Implement VarArr[Var] constraint
         // pm.add(arrays.back()[VarIndex] == VarValue);
@@ -700,7 +700,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
                 cout << "    minimize var " << x << "\n";
         constraintOptimisationMode = true;
         objectiveSign = +1;
-        pm.minimize(objectiveSign * variable[x->id]);
+        pm.minimize(objectiveSign * variable(x->id));
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
@@ -709,7 +709,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
                 cout << "    maximize var " << x << "\n";
         constraintOptimisationMode = true;
         objectiveSign = -1;
-        pm.minimize(objectiveSign * variable[x->id]);
+        pm.minimize(objectiveSign * variable(x->id));
 }
 
 void Xcsp3_to_Naxos::buildObjectiveMinimize(ExpressionObjective type,

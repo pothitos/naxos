@@ -57,7 +57,18 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         typedef std::unordered_map<std::string, naxos::NsIntVar> stringToVar_t;
 
         /// Maps a string to a constrained variable
-        stringToVar_t variable;
+        stringToVar_t variableStore;
+
+        /// Returns the variable that corresponds to the id
+        naxos::NsIntVar& variable(const string& id)
+        {
+                try {
+                        return variableStore.at(id);
+                } catch (std::out_of_range exception) {
+                        throw std::out_of_range("Undefined variable '" + id +
+                                                "'");
+                }
+        }
 
         /// The variables will be instantiated with NsgLabeling
         naxos::NsIntVarArray AllVars;
@@ -120,7 +131,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         {
                 arrays.push_back(naxos::NsIntVarArray());
                 for (auto& var : list)
-                        arrays.back().push_back(variable[var->id]);
+                        arrays.back().push_back(variable(var->id));
         }
 
         /// Converts an XCSP3 array with weights into a Naxos array
@@ -132,7 +143,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                 for (std::vector<XCSP3Core::XVariable*>::size_type i = 0;
                      i < list.size(); ++i)
                         arrays.back().push_back(coeffs.at(i) *
-                                                variable[list[i]->id]);
+                                                variable(list[i]->id));
         }
 
     public:
