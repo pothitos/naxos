@@ -40,7 +40,7 @@ Ns_StackSearch::goal_iterator& Ns_StackSearch::goal_iterator::operator++(void)
 void Ns_StackSearch::mapperInputToFile(const char* fileName, int mapperId)
 {
         fileMapperInput.open(fileName);
-        assert_Ns(fileMapperInput,
+        assert_Ns(fileMapperInput.good(),
                   "Ns_StackSearch::mapperInputToFile: Could not open file");
         mapper = mapperId;
 }
@@ -49,7 +49,7 @@ void Ns_StackSearch::mapperInputToFile(const char* fileName, int mapperId)
 void Ns_StackSearch::searchToGraphFile(const char* fileName)
 {
         fileSearchGraph.open(fileName);
-        assert_Ns(fileSearchGraph,
+        assert_Ns(fileSearchGraph.good(),
                   "Ns_StackSearch::searchToGraphFile: Could not open file");
         fileSearchGraph << "digraph \"Search Tree\" {\n\n"
                         << "\tnode [shape=point];\n\n"
@@ -217,7 +217,7 @@ void NsProblemManager::constraintsToGraphFile(const char* fileName)
 {
         fileConstraintsGraph.open(fileName);
         assert_Ns(
-            fileConstraintsGraph,
+            fileConstraintsGraph.good(),
             "NsProblemManager::constraintsToGraphFile: Could not open file");
         fileConstraintsGraph
             << "digraph \"Constraint Network\" {\n\n"
@@ -266,7 +266,7 @@ bool Ns_StackSearch::readSplit(string& splitEnd)
                 mapperLineStartTime = clock();
         istringstream line(mapperLine);
         string lineHeader;
-        assert_Ns(line >> lineHeader,
+        assert_Ns((line >> lineHeader).good(),
                   "Ns_StackSearch::readSplit: Cannot read split line header");
         assert_Ns(lineHeader == NsProblemManager::SPLIT_HEADER,
                   "Ns_StackSearch::readSplit: Wrong split line header");

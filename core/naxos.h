@@ -1246,7 +1246,7 @@ class Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 assert_Ns(
-                    fileConstraintsGraph,
+                    fileConstraintsGraph.good(),
                     "Ns_Constraint::toGraphFile: Problem writing to file");
                 fileConstraintsGraph
                     << "\n\t"
@@ -3960,6 +3960,30 @@ class NsgLabeling : public NsGoal {
 /// item is added into this queue.
 class Ns_QueueItem {
 
+    public:
+
+        /// Describes the removal of the member removedValue from the domain of
+        /// varFired. Contains the value that was removed, and which constraint
+        /// did it.
+        struct RemovedValueRecord_t {
+
+          /// The value that was taken from the domain of varFired. The
+          /// 'w' of the AC-5 algorithm.
+          const NsInt value;
+
+          /// The constraint that fired the removal of the value
+          /// removedValue from the domain of the variable varFired. If
+          /// no constraint provoked the removal, then constrFired == 0.
+          const Ns_Constraint* constrFired;
+
+          /// Constructor
+          RemovedValueRecord_t(const NsInt removedValue_init,
+            const Ns_Constraint* constrFired_init)
+            : value(removedValue_init), constrFired(constrFired_init)
+          {
+          }
+        };
+
     private:
         /// The domain of this variable has been modified
         NsIntVar* varFired;
@@ -4006,28 +4030,6 @@ class Ns_QueueItem {
 
         /// Used to record a modification of the bounds (if any)
         RemovedBoundRecord_t removedBoundRec;
-
-        /// Describes the removal of the member removedValue from the domain of
-        /// varFired. Contains the value that was removed, and which constraint
-        /// did it.
-        struct RemovedValueRecord_t {
-
-                /// The value that was taken from the domain of varFired. The
-                /// 'w' of the AC-5 algorithm.
-                const NsInt value;
-
-                /// The constraint that fired the removal of the value
-                /// removedValue from the domain of the variable varFired. If
-                /// no constraint provoked the removal, then constrFired == 0.
-                const Ns_Constraint* constrFired;
-
-                /// Constructor
-                RemovedValueRecord_t(const NsInt removedValue_init,
-                                     const Ns_Constraint* constrFired_init)
-                  : value(removedValue_init), constrFired(constrFired_init)
-                {
-                }
-        };
 
         /// An array that records the values removed from the domain of varFired
         NsDeque<RemovedValueRecord_t> removedValues;
