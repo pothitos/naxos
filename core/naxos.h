@@ -3960,11 +3960,13 @@ class NsgLabeling : public NsGoal {
 /// item is added into this queue.
 class Ns_QueueItem {
 
-    public:
+    private:
+        /// The domain of this variable has been modified
+        NsIntVar* varFired;
 
-        /// Describes the removal of the member removedValue from the domain of
-        /// varFired. Contains the value that was removed, and which constraint
-        /// did it.
+        /// The index of the constraint to check
+        NsDeque<NsIntVar::ConstraintAndFailure>::size_type currentConstr;
+
         struct RemovedValueRecord_t {
 
           /// The value that was taken from the domain of varFired. The
@@ -3983,13 +3985,6 @@ class Ns_QueueItem {
           {
           }
         };
-
-    private:
-        /// The domain of this variable has been modified
-        NsIntVar* varFired;
-
-        /// The index of the constraint to check
-        NsDeque<NsIntVar::ConstraintAndFailure>::size_type currentConstr;
 
         struct RemovedValueRecord_t;
 
