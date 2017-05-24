@@ -3986,8 +3986,6 @@ class Ns_QueueItem {
                 }
         };
 
-        struct RemovedValueRecord_t;
-
         /// The index of the removed value that will be checked against
         /// constraints (that require arc consistency)
         NsDeque<RemovedValueRecord_t>::size_type currentRemovedValue;
