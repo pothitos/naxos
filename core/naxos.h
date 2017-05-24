@@ -3969,21 +3969,21 @@ class Ns_QueueItem {
 
         struct RemovedValueRecord_t {
 
-          /// The value that was taken from the domain of varFired. The
-          /// 'w' of the AC-5 algorithm.
-          const NsInt value;
+                /// The value that was taken from the domain of varFired. The
+                /// 'w' of the AC-5 algorithm.
+                const NsInt value;
 
-          /// The constraint that fired the removal of the value
-          /// removedValue from the domain of the variable varFired. If
-          /// no constraint provoked the removal, then constrFired == 0.
-          const Ns_Constraint* constrFired;
+                /// The constraint that fired the removal of the value
+                /// removedValue from the domain of the variable varFired. If
+                /// no constraint provoked the removal, then constrFired == 0.
+                const Ns_Constraint* constrFired;
 
-          /// Constructor
-          RemovedValueRecord_t(const NsInt removedValue_init,
-            const Ns_Constraint* constrFired_init)
-            : value(removedValue_init), constrFired(constrFired_init)
-          {
-          }
+                /// Constructor
+                RemovedValueRecord_t(const NsInt removedValue_init,
+                                     const Ns_Constraint* constrFired_init)
+                  : value(removedValue_init), constrFired(constrFired_init)
+                {
+                }
         };
 
         struct RemovedValueRecord_t;
