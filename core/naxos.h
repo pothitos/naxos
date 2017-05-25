@@ -4466,7 +4466,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 /// Describes a search node of the binary search tree
 ///
 /// A critical type that can describe the current status of the problem.
-struct Ns_SearchNode {
+class Ns_SearchNode {
 
     public:
         /// Alternative goal to satisfy if search fails
