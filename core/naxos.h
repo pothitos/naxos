@@ -4093,7 +4093,7 @@ class Ns_StackGoals : public NsStack<NsGoal*> {
         ~Ns_StackGoals(void);
 };
 
-class Ns_SearchNode;
+struct Ns_SearchNode;
 
 /// Contains all the Ns_SearchNode's
 ///
@@ -4466,7 +4466,7 @@ class Ns_StackSearch : public NsStack<Ns_SearchNode> {
 /// Describes a search node of the binary search tree
 ///
 /// A critical type that can describe the current status of the problem.
-class Ns_SearchNode {
+struct Ns_SearchNode {
 
     public:
         /// Alternative goal to satisfy if search fails
