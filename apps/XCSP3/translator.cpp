@@ -475,6 +475,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
         }
+        collectTuples(tuples);
         // TODO
 }
 
@@ -498,6 +499,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
         }
+        collectTuples(tuples);
         // TODO
 }
 

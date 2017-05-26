@@ -276,6 +276,34 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @{
         /// @name Extensional Constraints
 
+    private:
+        /// Collection of all the tables for the extensional constraints
+        naxos::NsList<naxos::NsDeque<naxos::NsDeque<naxos::NsInt>>> tuplesStore;
+
+        /// Stores the table of the last unary extensional constraint
+        void collectTuples(const std::vector<int>& tuple)
+        {
+                tuplesStore.push_back(
+                    naxos::NsDeque<naxos::NsDeque<naxos::NsInt>>());
+                tuplesStore.back().push_back(naxos::NsDeque<naxos::NsInt>());
+                for (const auto& value : tuple)
+                        tuplesStore.back().back().push_back(value);
+        }
+
+        /// Stores the table of the last extensional constraint
+        void collectTuples(std::vector<std::vector<int>>& tuples)
+        {
+                tuplesStore.push_back(
+                    naxos::NsDeque<naxos::NsDeque<naxos::NsInt>>());
+                for (const auto& tuple : tuples) {
+                        tuplesStore.back().push_back(
+                            naxos::NsDeque<naxos::NsInt>());
+                        for (const auto& value : tuple)
+                                tuplesStore.back().back().push_back(value);
+                }
+        }
+
+    public:
         virtual void buildConstraintExtension(std::string id,
                                               XCSP3Core::XVariable* var,
                                               std::vector<int>& tuples,
