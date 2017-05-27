@@ -525,6 +525,11 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
         }
         collectTuples(tuples);
         addUnaryExtensionConstraint(var, support);
+        // TODO: Remove the above unary constraint function
+        // Use the common extensional constraint function even for one variable
+        // vector<XVariable*> list;
+        // list.push_back(var);
+        // addExtensionConstraint(list, support);
 }
 
 /// Extension constraint
