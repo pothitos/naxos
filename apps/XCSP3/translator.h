@@ -303,6 +303,12 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                 }
         }
 
+        void addUnaryExtensionConstraint(XCSP3Core::XVariable* var,
+                                         bool support);
+
+        void addExtensionConstraint(std::vector<XCSP3Core::XVariable*> list,
+                                    bool support);
+
     public:
         virtual void buildConstraintExtension(std::string id,
                                               XCSP3Core::XVariable* var,

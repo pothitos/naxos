@@ -458,6 +458,19 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
         }
 }
 
+/// Materializes the unary extensional constraint
+void Xcsp3_to_Naxos::addUnaryExtensionConstraint(XVariable* var, bool support)
+{
+        // TODO
+}
+
+/// Materializes the extensional constraint
+void Xcsp3_to_Naxos::addExtensionConstraint(vector<XVariable*> list,
+                                            bool support)
+{
+        // TODO
+}
+
 /// Unary extension constraint
 void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
                                               vector<int>& tuples, bool support,
@@ -476,7 +489,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id, XVariable* var,
                                        "containing '*', are not accepted");
         }
         collectTuples(tuples);
-        // TODO
+        addUnaryExtensionConstraint(var, support);
 }
 
 /// Extension constraint
@@ -500,7 +513,7 @@ void Xcsp3_to_Naxos::buildConstraintExtension(string id,
                                        "containing '*', are not accepted");
         }
         collectTuples(tuples);
-        // TODO
+        addExtensionConstraint(list, support);
 }
 
 /// Extension constraint with exactly the same tuples as the previous one
@@ -514,7 +527,10 @@ void Xcsp3_to_Naxos::buildConstraintExtensionAs(string id,
                 throw invalid_argument("Short tables, i.e. tables with tuples "
                                        "containing '*', are not accepted");
         }
-        // TODO
+        if (list.size() == 1)
+                addUnaryExtensionConstraint(list[0], support);
+        else
+                addExtensionConstraint(list, support);
 }
 
 void Xcsp3_to_Naxos::buildConstraintAlldifferent(string id,
