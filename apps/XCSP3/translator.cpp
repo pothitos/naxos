@@ -482,7 +482,14 @@ void Xcsp3_to_Naxos::buildConstraintPrimitive(string id, OrderType op,
 /// Materializes the unary extensional constraint
 void Xcsp3_to_Naxos::addUnaryExtensionConstraint(XVariable* var, bool support)
 {
-        // TODO
+        NsIntVar& Var = variable(var->id);
+        NsDeque<NsInt>& tuple = tuplesStore.back().back();
+        if (support) {
+                removeUnsupportedValues(Var, tuple);
+        } else {
+                for (auto val : tuple)
+                        Var.remove(val);
+        }
 }
 
 /// Materializes the extensional constraint
