@@ -144,14 +144,24 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
 
 namespace {
 
-void removeUnsupportedValues(NsIntVar& Var, vector<int>& supports)
+/// Leaves only the 'supports' values of the constrained variable
+void removeUnsupportedValues(NsIntVar& Var, NsDeque<NsInt>& supports)
 {
         // Ensure that the values are ordered
         sort(supports.begin(), supports.end());
         // Remove gaps from the variable's domain
-        for (vector<int>::size_type i = 0; i < supports.size() - 1; ++i)
-                for (int val = supports[i] + 1; val < supports[i + 1]; ++val)
+        for (NsDeque<NsInt>::size_type i = 0; i < supports.size() - 1; ++i)
+                for (NsInt val = supports[i] + 1; val < supports[i + 1]; ++val)
                         Var.remove(val);
+}
+
+/// Converts vector to NsDeque before removing unsupported values
+void removeUnsupportedValues(NsIntVar& Var, vector<int>& supports)
+{
+        NsDeque<NsInt> supportsDeque;
+        for (auto val : supports)
+                supportsDeque.push_back(val);
+        removeUnsupportedValues(Var, supportsDeque);
 }
 
 } // end namespace
