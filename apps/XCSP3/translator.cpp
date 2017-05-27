@@ -142,6 +142,20 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
         recordVar(id, variable(id));
 }
 
+namespace {
+
+void removeUnsupportedValues(NsIntVar& Var, vector<int>& supports)
+{
+        // Ensure that the values are ordered
+        sort(supports.begin(), supports.end());
+        // Remove gaps from the variable's domain
+        for (vector<int>::size_type i = 0; i < supports.size() - 1; ++i)
+                for (int val = supports[i] + 1; val < supports[i + 1]; ++val)
+                        Var.remove(val);
+}
+
+} // end namespace
+
 void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
 {
         if (verbose) {
@@ -156,10 +170,7 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         sort(values.begin(), values.end());
         // Set variable's domain to be the whole values[0]..values[N-1]
         variableStore[id] = NsIntVar(pm, values.front(), values.back());
-        // Remove gaps from the variable's domain
-        for (vector<int>::size_type i = 0; i < values.size() - 1; ++i)
-                for (int val = values[i] + 1; val < values[i + 1]; ++val)
-                        variable(id).remove(val);
+        removeUnsupportedValues(variable(id), values);
         recordVar(id, variable(id));
 }
 
