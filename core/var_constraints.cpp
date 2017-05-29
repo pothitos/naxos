@@ -1268,9 +1268,9 @@ void Ns_ConstrXeqYtimesZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 }
 
 void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
-                      NsInt& max, const Ns_Constraint* constraint)
+                      NsInt& max)
 {
-        VarZ->removeSingle(0, constraint);
+        VarZ->remove(0);
         assert_Ns(!(VarZ->isBound() && VarZ->value() == 0),
                   "quotient_min_max: zero 'VarZ'");
         NsInt quotient;
