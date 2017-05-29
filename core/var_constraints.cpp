@@ -1320,8 +1320,18 @@ void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
 
 void Ns_ConstrXeqYdivZ::ArcCons(void)
 {
-        // TODO
-        throw invalid_argument("Unimplemented constraint Y div Z");
+        NsInt min, max;
+        bool changed_minmax;
+        do {
+                changed_minmax = false;
+                quotient_min_max(VarY, VarZ, min, max);
+                VarX->removeRange(NsMINUS_INF, min - 1, this);
+                VarX->removeRange(max + 1, NsPLUS_INF, this);
+                // TODO
+                throw invalid_argument("Unimplemented constraint Y div Z");
+                //product_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
+                //product_prune_bound(VarX, VarZ, VarY, changed_minmax, this);
+        } while (changed_minmax);
 }
 
 void Ns_ConstrXeqYdivZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
