@@ -1200,57 +1200,6 @@ void Ns_ConstrXeqYplusZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
         ArcCons();
 }
 
-void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
-                      NsInt& max, const Ns_Constraint* constraint)
-{
-        VarZ->removeSingle(0, constraint);
-        assert_Ns(!(VarZ->isBound() && VarZ->value() == 0),
-                  "quotient_min_max: zero 'VarZ'");
-        NsInt quotient;
-        quotient = VarY->min() / VarZ->min();
-        min = max = quotient;
-        quotient = VarY->max() / VarZ->min();
-        if (quotient < min)
-                min = quotient;
-        if (quotient > max)
-                max = quotient;
-        quotient = VarY->min() / VarZ->max();
-        if (quotient < min)
-                min = quotient;
-        if (quotient > max)
-                max = quotient;
-        quotient = VarY->max() / VarZ->max();
-        if (quotient < min)
-                min = quotient;
-        if (quotient > max)
-                max = quotient;
-        NsInt divisor;
-        if ((divisor = VarZ->previous(0)) != NsMINUS_INF) {
-                quotient = VarY->min() / divisor;
-                if (quotient < min)
-                        min = quotient;
-                if (quotient > max)
-                        max = quotient;
-                quotient = VarY->max() / divisor;
-                if (quotient < min)
-                        min = quotient;
-                if (quotient > max)
-                        max = quotient;
-        }
-        if ((divisor = VarZ->next(0)) != NsPLUS_INF) {
-                quotient = VarY->min() / divisor;
-                if (quotient < min)
-                        min = quotient;
-                if (quotient > max)
-                        max = quotient;
-                quotient = VarY->max() / divisor;
-                if (quotient < min)
-                        min = quotient;
-                if (quotient > max)
-                        max = quotient;
-        }
-}
-
 void product_min_max(const NsIntVar* VarY, const NsIntVar* VarZ, NsInt& min,
                      NsInt& max)
 {
@@ -1316,4 +1265,55 @@ void Ns_ConstrXeqYtimesZ::ArcCons(void)
 void Ns_ConstrXeqYtimesZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
+}
+
+void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
+                      NsInt& max, const Ns_Constraint* constraint)
+{
+        VarZ->removeSingle(0, constraint);
+        assert_Ns(!(VarZ->isBound() && VarZ->value() == 0),
+                  "quotient_min_max: zero 'VarZ'");
+        NsInt quotient;
+        quotient = VarY->min() / VarZ->min();
+        min = max = quotient;
+        quotient = VarY->max() / VarZ->min();
+        if (quotient < min)
+                min = quotient;
+        if (quotient > max)
+                max = quotient;
+        quotient = VarY->min() / VarZ->max();
+        if (quotient < min)
+                min = quotient;
+        if (quotient > max)
+                max = quotient;
+        quotient = VarY->max() / VarZ->max();
+        if (quotient < min)
+                min = quotient;
+        if (quotient > max)
+                max = quotient;
+        NsInt divisor;
+        if ((divisor = VarZ->previous(0)) != NsMINUS_INF) {
+                quotient = VarY->min() / divisor;
+                if (quotient < min)
+                        min = quotient;
+                if (quotient > max)
+                        max = quotient;
+                quotient = VarY->max() / divisor;
+                if (quotient < min)
+                        min = quotient;
+                if (quotient > max)
+                        max = quotient;
+        }
+        if ((divisor = VarZ->next(0)) != NsPLUS_INF) {
+                quotient = VarY->min() / divisor;
+                if (quotient < min)
+                        min = quotient;
+                if (quotient > max)
+                        max = quotient;
+                quotient = VarY->max() / divisor;
+                if (quotient < min)
+                        min = quotient;
+                if (quotient > max)
+                        max = quotient;
+        }
 }
