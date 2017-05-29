@@ -1317,3 +1317,14 @@ void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
                         max = quotient;
         }
 }
+
+void Ns_ConstrXeqYdivZ::ArcCons(void)
+{
+        // TODO
+        throw invalid_argument("Unimplemented constraint Y div Z");
+}
+
+void Ns_ConstrXeqYdivZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
+{
+        ArcCons();
+}

@@ -300,8 +300,7 @@ void exprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
                 newConstr = new Ns_ConstrXeqYtimesZ(&VarX, &VarY, &VarZ);
                 break;
         case opDiv:
-                throw invalid_argument("Unimplemented constraint Y div Z");
-                // newConstr = new Ns_ConstrXeqYdivZ(&VarY, &VarX, &VarZ);
+                newConstr = new Ns_ConstrXeqYdivZ(&VarY, &VarX, &VarZ);
                 break;
         case opAnd:
                 newConstr = new Ns_ConstrXeqYandZ(&VarX, &VarY, &VarZ, true);
