@@ -300,7 +300,8 @@ void exprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
                 newConstr = new Ns_ConstrXeqYtimesZ(&VarX, &VarY, &VarZ);
                 break;
         case opDiv:
-                newConstr = new Ns_ConstrXeqYtimesZ(&VarY, &VarX, &VarZ);
+                throw invalid_argument("Unimplemented constraint Y div Z");
+                // newConstr = new Ns_ConstrXeqYdivZ(&VarY, &VarX, &VarZ);
                 break;
         case opAnd:
                 newConstr = new Ns_ConstrXeqYandZ(&VarX, &VarY, &VarZ, true);
@@ -377,23 +378,23 @@ NsIntVar& Ns_ExprYtimesZ::post(void) const
         return *VarX;
 }
 
-// void Ns_ExprYdivZ::post(NsIntVar &VarX) const
-//{
-//      NsInt min, max;
-//      quotient_min_max(&VarY, &VarZ, min, max);
-//      VarX = NsIntVar(VarY.manager(), min, max);
-//      exprYopZ_post_constr(VarX, VarY, VarZ, opDiv);
-//}
-//
-// NsIntVar& Ns_ExprYdivZ::post(void) const
-//{
-//      NsInt min, max;
-//      quotient_min_max(&VarY, &VarZ, min, max);
-//      NsIntVar *VarX = new NsIntVar(VarY.manager(), min, max);
-//      exprYopZ_post_constr(*VarX, VarY, VarZ, opDiv);
-//      VarX->manager().recordIntermediateVar(VarX);
-//      return *VarX;
-//}
+void Ns_ExprYdivZ::post(NsIntVar& VarX) const
+{
+        NsInt min, max;
+        quotient_min_max(&VarY, &VarZ, min, max);
+        VarX = NsIntVar(VarY.manager(), min, max);
+        exprYopZ_post_constr(VarX, VarY, VarZ, opDiv);
+}
+
+NsIntVar& Ns_ExprYdivZ::post(void) const
+{
+        NsInt min, max;
+        quotient_min_max(&VarY, &VarZ, min, max);
+        NsIntVar* VarX = new NsIntVar(VarY.manager(), min, max);
+        exprYopZ_post_constr(*VarX, VarY, VarZ, opDiv);
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
+}
 
 void Ns_ExprConstrYandZ::postC(NsIntVar& VarX, bool positively) const
 {
