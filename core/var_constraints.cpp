@@ -1318,6 +1318,31 @@ void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
         }
 }
 
+namespace {
+
+void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+                         bool& changed_minmax, const Ns_Constraint* constraint)
+{
+        while ((VarY->min() / VarZ->min() < VarX->min() &&
+                VarY->max() / VarZ->min() < VarX->min()) ||
+               (VarY->min() / VarZ->min() > VarX->max() &&
+                VarY->max() / VarZ->min() > VarX->max())) {
+                if (!VarZ->removeSingle(VarZ->min(), constraint))
+                        return; // to avoid an infinite loop
+                changed_minmax = true;
+        }
+        while ((VarY->min() / VarZ->max() < VarX->min() &&
+                VarY->max() / VarZ->max() < VarX->min()) ||
+               (VarY->min() / VarZ->max() > VarX->max() &&
+                VarY->max() / VarZ->max() > VarX->max())) {
+                if (!VarZ->removeSingle(VarZ->max(), constraint))
+                        return; // to avoid an infinite loop
+                changed_minmax = true;
+        }
+}
+
+} // end namespace
+
 void Ns_ConstrXeqYdivZ::ArcCons(void)
 {
         NsInt min, max;
@@ -1329,8 +1354,8 @@ void Ns_ConstrXeqYdivZ::ArcCons(void)
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
                 // TODO
                 throw invalid_argument("Unimplemented constraint Y div Z");
-                //product_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
-                //product_prune_bound(VarX, VarZ, VarY, changed_minmax, this);
+                // divident_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
+                divisor_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
         } while (changed_minmax);
 }
 
