@@ -88,7 +88,7 @@ void MakeBoolean(NsIntVar* VarX, const NsConstraint* constraint)
         //}
         VarX->removeRange(2, NsPLUS_INF, constraint);
 }
-} // namespace
+} // end namespace
 
 void ConstrMetaXeqYlessthanC::ArcCons(void)
 {
@@ -1203,7 +1203,7 @@ bool naxos::IntersectionEmpty(const NsIntVar* VarY, const NsIntVar* VarZ)
 //    		const NsConstraint *constraint, const bool neg)
 //    {
 //    }
-//}  // namespace
+//}  // end namespace
 
 void ConstrMetaXeqYeqZ::ArcCons(void)
 {
@@ -1618,7 +1618,7 @@ void ConstrXeqMax::ArcCons(void)
 //			}
 //		}
 //	}
-//}  // namespace
+//}  // end namespace
 
 void ConstrXeqMin::LocalArcCons(QueueItem& Qitem)
 {
@@ -1927,7 +1927,7 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                 changed_minmax = true;
         }
 }
-} // namespace
+} // end namespace
 
 // bounds-consistency only
 void ConstrXeqYtimesZ::ArcCons(void)
@@ -2419,7 +2419,7 @@ void AllDiffBoundsConsistency(
         //} // groups iteration
 }
 
-} // namespace
+} // end namespace
 
 // bounds-consistency only
 void ConstrAllDiffStrong::ArcCons(void)
@@ -2504,7 +2504,7 @@ void countArcCons(const NsIntVar& Var, NsIntVarArray& VarArr,
         }
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ConstrCount::ArcCons(void)
 {
@@ -2541,7 +2541,7 @@ void Ns_ConstrCount::LocalArcCons(QueueItem& Qitem)
 //				X->setID();
 //		}
 //	}
-//}  // namespace
+//}  // end namespace
 
 ConstrInverse::ConstrInverse(NsIntVarArray* VarArrInv_init,
                              NsIntVarArray* VarArr_init)

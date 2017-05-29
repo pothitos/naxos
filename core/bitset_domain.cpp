@@ -37,7 +37,7 @@ inline bool isContinuous(const NsInt minVal, const NsInt maxVal,
         return (diff + 1 == setCount);
 }
 
-} // namespace
+} // end namespace
 
 /// Constructs the domain [minDom_init..maxDom_init]
 Ns_BitSet::Ns_BitSet(NsProblemManager& pm_init, const NsInt minDom_init,

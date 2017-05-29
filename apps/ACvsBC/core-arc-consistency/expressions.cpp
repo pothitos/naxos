@@ -57,7 +57,7 @@ void ExprYopC_post_constr(NsIntVar& VarX, NsIntVar& VarY, const NsInt C,
         NewConstr->ArcCons();
         VarX.manager().RecordConstraint(NewConstr);
 }
-} // namespace
+} // end namespace
 
 void ExprYplusC::post(NsIntVar& VarX) const
 {
@@ -199,7 +199,7 @@ void exprInDomain_post_constr(NsIntVar& VarX, const NsDeque<NsInt>& domain)
                 VarX.remove(domain[i] + 1, domain[i + 1] - 1);
 }
 
-} // namespace
+} // end namespace
 
 void ExprInDomain::post(NsIntVar& VarX) const
 {
@@ -229,7 +229,7 @@ void ExprYplusCZspecial_post_constr(NsIntVar& VarX, NsIntVar& VarY,
         NewConstr->ArcCons();
         VarX.manager().RecordConstraint(NewConstr);
 }
-} // namespace
+} // end namespace
 
 void ExprYplusCZspecial::post(NsIntVar& VarX) const
 {
@@ -296,7 +296,7 @@ void ExprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
         NewConstr->ArcCons();
         VarX.manager().RecordConstraint(NewConstr);
 }
-} // namespace
+} // end namespace
 
 void ExprYplusZ::post(NsIntVar& VarX) const
 {
@@ -477,7 +477,7 @@ void ExprGlobSum_post_constr(NsIntVar& VarX, NsIntVarArray& VarArr,
         VarX.manager().RecordConstraint(NewConstr);
 }
 
-} // namespace
+} // end namespace
 
 void ExprMin::post(NsIntVar& VarX) const
 {
@@ -581,7 +581,7 @@ void exprElement_post_constr(NsIntVar& VarIndex, const NsDeque<NsInt>& intArray,
         VarX.manager().RecordConstraint(newConstr);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ExprElement::post(NsIntVar& VarX) const
 {
@@ -655,7 +655,7 @@ void ExprConstrYopZ_post_constr(NsConstraint* NewConstr, NsIntVar& VarX,
         VarZ.addConstraint(NewConstr);
         ExprConstrYopZ_post_constr(NewConstr, VarX, VarY);
 }
-} // namespace
+} // end namespace
 
 NsConstraint* ExprConstrYlessthanC::postConstraint(bool positively) const
 {

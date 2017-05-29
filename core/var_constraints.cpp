@@ -104,7 +104,7 @@ inline void makeBoolean(NsIntVar* VarX, const Ns_Constraint* constraint)
         VarX->removeRange(2, NsPLUS_INF, constraint);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ConstrMetaXeqYlessthanC::ArcCons(void)
 {
@@ -1246,7 +1246,7 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
         }
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ConstrXeqYtimesZ::ArcCons(void)
 {

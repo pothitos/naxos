@@ -259,7 +259,7 @@ void allDiffArcCons(NsIntVarArray* VarArr,
         }
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ConstrAllDiff::ArcCons(void)
 {
@@ -626,7 +626,7 @@ void allDiffBoundsConsistency(
         delete[] VarArrSorted;
 }
 
-} // namespace
+} // end namespace
 
 // bounds-consistency only
 void Ns_ConstrAllDiffStrong::ArcCons(void)
@@ -790,7 +790,7 @@ void countArcCons(NsIntVarArray& VarArr, const NsIndex i,
         }
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ConstrCount::ArcCons(void)
 {

@@ -61,7 +61,7 @@ void exprYopC_post_constr(NsIntVar& VarX, NsIntVar& VarY, const NsInt C,
         newConstr->ArcCons();
         VarX.manager().recordConstraint(newConstr);
 }
-} // namespace
+} // end namespace
 
 void Ns_ExprYplusC::post(NsIntVar& VarX) const
 {
@@ -232,7 +232,7 @@ void exprInDomain_post_constr(NsIntVar& VarX, const NsDeque<NsInt>& domain,
         VarX.manager().recordConstraint(newConstr);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ExprInDomain::post(NsIntVar& VarX) const
 {
@@ -264,7 +264,7 @@ void exprYplusCZspecial_post_constr(NsIntVar& VarX, NsIntVar& VarY,
         VarX.manager().recordConstraint(newConstr);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ExprYplusCZspecial::post(NsIntVar& VarX) const
 {
@@ -325,7 +325,7 @@ void exprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
         VarX.manager().recordConstraint(newConstr);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ExprYplusZ::post(NsIntVar& VarX) const
 {
@@ -518,7 +518,7 @@ void exprGlobSum_post_constr(NsIntVar& VarX, NsIntVarArray& VarArr,
         VarX.manager().recordConstraint(newConstr);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ExprMin::post(NsIntVar& VarX) const
 {
@@ -618,7 +618,7 @@ void exprElement_post_constr(NsIntVar& VarIndex, const NsDeque<NsInt>& intArray,
         VarX.manager().recordConstraint(newConstr);
 }
 
-} // namespace
+} // end namespace
 
 void Ns_ExprElement::post(NsIntVar& VarX) const
 {
@@ -694,7 +694,7 @@ void exprConstrYopZ_post_constr(Ns_Constraint* newConstr, NsIntVar& VarX,
         exprConstrYopZ_post_constr(newConstr, VarX, VarY);
 }
 
-} // namespace
+} // end namespace
 
 Ns_Constraint* Ns_ExprConstrYlessthanC::postConstraint(bool positively) const
 {
