@@ -44,4 +44,3 @@ NsIntVar& Ns_ExprInDomain::post(void) const
         VarX->manager().recordIntermediateVar(VarX);
         return *VarX;
 }
-
