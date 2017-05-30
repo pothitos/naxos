@@ -25,7 +25,8 @@ include_directories(SYSTEM ${LIBXML2_INCLUDE_DIR}
                     parser/src/XCSP3-CPP-Parser/include)
 
 add_executable(naxos-xcsp3 naxos-xcsp3.cpp translator.cpp)
-target_link_libraries(naxos-xcsp3 naxos ${LIBXML2_LIBRARIES} parserxcsp3core)
+target_link_libraries(naxos-xcsp3 naxos-mini ${LIBXML2_LIBRARIES}
+                      parserxcsp3core)
 add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser)
 
 enable_testing()

@@ -16,6 +16,7 @@ matrix:
             - valgrind
 
     - env: DIRECTORY="apps/XCSP3/"
+           TARGET="naxos-xcsp3"
       dist: trusty
       addons:
         apt:
@@ -117,6 +118,6 @@ matrix:
 script:
     - cd $DIRECTORY
     - test -e CMakeLists.txt && cmake . || true
-    - make -j
+    - make -j $TARGET
     - test -e CMakeLists.txt && ctest -V || make test
     - cd -
