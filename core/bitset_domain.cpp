@@ -3,7 +3,7 @@
 ///
 /// Part of https://github.com/pothitos/naxos
 
-#include "naxos.h"
+#include "naxos-mini.h"
 
 using namespace naxos;
 

@@ -7,7 +7,7 @@
 #ifndef Ns_INTERNAL_H
 #define Ns_INTERNAL_H
 
-#include "naxos.h"
+#include "naxos-mini.h"
 
 bool intersectionEmpty(const naxos::NsIntVar* VarY,
                        const naxos::NsIntVar* VarZ);

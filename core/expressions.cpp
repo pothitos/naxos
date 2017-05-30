@@ -4,7 +4,7 @@
 /// Part of https://github.com/pothitos/naxos
 
 #include "internal.h"
-#include "naxos.h"
+#include "naxos-mini.h"
 #include <cstdlib>
 
 using namespace std;
