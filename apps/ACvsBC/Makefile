@@ -17,7 +17,7 @@ PROGRAMS_AC = $(PROGRAMS:=.AC)
 PR_OBJECTS = $(PROGRAMS:=.o)
 PR_OBJECTS_AC = $(PROGRAMS_AC:=.o)
 
-OBJECTS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o)
+OBJECTS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o non_mini_solver_constraints.o)
 HEADERS = $(addprefix $(NAXOS)/, internal.h naxos.h stack.h)
 
 OBJECTS_AC = $(addprefix $(NAXOS_AC)/, constraints.o expressions.o intvar.o problemmanager.o)

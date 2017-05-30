@@ -27,7 +27,7 @@ RM = \rm -f
 NHDRS_AC = $(NDIR_AC)/naxos.h $(NDIR_AC)/queue.h $(NDIR_AC)/stack.h
 NHDRS = $(NDIR)/internal.h $(NDIR)/naxos.h $(NDIR)/stack.h
 NSRCS_AC = $(NDIR_AC)/constraints.cpp $(NDIR_AC)/expressions.cpp $(NDIR_AC)/intvar.cpp $(NDIR_AC)/problemmanager.cpp
-NSRCS = $(NDIR)/array_constraints.cpp $(NDIR)/bitset_domain.cpp $(NDIR)/expressions.cpp $(NDIR)/intvar.cpp $(NDIR)/problemmanager.cpp $(NDIR)/var_constraints.cpp
+NSRCS = $(NDIR)/array_constraints.cpp $(NDIR)/bitset_domain.cpp $(NDIR)/expressions.cpp $(NDIR)/intvar.cpp $(NDIR)/problemmanager.cpp $(NDIR)/var_constraints.cpp $(NDIR)/non_mini_solver_constraints.cpp
 
 AHDRS = $(ADIR)/amorgos.h $(ADIR)/boundedbt.h $(ADIR)/credit.h $(ADIR)/dbds.h $(ADIR)/dbs.h $(ADIR)/dfs.h $(ADIR)/domain_splitting.h $(ADIR)/fns.h $(ADIR)/gns.h $(ADIR)/heuristics.h $(ADIR)/ibroad.h $(ADIR)/isamp.h $(ADIR)/lan.h $(ADIR)/lds.h $(ADIR)/onesamp.h $(ADIR)/pops.h $(ADIR)/rdfs.h
 ASRCS = $(ADIR)/boundedbt.cpp $(ADIR)/credit.cpp $(ADIR)/dbds.cpp $(ADIR)/dbs.cpp $(ADIR)/dfs.cpp $(ADIR)/domain_splitting.cpp $(ADIR)/fns.cpp $(ADIR)/gns.cpp $(ADIR)/heuristics.cpp $(ADIR)/ibroad.cpp $(ADIR)/isamp.cpp $(ADIR)/lan.cpp $(ADIR)/lds.cpp $(ADIR)/onesamp.cpp $(ADIR)/pops.cpp $(ADIR)/rdfs.cpp

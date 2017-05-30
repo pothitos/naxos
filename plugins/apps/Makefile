@@ -16,7 +16,7 @@ LDFLAGS = -s $(COVERAGE)
 PROGRAMS = cryptmult golfer graphcolor knump magic mapcolor nqueens placement sudoku vertexcover
 PR_OBJECTS = $(PROGRAMS:=.o)
 
-OBJECTS_NAXOS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o)
+OBJECTS_NAXOS = $(addprefix $(NAXOS)/, array_constraints.o bitset_domain.o expressions.o intvar.o problemmanager.o var_constraints.o non_mini_solver_constraints.o)
 OBJECTS_AMORGOS = $(addprefix $(AMORGOS)/, boundedbt.o credit.o dbds.o dbs.o dfs.o fns.o gns.o heuristics.o ibroad.o isamp.o lan.o lds.o onesamp.o rdfs.o)
 OBJECTS = $(OBJECTS_NAXOS) $(OBJECTS_AMORGOS)
 
