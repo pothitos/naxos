@@ -32,7 +32,7 @@
 #define COSOCO_XCSP3PRINTCALLBACKS_H
 
 #include <XCSP3CoreCallbacks.h>
-#include <naxos.h>
+#include <naxos-mini.h>
 #include <unordered_map>
 
 /// The XCSP3 parser invokes the functions of this class
