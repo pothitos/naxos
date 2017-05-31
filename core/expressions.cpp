@@ -988,15 +988,3 @@ Ns_Constraint* Ns_ExprConstrAllDiff::postConstraint(bool positively) const
         VarArr.addConstraint();
         return newConstr;
 }
-
-Ns_Constraint* Ns_ExprConstrCount::postConstraint(bool positively) const
-{
-        assert_Ns(positively,
-                  "Ns_ExprConstrCount::postConstraint: 'positively'==false");
-        Ns_Constraint* newConstr = new Ns_ConstrCount(
-            &VarArr, Values, Occurrences, SplitPositions, Split, Dwin);
-        for (NsIntVarArray::iterator X = VarArr.begin(); X != VarArr.end(); ++X)
-                X->addConstraint(newConstr);
-        VarArr.addConstraint();
-        return newConstr;
-}
