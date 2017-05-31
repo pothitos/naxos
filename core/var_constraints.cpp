@@ -1271,6 +1271,39 @@ void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
 
 namespace {
 
+bool divident_is_out_of_bounds(NsIntVar* VarX, NsInt valueY, NsIntVar* VarZ)
+{
+        NsInt VarZ_min_positive = VarZ->next(0);
+        NsInt VarZ_max_negative = VarZ->previous(0);
+        return ((valueY / VarZ->min() < VarX->min() &&
+                 valueY / VarZ->max() < VarX->min() &&
+                 (VarZ_max_negative == NsMINUS_INF ||
+                  valueY / VarZ_max_negative < VarX->min()) &&
+                 (VarZ_min_positive == NsPLUS_INF ||
+                  valueY / VarZ_min_positive < VarX->min())) ||
+                (valueY / VarZ->min() > VarX->max() &&
+                 valueY / VarZ->max() > VarX->max() &&
+                 (VarZ_max_negative == NsMINUS_INF ||
+                  valueY / VarZ_max_negative > VarX->max()) &&
+                 (VarZ_min_positive == NsPLUS_INF ||
+                  valueY / VarZ_min_positive > VarX->max())));
+}
+
+void divident_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+                          bool& changed_minmax, const Ns_Constraint* constraint)
+{
+        while (divident_is_out_of_bounds(VarX, VarY->min(), VarZ)) {
+                if (!VarY->removeSingle(VarY->min(), constraint))
+                        return; // to avoid an infinite loop
+                changed_minmax = true;
+        }
+        while (divident_is_out_of_bounds(VarX, VarY->max(), VarZ)) {
+                if (!VarY->removeSingle(VarY->max(), constraint))
+                        return; // to avoid an infinite loop
+                changed_minmax = true;
+        }
+}
+
 void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                          bool& changed_minmax, const Ns_Constraint* constraint)
 {
@@ -1303,9 +1336,7 @@ void Ns_ConstrXeqYdivZ::ArcCons(void)
                 quotient_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                // TODO
-                throw invalid_argument("Unimplemented constraint Y div Z");
-                // divident_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
+                divident_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
                 divisor_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
         } while (changed_minmax);
 }
