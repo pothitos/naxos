@@ -1615,10 +1615,6 @@ class Ns_ConstrXeqCdivY : public Ns_Constraint {
                           "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: All the "
                           "variables of a constraint must belong to the same "
                           "NsProblemManager");
-                assert_Ns(Y->min() >= 0, "Ns_ConstrXeqCdivY::Ns_ConstrXeqYdivC:"
-                                         " Special condition required: Y > 0");
-                assert_Ns(C > 0, "Ns_ConstrXeqCdivY::Ns_ConstrXeqCdivY: "
-                                 "Special condition required: C > 0");
                 VarY->remove(0);
         }
 
