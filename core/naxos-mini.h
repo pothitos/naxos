@@ -2787,6 +2787,9 @@ class Ns_ExprYmodC : public Ns_Expression {
     public:
         Ns_ExprYmodC(NsIntVar& Y, const NsInt C_init) : VarY(Y), C(C_init)
         {
+                // (a % b) is equivalent to (a % (-b))
+                if (C < 0)
+                        C = -C;
         }
 
         virtual void post(NsIntVar& VarX) const;
