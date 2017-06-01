@@ -34,17 +34,4 @@ void array_sum_min_max(const naxos::NsIntVarArray* VarArr,
                        const naxos::NsIndex start, const naxos::NsIndex length,
                        naxos::NsInt& summin, naxos::NsInt& summax);
 
-/// Returns floor(x / y); overcomes C problems when an operand is negative
-inline naxos::NsInt xDIVy(const naxos::NsInt x, const naxos::NsInt y)
-{
-        if (x < 0 && y < 0)
-                return (-x / -y);
-        else if (x < 0)
-                return -((-x + y - 1) / y);
-        else if (y < 0)
-                return -((x - y - 1) / -y);
-        else
-                return (x / y);
-}
-
 #endif // Ns_INTERNAL_H

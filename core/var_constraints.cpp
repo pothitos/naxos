@@ -661,21 +661,19 @@ void Ns_ConstrXeqYdivC::ArcCons(void)
         do {
                 modification = false;
                 if (C >= 0) {
-                        VarX->removeRange(NsMINUS_INF,
-                                          xDIVy(VarY->min(), C) - 1, this,
-                                          modification);
-                        VarX->removeRange(xDIVy(VarY->max(), C) + 1, NsPLUS_INF,
+                        VarX->removeRange(NsMINUS_INF, VarY->min() / C - 1,
                                           this, modification);
+                        VarX->removeRange(VarY->max() / C + 1, NsPLUS_INF, this,
+                                          modification);
                         VarY->removeRange(NsMINUS_INF, VarX->min() * C - 1,
                                           this, modification);
                         VarY->removeRange((VarX->max() + 1) * C, NsPLUS_INF,
                                           this, modification);
                 } else {
-                        VarX->removeRange(NsMINUS_INF,
-                                          xDIVy(VarY->max(), C) - 1, this,
-                                          modification);
-                        VarX->removeRange(xDIVy(VarY->min(), C) + 1, NsPLUS_INF,
+                        VarX->removeRange(NsMINUS_INF, VarY->max() / C - 1,
                                           this, modification);
+                        VarX->removeRange(VarY->min() / C + 1, NsPLUS_INF, this,
+                                          modification);
                         VarY->removeRange(NsMINUS_INF, (VarX->max() + 1) * C,
                                           this, modification);
                         VarY->removeRange(VarX->min() * C + 1, NsPLUS_INF, this,
@@ -697,33 +695,32 @@ void Ns_ConstrXeqCdivY::ArcCons(void)
                 if (VarY->min() < 0 && 0 < VarY->max()) {
                         if (C >= 0) {
                                 VarX->removeRange(NsMINUS_INF,
-                                                  xDIVy(C, VarY->previous(0)) -
-                                                      1,
+                                                  C / VarY->previous(0) - 1,
                                                   this, modification);
-                                VarX->removeRange(xDIVy(C, VarY->next(0)) + 1,
+                                VarX->removeRange(C / VarY->next(0) + 1,
                                                   NsPLUS_INF, this,
                                                   modification);
                         } else {
                                 VarX->removeRange(NsMINUS_INF,
-                                                  xDIVy(C, VarY->next(0)) - 1,
-                                                  this, modification);
-                                VarX->removeRange(
-                                    xDIVy(C, VarY->previous(0)) + 1, NsPLUS_INF,
-                                    this, modification);
+                                                  C / VarY->next(0) - 1, this,
+                                                  modification);
+                                VarX->removeRange(C / VarY->previous(0) + 1,
+                                                  NsPLUS_INF, this,
+                                                  modification);
                         }
                 } else {
                         if (C >= 0) {
                                 VarX->removeRange(NsMINUS_INF,
-                                                  xDIVy(C, VarY->max()) - 1,
-                                                  this, modification);
-                                VarX->removeRange(xDIVy(C, VarY->min()) + 1,
+                                                  C / VarY->max() - 1, this,
+                                                  modification);
+                                VarX->removeRange(C / VarY->min() + 1,
                                                   NsPLUS_INF, this,
                                                   modification);
                         } else {
                                 VarX->removeRange(NsMINUS_INF,
-                                                  xDIVy(C, VarY->min()) - 1,
-                                                  this, modification);
-                                VarX->removeRange(xDIVy(C, VarY->max()) + 1,
+                                                  C / VarY->min() - 1, this,
+                                                  modification);
+                                VarX->removeRange(C / VarY->max() + 1,
                                                   NsPLUS_INF, this,
                                                   modification);
                         }
@@ -734,27 +731,25 @@ void Ns_ConstrXeqCdivY::ArcCons(void)
                                         VarY->removeRange(NsMINUS_INF, -C - 1,
                                                           this, modification);
                                 else
-                                        VarY->removeRange(
-                                            NsMINUS_INF,
-                                            xDIVy(C, (VarX->max() + 1)), this,
-                                            modification);
+                                        VarY->removeRange(NsMINUS_INF,
+                                                          C / (VarX->max() + 1),
+                                                          this, modification);
                                 if (VarX->min() != 0)
-                                        VarY->removeRange(
-                                            xDIVy(C, VarX->min()) + 1,
-                                            NsPLUS_INF, this, modification);
+                                        VarY->removeRange(C / VarX->min() + 1,
+                                                          NsPLUS_INF, this,
+                                                          modification);
                         } else {
                                 if (VarX->min() == -1)
                                         VarY->removeRange(C + 1, NsPLUS_INF,
                                                           this, modification);
                                 else
-                                        VarY->removeRange(
-                                            NsMINUS_INF,
-                                            xDIVy(C, (VarX->min() + 1)), this,
-                                            modification);
+                                        VarY->removeRange(NsMINUS_INF,
+                                                          C / (VarX->min() + 1),
+                                                          this, modification);
                                 if (VarX->max() != 0)
-                                        VarY->removeRange(
-                                            xDIVy(C, VarX->max()) + 1,
-                                            NsPLUS_INF, this, modification);
+                                        VarY->removeRange(C / VarX->max() + 1,
+                                                          NsPLUS_INF, this,
+                                                          modification);
                         }
                 }
         } while (modification);

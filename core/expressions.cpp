@@ -124,13 +124,10 @@ NsIntVar& Ns_ExprYtimesC::post(void) const
 
 void Ns_ExprYdivC::post(NsIntVar& VarX) const
 {
-        if (C >= 0) {
-                VarX = NsIntVar(VarY.manager(), xDIVy(VarY.min(), C),
-                                xDIVy(VarY.max(), C));
-        } else {
-                VarX = NsIntVar(VarY.manager(), xDIVy(VarY.max(), C),
-                                xDIVy(VarY.min(), C));
-        }
+        if (C >= 0)
+                VarX = NsIntVar(VarY.manager(), VarY.min() / C, VarY.max() / C);
+        else
+                VarX = NsIntVar(VarY.manager(), VarY.max() / C, VarY.min() / C);
         exprYopC_post_constr(VarX, VarY, C, opDiv);
 }
 
@@ -140,11 +137,11 @@ NsIntVar& Ns_ExprYdivC::post(void) const
                 return VarY;
         NsIntVar* VarX;
         if (C >= 0) {
-                VarX = new NsIntVar(VarY.manager(), xDIVy(VarY.min(), C),
-                                    xDIVy(VarY.max(), C));
+                VarX = new NsIntVar(VarY.manager(), VarY.min() / C,
+                                    VarY.max() / C);
         } else {
-                VarX = new NsIntVar(VarY.manager(), xDIVy(VarY.max(), C),
-                                    xDIVy(VarY.min(), C));
+                VarX = new NsIntVar(VarY.manager(), VarY.max() / C,
+                                    VarY.min() / C);
         }
         exprYopC_post_constr(*VarX, VarY, C, opDiv);
         VarX->manager().recordIntermediateVar(VarX);
@@ -153,13 +150,10 @@ NsIntVar& Ns_ExprYdivC::post(void) const
 
 void Ns_ExprCdivZ::post(NsIntVar& VarX) const
 {
-        if (C >= 0) {
-                VarX = NsIntVar(VarZ.manager(), xDIVy(C, VarZ.max()),
-                                xDIVy(C, VarZ.min()));
-        } else {
-                VarX = NsIntVar(VarZ.manager(), xDIVy(C, VarZ.min()),
-                                xDIVy(C, VarZ.max()));
-        }
+        if (C >= 0)
+                VarX = NsIntVar(VarZ.manager(), C / VarZ.max(), C / VarZ.min());
+        else
+                VarX = NsIntVar(VarZ.manager(), C / VarZ.min(), C / VarZ.max());
         exprYopC_post_constr(VarX, VarZ, C, opCDivY);
 }
 
@@ -167,11 +161,11 @@ NsIntVar& Ns_ExprCdivZ::post(void) const
 {
         NsIntVar* VarX;
         if (C >= 0) {
-                VarX = new NsIntVar(VarZ.manager(), xDIVy(C, VarZ.max()),
-                                    xDIVy(C, VarZ.min()));
+                VarX = new NsIntVar(VarZ.manager(), C / VarZ.max(),
+                                    C / VarZ.min());
         } else {
-                VarX = new NsIntVar(VarZ.manager(), xDIVy(C, VarZ.min()),
-                                    xDIVy(C, VarZ.max()));
+                VarX = new NsIntVar(VarZ.manager(), C / VarZ.min(),
+                                    C / VarZ.max());
         }
         exprYopC_post_constr(*VarX, VarZ, C, opCDivY);
         VarX->manager().recordIntermediateVar(VarX);
