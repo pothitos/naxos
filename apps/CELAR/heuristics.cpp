@@ -137,8 +137,7 @@ NsInt ValHeurCelar::select(const NsIntVar& V)
              val != Vars[index].end(); ++val, ++valNum) {
                 value[valNum] = *val;
         }
-        if (conf >= 0) {
+        if (conf >= 0)
                 bestValue = value[randomizeHeuristic(heuristic, conf)];
-        }
         return bestValue;
 }

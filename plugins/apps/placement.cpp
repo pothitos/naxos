@@ -24,9 +24,8 @@ class VarHeurCouples : public VariableHeuristic {
                 int minIndex = -1;
                 NsUInt minDom = NsUPLUS_INF;
                 for (NsIndex i = 0; i < Vars.size(); i += 2) {
-                        if (Vars[i].isBound() && !Vars[i + 1].isBound()) {
+                        if (Vars[i].isBound() && !Vars[i + 1].isBound())
                                 return (i + 1);
-                        }
                         if (!Vars[i].isBound() &&
                             Vars[i].size() * Vars[i + 1].size() < minDom) {
                                 minDom = Vars[i].size() * Vars[i + 1].size();

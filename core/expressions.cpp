@@ -448,11 +448,10 @@ Ns_Constraint* Ns_ExprConstrYorZ::postConstraint(bool positively) const
         Ns_Constraint* newConstr;
         if (!isPositive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 newConstr = new Ns_ConstrXorY(&VarY, &VarZ, true);
-        } else {
+        else
                 newConstr = new Ns_ConstrXorY(&VarY, &VarZ, false);
-        }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
         return newConstr;
@@ -829,11 +828,10 @@ Ns_Constraint* Ns_ExprConstrYlessthanZ::postConstraint(bool positively) const
         Ns_Constraint* newConstr;
         if (!isPositive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 newConstr = new Ns_ConstrXlessthanY(&VarY, &VarZ);
-        } else {
+        else
                 newConstr = new Ns_ConstrXlesseqthanY(&VarZ, &VarY);
-        }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
         return newConstr;
@@ -936,11 +934,10 @@ Ns_Constraint* Ns_ExprConstrYeqZ::postConstraint(bool positively) const
         Ns_Constraint* newConstr;
         if (!isPositive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 newConstr = new Ns_ConstrXeqY(&VarY, &VarZ);
-        } else {
+        else
                 newConstr = new Ns_ConstrXneqY(&VarY, &VarZ);
-        }
         VarY.addConstraint(newConstr);
         VarZ.addConstraint(newConstr);
         return newConstr;

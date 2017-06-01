@@ -421,11 +421,10 @@ NsConstraint* ExprConstrYorZ::postConstraint(bool positively) const
         NsConstraint* NewConstr;
         if (!is_positive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 NewConstr = new ConstrXorY(&VarY, &VarZ, true);
-        } else {
+        else
                 NewConstr = new ConstrXorY(&VarZ, &VarY, false);
-        }
         VarY.addConstraint(NewConstr);
         VarZ.addConstraint(NewConstr);
         return NewConstr;
@@ -937,11 +936,10 @@ NsConstraint* ExprConstrYlessthanZ::postConstraint(bool positively) const
         NsConstraint* NewConstr;
         if (!is_positive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 NewConstr = new ConstrXlessthanY(&VarY, &VarZ);
-        } else {
+        else
                 NewConstr = new ConstrXlesseqthanY(&VarZ, &VarY);
-        }
         VarY.addConstraint(NewConstr);
         VarZ.addConstraint(NewConstr);
         return NewConstr;
@@ -989,11 +987,10 @@ NsConstraint* ExprConstrYlesseqthanZ::postConstraint(bool positively) const
         NsConstraint* NewConstr;
         if (!is_positive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 NewConstr = new ConstrXlesseqthanY(&VarY, &VarZ);
-        } else {
+        else
                 NewConstr = new ConstrXlessthanY(&VarZ, &VarY);
-        }
         VarY.addConstraint(NewConstr);
         VarZ.addConstraint(NewConstr);
         return NewConstr;
@@ -1041,11 +1038,10 @@ NsConstraint* ExprConstrYeqZ::postConstraint(bool positively) const
         NsConstraint* NewConstr;
         if (!is_positive)
                 positively = !positively;
-        if (positively) {
+        if (positively)
                 NewConstr = new ConstrXeqY(&VarY, &VarZ);
-        } else {
+        else
                 NewConstr = new ConstrXneqY(&VarY, &VarZ);
-        }
         VarY.addConstraint(NewConstr);
         VarZ.addConstraint(NewConstr);
         return NewConstr;

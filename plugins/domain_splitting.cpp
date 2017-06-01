@@ -58,27 +58,24 @@ double naxos::splitValueConstrNeq(const NsIntVar X, const NsIntVar Y)
 {
         const double splitPercentage = 0.50;
         double Sum1SuppY = 0, Sum2SuppY = 0, Sum3SuppY = 0;
-        if (X.min() < Y.min()) {
+        if (X.min() < Y.min())
                 Sum1SuppY = min(Y.min() - 1, X.max()) - X.min() + 1.0;
-        }
         if ((Y.min() <= X.min() && X.min() <= Y.max()) ||
             (Y.min() <= X.max() && X.max() <= Y.max())) {
                 Sum2SuppY =
                     (Y.size() - 1.0) / Y.size() *
                     (min(Y.max(), X.max()) - max(Y.min(), X.min()) + 1.0);
         }
-        if (Y.max() < X.max()) {
+        if (Y.max() < X.max())
                 Sum3SuppY = X.max() - max(Y.max() + 1, X.min()) + 1.0;
-        }
         const double A = splitPercentage * (Sum1SuppY + Sum2SuppY + Sum3SuppY);
         // cout << "    \t" << ( min(Y.min()-1,X.max()) - X.min() + 1.0 ) <<
         // "\t" << ( min(Y.max(),X.max()) - max(Y.min(),X.min()) + 1.0 ) <<  "\t"
         // << ( X.max() - max(Y.max()+1,X.min()) + 1.0 ) << "\n";  cout <<
         // "Sum:\t" << Sum1SuppY <<  "\t" << Sum2SuppY <<  "\t" << Sum3SuppY <<
         // "\n";
-        if (Sum1SuppY >= A) {
+        if (Sum1SuppY >= A)
                 return (X.min() - 1 + A + 0.5);
-        }
         if (Sum1SuppY + Sum2SuppY >= A) {
                 return (max(Y.min(), X.min()) - 1 +
                         (A - Sum1SuppY) * Y.size() / (Y.size() - 1.0) + 0.5);

@@ -756,9 +756,8 @@ int main(int argc, char* argv[])
                                      << flush;
                         }
                         pm_ls.restart();
-                        if (foundNewSolution) {
+                        if (foundNewSolution)
                                 pm_ls.objectiveUpperLimit(vObjective.max());
-                        }
                         if (pr.searchMethod_ls != NONE)
                                 pm_ls.addGoal(new goalLsWeek(
                                     vLectPeriod_ls, vLectPeriodSortedByHeur_ls,

@@ -15,9 +15,8 @@ void ListPrint(NsIntVarArray& List)
         if (0 != List.size()) {
                 cout << it->value();
                 ++it;
-                for (; it != List.end(); ++it) {
+                for (; it != List.end(); ++it)
                         cout << " " << it->value();
-                }
         }
         cout << "\n";
 }

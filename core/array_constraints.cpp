@@ -548,9 +548,8 @@ void allDiffBoundsConsistency(
                                 for (gapVal = VarLeMax[j]->Var.gap_begin();
                                      gapVal != VarLeMax[j]->Var.gap_end();
                                      ++gapVal) {
-                                        if (!vUnionPrevious.contains(*gapVal)) {
+                                        if (!vUnionPrevious.contains(*gapVal))
                                                 vUnion->remove(*gapVal);
-                                        }
                                 }
                                 NsIndex sizeXcap = vUnion->size() * Capacity;
                                 if (sizeXcap < nVars) {
