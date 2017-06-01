@@ -15,7 +15,7 @@ bool intersectionEmpty(const naxos::NsIntVar* VarY,
 void YmodC_min_max(const naxos::NsIntVar* VarY, const naxos::NsInt C,
                    naxos::NsInt& min, naxos::NsInt& minmax);
 
-void CmodY_min_max(const naxos::NsInt C, const naxos::NsIntVar* VarY,
+void CmodY_min_max(const naxos::NsInt C, naxos::NsIntVar* VarY,
                    naxos::NsInt& min, naxos::NsInt& minmax);
 
 void product_min_max(const naxos::NsIntVar* VarY, const naxos::NsIntVar* VarZ,
