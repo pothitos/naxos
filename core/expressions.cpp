@@ -51,9 +51,7 @@ void exprYopC_post_constr(NsIntVar& VarX, NsIntVar& VarY, const NsInt C,
                 newConstr = new Ns_ConstrXeqYmodC(&VarX, &VarY, C);
                 break;
         case opCModY:
-                // TODO
-                throw invalid_argument("Unsupported C % X constraint");
-                // newConstr = new Ns_ConstrXeqCmodY(&VarX, C, &VarY);
+                newConstr = new Ns_ConstrXeqCmodY(&VarX, C, &VarY);
                 break;
         case opAbs:
                 newConstr = new Ns_ConstrXeqAbsY(&VarX, &VarY);

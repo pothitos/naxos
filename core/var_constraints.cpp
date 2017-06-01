@@ -854,6 +854,37 @@ void CmodY_min_max(const NsInt C, NsIntVar* VarY, NsInt& min, NsInt& max)
                 update_min_max(min, max, C % VarY->next(0));
 }
 
+void Ns_ConstrXeqCmodY::ArcCons(void)
+{
+        NsInt min, max;
+        bool modification;
+        do {
+                modification = false;
+                CmodY_min_max(C, VarY, min, max);
+                VarX->removeRange(NsMINUS_INF, min - 1, this);
+                VarX->removeRange(max + 1, NsPLUS_INF, this);
+                for (NsIntVar::const_iterator val = VarY->begin();
+                     val != VarY->end(); ++val) {
+                        if (VarX->contains(C % *val))
+                                break;
+                        VarY->removeSingle(*val, this);
+                        modification = true;
+                }
+                for (NsIntVar::const_reverse_iterator val = VarY->rbegin();
+                     val != VarY->rend(); ++val) {
+                        if (VarX->contains(C % *val))
+                                break;
+                        VarY->removeSingle(*val, this);
+                        modification = true;
+                }
+        } while (modification);
+}
+
+void Ns_ConstrXeqCmodY::LocalArcCons(Ns_QueueItem& /*Qitem*/)
+{
+        ArcCons();
+}
+
 void Ns_ConstrXneqY::ArcCons(void)
 {
         if (VarY->isBound())
