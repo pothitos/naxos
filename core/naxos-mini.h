@@ -1626,7 +1626,7 @@ class Ns_ConstrXeqCdivY : public Ns_Constraint {
         virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
         {
                 fileConstraintsGraph << "\n\tVar" << VarY << " -> Var" << VarX
-                                     << " [label=\"" << C << "/y\"];\n";
+                                     << " [label=\"" << C << "/\"];\n";
         }
 
         virtual void ArcCons(void);
