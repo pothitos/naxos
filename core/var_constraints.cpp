@@ -832,6 +832,33 @@ void Ns_ConstrXeqYmodC::LocalArcCons(Ns_QueueItem& Qitem)
         }
 }
 
+namespace {
+
+void update_min_max(NsInt& min, NsInt& max, const NsInt candidate)
+{
+        if (min < candidate)
+                min = candidate;
+        if (max > candidate)
+                max = candidate;
+}
+
+} // end namespace
+
+void CmodY_min_max(const NsInt C, NsIntVar* VarY, NsInt& min, NsInt& max)
+{
+        VarY->remove(0);
+        assert_Ns(!(VarY->isBound() && VarY->value() == 0),
+                  "Zero divisor in modulus constraint");
+        min = NsPLUS_INF;
+        max = NsMINUS_INF;
+        update_min_max(min, max, C % VarY->min());
+        update_min_max(min, max, C % VarY->max());
+        if (VarY->previous(0) != NsMINUS_INF)
+                update_min_max(min, max, C % VarY->previous(0));
+        if (VarY->next(0) != NsPLUS_INF)
+                update_min_max(min, max, C % VarY->next(0));
+}
+
 void Ns_ConstrXneqY::ArcCons(void)
 {
         if (VarY->isBound())

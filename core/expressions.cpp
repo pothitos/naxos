@@ -19,6 +19,7 @@ enum op_type {
         opDiv,
         opCDivY,
         opMod,
+        opCModY,
         opAnd,
         opNand,
         opOr,
@@ -48,6 +49,11 @@ void exprYopC_post_constr(NsIntVar& VarX, NsIntVar& VarY, const NsInt C,
                 break;
         case opMod:
                 newConstr = new Ns_ConstrXeqYmodC(&VarX, &VarY, C);
+                break;
+        case opCModY:
+                // TODO
+                throw invalid_argument("Unsupported C % X constraint");
+                // newConstr = new Ns_ConstrXeqCmodY(&VarX, C, &VarY);
                 break;
         case opAbs:
                 newConstr = new Ns_ConstrXeqAbsY(&VarX, &VarY);
@@ -188,6 +194,24 @@ NsIntVar& Ns_ExprYmodC::post(void) const
         YmodC_min_max(&VarY, C, min, max);
         NsIntVar* VarX = new NsIntVar(VarY.manager(), min, max);
         exprYopC_post_constr(*VarX, VarY, C, opMod);
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
+}
+
+void Ns_ExprCmodZ::post(NsIntVar& VarX) const
+{
+        NsInt min, max;
+        CmodY_min_max(C, &VarZ, min, max);
+        VarX = NsIntVar(VarZ.manager(), min, max);
+        exprYopC_post_constr(VarX, VarZ, C, opCModY);
+}
+
+NsIntVar& Ns_ExprCmodZ::post(void) const
+{
+        NsInt min, max;
+        CmodY_min_max(C, &VarZ, min, max);
+        NsIntVar* VarX = new NsIntVar(VarZ.manager(), min, max);
+        exprYopC_post_constr(*VarX, VarZ, C, opCModY);
         VarX->manager().recordIntermediateVar(VarX);
         return *VarX;
 }
