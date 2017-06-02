@@ -1213,7 +1213,7 @@ void product_min_max(const NsIntVar* VarY, const NsIntVar* VarZ, NsInt& min,
 namespace {
 
 void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                         bool& changed_minmax, const Ns_Constraint* constraint)
+                         bool& modification, const Ns_Constraint* constraint)
 {
         while ((VarY->min() * VarZ->min() < VarX->min() &&
                 VarY->min() * VarZ->max() < VarX->min()) ||
@@ -1221,7 +1221,7 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                 VarY->min() * VarZ->max() > VarX->max())) {
                 if (!VarY->removeSingle(VarY->min(), constraint))
                         return; // to avoid an infinite loop
-                changed_minmax = true;
+                modification = true;
         }
         while ((VarY->max() * VarZ->min() < VarX->min() &&
                 VarY->max() * VarZ->max() < VarX->min()) ||
@@ -1229,7 +1229,7 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                 VarY->max() * VarZ->max() > VarX->max())) {
                 if (!VarY->removeSingle(VarY->max(), constraint))
                         return; // to avoid an infinite loop
-                changed_minmax = true;
+                modification = true;
         }
 }
 
@@ -1238,15 +1238,15 @@ void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
 void Ns_ConstrXeqYtimesZ::ArcCons(void)
 {
         NsInt min, max;
-        bool changed_minmax;
+        bool modification;
         do {
-                changed_minmax = false;
+                modification = false;
                 product_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                product_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
-                product_prune_bound(VarX, VarZ, VarY, changed_minmax, this);
-        } while (changed_minmax);
+                product_prune_bound(VarX, VarY, VarZ, modification, this);
+                product_prune_bound(VarX, VarZ, VarY, modification, this);
+        } while (modification);
 }
 
 void Ns_ConstrXeqYtimesZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
@@ -1326,22 +1326,22 @@ bool dividend_is_out_of_bounds(NsIntVar* VarX, NsInt valueY, NsIntVar* VarZ)
 }
 
 void dividend_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                          bool& changed_minmax, const Ns_Constraint* constraint)
+                          bool& modification, const Ns_Constraint* constraint)
 {
         while (dividend_is_out_of_bounds(VarX, VarY->min(), VarZ)) {
                 if (!VarY->removeSingle(VarY->min(), constraint))
                         return; // to avoid an infinite loop
-                changed_minmax = true;
+                modification = true;
         }
         while (dividend_is_out_of_bounds(VarX, VarY->max(), VarZ)) {
                 if (!VarY->removeSingle(VarY->max(), constraint))
                         return; // to avoid an infinite loop
-                changed_minmax = true;
+                modification = true;
         }
 }
 
 void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                         bool& changed_minmax, const Ns_Constraint* constraint)
+                         bool& modification, const Ns_Constraint* constraint)
 {
         while ((VarY->min() / VarZ->min() < VarX->min() &&
                 VarY->max() / VarZ->min() < VarX->min()) ||
@@ -1349,7 +1349,7 @@ void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                 VarY->max() / VarZ->min() > VarX->max())) {
                 if (!VarZ->removeSingle(VarZ->min(), constraint))
                         return; // to avoid an infinite loop
-                changed_minmax = true;
+                modification = true;
         }
         while ((VarY->min() / VarZ->max() < VarX->min() &&
                 VarY->max() / VarZ->max() < VarX->min()) ||
@@ -1357,7 +1357,7 @@ void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                 VarY->max() / VarZ->max() > VarX->max())) {
                 if (!VarZ->removeSingle(VarZ->max(), constraint))
                         return; // to avoid an infinite loop
-                changed_minmax = true;
+                modification = true;
         }
 }
 
@@ -1366,15 +1366,15 @@ void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
 void Ns_ConstrXeqYdivZ::ArcCons(void)
 {
         NsInt min, max;
-        bool changed_minmax;
+        bool modification;
         do {
-                changed_minmax = false;
+                modification = false;
                 quotient_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                dividend_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
-                divisor_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
-        } while (changed_minmax);
+                dividend_prune_bound(VarX, VarY, VarZ, modification, this);
+                divisor_prune_bound(VarX, VarY, VarZ, modification, this);
+        } while (modification);
 }
 
 void Ns_ConstrXeqYdivZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
