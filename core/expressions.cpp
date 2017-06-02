@@ -280,6 +280,9 @@ void exprYopZ_post_constr(NsIntVar& VarX, NsIntVar& VarY, NsIntVar& VarZ,
         case opDiv:
                 newConstr = new Ns_ConstrXeqYdivZ(&VarY, &VarX, &VarZ);
                 break;
+        case opMod:
+                newConstr = new Ns_ConstrXeqYmodZ(&VarY, &VarX, &VarZ);
+                break;
         case opAnd:
                 newConstr = new Ns_ConstrXeqYandZ(&VarX, &VarY, &VarZ, true);
                 break;
@@ -369,6 +372,24 @@ NsIntVar& Ns_ExprYdivZ::post(void) const
         quotient_min_max(&VarY, &VarZ, min, max);
         NsIntVar* VarX = new NsIntVar(VarY.manager(), min, max);
         exprYopZ_post_constr(*VarX, VarY, VarZ, opDiv);
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
+}
+
+void Ns_ExprYmodZ::post(NsIntVar& VarX) const
+{
+        NsInt min, max;
+        remainder_min_max(&VarY, &VarZ, min, max);
+        VarX = NsIntVar(VarY.manager(), min, max);
+        exprYopZ_post_constr(VarX, VarY, VarZ, opMod);
+}
+
+NsIntVar& Ns_ExprYmodZ::post(void) const
+{
+        NsInt min, max;
+        remainder_min_max(&VarY, &VarZ, min, max);
+        NsIntVar* VarX = new NsIntVar(VarY.manager(), min, max);
+        exprYopZ_post_constr(*VarX, VarY, VarZ, opMod);
         VarX->manager().recordIntermediateVar(VarX);
         return *VarX;
 }

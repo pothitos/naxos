@@ -24,6 +24,9 @@ void product_min_max(const naxos::NsIntVar* VarY, const naxos::NsIntVar* VarZ,
 void quotient_min_max(const naxos::NsIntVar* VarY, naxos::NsIntVar* VarZ,
                       naxos::NsInt& min, naxos::NsInt& max);
 
+void remainder_min_max(const naxos::NsIntVar* VarY, naxos::NsIntVar* VarZ,
+                       naxos::NsInt& min, naxos::NsInt& max);
+
 void array_min_minmax(const naxos::NsIntVarArray* VarArr, naxos::NsInt& min,
                       naxos::NsInt& minmax);
 

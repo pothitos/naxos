@@ -1633,6 +1633,38 @@ class Ns_ConstrXeqCdivY : public Ns_Constraint {
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
 
+class Ns_ConstrXeqYmodZ : public Ns_Constraint {
+
+    private:
+        NsIntVar *VarX, *VarY, *VarZ;
+
+    public:
+        Ns_ConstrXeqYmodZ(NsIntVar* X, NsIntVar* Y, NsIntVar* Z)
+          : VarX(X), VarY(Y), VarZ(Z)
+        {
+                revisionType = BIDIRECTIONAL_CONSISTENCY;
+                assert_Ns(&VarX->manager() == &VarY->manager() &&
+                              &VarY->manager() == &VarZ->manager(),
+                          "Ns_ConstrXeqYmodZ::Ns_ConstrXeqYmodZ: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
+        }
+
+        virtual int varsInvolvedIn(void) const
+        {
+                return 3;
+        }
+
+        virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
+        {
+                Ns_ternaryConstraintToGraphFile(fileConstraintsGraph, VarX,
+                                                VarY, VarZ, this, "%", false);
+        }
+
+        virtual void ArcCons(void);
+        virtual void LocalArcCons(Ns_QueueItem& Qitem);
+};
+
 class Ns_ConstrXeqYmodC : public Ns_Constraint {
 
     private:

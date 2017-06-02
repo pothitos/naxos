@@ -409,9 +409,8 @@ NsIntVar& Xcsp3_to_Naxos::unfoldArithmExprOperation(const string& operation,
                 return (operand1 * operand2).post();
         else if (operation == "div")
                 return (operand1 / operand2).post();
-        // TODO
-        // else if (operation == "mod")
-        //        return (operand1 % operand2).post();
+        else if (operation == "mod")
+                return (operand1 % operand2).post();
         else if (operation == "dist")
                 return (NsAbs(operand1 - operand2)).post();
         else
