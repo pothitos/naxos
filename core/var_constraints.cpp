@@ -782,49 +782,32 @@ void YmodC_min_max(const NsIntVar* VarY, const NsInt C, NsInt& min, NsInt& max)
 void Ns_ConstrXeqYmodC::ArcCons(void)
 {
         NsInt min, max;
-        YmodC_min_max(VarY, C, min, max);
-        VarX->removeRange(NsMINUS_INF, min - 1, this);
-        VarX->removeRange(max + 1, NsPLUS_INF, this);
-        NsIntVar::const_iterator v;
-        NsInt SupValY;
-        for (v = VarX->begin(); v != VarX->end(); ++v) {
-                for (SupValY = (VarY->min() / C) * C + *v;
-                     SupValY <= VarY->max(); SupValY += C) {
-                        if (VarY->contains(SupValY))
+        bool modification;
+        do {
+                modification = false;
+                YmodC_min_max(VarY, C, min, max);
+                VarX->removeRange(NsMINUS_INF, min - 1, this);
+                VarX->removeRange(max + 1, NsPLUS_INF, this);
+                for (NsIntVar::const_iterator val = VarY->begin();
+                     val != VarY->end(); ++val) {
+                        if (VarX->contains(*val % C))
                                 break;
+                        VarY->removeSingle(*val, this);
+                        modification = true;
                 }
-                if (SupValY > VarY->max())
-                        VarX->removeSingle(*v, this);
-        }
-        for (v = VarY->begin(); v != VarY->end(); ++v) {
-                if (!VarX->contains(*v % C))
-                        VarY->removeSingle(*v, this);
-        }
+                for (NsIntVar::const_reverse_iterator val = VarY->rbegin();
+                     val != VarY->rend(); ++val) {
+                        if (VarX->contains(*val % C))
+                                break;
+                        VarY->removeSingle(*val, this);
+                        modification = true;
+                }
+        } while (modification);
 }
 
-void Ns_ConstrXeqYmodC::LocalArcCons(Ns_QueueItem& Qitem)
+void Ns_ConstrXeqYmodC::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 {
-        NsInt SupValX, SupValY;
-        if (VarX == Qitem.getVarFired()) {
-                SupValX = Qitem.getW();
-                for (SupValY = (VarY->min() / C) * C + SupValX;
-                     SupValY <= VarY->max(); SupValY += C) {
-                        VarY->removeSingle(SupValY, this);
-                }
-        } else {
-                assert_Ns(VarY == Qitem.getVarFired(),
-                          "Ns_ConstrXeqYmodC::LocalArcCons: Wrong getVarFired");
-                SupValX = Qitem.getW() % C;
-                if (VarX->contains(SupValX)) {
-                        for (SupValY = (VarY->min() / C) * C + SupValX;
-                             SupValY <= VarY->max(); SupValY += C) {
-                                if (VarY->contains(SupValY))
-                                        break;
-                        }
-                        if (SupValY > VarY->max())
-                                VarX->removeSingle(SupValX, this);
-                }
-        }
+        ArcCons();
 }
 
 namespace {

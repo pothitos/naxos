@@ -1643,15 +1643,13 @@ class Ns_ConstrXeqYmodC : public Ns_Constraint {
         Ns_ConstrXeqYmodC(NsIntVar* X, NsIntVar* Y, const NsInt C_init)
           : VarX(X), VarY(Y), C(C_init)
         {
-                revisionType = VALUE_CONSISTENCY;
+                revisionType = BIDIRECTIONAL_CONSISTENCY;
                 assert_Ns(&VarX->manager() == &VarY->manager(),
                           "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: All the "
                           "variables of a constraint must belong to the same "
                           "NsProblemManager");
-                assert_Ns(Y->min() >= 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC:"
-                                         " Special condition required: Y >= 0");
-                assert_Ns(C > 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: "
-                                 "Special condition required: C > 0");
+                assert_Ns(C != 0, "Ns_ConstrXeqYmodC::Ns_ConstrXeqYmodC: "
+                                  "Special condition required: C != 0");
         }
 
         virtual int varsInvolvedIn(void) const
