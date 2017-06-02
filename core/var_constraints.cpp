@@ -1307,7 +1307,7 @@ void quotient_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
 
 namespace {
 
-bool divident_is_out_of_bounds(NsIntVar* VarX, NsInt valueY, NsIntVar* VarZ)
+bool dividend_is_out_of_bounds(NsIntVar* VarX, NsInt valueY, NsIntVar* VarZ)
 {
         NsInt VarZ_min_positive = VarZ->next(0);
         NsInt VarZ_max_negative = VarZ->previous(0);
@@ -1325,15 +1325,15 @@ bool divident_is_out_of_bounds(NsIntVar* VarX, NsInt valueY, NsIntVar* VarZ)
                   valueY / VarZ_min_positive > VarX->max())));
 }
 
-void divident_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+void dividend_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                           bool& changed_minmax, const Ns_Constraint* constraint)
 {
-        while (divident_is_out_of_bounds(VarX, VarY->min(), VarZ)) {
+        while (dividend_is_out_of_bounds(VarX, VarY->min(), VarZ)) {
                 if (!VarY->removeSingle(VarY->min(), constraint))
                         return; // to avoid an infinite loop
                 changed_minmax = true;
         }
-        while (divident_is_out_of_bounds(VarX, VarY->max(), VarZ)) {
+        while (dividend_is_out_of_bounds(VarX, VarY->max(), VarZ)) {
                 if (!VarY->removeSingle(VarY->max(), constraint))
                         return; // to avoid an infinite loop
                 changed_minmax = true;
@@ -1372,7 +1372,7 @@ void Ns_ConstrXeqYdivZ::ArcCons(void)
                 quotient_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                divident_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
+                dividend_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
                 divisor_prune_bound(VarX, VarY, VarZ, changed_minmax, this);
         } while (changed_minmax);
 }
