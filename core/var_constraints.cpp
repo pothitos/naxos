@@ -814,9 +814,9 @@ namespace {
 
 void update_min_max(NsInt& min, NsInt& max, const NsInt candidate)
 {
-        if (min < candidate)
+        if (candidate < min)
                 min = candidate;
-        if (max > candidate)
+        if (candidate > max)
                 max = candidate;
 }
 
