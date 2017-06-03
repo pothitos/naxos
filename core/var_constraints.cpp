@@ -1381,3 +1381,52 @@ void Ns_ConstrXeqYdivZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 {
         ArcCons();
 }
+
+void remainder_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
+                       NsInt& max)
+{
+        VarZ->remove(0);
+        assert_Ns(!(VarZ->isBound() && VarZ->value() == 0),
+                  "remainder_min_max: zero 'VarZ'");
+        // TODO
+        throw invalid_argument("Unsupported mod constraint");
+}
+
+namespace {
+
+void dividend_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY,
+                                  NsIntVar* VarZ, bool& modification,
+                                  const Ns_Constraint* constraint)
+{
+        // TODO
+}
+
+void divisor_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+                                 bool& modification,
+                                 const Ns_Constraint* constraint)
+{
+        // TODO
+}
+
+} // end namespace
+
+void Ns_ConstrXeqYmodZ::ArcCons(void)
+{
+        NsInt min, max;
+        bool modification;
+        do {
+                modification = false;
+                remainder_min_max(VarY, VarZ, min, max);
+                VarX->removeRange(NsMINUS_INF, min - 1, this);
+                VarX->removeRange(max + 1, NsPLUS_INF, this);
+                dividend_for_mod_prune_bound(VarX, VarY, VarZ, modification,
+                                             this);
+                divisor_for_mod_prune_bound(VarX, VarY, VarZ, modification,
+                                            this);
+        } while (modification);
+}
+
+void Ns_ConstrXeqYmodZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
+{
+        ArcCons();
+}
