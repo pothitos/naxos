@@ -1382,14 +1382,31 @@ void Ns_ConstrXeqYdivZ::LocalArcCons(Ns_QueueItem& /*Qitem*/)
         ArcCons();
 }
 
-void remainder_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min,
-                       NsInt& max)
+void remainder_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min_rem,
+                       NsInt& max_rem)
 {
+        // Divisor must not be zero
         VarZ->remove(0);
         assert_Ns(!(VarZ->isBound() && VarZ->value() == 0),
                   "remainder_min_max: zero 'VarZ'");
-        // TODO
-        throw invalid_argument("Unsupported mod constraint");
+        // Get the minimum absolute divisor value
+        NsInt min_abs_divisor = VarZ->next(0);
+        if (VarZ->previous(0) != NsMINUS_INF &&
+            -VarZ->previous(0) < min_abs_divisor) {
+                min_abs_divisor = -VarZ->previous(0);
+        }
+        // Get the maximum absolute divisor value
+        NsInt max_abs_divisor = max(labs(VarZ->min()), labs(VarZ->max()));
+        // Iterate through VarY values and get the min/max VarY % VarZ
+        min_rem = NsPLUS_INF;
+        max_rem = NsMINUS_INF;
+        for (NsIntVar::const_iterator val = VarY->begin(); val != VarY->end();
+             ++val) {
+                if (*val % min_abs_divisor < min_rem)
+                        min_rem = *val % min_abs_divisor;
+                if (*val % max_abs_divisor > max_rem)
+                        max_rem = *val % max_abs_divisor;
+        }
 }
 
 namespace {
@@ -1399,6 +1416,7 @@ void dividend_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY,
                                   const Ns_Constraint* constraint)
 {
         // TODO
+        throw invalid_argument("Unsupported mod constraint");
 }
 
 void divisor_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
