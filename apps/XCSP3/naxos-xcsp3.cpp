@@ -71,7 +71,8 @@ int main(int argc, char* argv[])
                                 cout << "o " << solver->getObjectiveValue()
                                      << endl;
                         } else {
-                                cout << "s SATISFIABLE\n";
+                                if (solver->solutionIsRecored())
+                                        cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
                                 // Non-optimization search finishes here
                         }
