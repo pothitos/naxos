@@ -2388,6 +2388,38 @@ class Ns_ConstrInverse : public Ns_Constraint {
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
 
+class Ns_ConstrTable : public Ns_Constraint {
+
+    private:
+        NsIntVarArray& VarArr;
+        const NsDeque<NsDeque<NsInt>>& table;
+        bool isSupportsTable;
+
+    public:
+        Ns_ConstrTable(NsIntVarArray& VarArr_init,
+                       const NsDeque<NsDeque<NsInt>>& table_init,
+                       const bool isSupportsTable_init)
+          : VarArr(VarArr_init),
+            table(table_init),
+            isSupportsTable(isSupportsTable_init)
+        {
+        }
+
+        virtual int varsInvolvedIn(void) const
+        {
+                return VarArr.size();
+        }
+
+        virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
+        {
+                Ns_arrayConstraintToGraphFile(fileConstraintsGraph, &VarArr,
+                                              this, "table");
+        }
+
+        virtual void ArcCons(void);
+        virtual void LocalArcCons(Ns_QueueItem& Qitem);
+};
+
 class Ns_ConstrElement : public Ns_Constraint {
 
     private:
