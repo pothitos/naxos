@@ -1212,8 +1212,8 @@ void product_min_max(const NsIntVar* VarY, const NsIntVar* VarZ, NsInt& min,
 
 namespace {
 
-void product_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                         bool& modification, const Ns_Constraint* constraint)
+void product_prune_bounds(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+                          bool& modification, const Ns_Constraint* constraint)
 {
         while ((VarY->min() * VarZ->min() < VarX->min() &&
                 VarY->min() * VarZ->max() < VarX->min()) ||
@@ -1244,8 +1244,8 @@ void Ns_ConstrXeqYtimesZ::ArcCons(void)
                 product_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                product_prune_bound(VarX, VarY, VarZ, modification, this);
-                product_prune_bound(VarX, VarZ, VarY, modification, this);
+                product_prune_bounds(VarX, VarY, VarZ, modification, this);
+                product_prune_bounds(VarX, VarZ, VarY, modification, this);
         } while (modification);
 }
 
@@ -1325,8 +1325,8 @@ bool dividend_is_out_of_bounds(NsIntVar* VarX, NsInt valueY, NsIntVar* VarZ)
                   valueY / VarZ_min_positive > VarX->max())));
 }
 
-void dividend_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                          bool& modification, const Ns_Constraint* constraint)
+void dividend_prune_bounds(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+                           bool& modification, const Ns_Constraint* constraint)
 {
         while (dividend_is_out_of_bounds(VarX, VarY->min(), VarZ)) {
                 if (!VarY->removeSingle(VarY->min(), constraint))
@@ -1340,8 +1340,8 @@ void dividend_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
         }
 }
 
-void divisor_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                         bool& modification, const Ns_Constraint* constraint)
+void divisor_prune_bounds(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
+                          bool& modification, const Ns_Constraint* constraint)
 {
         while ((VarY->min() / VarZ->min() < VarX->min() &&
                 VarY->max() / VarZ->min() < VarX->min()) ||
@@ -1372,8 +1372,8 @@ void Ns_ConstrXeqYdivZ::ArcCons(void)
                 quotient_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                dividend_prune_bound(VarX, VarY, VarZ, modification, this);
-                divisor_prune_bound(VarX, VarY, VarZ, modification, this);
+                dividend_prune_bounds(VarX, VarY, VarZ, modification, this);
+                divisor_prune_bounds(VarX, VarY, VarZ, modification, this);
         } while (modification);
 }
 
@@ -1411,9 +1411,9 @@ void remainder_min_max(const NsIntVar* VarY, NsIntVar* VarZ, NsInt& min_rem,
 
 namespace {
 
-void dividend_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY,
-                                  NsIntVar* VarZ, bool& modification,
-                                  const Ns_Constraint* constraint)
+void dividend_for_mod_prune_bounds(NsIntVar* VarX, NsIntVar* VarY,
+                                   NsIntVar* VarZ, bool& modification,
+                                   const Ns_Constraint* constraint)
 {
         for (NsIntVar::const_iterator valY = VarY->begin(); valY != VarY->end();
              ++valY) {
@@ -1441,9 +1441,9 @@ void dividend_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY,
         }
 }
 
-void divisor_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
-                                 bool& modification,
-                                 const Ns_Constraint* constraint)
+void divisor_for_mod_prune_bounds(NsIntVar* VarX, NsIntVar* VarY,
+                                  NsIntVar* VarZ, bool& modification,
+                                  const Ns_Constraint* constraint)
 {
         for (NsIntVar::const_iterator valZ = VarZ->begin(); valZ != VarZ->end();
              ++valZ) {
@@ -1482,10 +1482,10 @@ void Ns_ConstrXeqYmodZ::ArcCons(void)
                 remainder_min_max(VarY, VarZ, min, max);
                 VarX->removeRange(NsMINUS_INF, min - 1, this);
                 VarX->removeRange(max + 1, NsPLUS_INF, this);
-                dividend_for_mod_prune_bound(VarX, VarY, VarZ, modification,
+                dividend_for_mod_prune_bounds(VarX, VarY, VarZ, modification,
+                                              this);
+                divisor_for_mod_prune_bounds(VarX, VarY, VarZ, modification,
                                              this);
-                divisor_for_mod_prune_bound(VarX, VarY, VarZ, modification,
-                                            this);
         } while (modification);
 }
 
