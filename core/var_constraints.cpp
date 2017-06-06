@@ -1415,15 +1415,60 @@ void dividend_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY,
                                   NsIntVar* VarZ, bool& modification,
                                   const Ns_Constraint* constraint)
 {
-        // TODO
-        throw invalid_argument("Unsupported mod constraint");
+        for (NsIntVar::const_iterator valY = VarY->begin(); valY != VarY->end();
+             ++valY) {
+                for (NsIntVar::const_iterator valZ = VarZ->begin();
+                     valZ != VarZ->end(); ++valZ) {
+                        if (VarX->contains(*valY % *valZ))
+                                break;
+                        if (valZ == VarZ->end()) {
+                                VarY->removeSingle(*valY, constraint);
+                                modification = true;
+                        }
+                }
+        }
+        for (NsIntVar::const_reverse_iterator valY = VarY->rbegin();
+             valY != VarY->rend(); ++valY) {
+                for (NsIntVar::const_iterator valZ = VarZ->begin();
+                     valZ != VarZ->end(); ++valZ) {
+                        if (VarX->contains(*valY % *valZ))
+                                break;
+                        if (valZ == VarZ->end()) {
+                                VarY->removeSingle(*valY, constraint);
+                                modification = true;
+                        }
+                }
+        }
 }
 
 void divisor_for_mod_prune_bound(NsIntVar* VarX, NsIntVar* VarY, NsIntVar* VarZ,
                                  bool& modification,
                                  const Ns_Constraint* constraint)
 {
-        // TODO
+        for (NsIntVar::const_iterator valZ = VarZ->begin(); valZ != VarZ->end();
+             ++valZ) {
+                for (NsIntVar::const_iterator valY = VarY->begin();
+                     valY != VarY->end(); ++valY) {
+                        if (VarX->contains(*valY % *valZ))
+                                break;
+                        if (valY == VarY->end()) {
+                                VarZ->removeSingle(*valZ, constraint);
+                                modification = true;
+                        }
+                }
+        }
+        for (NsIntVar::const_reverse_iterator valZ = VarZ->rbegin();
+             valZ != VarZ->rend(); ++valZ) {
+                for (NsIntVar::const_iterator valY = VarY->begin();
+                     valY != VarY->end(); ++valY) {
+                        if (VarX->contains(*valY % *valZ))
+                                break;
+                        if (valY == VarY->end()) {
+                                VarZ->removeSingle(*valZ, constraint);
+                                modification = true;
+                        }
+                }
+        }
 }
 
 } // end namespace
