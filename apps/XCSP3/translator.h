@@ -117,7 +117,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                 for (auto value : AllVarsValues)
                         std::cout << value << " ";
                 std::cout << "</values>\n"
-                          << "v </instantiation>\n";
+                          << "v </instantiation>" << std::endl;
         }
 
         /// @}
