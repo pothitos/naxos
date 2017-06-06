@@ -228,38 +228,6 @@ NsIntVar& Ns_ExprAbsY::post(void) const
         VarX->manager().recordIntermediateVar(VarX);
         return *VarX;
 }
-namespace {
-
-void exprYplusCZspecial_post_constr(NsIntVar& VarX, NsIntVar& VarY,
-                                    const NsInt C, NsIntVar& VarZ)
-{
-        Ns_Constraint* newConstr =
-            new Ns_ConstrXeqYplusCZspecial(&VarX, &VarY, C, &VarZ);
-        VarX.addConstraint(newConstr);
-        VarY.addConstraint(newConstr);
-        VarZ.addConstraint(newConstr);
-        newConstr->ArcCons();
-        VarX.manager().recordConstraint(newConstr);
-}
-
-} // end namespace
-
-void Ns_ExprYplusCZspecial::post(NsIntVar& VarX) const
-{
-        VarX = NsIntVar(VarY.manager(), VarY.min() + C * VarZ.min(),
-                        VarY.max() + C * VarZ.max());
-        exprYplusCZspecial_post_constr(VarX, VarY, C, VarZ);
-}
-
-NsIntVar& Ns_ExprYplusCZspecial::post(void) const
-{
-        NsIntVar* VarX =
-            new NsIntVar(VarY.manager(), VarY.min() + C * VarZ.min(),
-                         VarY.max() + C * VarZ.max());
-        exprYplusCZspecial_post_constr(*VarX, VarY, C, VarZ);
-        VarX->manager().recordIntermediateVar(VarX);
-        return *VarX;
-}
 
 namespace {
 

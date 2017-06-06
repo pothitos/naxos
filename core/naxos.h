@@ -10,6 +10,57 @@
 
 namespace naxos {
 
+/// This is somehow 'stronger' than the simple 'X == Y + C*Z'
+///
+/// It requires some special conditions, that allow the
+/// efficient application of the pure arc-consistency, i.e. not
+/// only bounds consistency.
+class Ns_ConstrXeqYplusCZspecial : public Ns_Constraint {
+
+    private:
+        NsIntVar *VarX, *VarY, *VarZ;
+        NsInt C;
+
+    public:
+        Ns_ConstrXeqYplusCZspecial(NsIntVar* X, NsIntVar* Y, const NsInt C_init,
+                                   NsIntVar* Z)
+          : VarX(X), VarY(Y), VarZ(Z), C(C_init)
+        {
+                revisionType = VALUE_CONSISTENCY;
+                assert_Ns(&VarX->manager() == &VarY->manager() &&
+                              &VarY->manager() == &VarZ->manager(),
+                          "Ns_ConstrXeqYplusCZspecial::Ns_"
+                          "ConstrXeqYplusCZspecial: All the variables of a "
+                          "constraint must belong to the same "
+                          "NsProblemManager");
+                assert_Ns(X->min() >= 0, "Ns_ConstrXeqYplusCZspecial::Ns_"
+                                         "ConstrXeqYplusCZspecial: Special "
+                                         "condition required: X >= 0");
+                assert_Ns(0 <= Y->min() && Y->max() < C,
+                          "Ns_ConstrXeqYplusCZspecial::Ns_"
+                          "ConstrXeqYplusCZspecial: Special condition "
+                          "required: 0 <= Y < C");
+                assert_Ns(C > 0, "Ns_ConstrXeqYplusCZspecial::Ns_"
+                                 "ConstrXeqYplusCZspecial: Condition required: "
+                                 "C > 0");
+        }
+
+        virtual int varsInvolvedIn(void) const
+        {
+                return 3;
+        }
+
+        virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
+        {
+                Ns_ternaryConstraintToGraphFile(fileConstraintsGraph, VarX,
+                                                VarY, VarZ, this,
+                                                "y+c*z special", false);
+        }
+
+        virtual void ArcCons(void);
+        virtual void LocalArcCons(Ns_QueueItem& Qitem);
+};
+
 class Ns_ConstrXinDomain : public Ns_Constraint {
 
     private:
@@ -154,6 +205,28 @@ class Ns_ConstrCount : public Ns_Constraint {
         virtual void ArcCons(void);
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
+
+class Ns_ExprYplusCZspecial : public Ns_Expression {
+
+    private:
+        NsIntVar &VarY, &VarZ;
+        NsInt C;
+
+    public:
+        Ns_ExprYplusCZspecial(NsIntVar& Y, const NsInt C_init, NsIntVar& Z)
+          : VarY(Y), VarZ(Z), C(C_init)
+        {
+        }
+
+        virtual void post(NsIntVar& VarX) const;
+        virtual NsIntVar& post(void) const;
+};
+
+inline Ns_ExprYplusCZspecial NsYplusCZspecial(NsIntVar& Y, const NsInt C,
+                                              NsIntVar& Z)
+{
+        return Ns_ExprYplusCZspecial(Y, C, Z);
+}
 
 class Ns_ExprInDomain : public Ns_Expression {
 

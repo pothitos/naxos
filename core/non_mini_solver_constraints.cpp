@@ -8,6 +8,82 @@
 using namespace naxos;
 using namespace std;
 
+void Ns_ConstrXeqYplusCZspecial::ArcCons(void)
+{
+        NsIntVar::const_iterator v, vz;
+        for (v = VarX->begin(); v != VarX->end(); ++v) {
+                if (!VarY->contains(*v % C) ||
+                    !VarZ->contains((*v - *v % C) / C))
+                        VarX->removeSingle(*v, this);
+        }
+        for (v = VarY->begin(); v != VarY->end(); ++v) {
+                for (vz = VarZ->begin(); vz != VarZ->end(); ++vz) {
+                        if (VarX->contains(*v + C * (*vz)))
+                                break;
+                }
+                if (vz == VarZ->end())
+                        VarY->removeSingle(*v, this);
+        }
+        for (vz = VarZ->begin(); vz != VarZ->end(); ++vz) {
+                for (v = VarY->begin(); v != VarY->end(); ++v) {
+                        if (VarX->contains(*v + C * (*vz)))
+                                break;
+                }
+                if (v == VarY->end())
+                        VarZ->removeSingle(*vz, this);
+        }
+}
+
+void Ns_ConstrXeqYplusCZspecial::LocalArcCons(Ns_QueueItem& Qitem)
+{
+        NsIntVar::const_iterator v, vz;
+        NsInt SupportVal;
+        if (VarX == Qitem.getVarFired()) {
+                SupportVal = Qitem.getW() / C;
+                if (VarZ->contains(SupportVal)) {
+                        if (VarX->next(SupportVal * C - 1) >=
+                            (SupportVal + 1) * C)
+                                VarZ->removeSingle(SupportVal, this);
+                }
+                SupportVal = Qitem.getW() % C;
+                if (VarY->contains(SupportVal)) {
+                        for (vz = VarZ->begin(); vz != VarZ->end(); ++vz) {
+                                if (VarX->contains(SupportVal + C * (*vz)))
+                                        break;
+                        }
+                        if (vz == VarZ->end())
+                                VarY->removeSingle(SupportVal, this);
+                }
+        } else if (VarY == Qitem.getVarFired()) {
+                for (SupportVal = C * (VarX->min() / C) + Qitem.getW();
+                     SupportVal <= VarX->max(); SupportVal += C) {
+                        VarX->removeSingle(SupportVal, this);
+                }
+                for (vz = VarZ->begin(); vz != VarZ->end(); ++vz) {
+                        for (v = VarY->begin(); v != VarY->end(); ++v) {
+                                if (VarX->contains(*v + C * (*vz)))
+                                        break;
+                        }
+                        if (v == VarY->end())
+                                VarZ->removeSingle(*vz, this);
+                }
+        } else {
+                assert_Ns(VarZ == Qitem.getVarFired(),
+                          "Ns_ConstrXeqYplusCZspecial::LocalArcCons: Wrong "
+                          "getVarFired");
+                VarX->removeRange(Qitem.getW() * C, (Qitem.getW() + 1) * C - 1,
+                                  this);
+                for (v = VarY->begin(); v != VarY->end(); ++v) {
+                        for (vz = VarZ->begin(); vz != VarZ->end(); ++vz) {
+                                if (VarX->contains(*v + C * (*vz)))
+                                        break;
+                        }
+                        if (vz == VarZ->end())
+                                VarY->removeSingle(*v, this);
+                }
+        }
+}
+
 Ns_ConstrXinDomain::Ns_ConstrXinDomain(NsIntVar* X,
                                        const NsDeque<NsInt>& domain,
                                        NsDeque<NsInt>* domainPrevious_init,
