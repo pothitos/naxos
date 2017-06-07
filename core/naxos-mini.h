@@ -3237,6 +3237,38 @@ class Ns_ExprConstrAllDiff : public Ns_ExprConstr {
         }
 };
 
+class Ns_ExprConstrTable : public Ns_ExprConstr {
+
+    private:
+        NsIntVarArray& VarArr;
+        const NsDeque<NsDeque<NsInt>>& table;
+        const bool isSupportsTable;
+
+    public:
+        Ns_ExprConstrTable(NsIntVarArray& Arr,
+                           const NsDeque<NsDeque<NsInt>>& table_init,
+                           const bool isSupportsTable_init)
+          : Ns_ExprConstr(true),
+            VarArr(Arr),
+            table(table_init),
+            isSupportsTable(isSupportsTable_init)
+        {
+        }
+
+        virtual Ns_Constraint* postConstraint(bool positively) const;
+
+        virtual void postC(NsIntVar& /*VarX*/, bool /*positively*/) const
+        {
+                throw NsException(
+                    "A table constraint cannot be used as a meta-constraint");
+        }
+        virtual NsIntVar& postC(bool /*positively*/) const
+        {
+                throw NsException(
+                    "A table constraint cannot be used as a meta-constraint");
+        }
+};
+
 inline Ns_ExprConstrYlessthanC operator<(NsIntVar& Y, const NsInt C)
 {
         return Ns_ExprConstrYlessthanC(Y, C, true);
@@ -3520,6 +3552,18 @@ inline Ns_ExprConstrAllDiff NsAllDiff(NsIntVarArray& Arr,
                                       const unsigned long Capacity = 0)
 {
         return Ns_ExprConstrAllDiff(Arr, Capacity);
+}
+
+inline Ns_ExprConstrTable NsSupports(NsIntVarArray& Arr,
+                                     const NsDeque<NsDeque<NsInt>>& table)
+{
+        return Ns_ExprConstrTable(Arr, table, true);
+}
+
+inline Ns_ExprConstrTable NsConflicts(NsIntVarArray& Arr,
+                                      const NsDeque<NsDeque<NsInt>>& table)
+{
+        return Ns_ExprConstrTable(Arr, table, false);
 }
 
 inline Ns_ExprConstrYorZ NsIfThen(const Ns_ExprConstr& Yexpr,
