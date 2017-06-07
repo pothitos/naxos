@@ -2393,7 +2393,7 @@ class Ns_ConstrTable : public Ns_Constraint {
     private:
         NsIntVarArray& VarArr;
         const NsDeque<NsDeque<NsInt>>& table;
-        bool isSupportsTable;
+        const bool isSupportsTable;
 
     public:
         Ns_ConstrTable(NsIntVarArray& VarArr_init,
