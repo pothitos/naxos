@@ -3227,13 +3227,13 @@ class Ns_ExprConstrAllDiff : public Ns_ExprConstr {
 
         virtual void postC(NsIntVar& /*VarX*/, bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff "
-                                  "cannot be used as a meta-constraint");
+                throw NsException(
+                    "NsAllDiff cannot be used as a meta-constraint");
         }
         virtual NsIntVar& postC(bool /*positively*/) const
         {
-                throw NsException("Ns_ExprConstrAllDiff::postC: NsAllDiff "
-                                  "cannot be used as a meta-constraint");
+                throw NsException(
+                    "NsAllDiff cannot be used as a meta-constraint");
         }
 };
 
