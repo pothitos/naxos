@@ -497,11 +497,9 @@ void Xcsp3_to_Naxos::addExtensionConstraint(vector<XVariable*> list,
 {
         collectArray(list);
         if (support) {
-                // TODO: Implement extensional constraint
-                // pm.add(NsSupports(arrays.back(), tuplesStore.back()));
+                pm.add(NsSupports(arrays.back(), tuplesStore.back()));
         } else {
-                // TODO: Implement extensional constraint
-                // pm.add(NsConflicts(arrays.back(), tuplesStore.back()));
+                pm.add(NsConflicts(arrays.back(), tuplesStore.back()));
         }
 }
 
