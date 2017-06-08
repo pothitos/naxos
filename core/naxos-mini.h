@@ -2403,6 +2403,9 @@ class Ns_ConstrTable : public Ns_Constraint {
             table(table_init),
             isSupportsTable(isSupportsTable_init)
         {
+                assert_Ns(
+                    VarArr.size() >= 2,
+                    "A table constraint must refer at least to two variables");
         }
 
         virtual int varsInvolvedIn(void) const
