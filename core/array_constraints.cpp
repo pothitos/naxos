@@ -760,6 +760,18 @@ Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
         }
 }
 
+void Ns_ConstrTable::ArcCons(void)
+{
+        // TODO
+        throw invalid_argument("Unsupported table constraint");
+}
+
+void Ns_ConstrTable::LocalArcCons(Ns_QueueItem& /*Qitem*/)
+{
+        // TODO
+        throw invalid_argument("Unsupported table constraint");
+}
+
 void Ns_ConstrElement::ArcCons(void)
 {
         if (!VarIndex->removeRange(NsMINUS_INF, -1, this) ||
