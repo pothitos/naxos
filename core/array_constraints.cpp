@@ -749,6 +749,12 @@ Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
 {
         assert_Ns(VarArr.size() >= 2,
                   "A table constraint must refer at least to two variables");
+        for (NsDeque<NsDeque<NsInt>>::const_iterator tuple = table.begin();
+             tuple != table.end(); ++tuple) {
+                assert_Ns(VarArr.size() == tuple->size(),
+                          "Variable array's and table constraint tuple's sizes "
+                          "mismatch");
+        }
         NsIntVarArray::iterator X = VarArr.begin();
         NsProblemManager& pm = X->manager();
         ++X;
