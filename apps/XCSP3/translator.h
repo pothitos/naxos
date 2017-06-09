@@ -50,9 +50,6 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// The CSP definition parsing has already begun
         bool instanceAlreadyBegan;
 
-        /// The problem manager
-        naxos::NsProblemManager pm;
-
         /// Hash table with strings (ID) as keys and variables as values
         typedef std::unordered_map<std::string, naxos::NsIntVar> stringToVar_t;
 
@@ -145,6 +142,13 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
                         arrays.back().push_back(coeffs.at(i) *
                                                 variable(list[i]->id));
         }
+
+        /// The problem manager
+        ///
+        /// It is declared as the last data-member, to be destroyed
+        /// first. This is because during its destruction it needs other
+        /// data members of the current class.
+        naxos::NsProblemManager pm;
 
     public:
         /// Constructor
