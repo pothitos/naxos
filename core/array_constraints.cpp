@@ -643,103 +643,6 @@ void Ns_ConstrAllDiffStrong::LocalArcCons(Ns_QueueItem& Qitem)
         allDiffBoundsConsistency(VarArr, Capacity, groupFired, this);
 }
 
-Ns_ConstrInverse::Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
-                                   NsIntVarArray* VarArr_init)
-  : VarArrInv(VarArrInv_init),
-    VarArr(VarArr_init),
-    VArrInv(*VarArrInv),
-    VArr(*VarArr)
-{
-        revisionType = VALUE_CONSISTENCY;
-        assert_Ns(!VarArrInv->empty() && !VarArr->empty(),
-                  "Ns_ConstrInverse::Ns_ConstrInverse: Condition required: "
-                  "Both arrays must have some elements");
-        NsIntVarArray::iterator X = VarArr->begin();
-        NsProblemManager& pm = X->manager();
-        ++X;
-        for (; X != VarArr->end(); ++X) {
-                assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrInverse::Ns_ConstrInverse: All the "
-                          "variables of a constraint must belong to the same "
-                          "NsProblemManager");
-        }
-        for (X = VarArrInv->begin(); X != VarArrInv->end(); ++X) {
-                assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrInverse::Ns_ConstrInverse: All the "
-                          "variables of a constraint must belong to the same "
-                          "NsProblemManager");
-        }
-        NsIndex i;
-        for (X = VarArr->begin(), i = 0; X != VarArr->end(); ++X, ++i) {
-                assert_Ns(
-                    VarArrayIndex.count((Ns_pointer_t) & *X) == 0,
-                    "Ns_ConstrInverse::Ns_ConstrInverse: Duplicate NsIntVar");
-                VarArrayIndex.insert(
-                    make_pair((Ns_pointer_t) & *X, ArrayIndex_t(false, i)));
-        }
-        for (X = VarArrInv->begin(), i = 0; X != VarArrInv->end(); ++X, ++i) {
-                assert_Ns(
-                    VarArrayIndex.count((Ns_pointer_t) & *X) == 0,
-                    "Ns_ConstrInverse::Ns_ConstrInverse: Duplicate NsIntVar");
-                VarArrayIndex.insert(
-                    make_pair((Ns_pointer_t) & *X, ArrayIndex_t(true, i)));
-        }
-}
-
-void Ns_ConstrInverse::ArcCons(void)
-{
-        NsIndex i;
-        NsIntVar::const_iterator val;
-        for (i = 0; i < VArrInv.size(); ++i) {
-                for (val = VArrInv[i].begin(); val != VArrInv[i].end(); ++val) {
-                        if (*val != -1) {
-                                if (*val < -1 ||
-                                    static_cast<unsigned>(*val) >=
-                                        VArr.size() ||
-                                    !VArr[*val].contains(i))
-                                        VArrInv[i].removeSingle(*val, this);
-                                else if (VArr[*val].isBound())
-                                        VArrInv[i].removeSingle(-1, this);
-                        }
-                }
-        }
-        for (i = 0; i < VArr.size(); ++i) {
-                for (val = VArr[i].begin(); val != VArr[i].end(); ++val) {
-                        if (*val < 0 ||
-                            static_cast<unsigned>(*val) >= VArrInv.size() ||
-                            !VArrInv[*val].contains(i))
-                                VArr[i].removeSingle(*val, this);
-                }
-        }
-}
-
-void Ns_ConstrInverse::LocalArcCons(Ns_QueueItem& Qitem)
-{
-        NsInt VarFiredW = Qitem.getW();
-        if (VarFiredW < 0)
-                return;
-        VarArrayIndex_t::const_iterator cit =
-            VarArrayIndex.find((Ns_pointer_t)Qitem.getVarFired());
-        NsIndex VarFiredId = cit->second.index;
-        if (cit->second.InInverse) {
-                if (static_cast<unsigned>(VarFiredW) >= VArr.size())
-                        return;
-                VArr[VarFiredW].removeSingle(VarFiredId, this);
-        } else {
-                if (Qitem.getVarFired()->isBound()) {
-                        NsInt val = Qitem.getVarFired()->value();
-                        assert_Ns(0 <= val && static_cast<unsigned>(val) <
-                                                  VArrInv.size(),
-                                  "Ns_ConstrInverse::LocalArcCons: 'val' out "
-                                  "of range");
-                        VArrInv[val].removeSingle(-1, this);
-                }
-                if (static_cast<unsigned>(VarFiredW) >= VArrInv.size())
-                        return;
-                VArrInv[VarFiredW].removeSingle(VarFiredId, this);
-        }
-}
-
 Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
                                const NsDeque<NsDeque<NsInt>>& table_init,
                                const bool isSupportsTable_init)
@@ -974,33 +877,6 @@ void naxos::Ns_arrayConstraintToGraphFile(ofstream& fileConstraintsGraph,
         for (; V != VarArr->end(); ++V) {
                 fileConstraintsGraph << "\tVar" << &*V << " -> Constr" << constr
                                      << " [arrowhead=none, style=dotted];\n";
-        }
-}
-
-/// Auxiliary function to depict an Inverse constraint into a graph file
-void naxos::Ns_inverseConstraintToGraphFile(ofstream& fileConstraintsGraph,
-                                            const NsIntVarArray* VarArr,
-                                            const NsIntVarArray* VarArrInv,
-                                            const Ns_Constraint* constr)
-{
-        fileConstraintsGraph << "\n\tConstr" << constr << " [shape=point];\n";
-        NsIndex i = 0;
-        fileConstraintsGraph
-            << "\tConstr" << constr << " -> Var" << &(*VarArr)[i]
-            << " [arrowhead=odot, style=dotted, headlabel=\"" << i
-            << "\", taillabel=\"Inverse\"];\n";
-        ++i;
-        for (; i < VarArr->size(); ++i) {
-                fileConstraintsGraph
-                    << "\tConstr" << constr << " -> Var" << &(*VarArr)[i]
-                    << " [arrowhead=odot, style=dotted, headlabel=\"" << i
-                    << "\"];\n";
-        }
-        for (i = 0; i < VarArrInv->size(); ++i) {
-                fileConstraintsGraph
-                    << "\tConstr" << constr << " -> Var" << &(*VarArrInv)[i]
-                    << " [arrowhead=dot, style=dotted, headlabel=\"" << i
-                    << "\"];\n";
         }
 }
 

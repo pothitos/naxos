@@ -206,6 +206,54 @@ class Ns_ConstrCount : public Ns_Constraint {
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
 
+void Ns_inverseConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
+                                     const NsIntVarArray* VarArr,
+                                     const NsIntVarArray* VarArrInv,
+                                     const Ns_Constraint* constr);
+
+class Ns_ConstrInverse : public Ns_Constraint {
+
+    private:
+        NsIntVarArray *VarArrInv, *VarArr;
+
+        NsIntVarArray &VArrInv, &VArr;
+
+        struct ArrayIndex_t {
+
+                const bool InInverse;
+
+                const NsIndex index;
+
+                ArrayIndex_t(const bool InInverse_init,
+                             const NsIndex index_init)
+                  : InInverse(InInverse_init), index(index_init)
+                {
+                }
+        };
+
+        typedef Ns_UNORDERED_MAP<Ns_pointer_t, ArrayIndex_t> VarArrayIndex_t;
+
+        VarArrayIndex_t VarArrayIndex;
+
+    public:
+        Ns_ConstrInverse(NsIntVarArray* VarArrInv_init,
+                         NsIntVarArray* VarArr_init);
+
+        virtual int varsInvolvedIn(void) const
+        {
+                return (VarArrInv->size() + VarArr->size());
+        }
+
+        virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
+        {
+                Ns_inverseConstraintToGraphFile(fileConstraintsGraph, VarArr,
+                                                VarArrInv, this);
+        }
+
+        virtual void ArcCons(void);
+        virtual void LocalArcCons(Ns_QueueItem& Qitem);
+};
+
 class Ns_ExprYplusCZspecial : public Ns_Expression {
 
     private:
@@ -312,6 +360,31 @@ NsCount(NsIntVarArray& Arr, const NsDeque<NsInt>& Values,
 {
         return Ns_ExprConstrCount(Arr, Values, Occurrences, SplitPositions,
                                   Split, Dwin);
+}
+
+class Ns_ExprInverse : public Ns_ExpressionArray {
+
+    private:
+        NsIntVarArray& VarArr;
+        NsInt MaxDom;
+
+    public:
+        Ns_ExprInverse(NsIntVarArray& VarArr_init, const NsInt MaxDom_init = -1)
+          : VarArr(VarArr_init), MaxDom(MaxDom_init)
+        {
+        }
+
+        virtual void post(NsIntVarArray& VarArrInv) const;
+};
+
+inline Ns_ExprInverse NsInverse(NsIntVarArray& Arr)
+{
+        return Ns_ExprInverse(Arr);
+}
+
+inline Ns_ExprInverse NsInverse(NsIntVarArray& Arr, const NsInt MaxDom)
+{
+        return Ns_ExprInverse(Arr, MaxDom);
 }
 
 } // end namespace

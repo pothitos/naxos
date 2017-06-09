@@ -89,3 +89,40 @@ Ns_Constraint* Ns_ExprConstrCount::postConstraint(bool positively) const
         VarArr.addConstraint();
         return newConstr;
 }
+
+void Ns_ExprInverse::post(NsIntVarArray& VarArrInv) const
+{
+        assert_Ns(!VarArr.empty(), "Cannot inverse an empty array");
+        assert_Ns(VarArrInv.empty(),
+                  "Ns_ExprInverse::post: 'VarArrInv' non-empty");
+        NsIntVarArray::iterator V;
+        V = VarArr.begin();
+        NsInt min = V->min();
+        NsInt max = V->max();
+        ++V;
+        for (/*VOID*/; V != VarArr.end(); ++V) {
+                if (V->min() < min)
+                        min = V->min();
+                if (V->max() > max)
+                        max = V->max();
+        }
+        assert_Ns(min >= 0, "Ns_ExprInverse::post: 'VarArr' min must be >= 0");
+        if (MaxDom != -1) {
+                assert_Ns(
+                    MaxDom >= max,
+                    "Ns_ExprInverse::post: 'MaxDom' is less than 'VarArr' max");
+                max = MaxDom;
+        }
+        for (NsIndex i = 0; i <= static_cast<NsIndex>(max); ++i)
+                VarArrInv.push_back(
+                    NsIntVar(VarArr[0].manager(), -1, VarArr.size() - 1));
+        Ns_Constraint* newConstr = new Ns_ConstrInverse(&VarArrInv, &VarArr);
+        for (V = VarArr.begin(); V != VarArr.end(); ++V)
+                V->addConstraint(newConstr);
+        VarArr.addConstraint();
+        for (V = VarArrInv.begin(); V != VarArrInv.end(); ++V)
+                V->addConstraint(newConstr);
+        VarArrInv.addConstraint();
+        newConstr->ArcCons();
+        VarArr[0].manager().recordConstraint(newConstr);
+}
