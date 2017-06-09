@@ -747,6 +747,7 @@ Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
     table(table_init),
     isSupportsTable(isSupportsTable_init)
 {
+        revisionType = BIDIRECTIONAL_CONSISTENCY;
         assert_Ns(VarArr.size() >= 2,
                   "A table constraint must refer at least to two variables");
         for (NsDeque<NsDeque<NsInt>>::const_iterator tuple = table.begin();
@@ -808,10 +809,9 @@ void Ns_ConstrTable::ArcCons(void)
         }
 }
 
-void Ns_ConstrTable::LocalArcCons(Ns_QueueItem& Qitem)
+void Ns_ConstrTable::LocalArcCons(Ns_QueueItem& /*Qitem*/)
 {
-        if (Qitem.getVarFired()->isBound())
-                ArcCons();
+        ArcCons();
 }
 
 void Ns_ConstrElement::ArcCons(void)
