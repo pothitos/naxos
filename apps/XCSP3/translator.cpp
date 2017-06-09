@@ -496,11 +496,10 @@ void Xcsp3_to_Naxos::addExtensionConstraint(vector<XVariable*> list,
                                             bool support)
 {
         collectArray(list);
-        if (support) {
+        if (support)
                 pm.add(NsSupports(arrays.back(), tuplesStore.back()));
-        } else {
+        else
                 pm.add(NsConflicts(arrays.back(), tuplesStore.back()));
-        }
 }
 
 /// Unary extension constraint
