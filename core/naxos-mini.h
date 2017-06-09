@@ -2412,6 +2412,8 @@ class Ns_ConstrTable : public Ns_Constraint {
         }
 
         virtual void ArcCons(void);
+        virtual void ArcConsSupports(void);
+        virtual void ArcConsConflicts(void);
         virtual void LocalArcCons(Ns_QueueItem& Qitem);
 };
 

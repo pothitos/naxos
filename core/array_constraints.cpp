@@ -767,46 +767,52 @@ Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
         }
 }
 
-void Ns_ConstrTable::ArcCons(void)
+void Ns_ConstrTable::ArcConsSupports(void)
 {
-        if (isSupportsTable) {
-                // TODO
-                throw invalid_argument("Unsupported table supports constraint");
-        } else {
-                // Delete conflicting values when one unbound variable exists
-                NsIndex lastUnboundIndex = NsUPLUS_INF;
-                for (NsIndex i = 0; i < VarArr.size(); ++i) {
-                        // Check if current variable is the last one
-                        if (i == VarArr.size() - 1 &&
-                            lastUnboundIndex == NsPLUS_INF) {
-                                lastUnboundIndex = i;
-                        } else if (!VarArr[i].isBound()) {
-                                // Do nothing for more than one unbound vars
-                                if (lastUnboundIndex != NsUPLUS_INF)
-                                        return;
-                                lastUnboundIndex = i;
-                        }
-                }
-                // Iterate through the tuples of conflicting values
-                for (NsDeque<NsDeque<NsInt>>::const_iterator tuple =
-                         table.begin();
-                     tuple != table.end(); ++tuple) {
-                        // Iterate through the values for each tuple
-                        NsDeque<NsInt>::size_type i = 0;
-                        for (; i < tuple->size(); ++i) {
-                                if (i != lastUnboundIndex &&
-                                    (*tuple)[i] != VarArr[i].value())
-                                        break;
-                                // Break when the tuple doesn't match
-                        }
-                        if (i == tuple->size()) {
-                                // All the VarArr values matched the tuple!
-                                // Removing the conflicting value
-                                VarArr[lastUnboundIndex].remove(
-                                    (*tuple)[lastUnboundIndex]);
-                        }
+        // TODO
+        throw invalid_argument("Unsupported table supports constraint");
+}
+
+void Ns_ConstrTable::ArcConsConflicts(void)
+{
+        // Delete conflicting values when one unbound variable exists
+        NsIndex lastUnboundIndex = NsUPLUS_INF;
+        for (NsIndex i = 0; i < VarArr.size(); ++i) {
+                // Check if current variable is the last one
+                if (i == VarArr.size() - 1 && lastUnboundIndex == NsPLUS_INF) {
+                        lastUnboundIndex = i;
+                } else if (!VarArr[i].isBound()) {
+                        // Do nothing for more than one unbound vars
+                        if (lastUnboundIndex != NsUPLUS_INF)
+                                return;
+                        lastUnboundIndex = i;
                 }
         }
+        // Iterate through the tuples of conflicting values
+        for (NsDeque<NsDeque<NsInt>>::const_iterator tuple = table.begin();
+             tuple != table.end(); ++tuple) {
+                // Iterate through the values for each tuple
+                NsDeque<NsInt>::size_type i = 0;
+                for (; i < tuple->size(); ++i) {
+                        if (i != lastUnboundIndex &&
+                            (*tuple)[i] != VarArr[i].value())
+                                break; // Break when the tuple doesn't match
+                }
+                if (i == tuple->size()) {
+                        // All the VarArr values matched the tuple!
+                        // Removing the conflicting value
+                        VarArr[lastUnboundIndex].remove(
+                            (*tuple)[lastUnboundIndex]);
+                }
+        }
+}
+
+void Ns_ConstrTable::ArcCons(void)
+{
+        if (isSupportsTable)
+                ArcConsSupports();
+        else
+                ArcConsConflicts();
 }
 
 void Ns_ConstrTable::LocalArcCons(Ns_QueueItem& /*Qitem*/)
