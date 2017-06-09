@@ -96,6 +96,7 @@ const NsUInt NsUPLUS_INF = ULONG_MAX;
 /// @}
 
 class NsIntVar;
+class NsIntVarArray;
 
 template <typename TemplType>
 class NsDeque;
@@ -126,6 +127,23 @@ class Ns_ExprElement : public Ns_Expression {
         Ns_ExprElement(NsIntVar& VarIndex_init,
                        const NsDeque<NsInt>& intArray_init)
           : VarIndex(VarIndex_init), intArray(intArray_init)
+        {
+        }
+
+        virtual void post(NsIntVar& VarX) const;
+        virtual NsIntVar& post(void) const;
+};
+
+class Ns_ExprVarArrElement : public Ns_Expression {
+
+    private:
+        NsIntVarArray& VarArr;
+        NsIntVar& VarIndex;
+
+    public:
+        Ns_ExprVarArrElement(NsIntVarArray& VarArr_init,
+                             NsIntVar& VarIndex_init)
+          : VarArr(VarArr_init), VarIndex(VarIndex_init)
         {
         }
 
@@ -1144,6 +1162,16 @@ class NsIntVarArray {
         const NsIntVar& operator[](const NsIndex i) const
         {
                 return *PointArray[i];
+        }
+
+        Ns_ExprVarArrElement operator[](NsIntVar& VarIndex)
+        {
+                return Ns_ExprVarArrElement(*this, VarIndex);
+        }
+
+        Ns_ExprVarArrElement operator[](const Ns_Expression& VarIndexExpr)
+        {
+                return (*this)[VarIndexExpr.post()];
         }
 
         NsIntVar& front(void)
