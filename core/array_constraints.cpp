@@ -769,8 +769,39 @@ Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
 
 void Ns_ConstrTable::ArcConsSupports(void)
 {
-        // TODO
-        throw invalid_argument("Unsupported table supports constraint");
+        // Initialize the supported variables' bounds
+        NsDeque<NsInt> VarArrMin(VarArr.size());
+        NsDeque<NsInt> VarArrMax(VarArr.size());
+        NsDeque<NsInt>::size_type i;
+        for (i = 0; i < VarArr.size(); ++i) {
+                VarArrMin[i] = NsPLUS_INF;
+                VarArrMax[i] = NsMINUS_INF;
+        }
+        // Iterate through the tuples of supporting values
+        for (NsDeque<NsDeque<NsInt>>::const_iterator tuple = table.begin();
+             tuple != table.end(); ++tuple) {
+                // Iterate through the values for each tuple
+                for (i = 0; i < tuple->size(); ++i)
+                        if (!VarArr[i].contains((*tuple)[i]))
+                                break; // tuple is not supporting
+                if (i == tuple->size()) {
+                        // This is a support tuple!
+                        // Update the (supported) bounds for each variable
+                        for (i = 0; i < tuple->size(); ++i) {
+                                update_min_max((*tuple)[i], VarArrMin[i],
+                                               VarArrMax[i]);
+                        }
+                }
+        }
+        // Update the supported variables' bounds
+        for (i = 0; i < VarArr.size(); ++i) {
+                if (VarArrMin[i] != NsPLUS_INF) {
+                        VarArr[i].removeRange(NsMINUS_INF, VarArrMin[i] - 1,
+                                              this);
+                        VarArr[i].removeRange(VarArrMax[i] + 1, NsPLUS_INF,
+                                              this);
+                }
+        }
 }
 
 void Ns_ConstrTable::ArcConsConflicts(void)
