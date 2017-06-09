@@ -807,14 +807,14 @@ void Ns_ConstrTable::ArcConsSupports(void)
 void Ns_ConstrTable::ArcConsConflicts(void)
 {
         // Delete conflicting values when one unbound variable exists
-        NsIndex lastUnboundIndex = NsUPLUS_INF;
+        NsIndex lastUnboundIndex = NsINDEX_INF;
         for (NsIndex i = 0; i < VarArr.size(); ++i) {
                 // Check if current variable is the last one
-                if (i == VarArr.size() - 1 && lastUnboundIndex == NsUPLUS_INF) {
+                if (i == VarArr.size() - 1 && lastUnboundIndex == NsINDEX_INF) {
                         lastUnboundIndex = i;
                 } else if (!VarArr[i].isBound()) {
                         // Do nothing for more than one unbound vars
-                        if (lastUnboundIndex != NsUPLUS_INF)
+                        if (lastUnboundIndex != NsINDEX_INF)
                                 return;
                         lastUnboundIndex = i;
                 }
