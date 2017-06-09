@@ -810,7 +810,7 @@ void Ns_ConstrTable::ArcConsConflicts(void)
         NsIndex lastUnboundIndex = NsUPLUS_INF;
         for (NsIndex i = 0; i < VarArr.size(); ++i) {
                 // Check if current variable is the last one
-                if (i == VarArr.size() - 1 && lastUnboundIndex == NsPLUS_INF) {
+                if (i == VarArr.size() - 1 && lastUnboundIndex == NsUPLUS_INF) {
                         lastUnboundIndex = i;
                 } else if (!VarArr[i].isBound()) {
                         // Do nothing for more than one unbound vars
