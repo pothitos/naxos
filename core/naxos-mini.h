@@ -1182,6 +1182,11 @@ void Ns_globalConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
                                     const Ns_Constraint* constr,
                                     const char* constrName);
 
+void Ns_elementConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
+                                     const NsIntVar& VarX, const NsIntVar& VarY,
+                                     const NsIntVarArray& VarArr,
+                                     const Ns_Constraint* constr);
+
 void Ns_arrayConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
                                    const NsIntVarArray* VarArr,
                                    const Ns_Constraint* constr,
@@ -2451,6 +2456,53 @@ class Ns_ConstrElement : public Ns_Constraint {
         {
                 fileConstraintsGraph << "\n\tVar" << VarValue << " -> Var"
                                      << VarIndex << " [label=\"element\"];\n";
+        }
+
+        virtual void ArcCons(void);
+        virtual void LocalArcCons(Ns_QueueItem& Qitem);
+};
+
+class Ns_ConstrVarArrElement : public Ns_Constraint {
+
+    private:
+        NsIntVarArray& VarArr;
+        NsIntVar& VarIndex;
+        NsIntVar& VarValue;
+
+    public:
+        Ns_ConstrVarArrElement(NsIntVarArray& VarArr_init,
+                               NsIntVar& VarIndex_init, NsIntVar& VarValue_init)
+          : VarArr(VarArr_init),
+            VarIndex(VarIndex_init),
+            VarValue(VarValue_init)
+        {
+                revisionType = BIDIRECTIONAL_CONSISTENCY;
+                assert_Ns(&VarIndex.manager() == &VarValue.manager(),
+                          "Ns_ConstrVarArrElement::Ns_ConstrVarArrElement: All "
+                          "the variables of a constraint must belong to the "
+                          "same NsProblemManager");
+                for (NsIntVarArray::iterator V = VarArr.begin();
+                     V != VarArr.end(); ++V) {
+                        assert_Ns(&VarIndex.manager() == &V->manager(),
+                                  "Ns_ConstrVarArrElement::Ns_"
+                                  "ConstrVarArrElement: All the variables of a "
+                                  "constraint must belong to the same "
+                                  "NsProblemManager");
+                }
+                assert_Ns(
+                    !VarArr.empty(),
+                    "Ns_ConstrElement::Ns_ConstrElement: Empty element array");
+        }
+
+        virtual int varsInvolvedIn(void) const
+        {
+                return (VarArr.size() + 2);
+        }
+
+        virtual void toGraphFile(std::ofstream& fileConstraintsGraph) const
+        {
+                Ns_elementConstraintToGraphFile(fileConstraintsGraph, VarIndex,
+                                                VarValue, VarArr, this);
         }
 
         virtual void ArcCons(void);

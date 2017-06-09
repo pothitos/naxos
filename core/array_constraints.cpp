@@ -936,6 +936,29 @@ void naxos::Ns_globalConstraintToGraphFile(ofstream& fileConstraintsGraph,
                              << "\", style=dotted];\n";
 }
 
+/// Depicts an advanced element constraint into a graph file
+void naxos::Ns_elementConstraintToGraphFile(ofstream& fileConstraintsGraph,
+                                            const NsIntVar& VarX,
+                                            const NsIntVar& VarY,
+                                            const NsIntVarArray& VarArr,
+                                            const Ns_Constraint* constr)
+{
+        fileConstraintsGraph << "\n\tConstr" << constr << " [shape=point];\n";
+        for (NsIntVarArray::const_iterator V = VarArr.begin();
+             V != VarArr.end(); ++V) {
+                fileConstraintsGraph << "\tVar" << &*V << " -> Constr" << constr
+                                     << " [arrowhead=none, style=dotted];\n";
+        }
+        fileConstraintsGraph << "\tConstr" << constr << " -> Var" << &VarX
+                             << " [taillabel=\""
+                             << "index"
+                             << "\", style=dotted];\n";
+        fileConstraintsGraph << "\tConstr" << constr << " -> Var" << &VarY
+                             << " [taillabel=\""
+                             << "value"
+                             << "\", style=dotted];\n";
+}
+
 /// Auxiliary function to depict an array-constraint into a graph file
 void naxos::Ns_arrayConstraintToGraphFile(ofstream& fileConstraintsGraph,
                                           const NsIntVarArray* VarArr,
