@@ -740,6 +740,26 @@ void Ns_ConstrInverse::LocalArcCons(Ns_QueueItem& Qitem)
         }
 }
 
+Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
+                               const NsDeque<NsDeque<NsInt>>& table_init,
+                               const bool isSupportsTable_init)
+  : VarArr(VarArr_init),
+    table(table_init),
+    isSupportsTable(isSupportsTable_init)
+{
+        assert_Ns(VarArr.size() >= 2,
+                  "A table constraint must refer at least to two variables");
+        NsIntVarArray::iterator X = VarArr.begin();
+        NsProblemManager& pm = X->manager();
+        ++X;
+        for (; X != VarArr.end(); ++X) {
+                assert_Ns(&pm == &X->manager(),
+                          "Ns_ConstrAllDiff::Ns_ConstrAllDiff: All the "
+                          "variables of a constraint must belong to the same "
+                          "NsProblemManager");
+        }
+}
+
 void Ns_ConstrElement::ArcCons(void)
 {
         if (!VarIndex->removeRange(NsMINUS_INF, -1, this) ||

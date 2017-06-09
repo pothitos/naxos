@@ -2398,15 +2398,7 @@ class Ns_ConstrTable : public Ns_Constraint {
     public:
         Ns_ConstrTable(NsIntVarArray& VarArr_init,
                        const NsDeque<NsDeque<NsInt>>& table_init,
-                       const bool isSupportsTable_init)
-          : VarArr(VarArr_init),
-            table(table_init),
-            isSupportsTable(isSupportsTable_init)
-        {
-                assert_Ns(
-                    VarArr.size() >= 2,
-                    "A table constraint must refer at least to two variables");
-        }
+                       const bool isSupportsTable_init);
 
         virtual int varsInvolvedIn(void) const
         {
