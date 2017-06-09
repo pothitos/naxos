@@ -2441,9 +2441,9 @@ class Ns_ConstrVarArrElement : public Ns_Constraint {
                                   "constraint must belong to the same "
                                   "NsProblemManager");
                 }
-                assert_Ns(
-                    !VarArr.empty(),
-                    "Ns_ConstrElement::Ns_ConstrElement: Empty element array");
+                assert_Ns(!VarArr.empty(),
+                          "Ns_ConstrVarArrElement::Ns_ConstrVarArrElement: "
+                          "Empty element array");
         }
 
         virtual int varsInvolvedIn(void) const
