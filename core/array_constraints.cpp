@@ -802,6 +802,25 @@ void Ns_ConstrElement::LocalArcCons(Ns_QueueItem& Qitem)
         }
 }
 
+void array_VarArr_elements_min_max(const NsIntVarArray& VarArr,
+                                   const NsIntVar& VarIndex, NsInt& min,
+                                   NsInt& max)
+{
+        // TODO
+        throw invalid_argument("Unsupported NsIntVarArray element constraint");
+}
+
+void Ns_ConstrVarArrElement::ArcCons(void)
+{
+        // TODO
+        throw invalid_argument("Unsupported NsIntVarArray element constraint");
+}
+
+void Ns_ConstrVarArrElement::LocalArcCons(Ns_QueueItem& /*Qitem*/)
+{
+        ArcCons();
+}
+
 /// @{
 /// @name Representation of higher order constraints in a graph
 
