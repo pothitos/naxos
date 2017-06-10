@@ -607,6 +607,44 @@ NsIntVar& Ns_ExprElement::post(void) const
 
 namespace {
 
+void exprVarArrElement_post_constr(NsIntVarArray& VarArr, NsIntVar& VarIndex,
+                                   NsIntVar& VarX)
+{
+        Ns_Constraint* newConstr =
+            new Ns_ConstrVarArrElement(VarArr, VarIndex, VarX);
+        VarX.addConstraint(newConstr);
+        VarIndex.addConstraint(newConstr);
+        for (NsIntVarArray::iterator X = VarArr.begin(); X != VarArr.end(); ++X)
+                X->addConstraint(newConstr);
+        newConstr->ArcCons();
+        VarX.manager().recordConstraint(newConstr);
+}
+
+} // end namespace
+
+void Ns_ExprVarArrElement::post(NsIntVar& VarX) const
+{
+        assert_Ns(!VarArr.empty(), "Array of constrained variables is empty");
+        NsInt minElement, maxElement;
+        array_VarArr_elements_min_max(VarArr, VarIndex, minElement, maxElement);
+        VarX = NsIntVar(VarIndex.manager(), minElement, maxElement);
+        exprVarArrElement_post_constr(VarArr, VarIndex, VarX);
+}
+
+NsIntVar& Ns_ExprVarArrElement::post(void) const
+{
+        assert_Ns(!VarArr.empty(), "Array of constrained variables is empty");
+        NsInt minElement, maxElement;
+        array_VarArr_elements_min_max(VarArr, VarIndex, minElement, maxElement);
+        NsIntVar* VarX =
+            new NsIntVar(VarIndex.manager(), minElement, maxElement);
+        exprVarArrElement_post_constr(VarArr, VarIndex, *VarX);
+        VarX->manager().recordIntermediateVar(VarX);
+        return *VarX;
+}
+
+namespace {
+
 void exprConstrYopZ_post_constr(Ns_Constraint* newConstr, NsIntVar& VarX,
                                 NsIntVar& VarY)
 {

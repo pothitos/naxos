@@ -37,6 +37,10 @@ void array_sum_min_max(const naxos::NsIntVarArray* VarArr,
                        const naxos::NsIndex start, const naxos::NsIndex length,
                        naxos::NsInt& summin, naxos::NsInt& summax);
 
+void array_VarArr_elements_min_max(const naxos::NsIntVarArray& VarArr,
+                                   const naxos::NsIntVar& VarIndex,
+                                   naxos::NsInt& min, naxos::NsInt& max);
+
 void update_min_max(const naxos::NsInt candidate, naxos::NsInt& min,
                     naxos::NsInt& max);
 
