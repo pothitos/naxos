@@ -826,8 +826,20 @@ void index_prune_bounds(const NsIntVarArray& VarArr, NsIntVar& VarIndex,
                         const NsIntVar& VarValue, bool& modification,
                         const Ns_Constraint* constraint)
 {
-        // TODO
-        throw invalid_argument("Unsupported NsIntVarArray element constraint");
+        for (NsIntVar::const_iterator i = VarIndex.begin(); i != VarIndex.end();
+             ++i) {
+                if (intersectionEmpty(&VarArr[*i], &VarValue)) {
+                        VarIndex.removeSingle(*i, constraint);
+                        modification = true;
+                }
+        }
+        for (NsIntVar::const_reverse_iterator i = VarIndex.rbegin();
+             i != VarIndex.rend(); ++i) {
+                if (intersectionEmpty(&VarArr[*i], &VarValue)) {
+                        VarIndex.removeSingle(*i, constraint);
+                        modification = true;
+                }
+        }
 }
 
 /// If VarIndex is bound, it holds VarArr[VarIndex] == VarValue
