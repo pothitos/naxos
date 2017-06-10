@@ -2,6 +2,26 @@
 
 Here we link Naxos to the XCSP3 parser.
 
+## Compilation
+
+Use the following commands to compile, if `g++-4.9` is
+installed.
+
+```sh
+git clone https://github.com/pothitos/naxos.git
+cd naxos/apps/XCSP3/
+cmake .
+make naxos-xcsp3
+```
+
+## Execution
+
+To solve a problem execute
+```sh
+./naxos-xcsp3 BENCHNAME
+```
+where `BENCHNAME` can be `tsp-25-843.xml` for example.
+
 
 # XCSP3 Mini-Solver Competition
 
