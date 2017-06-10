@@ -1335,28 +1335,27 @@ void dividend_for_mod_prune_bounds(NsIntVar* VarX, NsIntVar* VarY,
                                    NsIntVar* VarZ, bool& modification,
                                    const Ns_Constraint* constraint)
 {
+        NsIntVar::const_iterator valZ;
         for (NsIntVar::const_iterator valY = VarY->begin(); valY != VarY->end();
              ++valY) {
-                for (NsIntVar::const_iterator valZ = VarZ->begin();
-                     valZ != VarZ->end(); ++valZ) {
+                for (valZ = VarZ->begin(); valZ != VarZ->end(); ++valZ) {
                         if (VarX->contains(*valY % *valZ))
                                 break;
-                        if (valZ == VarZ->end()) {
-                                VarY->removeSingle(*valY, constraint);
-                                modification = true;
-                        }
+                }
+                if (valZ == VarZ->end()) {
+                        VarY->removeSingle(*valY, constraint);
+                        modification = true;
                 }
         }
         for (NsIntVar::const_reverse_iterator valY = VarY->rbegin();
              valY != VarY->rend(); ++valY) {
-                for (NsIntVar::const_iterator valZ = VarZ->begin();
-                     valZ != VarZ->end(); ++valZ) {
+                for (valZ = VarZ->begin(); valZ != VarZ->end(); ++valZ) {
                         if (VarX->contains(*valY % *valZ))
                                 break;
-                        if (valZ == VarZ->end()) {
-                                VarY->removeSingle(*valY, constraint);
-                                modification = true;
-                        }
+                }
+                if (valZ == VarZ->end()) {
+                        VarY->removeSingle(*valY, constraint);
+                        modification = true;
                 }
         }
 }
@@ -1365,28 +1364,27 @@ void divisor_for_mod_prune_bounds(NsIntVar* VarX, NsIntVar* VarY,
                                   NsIntVar* VarZ, bool& modification,
                                   const Ns_Constraint* constraint)
 {
+        NsIntVar::const_iterator valY;
         for (NsIntVar::const_iterator valZ = VarZ->begin(); valZ != VarZ->end();
              ++valZ) {
-                for (NsIntVar::const_iterator valY = VarY->begin();
-                     valY != VarY->end(); ++valY) {
+                for (valY = VarY->begin(); valY != VarY->end(); ++valY) {
                         if (VarX->contains(*valY % *valZ))
                                 break;
-                        if (valY == VarY->end()) {
-                                VarZ->removeSingle(*valZ, constraint);
-                                modification = true;
-                        }
+                }
+                if (valY == VarY->end()) {
+                        VarZ->removeSingle(*valZ, constraint);
+                        modification = true;
                 }
         }
         for (NsIntVar::const_reverse_iterator valZ = VarZ->rbegin();
              valZ != VarZ->rend(); ++valZ) {
-                for (NsIntVar::const_iterator valY = VarY->begin();
-                     valY != VarY->end(); ++valY) {
+                for (valY = VarY->begin(); valY != VarY->end(); ++valY) {
                         if (VarX->contains(*valY % *valZ))
                                 break;
-                        if (valY == VarY->end()) {
-                                VarZ->removeSingle(*valZ, constraint);
-                                modification = true;
-                        }
+                }
+                if (valY == VarY->end()) {
+                        VarZ->removeSingle(*valZ, constraint);
+                        modification = true;
                 }
         }
 }
