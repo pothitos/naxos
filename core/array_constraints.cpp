@@ -803,11 +803,18 @@ void Ns_ConstrElement::LocalArcCons(Ns_QueueItem& Qitem)
 }
 
 void array_VarArr_elements_min_max(const NsIntVarArray& VarArr,
-                                   const NsIntVar& VarIndex, NsInt& min,
-                                   NsInt& max)
+                                   NsIntVar& VarIndex, NsInt& min, NsInt& max)
 {
-        // TODO
-        throw invalid_argument("Unsupported NsIntVarArray element constraint");
+        assert_Ns(VarIndex.removeRange(NsMINUS_INF, -1, 0) &&
+                      VarIndex.removeRange(VarArr.size(), NsPLUS_INF, 0),
+                  "Index constrained variable for NsIntVarArray is empty");
+        min = NsPLUS_INF;
+        max = NsMINUS_INF;
+        for (NsIntVar::const_iterator val = VarIndex.begin();
+             val != VarIndex.end(); ++val) {
+                update_min_max(VarArr[*val].min(), min, max);
+                update_min_max(VarArr[*val].max(), min, max);
+        }
 }
 
 namespace {
