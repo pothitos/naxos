@@ -810,10 +810,48 @@ void array_VarArr_elements_min_max(const NsIntVarArray& VarArr,
         throw invalid_argument("Unsupported NsIntVarArray element constraint");
 }
 
-void Ns_ConstrVarArrElement::ArcCons(void)
+namespace {
+
+/// Checks if VarArr[i] doesn't have any value in common with VarValue
+///
+/// If not, 'i' should be removed from VarIndex.
+void index_prune_bounds(const NsIntVarArray& VarArr, NsIntVar& VarIndex,
+                        const NsIntVar& VarValue, bool& modification,
+                        const Ns_Constraint* constraint)
 {
         // TODO
         throw invalid_argument("Unsupported NsIntVarArray element constraint");
+}
+
+/// If VarIndex is bound, it holds VarArr[VarIndex] == VarValue
+///
+/// If VarIndex isn't bound, we cannot consider anything about
+/// VarArr elements.
+void VarArrElements_prune_bounds(NsIntVarArray& VarArr,
+                                 const NsIntVar& VarIndex,
+                                 const NsIntVar& VarValue, bool& modification,
+                                 const Ns_Constraint* constraint)
+{
+        // TODO
+        throw invalid_argument("Unsupported NsIntVarArray element constraint");
+}
+
+} // end namespace
+
+void Ns_ConstrVarArrElement::ArcCons(void)
+{
+        NsInt min, max;
+        bool modification;
+        do {
+                modification = false;
+                array_VarArr_elements_min_max(VarArr, VarIndex, min, max);
+                VarValue.removeRange(NsMINUS_INF, min - 1, this);
+                VarValue.removeRange(max + 1, NsPLUS_INF, this);
+                index_prune_bounds(VarArr, VarIndex, VarValue, modification,
+                                   this);
+                VarArrElements_prune_bounds(VarArr, VarIndex, VarValue,
+                                            modification, this);
+        } while (modification);
 }
 
 void Ns_ConstrVarArrElement::LocalArcCons(Ns_QueueItem& /*Qitem*/)
