@@ -394,6 +394,8 @@ Ns_StackGoals::~Ns_StackGoals(void)
 
 NsProblemManager::~NsProblemManager(void)
 {
+        // Delete the queue first, because it depends to the following
+        getQueue().clear();
         // Constraints destruction
         for (Ns_constraints_array_t::iterator c = constraints.begin();
              c != constraints.end(); ++c) {
