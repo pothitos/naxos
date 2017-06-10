@@ -51,6 +51,5 @@ do
     # Set the stored solution file name
     SOLUTION="verification/$(basename $INSTANCE .xml).sol"
     # Compare the stored solution with the solver's one
-    # This test is temporarily disabled
-    ./naxos-xcsp3 $INSTANCE | cmp $SOLUTION || true
+    ./naxos-xcsp3 $INSTANCE | cmp $SOLUTION
 done
