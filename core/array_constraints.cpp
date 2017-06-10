@@ -846,13 +846,29 @@ void index_prune_bounds(const NsIntVarArray& VarArr, NsIntVar& VarIndex,
 ///
 /// If VarIndex isn't bound, we cannot consider anything about
 /// VarArr elements.
-void VarArrElements_prune_bounds(NsIntVarArray& VarArr,
-                                 const NsIntVar& VarIndex,
-                                 const NsIntVar& VarValue, bool& modification,
-                                 const Ns_Constraint* constraint)
+void VarArrElements_prune(NsIntVarArray& VarArr, const NsIntVar& VarIndex,
+                          NsIntVar& VarValue, bool& modification,
+                          const Ns_Constraint* constraint)
 {
-        // TODO
-        throw invalid_argument("Unsupported NsIntVarArray element constraint");
+        if (VarIndex.isBound()) {
+                // Keep only the common values
+                for (NsIntVar::const_iterator val =
+                         VarArr[VarIndex.value()].begin();
+                     val != VarArr[VarIndex.value()].end(); ++val) {
+                        if (!VarValue.contains(*val)) {
+                                VarArr[VarIndex.value()].removeSingle(
+                                    *val, constraint);
+                                modification = true;
+                        }
+                }
+                for (NsIntVar::const_iterator val = VarValue.begin();
+                     val != VarValue.end(); ++val) {
+                        if (!VarArr[VarIndex.value()].contains(*val)) {
+                                VarValue.removeSingle(*val, constraint);
+                                modification = true;
+                        }
+                }
+        }
 }
 
 } // end namespace
@@ -868,8 +884,8 @@ void Ns_ConstrVarArrElement::ArcCons(void)
                 VarValue.removeRange(max + 1, NsPLUS_INF, this);
                 index_prune_bounds(VarArr, VarIndex, VarValue, modification,
                                    this);
-                VarArrElements_prune_bounds(VarArr, VarIndex, VarValue,
-                                            modification, this);
+                VarArrElements_prune(VarArr, VarIndex, VarValue, modification,
+                                     this);
         } while (modification);
 }
 
