@@ -189,12 +189,12 @@ The _Inverse_ constraint is applied between two arrays of
 constrained variables. Let _Arr_ be an array that contains
 variables with positive values in their domains. We want
 _ArrInv_ to be the "inverse" array of _Arr_. Still, let
-D*_x* be the domain of the constrained variable _x_. Then it
+D_*x* be the domain of the constrained variable _x_. Then it
 holds that:
 
-∀ v ∈ D*_ArrInv*[*i*], D*_Arr*[*v*] ∋ *i*.
+∀ v ∈ D_*ArrInv*[*i*], D_*Arr*[*v*] ∋ *i*.
 
-If there is no _v_ such that _i_ ∈ D*_Arr*[*v*], then the
+If there is no _v_ such that _i_ ∈ D_*Arr*[*v*], then the
 domain of *ArrInv*[*i*] will _only_ contain the special
 value -1.
 
