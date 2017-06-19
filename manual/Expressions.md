@@ -98,6 +98,8 @@ category of general expressions _Expression_:
 
  * _IntArr_`[`_Expression_`]`
 
+ * _VarArr_`[`_Expression_`]`
+
 An _Expression_—except from describing a constraint—can be
 assigned to a variable. E.g. we can write
 
@@ -130,16 +132,17 @@ they accept as an argument.
 
 ### The Element Constraint
 
-A separate paragraph for the last expression
-_IntArr_`[`_Expression_`]` is dedicated, because it has to
-do with the special _element_ constraint. The name "element"
-comes from logic programming. For simplicity reasons we take
-that the _Expression_ is simply the constrained variable
-_VarIndex_, that is used as an "index" in the array of
-integers _IntArr_. Note that _IntArr_ is an array containing
+A separate paragraph for the last two expressions
+_IntArr_`[`_Expression_`]` and _VarArr_`[`_Expression_`]` is
+dedicated, because they have to do with the special
+_element_ constraint. The name "element" comes from logic
+programming. For simplicity reasons, we suppose that the
+_Expression_ is simply the constrained variable _VarIndex_,
+that is used as an "index" in the array _IntArr_ or
+_VarArr_. Note that _IntArr_ is an array containing
 _integer_ values, because it is an `NsDeque<NsInt>`
-instance; it does _not_ contain constrained variables, as it
-is not an `NsIntVarArray` instance.
+instance. On the other hand the array _VarArr_ does contain
+constrained variables, as it is an `NsIntVarArray` instance.
 
 In order to understand the constraint usability, we will see
 an example. Let the array `NsDeque<NsInt> grades` contains
@@ -149,10 +152,12 @@ want the domain of the constrained variable _VarValue_ to
 contain every grade, we declare the constraint _VarValue_`
 == grades[`_VarIndex_`]`.
 
-(In case we declare another constraint, e.g. _VarValue_` >=
+In case we declare another constraint, e.g. _VarValue_` >=
 9`, the domain of _VarIndex_ will be limited in order to
 contain only the students' numbers whose grades are `9` or
-`10`.) We saw that the expression _VarValue_` ==
+`10`.
+
+We saw that the expression _VarValue_` ==
 `_IntArr_`[`_VarIndex_`]` declares an element constraint,
 but the same constraint can also be declared with a logic
 programming style as `NsElement(`_VarIndex_`, `_IntArr_`,
