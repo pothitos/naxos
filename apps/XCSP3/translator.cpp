@@ -303,11 +303,11 @@ void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsInt tokenLeft,
                                       const string& operand1,
                                       const string& operand2)
 {
-        if (tokenRight.empty()) { // Left token is an expression
+        if (tokenRight.empty()) { // Right token is an expression
                 NsIntVar& VarTmp =
                     unfoldArithmExprToken1(operation, operand1, operand2);
                 addIntensionConstraint(comparison, tokenLeft, VarTmp);
-        } else { // Left token is a variable
+        } else { // Right token is a variable
                 addIntensionConstraint(comparison, tokenLeft,
                                        variable(tokenRight));
         }
@@ -321,14 +321,14 @@ void Xcsp3_to_Naxos::unfoldRightToken(OrderType comparison, NsIntVar& tokenLeft,
                                       const string& operand2)
 {
         NsInt constant;
-        if (tokenRight.empty()) { // Left token is an expression
+        if (tokenRight.empty()) { // Right token is an expression
                 NsIntVar& VarTmp =
                     unfoldArithmExprToken1(operation, operand1, operand2);
                 addIntensionConstraint(comparison, tokenLeft, VarTmp);
         } else if (strToLong(tokenRight,
-                             constant)) { // Left token is a constant
+                             constant)) { // Right token is a constant
                 addIntensionConstraint(comparison, tokenLeft, constant);
-        } else { // Left token is a variable
+        } else { // Right token is a variable
                 addIntensionConstraint(comparison, tokenLeft,
                                        variable(tokenRight));
         }
