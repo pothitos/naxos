@@ -243,7 +243,7 @@ void parseExpression(const string& expr, string& tokenLeft, string& tokenRight,
         bool insideParentheses = false;
         for (auto c : expr) {
                 if (c == '(') {
-                        if (insideParentheses) {
+                        if (insideParentheses || !operation.empty()) {
                                 throw invalid_argument("Only one arithmetic "
                                                        "operation is permitted "
                                                        "in '" +
