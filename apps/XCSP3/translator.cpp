@@ -147,13 +147,16 @@ namespace {
 /// Leaves only the 'supports' values of the constrained variable
 void removeUnsupportedValues(NsIntVar& Var, NsDeque<NsInt>& supports)
 {
+        // Check if there's no support
+        if (supports.empty()) {
+                Var.removeAll();
+                return;
+        }
         // Ensure that the values are ordered
         sort(supports.begin(), supports.end());
         // Remove values before the fist and after the last support
-        if (!supports.empty()) {
-                Var.remove(NsMINUS_INF, supports.front() - 1);
-                Var.remove(supports.back() + 1, NsPLUS_INF);
-        }
+        Var.remove(NsMINUS_INF, supports.front() - 1);
+        Var.remove(supports.back() + 1, NsPLUS_INF);
         // Remove gaps from the variable's domain
         for (NsDeque<NsInt>::size_type i = 0; i < supports.size() - 1; ++i)
                 for (NsInt val = supports[i] + 1; val < supports[i + 1]; ++val)
