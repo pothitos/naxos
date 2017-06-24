@@ -43,6 +43,7 @@ vertexcover
 
 # XCSP3 downloaded files
 apps/XCSP3/parser/
+apps/XCSP3/checker/
 
 # Visual Studio binaries
 *.vcxproj

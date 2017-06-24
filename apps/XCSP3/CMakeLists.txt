@@ -7,6 +7,15 @@ include_directories(../../core)
 add_subdirectory(../../core ../../core)
 
 include(ExternalProject)
+
+ExternalProject_Add(XCSP3-Java-Tools
+    PREFIX checker
+    GIT_REPOSITORY https://github.com/xcsp3team/XCSP3-Java-Tools.git
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+)
+
 ExternalProject_Add(XCSP3-CPP-Parser
     PREFIX parser
     GIT_REPOSITORY https://github.com/xcsp3team/XCSP3-CPP-Parser.git
@@ -27,7 +36,7 @@ include_directories(SYSTEM ${LIBXML2_INCLUDE_DIR}
 add_executable(naxos-xcsp3 naxos-xcsp3.cpp translator.cpp)
 target_link_libraries(naxos-xcsp3 naxos-mini ${LIBXML2_LIBRARIES}
                       parserxcsp3core)
-add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser)
+add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser XCSP3-Java-Tools)
 
 enable_testing()
 add_test(verification verification/test.sh)
