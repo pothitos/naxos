@@ -12,7 +12,10 @@ ExternalProject_Add(XCSP3-Java-Tools
     PREFIX checker
     GIT_REPOSITORY https://github.com/xcsp3team/XCSP3-Java-Tools.git
     CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
+    BINARY_DIR checker/src/XCSP3-Java-Tools/src/main/java
+    BUILD_COMMAND test -e org/xcsp/checker/SolutionChecker.class || \\
+                  javac -classpath ../../../lib/javax.json-1.0.4.jar \\
+                  -sourcepath . org/xcsp/checker/SolutionChecker.java
     INSTALL_COMMAND ""
 )
 
