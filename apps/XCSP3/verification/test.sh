@@ -1,6 +1,6 @@
 #! /bin/sh
 
-validate () {
+validate() {
     # Solution validation tool
     VALIDATOR="java -classpath checker/src/XCSP3-Java-Tools/src/main/java
                org.xcsp.checker.SolutionChecker -cm"
