@@ -8,7 +8,8 @@ validate() {
     COST=$(grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 |
            grep -o -- "-\?[[:digit:]]\+" || true)
     VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION)
-    if [ "$VALIDATION" = "ERROR: the instantiation cannot be checked" ]
+    if [ "$(echo "$VALIDATION" | tail -1)" = \
+         "ERROR: the instantiation cannot be checked" ]
     then
         echo "$VALIDATION for $INSTANCE"
     elif [ "$VALIDATION" != "OK	$COST" ]
