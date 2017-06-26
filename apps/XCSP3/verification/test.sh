@@ -60,6 +60,15 @@ MEM_CHECK="valgrind -q"
 # Temporary file
 SOLUTION="/tmp/instance.sol"
 
+# Test using XCSP3 Checker's default instances
+for INSTANCE in $(cat verification/CheckerInstances.txt)
+do
+    unlzma --keep $INSTANCE.lzma
+    ./naxos-xcsp3 $INSTANCE > $SOLUTION
+    validate
+    rm $INSTANCE
+done
+
 # Default Traveling Salesman Problem instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
 timeout --preserve-status --kill-after=1s 10s \
