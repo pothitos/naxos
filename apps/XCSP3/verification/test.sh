@@ -12,6 +12,9 @@ validate() {
          "ERROR: the instantiation cannot be checked" ]
     then
         echo "$VALIDATION for $INSTANCE"
+    elif [ "$VALIDATION" = "" ]
+    then
+        cat $SOLUTION
     elif [ "$VALIDATION" != "OK	$COST" ]
     then
         echo
@@ -60,7 +63,8 @@ SOLUTION="/tmp/instance.sol"
 
 # Default Traveling Salesman Problem instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
-$MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
+timeout --preserve-status --kill-after=1s 10s \
+    $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
 validate
 
 # Default Constraint Optimisation (COP) instance
