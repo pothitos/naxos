@@ -14,6 +14,7 @@ validate() {
         echo "$VALIDATION for $INSTANCE"
     elif [ "$VALIDATION" = "" ]
     then
+        echo
         echo "$INSTANCE:"
         cat $SOLUTION
     elif [ "$VALIDATION" != "OK	$COST" ]
