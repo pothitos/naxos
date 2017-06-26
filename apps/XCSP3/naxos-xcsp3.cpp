@@ -90,10 +90,12 @@ int main(int argc, char* argv[])
                         cout << "s UNSATISFIABLE\n";
                 }
         } catch (exception& exc) {
-                cerr << exc.what() << "\n";
+                cout << "s UNSUPPORTED\n";
+                cout << "c " << exc.what() << "\n";
                 return 1;
         } catch (...) {
-                cerr << "Unknown exception\n";
+                cout << "s UNSUPPORTED\n";
+                cout << "c Unknown exception\n";
                 return 1;
         }
 }

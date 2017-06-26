@@ -71,6 +71,22 @@ do
     rm $INSTANCE
 done
 
+# Check message for unsupported instances
+for INSTANCE in $(cat verification/UnsupportedInstances.txt)
+do
+    if [ -e $INSTANCE.lzma ]
+    then
+        unlzma --keep $INSTANCE.lzma
+    fi
+    (! ./naxos-xcsp3 $INSTANCE > $SOLUTION)
+    grep -q "^s UNSUPPORTED$" $SOLUTION
+    validate
+    if [ -e $INSTANCE.lzma ]
+    then
+        rm $INSTANCE
+    fi
+done
+
 # Default Traveling Salesman Problem instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
 timeout --preserve-status --kill-after=1s 10s \
