@@ -21,8 +21,7 @@ validate() {
         echo "Wrong solution for $INSTANCE:"
         cat $SOLUTION
         echo "$VALIDATION"
-        #exit 1
-        # Continue even the test fails
+        exit 1
     fi
 }
 
