@@ -51,3 +51,4 @@ checker/src/XCSP3-Java-Tools/instancesTest/Vrp-A-n32-k5.xml
 checker/src/XCSP3-Java-Tools/instancesTest/Vrp-P-n16-k8.xml
 checker/src/XCSP3-Java-Tools/instancesTest/Warehouse-opl.xml
 checker/src/XCSP3-Java-Tools/instancesTest/Zebra.xml
+parser/src/XCSP3-CPP-Parser/instances/example.xml
