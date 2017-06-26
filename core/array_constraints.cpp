@@ -698,12 +698,8 @@ void Ns_ConstrTable::ArcConsSupports(void)
         }
         // Update the supported variables' bounds
         for (i = 0; i < VarArr.size(); ++i) {
-                if (VarArrMin[i] != NsPLUS_INF) {
-                        VarArr[i].removeRange(NsMINUS_INF, VarArrMin[i] - 1,
-                                              this);
-                        VarArr[i].removeRange(VarArrMax[i] + 1, NsPLUS_INF,
-                                              this);
-                }
+                VarArr[i].removeRange(NsMINUS_INF, VarArrMin[i] - 1, this);
+                VarArr[i].removeRange(VarArrMax[i] + 1, NsPLUS_INF, this);
         }
 }
 
