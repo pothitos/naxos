@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
                 if (argc == 3 && string(argv[2]) == "-v") {
                         verbose = true;
                 } else if (argc != 2) {
+                        cerr << "Naxos Solver 1.1.0\n";
                         cerr << "Usage: " << argv[0] << " BENCHNAME\n";
                         return 1;
                 }
