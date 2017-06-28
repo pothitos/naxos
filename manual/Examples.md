@@ -60,7 +60,7 @@ elements. Concerning (2), we create two other arrays,
 _Xi_ - _i_ respectively. For these arrays we will also
 declare that their elements shall differ.
 
-```c++
+```C++
 int N = 8;
 NsProblemManager pm;
 
@@ -95,7 +95,7 @@ digits than the one for `E`. After all the assignments the
 relation of the cryptarithm should be valid. This is the
 problem declaration for the solver:
 
-```c++
+```C++
 NsProblemManager pm;
 
 NsIntVar S(pm,1,9), E(pm,0,9), N(pm,0,9), D(pm,0,9),
@@ -156,7 +156,7 @@ Our code is summarized into the following triptych.
 The first thing to do is to create a problem manager (`pm`),
 to store the whole constraint network. The declaration is
 
-```c++
+```C++
 NsProblemManager pm;
 ```
 
@@ -171,7 +171,7 @@ When there are many constrained variables, then we use
 constrained variables arrays `NsIntVarArray`, as in the [_N_
 Queens problem](#n-queens-problem) for example. E.g.
 
-```c++
+```C++
 NsIntVarArray R;
 ```
 
@@ -180,7 +180,7 @@ define a priori neither the array size, nor the included
 constrained variables domains. We can do this through an
 iteration
 
-```c++
+```C++
 for (i = 0; i < N; ++i)
     R.push_back(NsIntVar(pm,min,max));
 ```
@@ -198,7 +198,7 @@ for _any_ solution of the problem.
 
 We can now add a goal to be satisfied through the statement:
 
-```c++
+```C++
 pm.addGoal(new NsgLabeling(R));
 ```
 
@@ -227,7 +227,7 @@ somewhere the last solution (and perhaps its cost too), in
 order to print it in the end, as in the following code for
 example:
 
-```c++
+```C++
 NsDeque<NsInt> bestR(N);
 
 while (pm.nextSolution() != false) {
@@ -248,7 +248,7 @@ straight; we cannot write something like the following,
 because in every iteration, the variable `vSum` is actually
 redefined:
 
-```c++
+```C++
 NsIntVar vSum;
 for (i = 0; i < N; ++i)
         vSum += R[i];  // WRONG!

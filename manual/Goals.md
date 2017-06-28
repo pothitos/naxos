@@ -72,7 +72,7 @@ then the whole OR-goal fails.
 The declaration for the basic goal class in _Naxos Solver_
 follows.
 
-```c++
+```C++
 class NsGoal {
     public:
         virtual bool isGoalAND(void) const;
@@ -110,7 +110,7 @@ Therefore, an example follows, illustrating goals already
 built in the solver, as they are widely used. These goals
 describe the search method _depth-first-search_ (DFS).
 
-```c++
+```C++
 class NsgInDomain : public NsGoal {
 
     private:

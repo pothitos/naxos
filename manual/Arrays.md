@@ -44,7 +44,7 @@ described by the _Expression_. In the following section it
 is explained that an _Expression_ can be simply a
 constrained variable or a combination of variables. E.g.
 
-```c++
+```C++
 VarArr.push_back(NsIntVar(pm, 10, 30));
 VarArr.push_back(3 * VarX + VarY);
 VarArr.push_back(VarX > 11);
@@ -76,7 +76,7 @@ With this iterator we can access all the variables of the
 array in turn. E.g. the following code removes the value `2`
 from every variable of `VarArr`.
 
-```c++
+```C++
 for (NsIntVarArray::iterator V = VarArr.begin(); V != VarArr.end(); ++V)
     V->remove(2);
 ```
@@ -88,7 +88,7 @@ This is an iterator like the above one, but it is useful
 only when we do not modify the constrained variables. E.g.
 we can use it in order to print the variables of an array.
 
-```c++
+```C++
 for (NsIntVarArray::const_iterator V=VarArr.begin(); V != VarArr.end(); ++V)
     cout << *V << "\n";
 ```
@@ -104,14 +104,14 @@ In case we want to create an array with the philosophy and
 methods of `NsIntVarArray`, we can use the template class
 `NsDeque<`*data_type*`>`. E.g. with
 
-```c++
+```C++
 NsDeque<int> arr;
 ```
 
 we declare that `arr` is a flexible array of integers,
 initially empty. With
 
-```c++
+```C++
 NsDeque<int> arr(5);
 ```
 

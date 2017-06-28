@@ -13,7 +13,7 @@ suffices to catch `exception` instances; this base class has
 a method `what()` that returns a string describing the error
 occurred.
 
-```c++
+```C++
 #include <naxos.h>
 using namespace naxos;
 using namespace std;

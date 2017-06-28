@@ -75,7 +75,7 @@ expressed with an equivalent way as `(!`_p_` || `_q_`)` and
 
 Some examples of expressions for constraints follow:
 
-```c++
+```C++
 VarX < VarY
 !(X == Y || X + Y == -3)
 (X == Y) != 1
@@ -124,7 +124,7 @@ category of general expressions _Expression_:
 An _Expression_—except from describing a constraint—can be
 assigned to a variable. E.g. we can write
 
-```c++
+```C++
 NsIntVar X = Y + 3 / Z;
 NsIntVar W = NsSum(VarArrA) - (NsMin(VarArrB) == 10);
 ```
@@ -202,7 +202,7 @@ created. If this argument does not exist, it is taken that
 _maxdom_ = max{_V_.max | _V_ ∈ _VarArr_}. In any case,
 _maxdom_ should be greater or equal than this value. E.g.
 
-```c++
+```C++
 NsIntVarArray VarArrB = NsInverse(VarArrA);
 NsIntVarArray VarArrC;
 VarArrC = NsInverse(VarArrA, 100);

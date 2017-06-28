@@ -23,7 +23,7 @@ etc.) or built-in expressions like `NsAllDiff()` that states
 that all the variables of an array must have different
 values. E.g.
 
-```c++
+```C++
 pm.add(3 * VarX != VarY / 2);
 pm.add(VarW == -2 || VarW >= 5);
 pm.add(NsAllDiff(VarArr));
@@ -58,7 +58,7 @@ reduced. If it cannot be further reduced, `nextSolution()`
 returns `false`, and we should have stored somewhere the
 last (best) solution. E.g.
 
-```c++
+```C++
 pm.minimize(VarX + VarY);
 while (pm.nextSolution() != false)
     { /* STORE SOLUTION */ }

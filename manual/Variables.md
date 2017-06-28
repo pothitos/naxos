@@ -38,7 +38,7 @@ afterwords by assigning an expression to it using the
 overloaded operator `=`, as on the third line of the
 following example.
 
-```c++
+```C++
 NsIntVar X(pm, 0, 3), Y(pm, -1, 15), Z;
 NsIntVar W = X + 3 * Y;
 Z = W * W;
@@ -151,7 +151,7 @@ Iterates through all the values of the domain of the
 variable. E.g. the following code prints the values of the
 variable `Var`, in ascending order.
 
-```c++
+```C++
 for (NsIntVar::const_iterator v = Var.begin(); v != Var.end(); ++v)
     cout << *v << "\n";
 ```
@@ -163,7 +163,7 @@ Iterates through the values of the domain of the variable in
 reverse order. E.g. the following code prints the values of
 the variable in descending order.
 
-```c++
+```C++
 for (NsIntVar::const_reverse_iterator v=Var.rbegin(); v != Var.rend(); ++v)
     cout << *v << "\n";
 ```
@@ -177,7 +177,7 @@ values (inside [`min`,`max`]) of the complement of the
 domain (where `min` is the minimum, and `max` is the maximum
 of the domain). E.g.
 
-```c++
+```C++
 for (NsIntVar::const_gap_iterator g = Var.gap_begin(); g != Var.gap_end(); ++g)
     cout << *g << "\n";
 ```
