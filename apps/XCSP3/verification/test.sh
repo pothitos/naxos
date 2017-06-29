@@ -31,7 +31,7 @@ set -ev
 
 SOLVER_FILES=$(ls ../../core/*.h ../../core/*.cpp | \
                grep -v "non_mini_solver\|naxos.h")
-# Ensure that Naxos Solver can be considered as a "mini-solver".
+# Ensure that Naxos Solver can be considered as a "mini-solver."
 # According to the First International XCSP3 Competition: "A
 # mini-solver is a solver whose code must be composed of
 # less than 8,000 lines of at most 160 characters (while
