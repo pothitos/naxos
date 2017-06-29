@@ -56,13 +56,46 @@ then
     cd -
 fi
 
+# For each Mini-solver Competition's requirement, solve a CSP
+for INSTANCE in verification/*.xml
+do
+    # Set the stored solution file name
+    SOLUTION="verification/$(basename $INSTANCE .xml).sol"
+    # Compare the stored solution with the solver's one
+    ./naxos-xcsp3 $INSTANCE | cmp $SOLUTION
+    validate
+done
+
 # Memory check tool
 MEM_CHECK="valgrind -q"
 
 # Temporary file
 SOLUTION="/tmp/instance.sol"
 
-# Test using XCSP3 Checker's instances
+# XCSP3 Parser's Traveling Salesman Problem instance
+INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
+timeout --preserve-status --kill-after=1s 10s \
+    $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
+validate
+
+# XCSP3 Parser's Constraint Optimisation (COP) instance
+INSTANCE="parser/src/XCSP3-CPP-Parser/instances/obj.xml"
+$MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
+validate
+
+# Limit the available time to 10s for searching a solution
+INSTANCE="verification/without_solutions/AllConstraints.xml"
+timeout --preserve-status --kill-after=1s 10s \
+    $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
+validate
+
+# Reduce the available time to 5s, while not testing memory
+INSTANCE="verification/without_solutions/AllConstraintsFormatted.xml"
+timeout --preserve-status --kill-after=1s 5s \
+    ./naxos-xcsp3 $INSTANCE > $SOLUTION
+validate
+
+# XCSP3 Checker's instances
 for INSTANCE in $(cat verification/CheckerFastInstances.txt)
 do
     unlzma --keep $INSTANCE.lzma
@@ -71,7 +104,7 @@ do
     rm $INSTANCE
 done
 
-# Test using XCSP3 Checker's instances that take more time
+# XCSP3 Checker's instances that take more time
 for INSTANCE in $(cat verification/CheckerSlowInstances.txt)
 do
     unlzma --keep $INSTANCE.lzma
@@ -97,38 +130,5 @@ do
     fi
 done
 
-# Default Traveling Salesman Problem instance
-INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
-timeout --preserve-status --kill-after=1s 10s \
-    $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
-
-# Default Constraint Optimisation (COP) instance
-INSTANCE="parser/src/XCSP3-CPP-Parser/instances/obj.xml"
-$MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
-
-# Limit the available time to 10s for searching a solution
-INSTANCE="verification/without_solutions/AllConstraints.xml"
-timeout --preserve-status --kill-after=1s 10s \
-    $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
-
-# Reduce the available time to 5s, while not testing memory
-INSTANCE="verification/without_solutions/AllConstraintsFormatted.xml"
-timeout --preserve-status --kill-after=1s 5s \
-    ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
-
 # Clean up
 rm $SOLUTION
-
-# For each Mini-solver Competition's requirement, solve a CSP
-for INSTANCE in verification/*.xml
-do
-    # Set the stored solution file name
-    SOLUTION="verification/$(basename $INSTANCE .xml).sol"
-    # Compare the stored solution with the solver's one
-    ./naxos-xcsp3 $INSTANCE | cmp $SOLUTION
-    validate
-done
