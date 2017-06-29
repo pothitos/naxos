@@ -1,0 +1,7 @@
+checker/src/XCSP3-Java-Tools/instancesTest/driverlogw-09.xml
+checker/src/XCSP3-Java-Tools/instancesTest/GracefulGraph-K02-P04.xml
+checker/src/XCSP3-Java-Tools/instancesTest/GraphColoring-3-fullins-4.xml
+checker/src/XCSP3-Java-Tools/instancesTest/LangfordBin-08.xml
+checker/src/XCSP3-Java-Tools/instancesTest/MarketSplit-01.xml
+checker/src/XCSP3-Java-Tools/instancesTest/QuadraticAssignment-bur26a.xml
+checker/src/XCSP3-Java-Tools/instancesTest/TravellingSalesman-20-30-00.xml

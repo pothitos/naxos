@@ -71,6 +71,16 @@ do
     rm $INSTANCE
 done
 
+# Test using XCSP3 Checker's instances that take more time
+for INSTANCE in $(cat verification/CheckerSlowInstances.txt)
+do
+    unlzma --keep $INSTANCE.lzma
+    timeout --preserve-status --kill-after=1s 10s \
+        ./naxos-xcsp3 $INSTANCE > $SOLUTION
+    validate
+    rm $INSTANCE
+done
+
 # Check message for unsupported instances
 for INSTANCE in $(cat verification/CheckerUnsupportedInstances.txt)
 do
