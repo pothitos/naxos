@@ -62,8 +62,8 @@ MEM_CHECK="valgrind -q"
 # Temporary file
 SOLUTION="/tmp/instance.sol"
 
-# Test using XCSP3 Checker's default instances
-for INSTANCE in $(cat verification/CheckerInstances.txt)
+# Test using XCSP3 Checker's instances
+for INSTANCE in $(cat verification/CheckerFastInstances.txt)
 do
     unlzma --keep $INSTANCE.lzma
     ./naxos-xcsp3 $INSTANCE > $SOLUTION
@@ -72,7 +72,7 @@ do
 done
 
 # Check message for unsupported instances
-for INSTANCE in $(cat verification/UnsupportedInstances.txt)
+for INSTANCE in $(cat verification/CheckerUnsupportedInstances.txt)
 do
     if [ -e $INSTANCE.lzma ]
     then
