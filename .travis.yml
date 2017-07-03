@@ -24,11 +24,11 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise
           packages:
-            - g++-4.9
+            - g++-7.1
             - valgrind
             - clang-format-5.0
       before_script:
-        - CXX=g++-4.9
+        - CXX=g++-7.1
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
