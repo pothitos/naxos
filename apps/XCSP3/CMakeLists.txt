@@ -39,7 +39,7 @@ include_directories(SYSTEM ${LIBXML2_INCLUDE_DIR}
 add_executable(naxos-xcsp3 naxos-xcsp3.cpp translator.cpp)
 target_link_libraries(naxos-xcsp3 naxos-mini ${LIBXML2_LIBRARIES}
                       parserxcsp3core)
-add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser XCSP3-Java-Tools)
+add_dependencies(naxos-xcsp3 XCSP3-CPP-Parser)
 
 enable_testing()
 add_test(verification verification/test.sh)

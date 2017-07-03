@@ -685,6 +685,8 @@ class Ns_BitSet {
         }
 };
 
+std::ostream& operator<<(std::ostream& os, const Ns_BitSet& domain);
+
 class Ns_Constraint;
 typedef NsDeque<Ns_Constraint*> Ns_constraints_array_t;
 

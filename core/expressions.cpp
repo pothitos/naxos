@@ -371,8 +371,8 @@ void Ns_ExprConstrYandZ::postC(NsIntVar& VarX, bool positively) const
                                 VarY.max() * VarZ.max());
                 exprYopZ_post_constr(VarX, VarY, VarZ, opAnd);
         } else {
-                VarX = NsIntVar(VarY.manager(), !(VarY.max() * VarZ.max()),
-                                !(VarY.min() * VarZ.min()));
+                VarX = NsIntVar(VarY.manager(), !(VarY.max() && VarZ.max()),
+                                !(VarY.min() && VarZ.min()));
                 exprYopZ_post_constr(VarX, VarY, VarZ, opNand);
         }
 }
@@ -387,8 +387,8 @@ NsIntVar& Ns_ExprConstrYandZ::postC(bool positively) const
                                     VarY.max() * VarZ.max());
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opAnd);
         } else {
-                VarX = new NsIntVar(VarY.manager(), !(VarY.max() * VarZ.max()),
-                                    !(VarY.min() * VarZ.min()));
+                VarX = new NsIntVar(VarY.manager(), !(VarY.max() && VarZ.max()),
+                                    !(VarY.min() && VarZ.min()));
                 exprYopZ_post_constr(*VarX, VarY, VarZ, opNand);
         }
         VarX->manager().recordIntermediateVar(VarX);

@@ -944,9 +944,9 @@ void Ns_ConstrMetaXeqYeqZ::LocalArcCons(Ns_QueueItem& Qitem)
 void Ns_ConstrXeqYandZ::ArcCons(void)
 {
         makeBoolean(VarX, this);
-        if ((VarY->min() * VarZ->min()))
+        if ((VarY->min() && VarZ->min()))
                 VarX->removeSingle(neg, this);
-        if (!(VarY->max() * VarZ->max()))
+        if (!(VarY->max() && VarZ->max()))
                 VarX->removeSingle(!neg, this);
         if (VarX->isBound()) {
                 if (VarX->value() == neg) {
@@ -976,9 +976,9 @@ void Ns_ConstrXeqYandZ::LocalArcCons(Ns_QueueItem& Qitem)
                         }
                 }
         } else {
-                if ((VarY->min() * VarZ->min()))
+                if ((VarY->min() && VarZ->min()))
                         VarX->removeSingle(neg, this);
-                if (!(VarY->max() * VarZ->max()))
+                if (!(VarY->max() && VarZ->max()))
                         VarX->removeSingle(!neg, this);
         }
 }
