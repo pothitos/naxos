@@ -29,6 +29,7 @@ matrix:
             - clang-format-5.0
       before_script:
         - CXX=g++-7
+        - $CXX --version
 
     - env: DIRECTORY="apps/ACvsBC/"
       addons:
