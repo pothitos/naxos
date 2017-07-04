@@ -4,8 +4,8 @@ Here we link Naxos to the XCSP3 parser.
 
 ## Compilation
 
-Use the following commands to compile, if `g++-4.9` is
-installed.
+Use the following commands to compile, if G++ version 4.9
+or later is installed.
 
 ```sh
 git clone https://github.com/pothitos/naxos.git
