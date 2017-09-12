@@ -34,31 +34,35 @@ diagonal. The following table displays an example for _N_ =
 Thus, in each column 0, 1, ..., _N_-1 we will have a queen.
 It remains to find out the _line_ where each queen will be
 placed. Therefore, we ask to assign values to the variables
-_Xi_ with 0 ≤ _Xi_ ≤ _N_-1, where _Xi_ is the line on which
-the queen of column _i_ is placed.
+_X<sub>i</sub>_ with 0 ≤ _X<sub>i</sub>_ ≤ _N_-1, where
+_X<sub>i</sub>_ is the line on which the queen of column _i_
+is placed.
 
 Regarding the constraints, first of all, no two queens
 should share the same line, i.e.
 
-_Xi_ ≠ _Xj_, ∀ _i_ ≠ _j_. (1)
+_X<sub>i</sub>_ ≠ _X<sub>j</sub>_, ∀ _i_ ≠ _j_. (1)
 
 They should not also share the same diagonal, consequently
 
-_Xi_ + i ≠ _Xj_ + _j_ and _Xi_ - _i_ ≠ _Xj_ - _j_, ∀ _i_ ≠
-_j_. (2)
+_X<sub>i</sub>_ + i ≠ _X<sub>j</sub>_ + _j_ and
+_X<sub>i</sub>_ - _i_ ≠ _X<sub>j</sub>_ - _j_, ∀ _i_ ≠ _j_.
+(2)
 
-_Xi_ + _i_ corresponds to the first diagonal and _Xi_ - _i_
-to the second diagonal for the queen of column _i_.
+_X<sub>i</sub>_ + _i_ corresponds to the first diagonal and
+_X<sub>i</sub>_ - _i_ to the second diagonal for the queen
+of column _i_.
 
 
 ### Code
 
-In the solver code, the variables _Xi_ are represented by
-the array `Var`, that according to (1) should have different
-elements. Concerning (2), we create two other arrays,
-`VarPlus` and `VarMinus`, with the elements _Xi_ + _i_ and
-_Xi_ - _i_ respectively. For these arrays we will also
-declare that their elements shall differ.
+In the solver code, the variables _X<sub>i</sub>_ are
+represented by the array `Var`, that according to (1) should
+have different elements. Concerning (2), we create two other
+arrays, `VarPlus` and `VarMinus`, with the elements
+_X<sub>i</sub>_ + _i_ and _X<sub>i</sub>_ - _i_
+respectively. For these arrays we will also declare that
+their elements shall differ.
 
 ```C++
 int N = 8;
