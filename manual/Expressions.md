@@ -20,18 +20,22 @@ _Expression_. They are mainly used as
 `NsProblemManager::add()` arguments and for the creation of
 meta-constraints. The following are _ExprConstr_:
 
- * _Expression1_ op _Expression2_, op ∈ {`<`, `<=`, `>`,
-   `>=`, `==`, `!=`}
+ * _Expression<sub>1</sub>_ op _Expression<sub>2</sub>_,
+   op ∈ {`<`, `<=`, `>`, `>=`, `==`, `!=`}
 
  * `!(`_ExprConstr_`)`
 
- * _ExprConstr1_ op _ExprConstr2_, op ∈ {`&&`, `||`}
+ * _ExprConstr<sub>1</sub>_ op _ExprConstr<sub>2</sub>_,
+   op ∈ {`&&`, `||`}
 
- * `NsIfThen(`_ExprConstr1_`, `_ExprConstr2_`)`
+ * `NsIfThen(`_ExprConstr<sub>1</sub>_`,
+             `_ExprConstr<sub>2</sub>_`)`
 
- * `NsEquiv(`_ExprConstr1_`, `_ExprConstr2_`)`
+ * `NsEquiv(`_ExprConstr<sub>1</sub>_`,
+            `_ExprConstr<sub>2</sub>_`)`
 
- * `NsCount(`_VarArr_`, `_IntArr1_`, `_IntArr2_`)`
+ * `NsCount(`_VarArr_`, `_IntArr<sub>1</sub>_`,
+            `_IntArr<sub>2</sub>_`)`
 
  * `NsSupports(`_VarArr_`, `_IntArr_`)`
 
@@ -104,8 +108,8 @@ _IntArr_[_i_][_n_ - 1].
 Apart from _ExprConstr_, the following also belong to the
 category of general expressions _Expression_:
 
- * _Expression1_ op _Expression2_, op ∈ {`+`, `-`, `*`, `/`,
-   `%`}
+ * _Expression<sub>1</sub>_ op _Expression<sub>2</sub>_,
+   op ∈ {`+`, `-`, `*`, `/`, `%`}
 
  * `NsAbs(`_Expression_`)`
 
