@@ -7,7 +7,7 @@ Constraint Programming environment implemented in C++. It
 supports the statement of Constraint Satisfaction Problems
 (CSPs) having constrained variables with finite domains
 containing integers. Please read the
-[manual](manual/README.md) in order to use it
+[__manual__](manual/README.md) in order to use it
 [[BibTeX](manual/naxos.bib)].
 
 _Amorgos_, a search methods library written by Foivos
