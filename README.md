@@ -1,4 +1,4 @@
-# Naxos Solver [![Build Status](https://travis-ci.org/pothitos/naxos.svg?branch=master)](https://travis-ci.org/pothitos/naxos) [![Visual Studio build status](https://ci.appveyor.com/api/projects/status/github/pothitos/naxos?svg=true)](https://ci.appveyor.com/project/pothitos/naxos)
+# Naxos Solver [![Build Status](https://travis-ci.org/pothitos/naxos.svg?branch=master)](https://travis-ci.org/pothitos/naxos "Compilation for Linux and tests") [![Visual Studio build status](https://ci.appveyor.com/api/projects/status/github/pothitos/naxos?svg=true "Compilation for Windows")](https://ci.appveyor.com/project/pothitos/naxos)
 
 <img src="https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg" align="right">
 
