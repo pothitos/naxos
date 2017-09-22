@@ -26,7 +26,7 @@ validate() {
            grep -o -- "-\?[[:digit:]]\+" || true)
     VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION)
     if [ "$(echo "$VALIDATION" | tail -1)" = \
-         "ERROR: the instantiation cannot be checked java.lang.NullPointerException ]
+         "ERROR: the instantiation cannot be checked java.lang.NullPointerException" ]
     then
         echo "$VALIDATION for $INSTANCE"
     elif [ "$VALIDATION" = "" ]
