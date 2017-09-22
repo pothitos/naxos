@@ -34,7 +34,7 @@ validate() {
         echo
         echo "$INSTANCE:"
         cat $SOLUTION
-    elif [ "$VALIDATION" != "OK	$COST" ]
+    elif [ $(echo "$VALIDATION" | tail -1) != "OK	$COST" ]
     then
         echo
         echo "Wrong solution for $INSTANCE:"
