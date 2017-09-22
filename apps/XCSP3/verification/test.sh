@@ -24,11 +24,11 @@ validate() {
 
     COST=$(grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 |
            grep -o -- "-\?[[:digit:]]\+" || true)
-    VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION)
-    if [ "$(echo "$VALIDATION" | tail -1)" = \
-         "ERROR: the instantiation cannot be checked java.lang.NullPointerException" ]
+    VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION 2>&1)
+    if echo "$VALIDATION" | grep -q \
+                            "^ERROR: the instantiation cannot be checked "
     then
-        echo "$VALIDATION for $INSTANCE"
+        echo "$INSTANCE: Cannot check the instantiation"
     elif [ "$VALIDATION" = "" ]
     then
         echo
