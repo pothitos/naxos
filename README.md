@@ -1,6 +1,6 @@
 # Naxos Solver [![Build Status](https://travis-ci.org/pothitos/naxos.svg?branch=master)](https://travis-ci.org/pothitos/naxos "Compilation for Linux and tests") [![Visual Studio build status](https://ci.appveyor.com/api/projects/status/github/pothitos/naxos?svg=true "Compilation for Windows")](https://ci.appveyor.com/project/pothitos/naxos)
 
-<img src="https://rawgit.com/pothitos/naxos-solver/master/manual/figures/logo.svg" align="right">
+<img src="https://rawgit.com/pothitos/naxos/master/manual/figures/logo.svg" align="right">
 
 Welcome to _Naxos Solver_, a library for an object-oriented
 Constraint Programming environment implemented in C++. It
