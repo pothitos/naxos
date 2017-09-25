@@ -31,7 +31,7 @@ assignment causes an inconsistency, then it should be
 canceled, and another value should be chosen.
 
 ![Three arc-consistent constraint
-networks](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/AC.svg)
+networks](https://rawgit.com/pothitos/naxos/master/manual/figures/AC.svg)
 
 In order to facilitate or, better, to guide search, a _goals
 mechanism_ has been implemented in the solver. The
@@ -184,7 +184,7 @@ solver to assign values to the rest of `VarArr` variables.
 When `GOAL()` returns `0`, we have finished.
 
 ![The combination of the goals that compose
-NsgLabeling](https://rawgit.com/pothitos/naxos-solver/master/manual/figures/NsgLabeling.svg)
+NsgLabeling](https://rawgit.com/pothitos/naxos/master/manual/figures/NsgLabeling.svg)
 
 While `NsgLabeling` chooses a variable to be instantiated,
 `NsgInDomain` chooses the value to assign to the variable.

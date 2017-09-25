@@ -1,5 +1,5 @@
 scp master:nikos/hadoop-2.7.2.tar.gz .
-scp master:nikos/naxos-solver/hadoop/install/hadoop.patch .
+scp master:nikos/naxos/hadoop/install/hadoop.patch .
 
 cd /usr/local/
 sudo \rm -r hadoop-2.7.1/
