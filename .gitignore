@@ -13,9 +13,6 @@ CTestTestfile.cmake
 DartConfiguration.tcl
 Testing
 
-# Unit testing framework
-catch.hpp
-
 # Naxos executables
 celar_solver
 itc_solver
