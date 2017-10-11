@@ -31,13 +31,6 @@ matrix:
         - CXX=g++-7
         - $CXX --version
 
-    - env: DIRECTORY="apps/ACvsBC/"
-      addons:
-        apt:
-          packages:
-            - time
-            - gnuplot
-
     - env: DIRECTORY="apps/CELAR/"
            DATASET="SCEN06"
       addons:
