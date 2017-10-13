@@ -47,3 +47,6 @@ apps/XCSP3/verification/XCSP3-Java-Tools/
 Release/
 Debug/
 *.exe
+
+# Logs
+progress.svg
