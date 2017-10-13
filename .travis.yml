@@ -111,7 +111,7 @@ matrix:
 
 script:
     - cd $DIRECTORY
-    - test -e CMakeLists.txt && cmake . || true
+    - cmake .
     - make -j $TARGET
-    - test -e CMakeLists.txt && ctest -V || make test
+    - ctest -V
     - cd -
