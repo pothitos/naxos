@@ -17,7 +17,6 @@ matrix:
 
     - env: DIRECTORY="apps/XCSP3/"
            TARGET="naxos-xcsp3"
-      dist: trusty
       addons:
         apt:
           sources:
