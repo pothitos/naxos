@@ -13,7 +13,7 @@ ExternalProject_Add(XCSP3-CPP-Parser
     GIT_REPOSITORY https://github.com/xcsp3team/XCSP3-CPP-Parser.git
     CONFIGURE_COMMAND ""
     BINARY_DIR parser/src/XCSP3-CPP-Parser/samples
-    BUILD_COMMAND make lib
+    BUILD_COMMAND $(MAKE) lib
     INSTALL_COMMAND ""
 )
 
