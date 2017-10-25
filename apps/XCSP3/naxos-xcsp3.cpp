@@ -19,7 +19,7 @@ Xcsp3_to_Naxos* solver;
 
 void printSolutionAndExit(void)
 {
-        if (solver->solutionIsRecored()) {
+        if (solver->solutionIsRecorded()) {
                 // A solution has been found
                 // Status SATISFIABLE or OPTIMUM FOUND has been already printed
                 solver->printSolution();
@@ -34,7 +34,7 @@ void interruptionHandler(int /*signum*/)
 {
         if (searching) {
                 // The interruption happened inside pm.nextSolution()
-                if (solver->solutionIsRecored())
+                if (solver->solutionIsRecorded())
                         cout << "s SATISFIABLE\n";
                 printSolutionAndExit();
         } else {
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
                                 cout << "o " << solver->getObjectiveValue()
                                      << endl;
                         } else {
-                                if (solver->solutionIsRecored())
+                                if (solver->solutionIsRecorded())
                                         cout << "s SATISFIABLE\n";
                                 printSolutionAndExit();
                                 // Non-optimization search finishes here
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
                 }
                 // Search has been completed
                 searching = false;
-                if (solver->solutionIsRecored()) {
+                if (solver->solutionIsRecorded()) {
                         cout << "s OPTIMUM FOUND\n";
                         printSolutionAndExit();
                 } else {

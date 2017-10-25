@@ -89,7 +89,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
 
     public:
         /// Returns true if a solution has been recorded
-        bool solutionIsRecored(void) const
+        bool solutionIsRecorded(void) const
         {
                 return !AllVarsValues.empty();
         }
