@@ -664,7 +664,7 @@ Ns_ConstrTable::Ns_ConstrTable(NsIntVarArray& VarArr_init,
         ++X;
         for (; X != VarArr.end(); ++X) {
                 assert_Ns(&pm == &X->manager(),
-                          "Ns_ConstrAllDiff::Ns_ConstrAllDiff: All the "
+                          "Ns_ConstrTable::Ns_ConstrTable: All the "
                           "variables of a constraint must belong to the same "
                           "NsProblemManager");
         }
