@@ -25,7 +25,8 @@ validate() {
     COST=$(grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 |
            grep -o -- "-\?[[:digit:]]\+" || true)
     VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION 2>&1)
-    ! VALIDATION=$(echo "$VALIDATION" | grep -v "^Picked up _JAVA_OPTIONS: ")
+    ! VALIDATION=$(echo "$VALIDATION" |
+                   grep -v "^Picked up _JAVA_OPTIONS: \|^ROOT\|^$")
     if echo "$VALIDATION" | grep -q \
                             "^ERROR: the instantiation cannot be checked "
     then
