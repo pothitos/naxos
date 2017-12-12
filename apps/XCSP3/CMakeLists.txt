@@ -11,6 +11,7 @@ include(ExternalProject)
 ExternalProject_Add(XCSP3-CPP-Parser
     PREFIX parser
     GIT_REPOSITORY https://github.com/xcsp3team/XCSP3-CPP-Parser.git
+    GIT_TAG 7aff
     CONFIGURE_COMMAND ""
     BINARY_DIR parser/src/XCSP3-CPP-Parser/samples
     BUILD_COMMAND $(MAKE) lib
