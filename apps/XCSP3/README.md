@@ -14,6 +14,9 @@ cmake .
 make naxos-xcsp3
 ```
 
+:bulb: In some cases you may have to
+`sudo apt-get install libxml2-dev`
+
 ## Execution
 
 To solve a problem execute
