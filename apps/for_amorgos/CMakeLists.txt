@@ -12,8 +12,8 @@ endif()
 include_directories(../../core)
 add_subdirectory(../../core ../../core)
 
-include_directories(..)
-add_subdirectory(.. ..)
+include_directories(../../plugins)
+add_subdirectory(../../plugins ../../plugins)
 
 add_executable(cryptmult cryptmult.cpp)
 target_link_libraries(cryptmult naxos amorgos)

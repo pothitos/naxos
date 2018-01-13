@@ -15,6 +15,8 @@ matrix:
           packages:
             - valgrind
 
+    - env: DIRECTORY="apps/for_amorgos/"
+
     - env: DIRECTORY="apps/XCSP3/"
            TARGET="naxos-xcsp3"
       addons:
@@ -105,8 +107,6 @@ matrix:
     - env: DIRECTORY="apps/ITC/"
            DATASET="comp14.ctt"
            METHOD="ONESAMP"
-
-    - env: DIRECTORY="plugins/apps/"
 
 script:
     - cd $DIRECTORY
