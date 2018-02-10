@@ -7,19 +7,16 @@ install_validator() {
     then
         git clone https://github.com/xcsp3team/XCSP3-Java-Tools.git
     fi
-    cd XCSP3-Java-Tools/src/main/java/
+    cd XCSP3-Java-Tools/
     git pull --ff-only
-    if [ ! -e org/xcsp/checker/SolutionChecker.class ]
-    then
-        javac -classpath ../../../lib/javax.json-1.0.4.jar -sourcepath . \
-            org/xcsp/checker/SolutionChecker.java
-    fi
-    cd ../../../../../
+    gradle build -x test
+    cd ../../
 }
 
 validate() {
     # Solution validation tool
-    VALIDATOR="java -classpath verification/XCSP3-Java-Tools/src/main/java/
+    VALIDATOR="java -classpath
+               verification/XCSP3-Java-Tools/build/libs/xcsp3-tools-*.jar
                org.xcsp.checker.SolutionChecker -cm"
 
     COST=$(grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 |
