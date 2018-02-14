@@ -111,9 +111,21 @@ done
 for INSTANCE in $(cat verification/CheckerSlowInstances.txt)
 do
     unlzma --keep $INSTANCE.lzma
+    set +e
     timeout --preserve-status --kill-after=1s 10s \
         ./naxos-xcsp3 $INSTANCE > $SOLUTION
-    validate
+    STATUS=$?
+    set -e
+    if [ $STATUS -ne 137 ]
+    then
+        # Solver wasn't killed
+        if [ $STATUS -ne 0 ]
+        then
+            # Solver exited with an error
+            exit 1
+        fi
+        validate
+    fi
     rm $INSTANCE
 done
 
