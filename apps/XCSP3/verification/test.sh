@@ -116,13 +116,23 @@ do
         ./naxos-xcsp3 $INSTANCE > $SOLUTION
     STATUS=$?
     set -e
-    if [ $STATUS -ne 137 ]
+    if [ $STATUS -eq 137 ]
     then
-        # Solver wasn't killed
+        #     Killed
+        echo "       $INSTANCE before normal termination"
+        if [ -e $SOLUTION ]
+        then
+            validate
+        fi
+    else
         if [ $STATUS -ne 0 ]
         then
-            # Solver exited with an error
-            exit 1
+            echo "$INSTANCE: Unexpected exit status $STATUS"
+            if [ -e $SOLUTION ]
+            then
+                cat $SOLUTION
+            fi
+            exit $STATUS
         fi
         validate
     fi
