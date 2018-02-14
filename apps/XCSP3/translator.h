@@ -42,7 +42,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         bool verbose;
 
         /// The CSP has an objective
-        bool constraintOptimisationMode;
+        bool constrainedOptimizationMode;
 
         /// The sign of the objective variable is -1 for maximization
         int objectiveSign;
@@ -154,15 +154,15 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// Constructor
         Xcsp3_to_Naxos(const bool verbose_init)
           : verbose(verbose_init),
-            constraintOptimisationMode(false),
+            constrainedOptimizationMode(false),
             instanceAlreadyBegan(false)
         {
         }
 
         /// Returns true if we are in COP mode
-        bool constraintOptimisation(void) const
+        bool constrainedOptimization(void) const
         {
-                return constraintOptimisationMode;
+                return constrainedOptimizationMode;
         }
 
         /// Returns the objective variable's current value
@@ -388,7 +388,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @}
 
         /// @{
-        /// @name Constraint Optimization for a variable
+        /// @name Constrained Optimization for a variable
 
         virtual void
         buildObjectiveMinimizeVariable(XCSP3Core::XVariable* x) override;
@@ -399,7 +399,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         /// @}
 
         /// @{
-        /// @name Constraint Optimization for an array of variables
+        /// @name Constrained Optimization for an array of variables
 
         virtual void buildObjectiveMinimize(
             XCSP3Core::ExpressionObjective type,

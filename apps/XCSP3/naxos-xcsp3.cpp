@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
                 while (solver->nextSolution() != false) {
                         searching = false;
                         solver->recordSolution();
-                        if (solver->constraintOptimisation()) {
+                        if (solver->constrainedOptimization()) {
                                 cout << "o " << solver->getObjectiveValue()
                                      << endl;
                         } else {

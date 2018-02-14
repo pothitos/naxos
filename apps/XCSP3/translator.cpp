@@ -759,7 +759,7 @@ void Xcsp3_to_Naxos::buildObjectiveMinimizeVariable(XVariable* x)
 {
         if (verbose)
                 cout << "    minimize var " << x << "\n";
-        constraintOptimisationMode = true;
+        constrainedOptimizationMode = true;
         objectiveSign = +1;
         pm.minimize(objectiveSign * variable(x->id));
 }
@@ -768,7 +768,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximizeVariable(XVariable* x)
 {
         if (verbose)
                 cout << "    maximize var " << x << "\n";
-        constraintOptimisationMode = true;
+        constrainedOptimizationMode = true;
         objectiveSign = -1;
         pm.minimize(objectiveSign * variable(x->id));
 }
@@ -810,7 +810,7 @@ void Xcsp3_to_Naxos::buildObjectiveMaximize(ExpressionObjective type,
 /// Sets the objective goal for arrays
 void Xcsp3_to_Naxos::addObjectiveArray(ExpressionObjective type)
 {
-        constraintOptimisationMode = true;
+        constrainedOptimizationMode = true;
         NsIntVarArray& objArray = arrays.back();
         switch (type) {
         case SUM_O:

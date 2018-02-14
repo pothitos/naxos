@@ -251,7 +251,7 @@ int main(int argc, char* argv[])
                                 if (bestObjective != -1) {
                                         cout << bestObjective << "\n";
                                         pm.restart();
-                                        // We restart and disable optimisation
+                                        // We restart and disable optimization
                                         // in order to have a well-defined
                                         // reference search tree.
                                 }

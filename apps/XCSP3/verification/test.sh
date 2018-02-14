@@ -81,7 +81,7 @@ timeout --preserve-status --kill-after=1s 10s \
     $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
 validate
 
-# XCSP3 Parser's Constraint Optimisation (COP) instance
+# XCSP3 Parser's Constrained Optimization (COP) instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/obj.xml"
 $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
 validate
