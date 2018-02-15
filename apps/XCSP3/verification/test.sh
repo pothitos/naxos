@@ -120,7 +120,7 @@ do
     then
         #     Killed
         echo "       $INSTANCE before normal termination"
-        if [ -e $SOLUTION ]
+        if [ -s $SOLUTION ]
         then
             validate
         fi
@@ -128,7 +128,7 @@ do
         if [ $STATUS -ne 0 ]
         then
             echo "$INSTANCE: Unexpected exit status $STATUS"
-            if [ -e $SOLUTION ]
+            if [ -s $SOLUTION ]
             then
                 cat $SOLUTION
             fi
