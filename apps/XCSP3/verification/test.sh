@@ -43,6 +43,36 @@ validate() {
     fi
 }
 
+validate_exit_status() {
+    set -e
+    STATUS="$1"
+    if [ -z "$STATUS" ]
+    then
+        echo "validate_exit_status: Missing status argument!" 1>&2
+        exit 1
+    fi
+    if [ $STATUS -eq 137 ]
+    then
+        #     Killed
+        echo "       $INSTANCE before normal termination"
+        if [ -s $SOLUTION ]
+        then
+            validate
+        fi
+    else
+        if [ $STATUS -ne 0 ]
+        then
+            echo "$INSTANCE: Unexpected exit status $STATUS"
+            if [ -s $SOLUTION ]
+            then
+                cat $SOLUTION
+            fi
+            exit $STATUS
+        fi
+        validate
+    fi
+}
+
 set -ev
 
 # Check coding style in TraviS CI
@@ -77,9 +107,10 @@ SOLUTION="/tmp/instance.sol"
 
 # XCSP3 Parser's Traveling Salesman Problem instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
+set +e  # Temporarily allow errors
 timeout --preserve-status --kill-after=1s 10s \
     $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
+validate_exit_status $?
 
 # XCSP3 Parser's Constrained Optimization (COP) instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/obj.xml"
@@ -88,15 +119,17 @@ validate
 
 # Limit the available time to 10s for searching a solution
 INSTANCE="verification/without_solutions/AllConstraints.xml"
+set +e  # Temporarily allow errors
 timeout --preserve-status --kill-after=1s 10s \
     $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
+validate_exit_status $?
 
 # Reduce the available time to 5s, while not testing memory
 INSTANCE="verification/without_solutions/AllConstraintsFormatted.xml"
+set +e  # Temporarily allow errors
 timeout --preserve-status --kill-after=1s 5s \
     ./naxos-xcsp3 $INSTANCE > $SOLUTION
-validate
+validate_exit_status $?
 
 # XCSP3 Checker's instances
 for INSTANCE in $(cat verification/CheckerFastInstances.txt)
@@ -111,31 +144,10 @@ done
 for INSTANCE in $(cat verification/CheckerSlowInstances.txt)
 do
     unlzma --keep $INSTANCE.lzma
-    set +e
+    set +e  # Temporarily allow errors
     timeout --preserve-status --kill-after=1s 10s \
         ./naxos-xcsp3 $INSTANCE > $SOLUTION
-    STATUS=$?
-    set -e
-    if [ $STATUS -eq 137 ]
-    then
-        #     Killed
-        echo "       $INSTANCE before normal termination"
-        if [ -s $SOLUTION ]
-        then
-            validate
-        fi
-    else
-        if [ $STATUS -ne 0 ]
-        then
-            echo "$INSTANCE: Unexpected exit status $STATUS"
-            if [ -s $SOLUTION ]
-            then
-                cat $SOLUTION
-            fi
-            exit $STATUS
-        fi
-        validate
-    fi
+    validate_exit_status $?
     rm $INSTANCE
 done
 
