@@ -100,7 +100,7 @@ do
 done
 
 # Memory check tool
-MEM_CHECK="valgrind -q"
+MEM_CHECK="valgrind -q --error-exitcode=1"
 
 # Temporary file
 SOLUTION="/tmp/instance.sol"
