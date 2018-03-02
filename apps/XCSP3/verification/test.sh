@@ -50,7 +50,7 @@ SOLUTION="/tmp/instance.sol"
 # XCSP3 Parser's Traveling Salesman Problem instance
 INSTANCE="parser/src/XCSP3-CPP-Parser/instances/tsp-25-843.xml"
 set +e  # Temporarily allow errors
-timeout --preserve-status --kill-after=1s 10s \
+timeout --preserve-status --kill-after=1s 15s \
     $MEM_CHECK ./naxos-xcsp3 $INSTANCE > $SOLUTION
 validate_exit_status $?
 
