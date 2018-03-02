@@ -1,13 +1,16 @@
 #! /bin/sh
 
+get_solution_cost() {
+    grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 | \
+        grep -o -- "-\?[[:digit:]]\+" || true
+}
+
 validate() {
     # Solution validation tool
     VALIDATOR="java -classpath
                verification/XCSP3-Java-Tools/build/libs/xcsp3-tools-*.jar
                org.xcsp.checker.SolutionChecker -cm"
 
-    COST=$(grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 |
-           grep -o -- "-\?[[:digit:]]\+" || true)
     VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION 2>&1)
     ! VALIDATION=$(echo "$VALIDATION" |
                    grep -v "^Picked up _JAVA_OPTIONS: \|^ROOT\|^$")
@@ -20,7 +23,7 @@ validate() {
         echo
         echo "$INSTANCE:"
         cat $SOLUTION
-    elif [ "$VALIDATION" != "OK	$COST" ]
+    elif [ "$VALIDATION" != "OK	$(get_solution_cost)" ]
     then
         echo
         echo "Wrong solution for $INSTANCE:"
