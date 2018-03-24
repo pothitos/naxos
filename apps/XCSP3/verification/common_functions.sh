@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 get_solution_cost() {
     grep "^o -\?[[:digit:]]\+$" $SOLUTION | tail -1 | \

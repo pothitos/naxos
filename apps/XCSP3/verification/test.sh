@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 install_validator() {
     # Install XCSP3 Checker

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 : ${HD_HOME?"Please set the envinonment variable HD_HOME, by executing the command e.g. 'export HD_HOME=/usr/local/hd'"}
 

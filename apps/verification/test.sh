@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 set -ev
 MEM_CHECK="valgrind -q --leak-check=full --error-exitcode=1"
 # Validate 3 Queens empty set of solutions

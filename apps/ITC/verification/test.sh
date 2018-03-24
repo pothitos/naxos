@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 set -ev
 # Set default values, if variables are unset
 METHOD=${METHOD-"DBS"}
