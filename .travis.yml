@@ -109,8 +109,8 @@ matrix:
            METHOD="ONESAMP"
 
 script:
-    - cd $DIRECTORY
-    - cmake .
-    - make -j $TARGET
-    - ctest -V
-    - cd -
+  - cd $DIRECTORY
+  - cmake .
+  - make -j $TARGET
+  - ctest -V
+  - cd -
