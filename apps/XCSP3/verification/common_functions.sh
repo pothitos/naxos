@@ -38,7 +38,7 @@ validate_exit_status() {
     STATUS="$1"
     if [ -z "$STATUS" ]
     then
-        echo "validate_exit_status: Missing status argument!" 1>&2
+        echo "validate_exit_status: Missing status argument!" >&2
         exit 1
     fi
     if [ $STATUS -eq 137 ]
