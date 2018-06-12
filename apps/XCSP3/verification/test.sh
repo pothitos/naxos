@@ -17,7 +17,7 @@ install_validator() {
 
 set -ev
 
-# Check coding style in TraviS CI
+# Check coding style in Travis CI
 if [ "$CONTINUOUS_INTEGRATION" = "true" ]
 then
     cd -
