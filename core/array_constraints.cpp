@@ -731,8 +731,8 @@ void Ns_ConstrTable::ArcConsConflicts(void)
                 if (i == tuple->size()) {
                         // All the VarArr values matched the tuple!
                         // Removing the conflicting value
-                        VarArr[lastUnboundIndex].remove(
-                            (*tuple)[lastUnboundIndex]);
+                        VarArr[lastUnboundIndex].removeSingle(
+                            (*tuple)[lastUnboundIndex], this);
                 }
         }
 }
