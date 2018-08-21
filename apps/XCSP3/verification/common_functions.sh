@@ -9,7 +9,7 @@ validate() {
     # Solution validation tool
     VALIDATOR="java -classpath
                verification/XCSP3-Java-Tools/build/libs/xcsp3-tools-*.jar
-               org.xcsp.checker.SolutionChecker -cm"
+               org.xcsp.parser.callbacks.SolutionChecker -cm"
 
     VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION 2>&1)
     ! VALIDATION=$(echo "$VALIDATION" |
