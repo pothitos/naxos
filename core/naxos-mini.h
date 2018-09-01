@@ -4472,6 +4472,7 @@ class NsProblemManager {
             calledTimeLimit(false),
             timeSplitLim(0),
             domainsSizeMax(0),
+            domainsSizeSum(0.0),
             nFailures(0),
             nBacktracks(0),
             nGoals(0),
@@ -4707,6 +4708,8 @@ class NsProblemManager {
 
         NsDeque<const NsIntVar*> vars;
         NsUInt domainsSizeMax;
+        double domainsSizeLast;
+        double domainsSizeSum;
 
         unsigned long nFailures, nBacktracks, nGoals, nConstraintChecks,
             backtrackLim;
@@ -4753,12 +4756,15 @@ class NsProblemManager {
                 vars.push_back(Var);
                 if (Var->size() > domainsSizeMax)
                         domainsSizeMax = Var->size();
+                domainsSizeLast = Var->size();
+                domainsSizeSum += domainsSizeLast;
         }
 
         /// Removes the last variable pointer recorded, to correct a problem
         /// created by Ns_Expression::post(Var)
         void removeLastVar(void)
         {
+                domainsSizeSum -= domainsSizeLast;
                 vars.resize(vars.size() - 1);
         }
 
@@ -4766,6 +4772,7 @@ class NsProblemManager {
         void printCspParameters(void) const
         {
                 std::cout << numVars() << "\t" << domainsSizeMax << "\t"
+                          << domainsSizeSum / numVars() << "\t"
                           << numConstraints() << "\n";
         }
 
