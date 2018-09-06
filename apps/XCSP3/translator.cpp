@@ -139,6 +139,8 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, int minValue, int maxValue)
                      << maxValue << "\n";
         }
         variableStore[id] = NsIntVar(pm, minValue, maxValue);
+        pm.removeLastVar();
+        pm.addVar(&variable(id));
         recordVar(id, variable(id));
 }
 
@@ -188,6 +190,8 @@ void Xcsp3_to_Naxos::buildVariableInteger(string id, vector<int>& values)
         sort(values.begin(), values.end());
         // Set variable's domain to be the whole values[0]..values[N-1]
         variableStore[id] = NsIntVar(pm, values.front(), values.back());
+        pm.removeLastVar();
+        pm.addVar(&variable(id));
         removeUnsupportedValues(variable(id), values);
         recordVar(id, variable(id));
 }
