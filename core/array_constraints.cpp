@@ -827,6 +827,8 @@ void index_prune_bounds(const NsIntVarArray& VarArr, NsIntVar& VarIndex,
                 if (intersectionEmpty(&VarArr[*i], &VarValue)) {
                         VarIndex.removeSingle(*i, constraint);
                         modification = true;
+                } else {
+                        break;
                 }
         }
         for (NsIntVar::const_reverse_iterator i = VarIndex.rbegin();
@@ -834,6 +836,8 @@ void index_prune_bounds(const NsIntVarArray& VarArr, NsIntVar& VarIndex,
                 if (intersectionEmpty(&VarArr[*i], &VarValue)) {
                         VarIndex.removeSingle(*i, constraint);
                         modification = true;
+                } else {
+                        break;
                 }
         }
 }
