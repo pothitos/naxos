@@ -1,5 +1,4 @@
-#!/bin/sh
-set -ev
+#!/bin/sh -ev
 # Set default values, if variables are unset
 DATASET=${DATASET-"SCEN06"}
 # If Valgrind is installed, do memory check too

@@ -1,5 +1,4 @@
-#!/bin/sh
-set -ev
+#!/bin/sh -ev
 # Set default values, if variables are unset
 METHOD=${METHOD-"DBS"}
 DATASET=${DATASET-"comp01.ctt"}
