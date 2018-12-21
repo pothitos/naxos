@@ -124,6 +124,34 @@ The difference in `NsDeque` is that it always checks that we
 are inside the array bounds; if we exceed them, the
 corresponding exception is thrown.
 
+
+## How to Implement a Grid of Constrained Variables?
+
+In general, there's a flexibility using such kinds of data
+structures. In any case, an easy implementation follows when
+you know a priori how many `lines` the grid will contain.
+
+```C++
+NsDeque<NsIntVarArray> grid(lines);
+```
+
+You will be then able to add constrained variables to the
+array of line `l` by using the `push_back` method. For
+example, the following alternative cases are possible.
+
+```C++
+grid[l].push_back(NsIntVar(pm, 0, 1));
+```
+
+```C++
+NsIntVar X(pm, -2, 10);
+grid[l].push_back(X);
+```
+
+```C++
+grid[l].push_back(another_grid[3][4]);
+```
+
 ---
 
  - [Next Section](ProblemManager.md)
