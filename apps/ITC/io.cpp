@@ -79,7 +79,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                 exit(1);
         }
         ifstream instanceFile(argv[1]);
-        assert_that(instanceFile, "Could not open input file");
+        assert_that(instanceFile.good(), "Could not open input file");
         string str;
         instanceFile >> str;
         assert_that(str == "Name:", "Expected token \"Name\"");
@@ -215,7 +215,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                  * the possibility of results graphical display.    */
                 assert_that(argc == 4, "Too many arguments");
                 ifstream resultsFile(argv[2]);
-                assert_that(resultsFile, "Could not open results file");
+                assert_that(resultsFile.good(), "Could not open results file");
                 string strRoom;
                 while (resultsFile >> str >> strRoom >> d >> h) {
                         // cout << "." << str << ".\n";
@@ -336,7 +336,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
         if (str != "") {
                 /* Loading an options-file */
                 ifstream optionsFile(str.c_str());
-                assert_that(optionsFile, "Could not open options-file");
+                assert_that(optionsFile.good(), "Could not open options-file");
                 bool alreadyReadAnOption = false;
                 for (;;) {
                         if (alreadyReadAnOption)
@@ -351,7 +351,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                         }
                         if (str == "searchMethod") {
                                 assert_that(
-                                    optionsFile >> str,
+                                    (optionsFile >> str).good(),
                                     "Missing value for \"searchMethod\"");
                                 if (str == "DFS") {
                                         pr.searchMethod = DFS;
@@ -415,7 +415,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod = CREDIT;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter[0]),
+                                             pr.searchMethodParameter[0])
+                                                .good(),
                                             "Missing/Wrong parameter for "
                                             "search method \"CREDIT\"");
                                 } else if (str == "DBS") {
@@ -436,7 +437,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod = LAN;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter[0]),
+                                             pr.searchMethodParameter[0])
+                                                .good(),
                                             "Missing/Wrong parameter for "
                                             "search method \"LAN\"");
                                 } else if (str == "DBDS") {
@@ -447,7 +449,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod = BBS;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter[0]),
+                                             pr.searchMethodParameter[0])
+                                                .good(),
                                             "Missing/Wrong first parameter for "
                                             "search method \"BBS\"");
                                         /* Default parameters */
@@ -475,7 +478,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod = GNS;
                                 } else if (str == "FNS") {
                                         pr.searchMethod = FNS;
-                                        assert_that((optionsFile >> str),
+                                        assert_that((optionsFile >> str).good(),
                                                     "Missing parameter for "
                                                     "search method \"FNS\"");
                                         if (str == "fSample")
@@ -496,7 +499,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod = ISAMP;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter[0]),
+                                             pr.searchMethodParameter[0])
+                                                .good(),
                                             "Missing/Wrong parameter for "
                                             "search method \"ISAMP\"");
                                 } else if (str == "ONESAMP") {
@@ -547,7 +551,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                 }
                         } else if (str == "metaSearchMethod") {
                                 assert_that(
-                                    optionsFile >> str,
+                                    (optionsFile >> str).good(),
                                     "Missing value for \"metaSearchMethod\"");
                                 if (str == "NONE") {
                                         pr.searchMethod_ls = NONE;
@@ -613,7 +617,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod_ls = CREDIT;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter_ls[0]),
+                                             pr.searchMethodParameter_ls[0])
+                                                .good(),
                                             "Missing/Wrong parameter for "
                                             "search method \"CREDIT\"");
                                 } else if (str == "DBS") {
@@ -634,7 +639,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod_ls = LAN;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter_ls[0]),
+                                             pr.searchMethodParameter_ls[0])
+                                                .good(),
                                             "Missing/Wrong parameter for "
                                             "search method \"LAN\"");
                                 } else if (str == "DBDS") {
@@ -645,7 +651,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod_ls = BBS;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter_ls[0]),
+                                             pr.searchMethodParameter_ls[0])
+                                                .good(),
                                             "Missing/Wrong first parameter for "
                                             "search method \"BBS\"");
                                         /* Default parameters */
@@ -674,7 +681,7 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod_ls = GNS;
                                 } else if (str == "FNS") {
                                         pr.searchMethod_ls = FNS;
-                                        assert_that((optionsFile >> str),
+                                        assert_that((optionsFile >> str).good(),
                                                     "Missing parameter for "
                                                     "search method \"FNS\"");
                                         if (str == "fSample")
@@ -695,7 +702,8 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                         pr.searchMethod_ls = ISAMP;
                                         assert_that(
                                             (optionsFile >>
-                                             pr.searchMethodParameter_ls[0]),
+                                             pr.searchMethodParameter_ls[0])
+                                                .good(),
                                             "Missing/Wrong parameter for "
                                             "search method \"ISAMP\"");
                                 } else if (str == "ONESAMP") {
@@ -745,16 +753,19 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                             "options-file");
                                 }
                         } else if (str == "timeLimit") {
-                                assert_that(optionsFile >> pr.timeLimit,
-                                            "Missing value for \"timeLimit\"");
+                                assert_that(
+                                    (optionsFile >> pr.timeLimit).good(),
+                                    "Missing value for \"timeLimit\"");
                         } else if (str == "timeLimitDirectMethodRound") {
-                                assert_that(optionsFile >>
-                                                pr.timeLimitDirectMethodRound,
+                                assert_that((optionsFile >>
+                                             pr.timeLimitDirectMethodRound)
+                                                .good(),
                                             "Missing value for "
                                             "\"timeLimitDirectMethodRound\"");
                         } else if (str == "timeLimitIndirectMethodRound") {
-                                assert_that(optionsFile >>
-                                                pr.timeLimitIndirectMethodRound,
+                                assert_that((optionsFile >>
+                                             pr.timeLimitIndirectMethodRound)
+                                                .good(),
                                             "Missing value for "
                                             "\"timeLimitIndirectMethodRound\"");
                         } else if (str == "quiet") {
@@ -781,26 +792,29 @@ void createInstance(struct itcProblem_t& pr, const int argc, char* argv[])
                                 //timetableException("Wrong value for
                                 //\"timeType\"");
                         } else if (str == "constrainingFactorExponent") {
-                                assert_that(optionsFile >>
-                                                pr.constrainingFactorExponent,
+                                assert_that((optionsFile >>
+                                             pr.constrainingFactorExponent)
+                                                .good(),
                                             "Missing value for "
                                             "\"constrainingFactorExponent\"");
                         } else if (str == "conf") {
-                                assert_that(optionsFile >> pr.conf,
+                                assert_that((optionsFile >> pr.conf).good(),
                                             "Missing value for \"conf\"");
                         } else if (str ==
                                    "leastConstrainingValueHeuristicWeight") {
                                 assert_that(
-                                    optionsFile >>
-                                        pr.leastConstrainingValueHeuristicWeight,
+                                    (optionsFile >>
+                                     pr.leastConstrainingValueHeuristicWeight)
+                                        .good(),
                                     "Missing value for "
                                     "\"leastConstrainingValueHeuristicWeight"
                                     "\"");
                         } else if (str ==
                                    "objectiveOrientedValueHeuristicWeight") {
                                 assert_that(
-                                    optionsFile >>
-                                        pr.objectiveOrientedValueHeuristicWeight,
+                                    (optionsFile >>
+                                     pr.objectiveOrientedValueHeuristicWeight)
+                                        .good(),
                                     "Missing value for "
                                     "\"objectiveOrientedValueHeuristicWeight"
                                     "\"");
@@ -831,7 +845,8 @@ void writeSolution(const struct itcProblem_t& pr, NsIntVarArray& vLectPeriod,
                 }
         }
         ofstream solutionFile(solutionFileName);
-        assert_that(solutionFile, "Could not open solution file for writing");
+        assert_that(solutionFile.good(),
+                    "Could not open solution file for writing");
         for (i = 0; i < pr.ncourses; ++i) {
                 for (j = 0; j < pr.course[i].lecturesScheduled; ++j) {
                         solutionFile
