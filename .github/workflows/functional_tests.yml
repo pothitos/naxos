@@ -1,4 +1,4 @@
-name: Unit tests
+name: Functional tests
 
 on: [push]
 
