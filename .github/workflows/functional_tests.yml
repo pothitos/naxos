@@ -20,6 +20,9 @@ jobs:
                       target: "naxos-xcsp3"
                       cxx: "g++-7"
                       run:
+                          sudo apt-get update &&
+                          sudo apt-get remove gradle &&
+                          sudo apt-get install -y gradle &&
                           sudo add-apt-repository ppa:ubuntu-toolchain-r/test  &&
                           sudo apt-get update &&
                           sudo apt-get install -y g++-7 valgrind clang-format-5.0 &&
