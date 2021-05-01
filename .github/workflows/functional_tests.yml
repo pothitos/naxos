@@ -12,18 +12,18 @@ jobs:
             matrix:
                 include:
                     - dir: "./apps/"
-                      run: sudo apt install -y valgrind
+                      run: sudo apt-get install -y valgrind
                     - dir: "./apps/for_amorgos/"
                     - dir: "./apps/XCSP3/"
                       target: "naxos-xcsp3"
                       cxx: "g++-7"
                       run:
                           sudo add-apt-repository ppa:ubuntu-toolchain-r/test  &&
-                          sudo apt install -y g++-7 valgrind clang-format-5.0 &&
+                          sudo apt-get install -y g++-7 valgrind clang-format-5.0 &&
                           $CXX --version
                     - dir: "./apps/CELAR/"
                       data: "SCEN06"
-                      run: sudo apt install -y valgrind
+                      run: sudo apt-get install -y valgrind
                     - dir: "./apps/CELAR/"
                       data: "SCEN07"
                     - dir: "./apps/CELAR/"
@@ -36,11 +36,11 @@ jobs:
                     - dir: "./apps/ITC/"
                       data: "comp01.ctt"
                       method: "DFS"
-                      run: sudo apt install -y valgrind
+                      run: sudo apt-get install -y valgrind
                     - dir: "./apps/ITC/"
                       data: "comp02.ctt"
                       method: "LDS"
-                      run: sudo apt install -y valgrind
+                      run: sudo apt-get install -y valgrind
                     - dir: "./apps/ITC/"
                       data: "comp03.ctt"
                       method: "IBROAD"
@@ -50,7 +50,7 @@ jobs:
                     - dir: "./apps/ITC/"
                       data: "comp05.ctt"
                       method: "DBS"
-                      run: sudo apt install -y valgrind
+                      run: sudo apt-get install -y valgrind
                     - dir: "./apps/ITC/"
                       data: "comp06.ctt"
                       method: "CREDIT 100"
