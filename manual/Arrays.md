@@ -98,7 +98,7 @@ arrays too. We can type an array by writing for example
 `cout << VarArr;`.
 
 
-## Generic Arrays
+## Generic arrays
 
 In case we want to create an array with the philosophy and
 methods of `NsIntVarArray`, we can use the template class
@@ -125,7 +125,7 @@ are inside the array bounds; if we exceed them, the
 corresponding exception is thrown.
 
 
-## How to Implement a Grid of Constrained Variables?
+## How to implement a grid of constrained variables?
 
 In general, there's a flexibility using such kinds of data
 structures. In any case, an easy implementation follows when

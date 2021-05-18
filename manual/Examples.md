@@ -139,7 +139,7 @@ If we execute the code we take the result
 ```
 
 
-## How Do We State and Solve a Problem?
+## How do we state and solve a problem?
 
 In the previous sections we stated some problems-examples;
 but what are the steps in order to state and solve another

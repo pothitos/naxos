@@ -1,4 +1,4 @@
-# XCSP3 Integration to Naxos
+# XCSP3 integration to Naxos
 
 Here we link Naxos to the XCSP3 parser.
 
@@ -26,13 +26,13 @@ To solve a problem execute
 where `BENCHNAME` can be `tsp-25-843.xml` for example.
 
 
-# XCSP3 Mini-Solver Competition
+# XCSP3 mini-solver competition
 
 We will also try to cover the following constraints for the
 [XCSP3 mini-solver competition
 tracks](http://xcsp.org/competition).
 
-## Intensional Constraints
+## Intensional constraints
 
 We should cover the following statements, where
 
@@ -56,7 +56,7 @@ We should cover the following statements, where
     - (_x_ ⊕ _y_) ⊙ _z_
     - _x_ ⊙ (_y_ ⊕ _z_)
 
-## Extensional Constraints
+## Extensional constraints
 
 These constraints are also called _table constraints_. Two
 examples follow.

@@ -67,7 +67,7 @@ subgoal is then tried. If the second subgoal also fails,
 then the whole OR-goal fails.
 
 
-## Object-Oriented Modelling
+## Object-oriented modelling
 
 The declaration for the basic goal class in _Naxos Solver_
 follows.

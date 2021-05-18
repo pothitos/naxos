@@ -12,7 +12,7 @@ variable or an integer. An expression is designated
 _Expression_.
 
 
-## Expressions for Constraints
+## Expressions for constraints
 
 Expressions for constraint are denoted _ExprConstr_, and
 they are a subcategory of the general expression category
@@ -103,7 +103,7 @@ _VarArr_[1] = _IntArr_[_i_][1], ...,  _VarArr_[_n_ - 1] =
 _IntArr_[_i_][_n_ - 1].
 
 
-## General Expressions
+## General expressions
 
 Apart from _ExprConstr_, the following also belong to the
 category of general expressions _Expression_:
@@ -155,7 +155,7 @@ respectively the minimum and the maximum of the array that
 they accept as an argument.
 
 
-### The Element Constraint
+### The Element constraint
 
 A separate paragraph for the last two expressions
 _IntArr_`[`_Expression_`]` and _VarArr_`[`_Expression_`]` is
@@ -189,7 +189,7 @@ programming style as `NsElement(`_VarIndex_`, `_IntArr_`,
 `_VarValue_`)`.
 
 
-## Expressions for Arrays
+## Expressions for arrays
 
 Finally there is a special independent expression category,
 that can be assigned to arrays of constrained variables
@@ -213,7 +213,7 @@ VarArrC = NsInverse(VarArrA, 100);
 ```
 
 
-### The Inverse Constraint
+### The Inverse constraint
 
 The _Inverse_ constraint is applied between two arrays of
 constrained variables. Let _Arr_ be an array that contains
@@ -240,7 +240,7 @@ variable had was designated with the variable name itself.
 It should also apply that ∀ _i_, _ArrInv_[_i_] ≠ -1.
 
 
-#### Usefulness of the Constraint
+#### Usefulness of the constraint
 
 This constraint can be used in dual modelings of a problem.
 E.g. suppose that we have a number of tasks to assign to

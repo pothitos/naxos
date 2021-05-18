@@ -1,4 +1,4 @@
-# Naxos+Hadoop Integration Samples
+# Naxos+Hadoop integration samples
 
 Here are Constraint Satisfaction Problems instances solved
 by Naxos in collaboration with Hadoop. There are also
