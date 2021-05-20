@@ -1,7 +1,7 @@
 # Naxos Solver User's Guide
 
 _Naxos Solver_ is a constraint satisfaction problems
-_solver_. "_Naxos_" is the name of the Greek island where
+_solver_. “_Naxos_” is the name of the Greek island where
 the solver was built in the beginning. It is implemented and
 maintained by the author, under the supervision of Assistant
 Professor Panagiotis Stamatopoulos at the Department of

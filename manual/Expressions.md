@@ -54,7 +54,7 @@ constraint propagation. E.g. if _VarArr_ = {`[1..2]`,
 {`[1..2]`, `[1..2]`, `[3..5]`}, but using the simple
 expression `NsAllDiff(`_VarArr_`)` we would have a value
 removal only when a variable of _VarArr_ becomes assigned.
-However, this more powerful consistency may "cost" in terms
+However, this more powerful consistency may “cost” in terms
 of time. Finally, the integer _Capacity_ is the maximum
 number of occurrences that a value can have inside the array
 _VarArr_.
@@ -160,10 +160,10 @@ they accept as an argument.
 A separate paragraph for the last two expressions
 _IntArr_`[`_Expression_`]` and _VarArr_`[`_Expression_`]` is
 dedicated, because they have to do with the special
-_element_ constraint. The name "element" comes from logic
+_element_ constraint. The name “element” comes from logic
 programming. For simplicity reasons, we suppose that the
 _Expression_ is simply the constrained variable _VarIndex_,
-that is used as an "index" in the array _IntArr_ or
+that is used as an “index” in the array _IntArr_ or
 _VarArr_. Note that _IntArr_ is an array containing
 _integer_ values, because it is an `NsDeque<NsInt>`
 instance. On the other hand the array _VarArr_ does contain
@@ -218,7 +218,7 @@ VarArrC = NsInverse(VarArrA, 100);
 The _Inverse_ constraint is applied between two arrays of
 constrained variables. Let _Arr_ be an array that contains
 variables with positive values in their domains. We want
-_ArrInv_ to be the "inverse" array of _Arr_. Still, let
+_ArrInv_ to be the “inverse” array of _Arr_. Still, let
 _D<sub>x</sub>_ be the domain of the constrained variable
 _x_. Then it holds that:
 
@@ -233,7 +233,7 @@ In a simpler notation, we can write that it holds:
 
 _Arr_[_ArrInv_[_i_]] = _i_ and _ArrInv_[_Arr_[_i_]] = _i_.
 
-That is why the constraint is called "Inverse." Of course,
+That is why the constraint is called “Inverse.” Of course,
 the above relations would have sense if the variables of the
 two arrays were bound and if the unique value that each
 variable had was designated with the variable name itself.

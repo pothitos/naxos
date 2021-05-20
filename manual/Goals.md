@@ -50,7 +50,7 @@ this way it defines the search method. While a goal
 terminates, it can optionally generate another goal; this
 possibility provides recursion characteristics to the goals
 mechanism. Last but not least, there are also the AND and OR
-_meta-goals_. They are called "meta-goals" because each of
+_meta-goals_. They are called “meta-goals” because each of
 them is used to manipulate two _other_ goals, namely
 _subgoals_. An AND-goal succeeds if its two subgoals succeed
 both, while an OR-goal succeeds if one or more of its
@@ -178,7 +178,7 @@ size according to the first-fail heuristic). Then it asks
 (via the goal `NsgInDomain` that assigns to a variable, its
 domain minimum value) to instantiate the variable _and_ to
 satisfy the goal `this`. This goal—that refers to a kind of
-"recursion"—constructs another `NsgLabeling` instance, that
+“recursion”—constructs another `NsgLabeling` instance, that
 is identical to the current one. In fact, `this` tells the
 solver to assign values to the rest of `VarArr` variables.
 When `GOAL()` returns `0`, we have finished.

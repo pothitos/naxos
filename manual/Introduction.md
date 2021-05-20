@@ -29,7 +29,7 @@ _Naxos Solver_ is a library that solves constraint
 satisfaction problems, that was designed for the C++
 object-oriented programming environment. The solver is
 threadsafe, i.e. safe to use in a multithreaded environment.
-"Internal" classes, methods, functions, etc. that are not
+“Internal” classes, methods, functions, etc. that are not
 stated in this manual, should not be used by the application
 developer, as they may change in future. Still, to avoid
 misunderstandings, we should not name our own variables,

@@ -175,7 +175,7 @@ had the domain `[0..10]`, then after `restart()` is called,
 the domain will be kept `[0..10]`.
 
 We cannot call this function inside goals, but outside them.
-E.g. we can call it at the code "level" we call
+E.g. we can call it at the code “level” we call
 `nextSolution()`.
 
 ---

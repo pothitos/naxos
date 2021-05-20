@@ -64,7 +64,7 @@ method.
 
 #### `void removeAll()`
 
-"Empties" the domain of the variable. Practically, the
+“Empties” the domain of the variable. Practically, the
 solver only informs the problem manager that an
 inconsistency occurred, due to an empty domain. This method
 is useful when we want to make search fail. E.g. when we
@@ -108,8 +108,8 @@ The number of the values in the domain.
 
 #### `bool isBound()`
 
-Returns `true` if the variable is bound. "Bound" is synonym
-to "instantiated," "singleton," and "fixed" and means that a
+Returns `true` if the variable is bound. “Bound” is synonym
+to “instantiated,” “singleton,” and “fixed” and means that a
 value has been assigned to the variable or, in other words,
 that the domain contains only one value.
 

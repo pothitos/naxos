@@ -36,7 +36,7 @@ int main(void)
 
 It is not a good programming practice to to use exceptions
 inside the algorithms body. In most cases, exceptions should
-"wrap" our programs.
+“wrap” our programs.
 
 ---
 
