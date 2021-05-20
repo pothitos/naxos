@@ -91,7 +91,7 @@ instantiated, the tuple with their values must belong to
 _IntArr_.  _IntArr_ is a two-dimensional array of integers;
 its type is `NsDeque<NsDeque<NsInt>>`. In other words, there
 should exist an _i_ with _VarArr_[0] = _IntArr_[_i_][0],
-_VarArr_[1] = _IntArr_[_i_][1], ...,  _VarArr_[_n_ - 1] =
+_VarArr_[1] = _IntArr_[_i_][1], …,  _VarArr_[_n_ - 1] =
 _IntArr_[_i_][_n_ - 1], where _n_ is the size of the arrays.
 
 On the other hand, `NsConflicts(`_VarArr_`, `_IntArr_`)`
@@ -99,7 +99,7 @@ means that if the constrained variables of _VarArr_ are
 instantiated, the tuple with their values must __not__
 belong to _IntArr_. In other words, there should __not__
 exist an _i_ with _VarArr_[0] = _IntArr_[_i_][0],
-_VarArr_[1] = _IntArr_[_i_][1], ...,  _VarArr_[_n_ - 1] =
+_VarArr_[1] = _IntArr_[_i_][1], …,  _VarArr_[_n_ - 1] =
 _IntArr_[_i_][_n_ - 1].
 
 

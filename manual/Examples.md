@@ -31,8 +31,8 @@ diagonal. The following table displays an example for _N_ =
 | __7__ |   | ♕ |   |   |   |   |   |   |
 | __8__ |   |   |   |   |   |   |   | ♕ |
 
-Thus, in each column 0, 1, ..., _N_-1 we will have a queen.
-It remains to find out the _line_ where each queen will be
+Thus, in each column 0, 1, …, _N_-1 we will have a queen. It
+remains to find out the _line_ where each queen will be
 placed. Therefore, we ask to assign values to the variables
 _X<sub>i</sub>_ with 0 ≤ _X<sub>i</sub>_ ≤ _N_-1, where
 _X<sub>i</sub>_ is the line on which the queen of column _i_
@@ -189,10 +189,10 @@ for (i = 0; i < N; ++i)
     R.push_back(NsIntVar(pm,min,max));
 ```
 
-...in the way we insert items into a list. In place of `min`
+…in the way we insert items into a list. In place of `min`
 and `max` we put the minimum and maximum domain value,
 respectively. Next, we declare the existing constraints
-through `pm.add(·)` calls...
+through `pm.add(·)` calls…
 
 Before the end, if we solve an _optimization_ problem, it
 remains to declare the parameter to optimize. When we find
