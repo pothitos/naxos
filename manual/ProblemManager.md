@@ -1,4 +1,4 @@
- - [Previous Section](Arrays.md)
+ - [Previous section](Arrays.md)
  - [Contents](README.md)
 
 ---
@@ -180,4 +180,4 @@ E.g. we can call it at the code "level" we call
 
 ---
 
- - [Next Section](Expressions.md)
+ - [Next section](Expressions.md)

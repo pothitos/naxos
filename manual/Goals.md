@@ -1,4 +1,4 @@
- - [Previous Section](Examples.md)
+ - [Previous section](Examples.md)
  - [Contents](README.md)
 
 ---

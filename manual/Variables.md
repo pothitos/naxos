@@ -1,4 +1,4 @@
- - [Previous Section](Errors.md)
+ - [Previous section](Errors.md)
  - [Contents](README.md)
 
 ---
@@ -188,4 +188,4 @@ print the variable to an output stream, by writing e.g.
 
 ---
 
- - [Next Section](Arrays.md)
+ - [Next section](Arrays.md)

@@ -1,4 +1,4 @@
- - [Previous Section](Introduction.md)
+ - [Previous section](Introduction.md)
  - [Contents](README.md)
 
 ---
@@ -40,4 +40,4 @@ inside the algorithms body. In most cases, exceptions should
 
 ---
 
- - [Next Section](Variables.md)
+ - [Next section](Variables.md)

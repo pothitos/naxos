@@ -62,4 +62,4 @@ _Naxos Solver_ we would have a segmentation fault.
 
 ---
 
- - [Next Section](Errors.md)
+ - [Next section](Errors.md)

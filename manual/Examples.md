@@ -1,4 +1,4 @@
- - [Previous Section](Expressions.md)
+ - [Previous section](Expressions.md)
  - [Contents](README.md)
 
 ---
@@ -262,4 +262,4 @@ The above can be simply stated as `NsIntVar vSum = NsSum(R);`
 
 ---
 
- - [Next Section](Goals.md)
+ - [Next section](Goals.md)

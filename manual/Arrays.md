@@ -1,4 +1,4 @@
- - [Previous Section](Variables.md)
+ - [Previous section](Variables.md)
  - [Contents](README.md)
 
 ---
@@ -154,4 +154,4 @@ grid[l].push_back(another_grid[3][4]);
 
 ---
 
- - [Next Section](ProblemManager.md)
+ - [Next section](ProblemManager.md)

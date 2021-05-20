@@ -44,4 +44,4 @@ big to quote, but I personally thank you one and all!
 
 ---
 
- - [Next Section](Introduction.md)
+ - [Next section](Introduction.md)

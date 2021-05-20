@@ -1,4 +1,4 @@
- - [Previous Section](ProblemManager.md)
+ - [Previous section](ProblemManager.md)
  - [Contents](README.md)
 
 ---
@@ -261,4 +261,4 @@ constraint.
 
 ---
 
- - [Next Section](Examples.md)
+ - [Next section](Examples.md)
