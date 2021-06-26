@@ -49,9 +49,9 @@ _X<sub>i</sub>_ + i ≠ _X<sub>j</sub>_ + _j_ and
 _X<sub>i</sub>_ - _i_ ≠ _X<sub>j</sub>_ - _j_, ∀ _i_ ≠ _j_.
 (2)
 
-_X<sub>i</sub>_ + _i_ corresponds to the first diagonal and
-_X<sub>i</sub>_ - _i_ to the second diagonal for the queen
-of column _i_.
+_X<sub>i</sub>_ - _i_ corresponds to the primary diagonal
+and _X<sub>i</sub>_ + _i_ to the secondary diagonal for the
+queen of column _i_.
 
 
 ### Code
