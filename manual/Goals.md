@@ -7,7 +7,7 @@
 
 ## Introduction
 
-A pair of variables (_x_,_x'_) is _consistent_, if for each
+A pair of variables (_x_,_x'_) is _consistent_ if for each
 value _v_ in the domain of _x_, there is a value _v'_ in the
 domain of _x'_ such that every constraint that connects the
 two variables is satisfied. When every pair of variables is
