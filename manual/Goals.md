@@ -174,7 +174,7 @@ the solver to satisfy the goal `NsgLabeling(VarArr)`, we
 except that all the variables of `VarArr` will be assigned
 values. Thus, the function `GOAL()` of `NsgLabeling` chooses
 a variable (specifically, the one with the smallest domain
-size according to the first-fail heuristic). Then it asks
+size according to the fail-first heuristic). Then it asks
 (via the goal `NsgInDomain` that assigns to a variable, its
 domain minimum value) to instantiate the variable _and_ to
 satisfy the goal `this`. This goal—that refers to a kind of
