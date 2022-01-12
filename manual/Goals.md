@@ -13,12 +13,11 @@ domain of _x'_ such that every constraint that connects the
 two variables is satisfied. When every pair of variables is
 consistent, then we say that the constraint network is
 _arc-consistent_. Arc-consistency does not necessarily mean
-that we have a solution—but if the constraint network is not
-arc-consistent, we are sure that there is no solution.
-Therefore, we have to combine arc-consistency with a search
-method. Besides, arc-consistency reduces the search space
-that a search method—such as depth first search (DFS) or
-limited discrepancy search (LDS) etc.—has to explore.
+that we have a solution. Therefore, we have to combine
+arc-consistency with a search method. Besides,
+arc-consistency reduces the search space that a search
+method—such as depth first search (DFS) or limited
+discrepancy search (LDS) etc.—has to explore.
 
 It is known that in most problems arc-consistency does not
 suffice to find a solution (see also the following figure).
