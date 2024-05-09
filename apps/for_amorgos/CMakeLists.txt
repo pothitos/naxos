@@ -44,3 +44,6 @@ target_link_libraries(sudoku naxos amorgos)
 
 add_executable(vertexcover vertexcover.cpp)
 target_link_libraries(vertexcover naxos amorgos)
+
+add_executable(EinsteinRiddle EinsteinRiddle.cpp)
+target_link_libraries(EinsteinRiddle naxos amorgos)
