@@ -71,8 +71,8 @@ public:
 		pm.add(smoke_lucky == drink_juice);
 		pm.add(country_japanese == smoke_kent);
 		pm.add((country_norwegian == color_blue - 1) || (country_norwegian == color_blue + 1));
-		drink_water;
-		pet_zebra;
+		static_cast<void>(drink_water);
+		static_cast<void>(pet_zebra);
 
 		for (auto& i : m_list_var) pm.addGoal(new NsgLabeling(i.second));
 
@@ -82,7 +82,7 @@ public:
 
 			for (auto& i : m_list_var)
 			{
-				for (auto k = 0; k < i.second.size(); ++k)
+				for (size_t k = 0; k < i.second.size(); ++k)
 				{
 					auto name = m_list_name[i.first][k];
 					auto index = m_list_var[i.first][k].value();
@@ -140,7 +140,7 @@ private:
 	}
 };
 
-int main(int argc, char* argv[])
+int main(int, char*[])
 {
 	c_who_have_fish ms;
 	ms.work();

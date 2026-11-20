@@ -2,14 +2,15 @@ name: Compilation for Windows
 
 on: [push]
 
+env:
+    CMAKE_POLICY_VERSION_MINIMUM: "3.5"
+
 jobs:
     build:
         runs-on: windows-latest
         steps:
-            - uses: actions/checkout@v2
-            - name: Add msbuild to PATH
-              uses: microsoft/setup-msbuild@v1.0.2
+            - uses: actions/checkout@v4
             - name: Build
               run: cmake .\apps\
-            - name: Msbuild
-              run: msbuild ".\Project.sln" /verbosity:minimal
+            - name: Compile
+              run: cmake --build . --config Release

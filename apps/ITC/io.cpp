@@ -36,8 +36,7 @@ struct RoomRank_t {
         struct itcRoom_t* room;
 };
 
-struct less_function_RoomRank
-    : public binary_function<struct RoomRank_t, struct RoomRank_t, bool> {
+struct less_function_RoomRank {
 
         bool operator()(const struct RoomRank_t& X, const struct RoomRank_t& Y)
         {

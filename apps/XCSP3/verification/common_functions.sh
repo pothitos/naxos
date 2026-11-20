@@ -9,9 +9,9 @@ validate() {
     # Solution validation tool
     VALIDATOR="java -classpath
                verification/XCSP3-Java-Tools/build/libs/xcsp3-tools-*.jar
-               org.xcsp.parser.callbacks.SolutionChecker -cm"
+               org.xcsp.parser.callbacks.SolutionChecker"
 
-    VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION 2>&1)
+    VALIDATION=$($VALIDATOR $INSTANCE $SOLUTION -cm 2>&1)
     ! VALIDATION=$(echo "$VALIDATION" |
                    grep -v "^Picked up _JAVA_OPTIONS: \|^ROOT\|^$")
     if echo "$VALIDATION" | grep -q \

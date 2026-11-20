@@ -29,8 +29,7 @@ struct VarHeur_t {
         double heur;
 };
 
-struct less_function_VarHeur
-    : public binary_function<struct VarHeur_t, struct VarHeur_t, bool> {
+struct less_function_VarHeur {
 
         bool operator()(const struct VarHeur_t& X, const struct VarHeur_t& Y)
         {

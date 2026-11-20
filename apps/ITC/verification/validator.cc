@@ -573,7 +573,8 @@ unsigned Validator::CostsOnCurriculumCompactness() const
 	      cost += out.CurriculumPeriodLectures(g,p);
 	    else if (p % ppd == ppd-1 && out.CurriculumPeriodLectures(g,p-1) == 0)
 	      cost += out.CurriculumPeriodLectures(g,p);
-	    else if (out.CurriculumPeriodLectures(g,p+1) == 0 && out.CurriculumPeriodLectures(g,p-1) == 0)
+	    else if (p % ppd != 0 && p % ppd != ppd-1
+		     && out.CurriculumPeriodLectures(g,p+1) == 0 && out.CurriculumPeriodLectures(g,p-1) == 0)
 	      cost += out.CurriculumPeriodLectures(g,p);
 	  }
     }
@@ -699,7 +700,8 @@ void Validator::PrintViolationsOnCurriculumCompactness(std::ostream& os) const
 	  {
 	    if ((p % ppd == 0 && out.CurriculumPeriodLectures(g,p+1) == 0)
 		|| (p % ppd == ppd-1 && out.CurriculumPeriodLectures(g,p-1) == 0)
-		|| (out.CurriculumPeriodLectures(g,p+1) == 0 && out.CurriculumPeriodLectures(g,p-1) == 0))
+		|| (p % ppd != 0 && p % ppd != ppd-1
+		    && out.CurriculumPeriodLectures(g,p+1) == 0 && out.CurriculumPeriodLectures(g,p-1) == 0))
 	      os << "[S(" << in.CURRICULUM_COMPACTNESS_COST << ")] Curriculum " << in.CurriculaVector(g).Name() 
 		 << " has an isolated lecture at period " << p << " (day " << p/in.PeriodsPerDay() << ", timeslot " << p % in.PeriodsPerDay() << ")"
 		 << std::endl;

@@ -61,7 +61,7 @@ class Xcsp3_to_Naxos : public XCSP3Core::XCSP3CoreCallbacks {
         {
                 try {
                         return variableStore.at(id);
-                } catch (std::out_of_range exception) {
+                } catch (const std::out_of_range& exception) {
                         throw std::out_of_range("Undefined variable '" + id +
                                                 "'");
                 }

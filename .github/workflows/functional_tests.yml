@@ -4,34 +4,21 @@ on: [push]
 
 env:
     COVERAGE: --coverage
+    CMAKE_POLICY_VERSION_MINIMUM: "3.5"
 
 jobs:
     setup:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-26.04
         strategy:
+            fail-fast: false
             matrix:
                 include:
                     - dir: "./apps/"
-                      run:
-                          sudo apt-get update &&
-                          sudo apt-get install -y valgrind
                     - dir: "./apps/for_amorgos/"
                     - dir: "./apps/XCSP3/"
                       target: "naxos-xcsp3"
-                      cxx: "g++-7"
-                      run:
-                          sudo apt-get update &&
-                          sudo apt-get remove gradle &&
-                          sudo apt-get install -y gradle &&
-                          sudo add-apt-repository ppa:ubuntu-toolchain-r/test  &&
-                          sudo apt-get update &&
-                          sudo apt-get install -y g++-7 valgrind clang-format-5.0 &&
-                          $CXX --version
                     - dir: "./apps/CELAR/"
                       data: "SCEN06"
-                      run:
-                          sudo apt-get update &&
-                          sudo apt-get install -y valgrind
                     - dir: "./apps/CELAR/"
                       data: "SCEN07"
                     - dir: "./apps/CELAR/"
@@ -44,15 +31,9 @@ jobs:
                     - dir: "./apps/ITC/"
                       data: "comp01.ctt"
                       method: "DFS"
-                      run:
-                          sudo apt-get update &&
-                          sudo apt-get install -y valgrind
                     - dir: "./apps/ITC/"
                       data: "comp02.ctt"
                       method: "LDS"
-                      run:
-                          sudo apt-get update &&
-                          sudo apt-get install -y valgrind
                     - dir: "./apps/ITC/"
                       data: "comp03.ctt"
                       method: "IBROAD"
@@ -62,9 +43,6 @@ jobs:
                     - dir: "./apps/ITC/"
                       data: "comp05.ctt"
                       method: "DBS"
-                      run:
-                          sudo apt-get update &&
-                          sudo apt-get install -y valgrind
                     - dir: "./apps/ITC/"
                       data: "comp06.ctt"
                       method: "CREDIT 100"
@@ -97,12 +75,25 @@ jobs:
                       data: "comp14.ctt"
                       method: "ONESAMP"
         steps:
-            - uses: actions/checkout@v2
+            - name: Install dependencies
+              run: >
+                  sudo apt-get update &&
+                  sudo apt-get install -y --no-install-recommends
+                  valgrind libxml2-dev xz-utils
+            - uses: actions/checkout@v4
+            - uses: actions/setup-java@v4
+              if: matrix.target
+              with:
+                  distribution: temurin
+                  java-version: "11"
+            - uses: gradle/actions/setup-gradle@v4
+              if: matrix.target
+              with:
+                  gradle-version: "6.9.4"
             - name: Build
               env:
                   DIRECTORY: ${{ matrix.dir }}
                   TARGET: ${{ matrix.target || null }}
-                  CXX: ${{ matrix.cxx || null }}
               run: cd $DIRECTORY && cmake . && make -j $TARGET
             - name: Test
               env:
@@ -110,6 +101,4 @@ jobs:
                   DATASET: ${{ matrix.data || null }}
                   METHOD: ${{ matrix.method || null }}
                   METHOD_LOCAL_SEARCH: ${{ matrix.method_l_s || null }}
-                  CXX: ${{ matrix.cxx || null }}
-                  RUN: ${{ matrix.run || null }}
-              run: eval $RUN && cd $DIRECTORY && ctest -V && cd -
+              run: cd $DIRECTORY && ctest -V && cd -
