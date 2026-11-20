@@ -18,5 +18,8 @@ target_link_libraries(nqueens naxos)
 add_executable(send_more_money send_more_money.cpp)
 target_link_libraries(send_more_money naxos)
 
+add_executable(conflict conflict.cpp)
+target_link_libraries(conflict naxos)
+
 enable_testing()
 add_test(verification verification/test.sh)

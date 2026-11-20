@@ -107,6 +107,7 @@ bool NsIntVar::removeRange(const NsInt first, const NsInt last,
                         return false;
                 } else {
                         modified = true;
+                        pm->foundAPruning();
                 }
         }
         return true;

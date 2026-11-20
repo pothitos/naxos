@@ -493,17 +493,25 @@ Ns_Constraint* Ns_QueueItem::getNextConstraint(void)
         return 0;
 }
 
-/// Adds a constraint to the problem
-void NsProblemManager::add(const Ns_ExprConstr& expr)
+/// Adds a constraint to the problem and returns its index
+///
+/// The index is the number of the previous add() calls for
+/// hard constraints. It can be passed to numFailures() and
+/// numPrunings().
+NsIndex NsProblemManager::add(const Ns_ExprConstr& expr)
 {
         assert_Ns(firstNextSolution, "NsProblemManager::add: Cannot add a "
                                      "constraint because search has already "
                                      "started");
+        constraintsStats.push_back(Ns_ConstraintStats());
+        currentStats = &constraintsStats.back();
         Ns_Constraint* newConstr = expr.postConstraint();
-        if (newConstr == 0)
-                return; // unary constraint
-        newConstr->ArcCons();
-        recordConstraint(newConstr);
+        if (newConstr != 0) { // not a unary constraint
+                newConstr->ArcCons();
+                recordConstraint(newConstr);
+        }
+        currentStats = 0;
+        return constraintsStats.size() - 1;
 }
 
 /// Adds a soft constraint to the problem, with the corresponding weight
@@ -535,9 +543,11 @@ bool NsProblemManager::arcConsistent(void)
                 // Q.front() during this iteration...
                 vFired->queueItem = 0;
                 while ((c = getQueue().front().getNextConstraint()) != 0) {
+                        currentStats = c->stats;
                         // Change the following for AC-3.
                         // c->ArcCons();
                         c->LocalArcCons(getQueue().front());
+                        currentStats = 0;
                         c->lastConstraintCheckTime = ++nConstraintChecks;
                         if (foundInconsistency) {
                                 foundInconsistency = false;

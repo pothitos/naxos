@@ -387,6 +387,68 @@ inline Ns_ExprInverse NsInverse(NsIntVarArray& Arr, const NsInt MaxDom)
         return Ns_ExprInverse(Arr, MaxDom);
 }
 
+/// Recursive part of NsMinimalConflict(), i.e. of the QuickXplain algorithm
+///
+/// Returns a minimal subset of 'constraints' that cannot be
+/// satisfied together with the 'background' constraints.
+/// 'backgroundGrew' is false if 'background' is known to be
+/// satisfiable. Source: "QuickXplain: Preferred Explanations and
+/// Relaxations for Over-Constrained Problems," by U. Junker.
+template <class Predicate>
+NsDeque<NsIndex>
+Ns_quickXplain(const NsDeque<NsIndex>& background, const bool backgroundGrew,
+               const NsDeque<NsIndex>& constraints, Predicate& isSatisfiable)
+{
+        if (backgroundGrew) {
+                NsDeque<NsIndex> sortedBackground(background);
+                std::sort(sortedBackground.begin(), sortedBackground.end());
+                if (!isSatisfiable(sortedBackground))
+                        return NsDeque<NsIndex>();
+        }
+        if (constraints.size() == 1)
+                return constraints;
+        NsDeque<NsIndex> first, second;
+        for (NsIndex i = 0; i < constraints.size(); ++i) {
+                if (i < constraints.size() / 2)
+                        first.push_back(constraints[i]);
+                else
+                        second.push_back(constraints[i]);
+        }
+        NsDeque<NsIndex> extended(background);
+        extended.insert(extended.end(), first.begin(), first.end());
+        NsDeque<NsIndex> conflictSecond =
+            Ns_quickXplain(extended, true, second, isSatisfiable);
+        extended = background;
+        extended.insert(extended.end(), conflictSecond.begin(),
+                        conflictSecond.end());
+        NsDeque<NsIndex> conflict = Ns_quickXplain(
+            extended, !conflictSecond.empty(), first, isSatisfiable);
+        conflict.insert(conflict.end(), conflictSecond.begin(),
+                        conflictSecond.end());
+        return conflict;
+}
+
+/// Finds a minimal set of constraints that cannot be satisfied together
+///
+/// The constraints are numbered from 0 to numConstraints - 1.
+/// isSatisfiable(subset) should build a new problem with only
+/// the constraints of 'subset', which is sorted, and return
+/// true if the problem has a solution. The returned constraints
+/// are sorted too, and they are minimal: removing any of them
+/// makes the rest satisfiable. An empty result means that all
+/// the constraints can be satisfied together.
+template <class Predicate>
+NsDeque<NsIndex> NsMinimalConflict(const NsIndex numConstraints,
+                                   Predicate isSatisfiable)
+{
+        NsDeque<NsIndex> all;
+        for (NsIndex i = 0; i < numConstraints; ++i)
+                all.push_back(i);
+        if (all.empty() || isSatisfiable(all))
+                return NsDeque<NsIndex>();
+        return Ns_quickXplain(NsDeque<NsIndex>(), false, all, isSatisfiable);
+}
+
 } // end namespace
 
 #endif // Ns_NAXOS_H

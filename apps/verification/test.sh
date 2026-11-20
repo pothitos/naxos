@@ -15,5 +15,8 @@ bash -c 'cmp <(sort solutions.txt) <(sort verification/nqueens_12_sorted_solutio
 # Validate SEND + MORE = MONEY solution
 $MEM_CHECK ./send_more_money > solutions.txt
 bash -c 'cmp <(sort solutions.txt) <(sort verification/send_more_money_solution.txt)'
+# Validate the minimal conflict and the constraint statistics
+$MEM_CHECK ./conflict > solutions.txt
+cmp solutions.txt verification/conflict_output.txt
 # Clean up
 rm solutions.txt

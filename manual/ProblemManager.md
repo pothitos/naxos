@@ -13,7 +13,7 @@ executed. The constructor function does not have any
 argument. The other functions follow.
 
 
-#### `void add(`_ExprConstr_`)`
+#### `NsIndex add(`_ExprConstr_`)`
 
 Adds the constraint described by the constraint expression
 _ExprConstr_ (see the [Expressions for
@@ -28,6 +28,11 @@ pm.add(3 * VarX != VarY / 2);
 pm.add(VarW == -2 || VarW >= 5);
 pm.add(NsAllDiff(VarArr));
 ```
+
+It returns the index of the constraint, which is the number
+of the previous `add()` calls, i.e. 0 for the first
+constraint, 1 for the second, etc. The index can be passed
+to `numFailures()` and `numPrunings()`.
 
 
 #### `void addGoal(NsGoal* goal)`
@@ -107,6 +112,30 @@ the moment that this function was called.
 Returns the number of failures during search.
 
 
+#### `unsigned long numFailures(NsIndex constraint)`
+
+Returns how many times the constraint with the index
+`constraint`, which `add()` returned, emptied the domain of a
+variable. The failures of a problem without solutions point
+to the constraints that are more likely to conflict.
+
+
+#### `unsigned long numPrunings(NsIndex constraint)`
+
+Returns how many times the constraint with the index
+`constraint` removed values from the domain of a variable,
+without emptying it. A constraint with zero prunings and
+zero failures did not remove any value during the search so
+far. In this sense, it was not used to find the solutions,
+although another order of the `add()` calls could make it
+useful. For example, after `pm.add(X < Y)`, the constraint
+`pm.add(X <= Y)` never removes a value.
+
+The statistics count only the constraints that `add()`
+imposed. They do not count the constraints that come from an
+expression assigned to a variable, e.g. `NsIntVar Z = X + Y`.
+
+
 #### `unsigned long numBacktracks()`
 
 Returns how many times the solver has backtracked during
@@ -177,6 +206,55 @@ the domain will be kept `[0..10]`.
 We cannot call this function inside goals, but outside them.
 E.g. we can call it at the code “level” we call
 `nextSolution()`.
+
+
+## Explaining a problem without solutions
+
+#### `NsDeque<NsIndex> NsMinimalConflict(NsIndex n, isSatisfiable)`
+
+When a problem has no solution, this function finds a
+minimal set of its constraints that cannot be satisfied
+together. _Minimal_ means that if we remove any constraint
+of the set, the rest can be satisfied. The constraints are
+numbered from 0 to `n` - 1. The function `isSatisfiable`
+takes a sorted `NsDeque<NsIndex>` with some of these
+numbers, builds a _new_ problem manager with only these
+constraints, and returns `true` if the problem has a
+solution. `NsMinimalConflict` returns the sorted numbers of
+the conflicting constraints, or an empty `NsDeque` if the
+whole problem has a solution. E.g.
+
+```C++
+bool isSatisfiable(const NsDeque<NsIndex>& subset)
+{
+    NsProblemManager pm;
+    NsIntVar X(pm, 0, 9), Y(pm, 0, 9), Z(pm, 0, 9);
+    for (NsIndex i = 0; i < subset.size(); ++i) {
+        switch (subset[i]) {
+        case 0: pm.add(X < Y); break;
+        case 1: pm.add(Y < Z); break;
+        case 2: pm.add(X != 4); break;
+        case 3: pm.add(Z < X); break;
+        }
+    }
+    NsIntVarArray vars;
+    vars.push_back(X);
+    vars.push_back(Y);
+    vars.push_back(Z);
+    pm.addGoal(new NsgLabeling(vars));
+    return pm.nextSolution();
+}
+
+NsDeque<NsIndex> conflict = NsMinimalConflict(4, isSatisfiable);
+// conflict contains 0, 1, and 3
+```
+
+The function implements the QuickXplain algorithm by Ulrich
+Junker. It solves a few subproblems, so it may take time for
+hard problems. `isSatisfiable` should search the whole
+subproblem, without a time limit, otherwise the result may
+be wrong. A complete example is
+[`apps/conflict.cpp`](../apps/conflict.cpp).
 
 ---
 

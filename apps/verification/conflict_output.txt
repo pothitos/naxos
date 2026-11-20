@@ -1,0 +1,7 @@
+Conflict: X < Y, Y < Z, Z < X
+Solution: X = 0, Y = 9
+Prunings	Failures	Constraint
+2	0	X < Y
+2	0	X + Y == 9
+0	0	X <= Y
+1	0	X != 4

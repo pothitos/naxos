@@ -1222,6 +1222,22 @@ void Ns_arrayConstraintToGraphFile(std::ofstream& fileConstraintsGraph,
                                    const Ns_Constraint* constr,
                                    const char* constrName);
 
+/// Statistics for a constraint imposed by NsProblemManager::add()
+struct Ns_ConstraintStats {
+
+        /// How many times the constraint emptied a domain
+        unsigned long failures;
+
+        /// How many times the constraint removed values from a domain,
+        /// without emptying it
+        unsigned long prunings;
+
+        /// Constructor
+        Ns_ConstraintStats(void) : failures(0), prunings(0)
+        {
+        }
+};
+
 /// Abstract class that represents a constraint between constrained variables
 class Ns_Constraint {
 
@@ -1232,7 +1248,9 @@ class Ns_Constraint {
 
         /// Constructor
         Ns_Constraint(void)
-          : lastConstraintCheckTime(0), revisionType(BOUNDS_CONSISTENCY)
+          : lastConstraintCheckTime(0),
+            revisionType(BOUNDS_CONSISTENCY),
+            stats(0)
         {
         }
 
@@ -1270,6 +1288,11 @@ class Ns_Constraint {
         /// Description of the type of revision function (LocalArcCons) for the
         /// constraint
         ConsistencyType revisionType;
+
+        /// The statistics of the NsProblemManager::add() call that created the
+        /// constraint, or 0 if the constraint was created otherwise, e.g. by
+        /// an expression assigned to a variable
+        Ns_ConstraintStats* stats;
 
         /// Writes a constraint-edge representation into a graph file, with a
         /// format supported by Graphviz
@@ -4455,6 +4478,14 @@ class NsProblemManager {
         /// True, if an inconsistency has been found
         bool foundInconsistency;
 
+        /// The statistics of each constraint imposed by add(), in the order of
+        /// the add() calls
+        NsDeque<Ns_ConstraintStats> constraintsStats;
+
+        /// The statistics of the constraint that is being imposed or
+        /// propagated, or 0 if no constraint imposed by add() is active
+        Ns_ConstraintStats* currentStats;
+
         bool arcConsistent(void);
 
         bool backtrack(void);
@@ -4467,6 +4498,7 @@ class NsProblemManager {
         /// the search tree in a Graphviz supported format.
         NsProblemManager(void)
           : foundInconsistency(false),
+            currentStats(0),
             vObjective(0),
             timeLim(0),
             firstNextSolution(true),
@@ -4497,7 +4529,7 @@ class NsProblemManager {
                         searchNodes.top().stackAND.push(goal);
         }
 
-        void add(const Ns_ExprConstr& expr);
+        NsIndex add(const Ns_ExprConstr& expr);
 
         void add(const Ns_ExprConstr& expr, const NsInt weight);
 
@@ -4510,7 +4542,17 @@ class NsProblemManager {
         /// Informs NsProblemManager than an inconsistency has been found
         void foundAnInconsistency(void)
         {
+                if (!foundInconsistency && currentStats != 0)
+                        ++currentStats->failures;
                 foundInconsistency = true;
+        }
+
+        /// Informs NsProblemManager that values have been removed from a
+        /// domain, without emptying it
+        void foundAPruning(void)
+        {
+                if (currentStats != 0)
+                        ++currentStats->prunings;
         }
 
         bool nextSolution(void);
@@ -4716,6 +4758,26 @@ class NsProblemManager {
                 return nFailures;
         }
 
+        /// Returns how many times the constraint, whose index was returned by
+        /// add(), emptied a domain
+        unsigned long numFailures(const NsIndex constr) const
+        {
+                assert_Ns(constr < constraintsStats.size(),
+                          "NsProblemManager::numFailures: Wrong constraint "
+                          "index");
+                return constraintsStats[constr].failures;
+        }
+
+        /// Returns how many times the constraint, whose index was returned by
+        /// add(), removed values from a domain without emptying it
+        unsigned long numPrunings(const NsIndex constr) const
+        {
+                assert_Ns(constr < constraintsStats.size(),
+                          "NsProblemManager::numPrunings: Wrong constraint "
+                          "index");
+                return constraintsStats[constr].prunings;
+        }
+
         unsigned long numGoals(void) const
         {
                 return nGoals;
@@ -4793,6 +4855,7 @@ class NsProblemManager {
 
         void recordConstraint(Ns_Constraint* newConstr)
         {
+                newConstr->stats = currentStats;
                 constraints.push_back(newConstr);
         }
 
