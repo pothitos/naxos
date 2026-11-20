@@ -11,7 +11,7 @@ is to provide all the information needed by an application
 developer of the library.
 
 <p align="center">
-  <img src="https://rawgit.com/pothitos/naxos/master/manual/figures/logo.svg">
+  <img src="figures/logo.svg">
 </p>
 
 

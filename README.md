@@ -1,6 +1,6 @@
 # Naxos Solver
 
-<img src="https://rawgit.com/pothitos/naxos/master/manual/figures/logo.svg" align="right">
+<img src="manual/figures/logo.svg" align="right">
 
 [![Functional tests](https://github.com/pothitos/naxos/actions/workflows/functional_tests.yml/badge.svg)](https://github.com/pothitos/naxos/actions/workflows/functional_tests.yml "Compilation for Linux and tests")
 [![Compilation for Windows](https://github.com/pothitos/naxos/actions/workflows/windows.yml/badge.svg "Compilation for Windows")](https://github.com/pothitos/naxos/actions/workflows/windows.yml)
