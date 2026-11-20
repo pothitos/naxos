@@ -4358,6 +4358,7 @@ struct Ns_SearchNode {
           : goalNextChoice(goalNextChoice_init),
             delayedGoal(git),
             children(0),
+            matchesEndNode(false),
             timeBorn(clock()),
             descBorn(descBorn_init),
             timeSimChild(0.0),
