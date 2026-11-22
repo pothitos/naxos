@@ -4,7 +4,6 @@ on: [push]
 
 env:
     COVERAGE: --coverage
-    CMAKE_POLICY_VERSION_MINIMUM: "3.5"
 
 jobs:
     setup:
