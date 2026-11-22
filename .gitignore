@@ -15,6 +15,7 @@ Testing
 
 # Naxos executables
 celar_solver
+conflict
 itc_solver
 naxos-xcsp3
 naxos-xcsp3-test
